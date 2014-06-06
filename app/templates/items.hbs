@@ -1,0 +1,17 @@
+Items
+<table class="items">
+    <thead>
+        <tr>
+            <th class="done">&nbsp;</th>
+            <th class="date">Date</th>
+            <th class="event">Event</th>
+            <th class="location">Location</th>
+            <th class="times">Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each}}
+            {{render 'item' this}}
+        {{/each}}
+    </tbody>
+</ul>
