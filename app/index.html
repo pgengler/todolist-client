@@ -1,24 +1,76 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>EmberTodo</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <meta charset="utf-8">
+        <title>Todo</title>
+        <script src="jquery-v2.1.1.js"></script>
+        <script src="handlebars-v1.3.0.js"></script>
+        <script src="ember-v1.5.1.js"></script>
+        <script src="ember-data-v1.0.0-beta8.js"></script>
+        <script src="strftime.js"></script>
+        <script src="todolist.js"></script>
 
-    {{BASE_TAG}}
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="assets/vendor.css">
-    <link rel="stylesheet" href="assets/ember-todo.css">
-  </head>
-  <body>
-    <script>
-      window.ENV = {{ENV}};
-    </script>
-    <script src="assets/ember-todo.js"></script>
-    <script>
-      window.EmberTodo = require('ember-todo/app')['default'].create(ENV.APP);
-    </script>
-  </body>
+        {{BASE_TAG}}
+
+        <link rel="stylesheet" href="assets/vendor.css">
+        <link rel="stylesheet" href="assets/ember-todo.css">
+    </head>
+    <body>
+        <script type="text/x-handlebars" data-template-name="application">
+	       {{outlet}}
+        </script>
+
+        <script type="text/x-handlebars" data-template-name="items">
+        	Items
+        	<table class="items">
+        		<thead>
+        			<tr>
+        				<th class="done">&nbsp;</th>
+        				<th class="date">Date</th>
+        				<th class="event">Event</th>
+        				<th class="location">Location</th>
+        				<th class="times">Time</th>
+        			</tr>
+        		</thead>
+        		<tbody>
+        			{{#each}}
+        				{{render 'item' this}}
+        			{{/each}}
+        		</tbody>
+        	</ul>
+        </script>
+
+        <script type="text/x-handlebars" data-template-name="item">
+        	<tr {{bind-attr class="done isCurrent isCurrent:today isPast:past isFuture:future isUndated:undated"}}>
+        		<td>
+        			{{input type="checkbox" checked=done}}
+        		</td>
+        		<td>{{formatDate date}}</td>
+        		<td>
+        			{{event}}
+        			<ul class="tags">
+        				{{#each tags}}
+        					{{partial 'tag'}}
+        				{{/each}}
+        			</ul>
+        		</td>
+        		<td>{{location}}</td>
+        		<td>{{formatTimes startTime endTime}}</td>
+        	</tr>
+        </script>
+
+        <script type="text/x-handlebars" data-template-name="_tag">
+        	<li {{bind-attr class=":tag styleClass"}}>{{name}}</li>
+        </script>
+
+        <script>
+          window.ENV = {{ENV}};
+        </script>
+        <script src="assets/ember-todo.js"></script>
+        <script>
+          window.EmberTodo = require('ember-todo/app')['default'].create(ENV.APP);
+        </script>
+    </body>
 </html>
