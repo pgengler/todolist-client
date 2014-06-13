@@ -11,7 +11,27 @@ Items
     </thead>
     <tbody>
         {{#each}}
-            {{render 'item' this}}
+            {{render "item" this}}
         {{/each}}
     </tbody>
-</ul>
+</table>
+<form {{action "createItem" on="submit"}}>
+    <label>
+        Event
+        {{input id="event" value=newEvent}}
+    </label>
+    <br>
+    <label>
+        Location
+        {{input id="location" value=newLocation}}
+    </label>
+    <br>
+    <label>
+        Time
+        {{input id="start" value=newStartTime}}
+        &ndash;
+        {{input id="end" value=newEndTime}}
+    </label>
+    <br>
+    <button type="submit">Add</button>
+</form>
