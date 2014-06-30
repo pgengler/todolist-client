@@ -1,16 +1,13 @@
-<tr {{bind-attr class="done isCurrent isCurrent:today isPast:past isFuture:future isUndated:undated"}}>
-    <td>
-        {{input type="checkbox" checked=done}}
-    </td>
-    <td>{{format-date date}}</td>
-    <td>
-        {{event}}
-        <ul class="tags">
-            {{#each tags}}
-                {{partial 'tag'}}
-            {{/each}}
-        </ul>
-    </td>
-    <td>{{location}}</td>
-    <td>{{format-times startTime endTime}}</td>
-</tr>
+<li {{bind-attr class="done isCurrent isCurrent:today isPast:past isFuture:future isUndated:undated"}}>
+  {{input type="checkbox" checked=done}}
+  {{event}}
+  <ul class="tags">
+    {{#each tags}}
+      {{partial 'tag'}}
+    {{/each}}
+  </ul>
+  <br>
+  {{location}}
+  <br>
+  {{format-times startTime endTime}}
+</li>

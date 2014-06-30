@@ -1,27 +1,17 @@
-table.items {
-	width: 100%;
+.items {
+	display: inline-block;
+	overflow: auto;
+	width: 25%;
 }
 
-table.items thead th.done {
-	width: 1.5em;
-}
+	.items ul {
+		padding: 0;
+		width: 100%;
+	}
 
-table.items thead th.date {
-	width: 6.5em;
-}
-
-table.items thead th.event {
-
-}
-
-table.items thead th.location {
-	width: 33%;
-}
-
-table.items thead th.times {
-	width: 10%;
-}
-
+		.items ul li {
+			list-style-type: none;
+		}
 
 /* Row styles */
 .today {
