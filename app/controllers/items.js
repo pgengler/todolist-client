@@ -1,4 +1,6 @@
-export default Ember.ArrayController.extend({
+import GroupableMixin from 'ember-todo/mixins/groupable';
+
+export default Ember.ArrayController.extend(GroupableMixin, {
   sortProperties: [ 'date', 'startTime', 'endTime', 'event', 'location' ],
   actions: {
     createItem: function() {
@@ -33,23 +35,5 @@ export default Ember.ArrayController.extend({
       this.set('newEndTime', '');
     }
   },
-
-  groupedByDate: function () {
-    var result = [];
-
-    this.get('content').forEach(function(item) {
-      var hasDate = result.findBy('date', item.get('date'));
-
-      if (!hasDate) {
-        result.pushObject(Ember.Object.create({
-          date: item.get('date'),
-          contents: []
-        }));
-      }
-
-      result.findBy('date', item.get('date')).get('contents').pushObject(item);
-    });
-
-    return result;
-  }.property('content.[]')
+  groupBy: 'date'
 });

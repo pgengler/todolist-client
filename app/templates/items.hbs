@@ -1,6 +1,6 @@
-{{#each groupedByDate}}
+{{#each groupedContent}}
 <div class="items">
-  <h3>{{format-date date}}</h3>
+  <h3>{{format-date name}}</h3>
 
   {{render "item-list" this}}
 </div>
