@@ -1,3 +1,5 @@
+import Ember from 'ember';
+
 export default Ember.ObjectController.extend({
    isCurrent: function() {
        return datesEqual(this.get('date'), new Date());

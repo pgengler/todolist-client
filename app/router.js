@@ -1,9 +1,11 @@
+import Ember from 'ember';
+
 var Router = Ember.Router.extend({
-  location: ENV.locationType
+  location: EmberTodoENV.locationType
 });
 
 Router.map(function() {
-    this.resource('items');
+  this.resource('items');
 });
 
 export default Router;

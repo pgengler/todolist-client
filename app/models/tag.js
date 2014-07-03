@@ -1,3 +1,5 @@
+import DS from 'ember-data';
+
 var Tag = DS.Model.extend({
     style: DS.attr('number'),
     name: DS.attr('string'),

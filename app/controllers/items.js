@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import GroupableMixin from 'ember-todo/mixins/groupable';
 
 export default Ember.ArrayController.extend(GroupableMixin, {

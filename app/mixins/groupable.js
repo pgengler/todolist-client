@@ -1,7 +1,4 @@
-/**
-@module ember
-@submodule ember-runtime
-*/
+import Ember from 'ember';
 
 export default Ember.Mixin.create({
   contentArrayDidChange: function(array, idx, removedCount, addedCount) {
@@ -35,7 +32,9 @@ export default Ember.Mixin.create({
     group.pushObject(object);
 
     var groups = this.get('groups');
-    if (!groups.contains(group)) groups.pushObject(group);
+    if (!groups.contains(group)) {
+      groups.pushObject(group);
+    }
   },
 
   removeItemGrouped: function(object) {
@@ -49,7 +48,9 @@ export default Ember.Mixin.create({
 
   groupedContent: Ember.computed('arrangedContent', 'groupBy', function() {
     var content = Ember.get(this, 'arrangedContent');
-    if (!content) return;
+    if (!content) {
+      return;
+    }
 
     return this.group(content);
   }),
@@ -67,7 +68,9 @@ export default Ember.Mixin.create({
 
       var group = this.groupFor(object);
 
-      if (!group) return;
+      if (!group) {
+        return;
+      }
 
       group.get("content").pushObject(object);
     }), this);
@@ -82,7 +85,9 @@ export default Ember.Mixin.create({
     groups = this.get('groups');
     groupName = this.extractGroup(object);
 
-    if (!groupName) return;
+    if (!groupName) {
+      return;
+    }
 
     group = groupsMap[groupName];
 
@@ -104,7 +109,9 @@ export default Ember.Mixin.create({
   extractGroup: function(object) {
     var propertyName = Ember.get(this, 'groupBy');
 
-    if (!propertyName) return;
+    if (!propertyName) {
+      return;
+    }
 
     return Ember.get(object, propertyName);
   }
