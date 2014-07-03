@@ -4,12 +4,14 @@ This README outlines the details of collaborating on this Ember application.
 
 ## Installation
 
+### Rails backend API
+* `git clone` the [pgengler/ember-todo-api](http://github.com/pgengler/ember-todo-api) repository
+* `bundle install`
+
+### Ember frontend
 * `git clone` this repository
 * `npm install`
 * `bower install`
-
-* `git clone` the [pgengler/ember-todo-api](http://github.com/pgengler/ember-todo-api) repository
-* `bundle install`
 
 ## Running
 
