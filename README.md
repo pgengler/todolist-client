@@ -8,9 +8,13 @@ This README outlines the details of collaborating on this Ember application.
 * `npm install`
 * `bower install`
 
+* `git clone` the [pgengler/ember-todo-api](http://github.com/pgengler/ember-todo-api) repository
+* `bundle install`
+
 ## Running
 
-* `ember server`
+* Start the Rails server (`ember-todo-api`): `rails server`
+* `ember server --proxy http://localhost:3000`
 * Visit your app at http://localhost:4200.
 
 ## Running Tests
