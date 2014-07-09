@@ -1,11 +1,13 @@
-{{#each group in groupedContent}}
-<div class="items">
-  <h3>{{day-of-week group.name}}</h3>
-  <h4>{{format-date group.name}}</h4>
+<div class="item-list">
+  {{#each group in groupedContent}}
+  <div class="items">
+    <h3>{{day-of-week group.name}}</h3>
+    <h4>{{format-date group.name}}</h4>
 
-  {{render "item-list" group}}
+    {{render "item-list" group}}
+  </div>
+  {{/each}}
 </div>
-{{/each}}
 
 <form {{action "createItem" on="submit"}}>
     <label>

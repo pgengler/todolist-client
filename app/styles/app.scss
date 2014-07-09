@@ -1,3 +1,9 @@
+.item-list {
+	overflow-x: scroll;
+	overflow-y: hidden;
+	white-space: nowrap;
+}
+
 .items {
 	display: inline-block;
 	overflow: auto;
