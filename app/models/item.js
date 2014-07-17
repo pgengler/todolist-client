@@ -8,5 +8,5 @@ export default DS.Model.extend({
     startTime: DS.attr('number'),
     endTime: DS.attr('number'),
 
-    tags: DS.hasMany('tag', { async: true })
+    tags: DS.hasMany('tag')
 });
