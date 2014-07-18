@@ -1,7 +1,4 @@
 <li {{bind-attr class="done isCurrent isCurrent:today isPast:past isFuture:future isUndated:undated"}}>
   {{input type="checkbox" checked=done}}
   {{event}}
-  {{#each tags}}
-    {{render 'tag' this}}
-  {{/each}}
 </li>
