@@ -23,31 +23,3 @@
 	color: #666;
 	text-decoration: line-through;
 }
-
-.today {
-	background-color: #C2E1FF;
-
-	&.done {
-		background-color: #E5F3FF;
-	}
-}
-
-.past {
-	background-color: #FFCB9E;
-
-	&.done {
-		background-color: #EEE;
-	}
-}
-
-.future {
-	background-color: white;
-}
-
-.undated {
-	background-color: white;
-
-	&.done {
-		background-color: #EEE;
-	}
-}

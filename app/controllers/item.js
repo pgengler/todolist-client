@@ -1,19 +1,6 @@
 import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
-  isCurrent: function() {
-    return datesEqual(this.get('date'), new Date());
-  }.property('model.date'),
-  isPast: function() {
-    return dateLessThan(this.get('date'), new Date());
-  }.property('model.date'),
-  isFuture: function() {
-    return dateGreaterThan(this.get('date'), new Date());
-  }.property('model.date'),
-  isUndated: function() {
-    return !this.get('date');
-  }.property('model.date'),
-
   isDone: function(key, value){
     var model = this.get('model');
 
