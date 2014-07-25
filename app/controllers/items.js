@@ -1,8 +1,8 @@
 import Ember from 'ember';
-import GroupableMixin from 'ember-todo/mixins/groupable';
 
 export default Ember.ArrayController.extend(GroupableMixin, {
-  sortProperties: [ 'date', 'event' ],
+  sortProperties: 'event',
+
   actions: {
     createItem: function() {
       var event = this.get('newEvent').trim();
@@ -17,6 +17,5 @@ export default Ember.ArrayController.extend(GroupableMixin, {
 
       this.set('newEvent', '');
     }
-  },
-  groupBy: 'date'
+  }
 });
