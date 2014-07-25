@@ -4,7 +4,7 @@ export default Ember.ObjectController.extend({
   isDone: function(key, value){
     var model = this.get('model');
 
-    if (value === undefined) {
+    if (typeof(value) === 'undefined') {
       // property being used as a getter
       return model.get('done');
     } else {
@@ -15,50 +15,3 @@ export default Ember.ObjectController.extend({
     }
   }.property('model.done')
 });
-
-
-function datesEqual(a, b)
-{
-  if (!a && !b) {
-    return true;
-  }
-  if ((a && !b) || (!a && b)) {
-    return false;
-  }
-  return (a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate());
-}
-
-function dateLessThan(a, b)
-{
-  if (!a && !b) {
-    // null on both sides is considered equal
-    return false;
-  }
-
-  if (!a && b) {
-    // null on the left is considered less than any value on the right
-    return true;
-  }
-
-  if (!b) {
-    // null on the right will never be less than any value on the left
-    return false;
-  }
-
-  if (a.getFullYear() < b.getFullYear()) {
-    return true;
-  } else if (a.getFullYear() > b.getFullYear()) {
-    return false;
-  }
-  if (a.getMonth() < b.getMonth()) {
-    return true;
-  } else if (a.getMonth() > b.getMonth()) {
-    return false;
-  }
-  return (a.getDate() < b.getDate());
-}
-
-function dateGreaterThan(a, b)
-{
-  return (!datesEqual(a, b) && !dateLessThan(a, b));
-}
