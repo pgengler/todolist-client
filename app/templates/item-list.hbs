@@ -1,5 +1,10 @@
 <ul class="items">
-	{{#each content}}
+	{{#each items}}
 		{{render "item" this}}
 	{{/each}}
+	<li>
+		<form {{action "saveItem" on="submit"}}>
+			{{input type="text" value=newItem}}
+		</form>
+	</li>
 </ul>

@@ -5,5 +5,5 @@ export default DS.Model.extend({
     date: DS.attr('date'),
     event: DS.attr('string'),
 
-    tags: DS.hasMany('tag')
+    tags: DS.hasMany('tag', { async: true })
 });
