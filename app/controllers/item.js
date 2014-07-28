@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
-  isDone: function(key, value){
+  isDone: function(key, value) {
     var model = this.get('model');
 
     if (typeof(value) === 'undefined') {
