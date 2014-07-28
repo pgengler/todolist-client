@@ -8,8 +8,16 @@ export default Ember.ObjectController.extend({
 			if (!itemText) {
 				return;
 			}
+			var self = this;
 			var item = this.store.createRecord('item', {
 				event: itemText
+			});
+			item.save().then(function() {
+				var item_tag = self.store.createRecord('itemTag', {
+					item: item,
+					tag: tag
+				});
+				item_tag.save();
 			});
 		}
 	}
