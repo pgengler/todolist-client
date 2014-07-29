@@ -1,6 +1,6 @@
 <ul class="items">
 	{{#each savedItems}}
-		{{partial "item"}}
+		{{render "item" this}}
 	{{/each}}
 	<li>
 		<form {{action "saveItem" on="submit"}}>
