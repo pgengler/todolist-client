@@ -17,7 +17,9 @@ export default Ember.ObjectController.extend({
 					item: item,
 					tag: tag
 				});
-				item_tag.save();
+				return item_tag.save();
+			}).then(function() {
+				self.set('newItem', '');
 			});
 		}
 	}
