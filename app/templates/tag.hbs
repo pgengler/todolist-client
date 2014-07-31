@@ -1,14 +1,5 @@
 <div class="items">
 	<h3>{{name}}</h3>
 
-	<ul class="item-list">
-		{{#each savedItems}}
-			{{render "item" this}}
-		{{/each}}
-		<li>
-			<form {{action "saveItem" on="submit"}}>
-				{{input type="text" value=newItem}}
-			</form>
-		</li>
-	</ul>
+	{{view "sortable-item-list"}}
 </div>
