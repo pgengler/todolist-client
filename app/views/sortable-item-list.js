@@ -6,8 +6,7 @@ export default Ember.View.extend({
 	templateName: 'sortable-item-list',
 
 	didInsertElement: function() {
-		var element = this.get('element');
-		this.$(element).sortable();
-		this.$(element).disableSelection();
+		this.$().sortable();
+		this.$().disableSelection();
 	}
 });
