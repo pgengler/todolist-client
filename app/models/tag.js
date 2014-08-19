@@ -6,7 +6,7 @@ export default DS.Model.extend(Persisted, {
   name: DS.attr('string'),
   itemTags: DS.hasMany('itemTag'),
   items: Ember.computed.mapBy('itemTags', 'item'),
-  savedItems: function() {
-    return this.persisted('items')
-  }.property('items')
+  savedItemTags: function() {
+    return this.persisted('itemTags')
+  }.property('itemTags')
 });

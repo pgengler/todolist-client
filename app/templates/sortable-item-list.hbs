@@ -1,5 +1,5 @@
-{{#each savedItems}}
-	{{render "item" this}}
+{{#each sortedItemTags}}
+	{{render "item" this.item}}
 {{/each}}
 <li>
 	<form {{action "saveItem" on="submit"}}>
