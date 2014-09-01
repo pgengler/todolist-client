@@ -13,12 +13,12 @@ export default Ember.View.extend({
 
 				var $this = $(this);
 				$this.find('li[data-id]').each(function(index) {
-          positions[ $(this).data('id') ] = index;
-        });
+					positions[ $(this).data('id') ] = index;
+				});
 
-        $this.sortable('cancel');
+				$this.sortable('cancel');
 
-        controller.updateSortOrder(positions);
+				controller.updateSortOrder(positions);
 			}
 		});
 		this.$().disableSelection();
