@@ -2,4 +2,8 @@
 	<h3>{{name}}</h3>
 
 	{{view "sortable-item-list"}}
+
+	<form {{action "saveItem" on="submit"}}>
+		{{input type="text" value=newItem}}
+	</form>
 </div>

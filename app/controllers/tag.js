@@ -24,5 +24,15 @@ export default Ember.ObjectController.extend({
 				self.set('newItem', '');
 			});
 		}
+	},
+	updateSortOrder: function(positions) {
+		console.dir(positions);
+		this.beginPropertyChanges();
+		this.get('itemTags').forEach(function(itemTag) {
+			var position = positions[ itemTag.get('id') ];
+			console.log("Moving itemTag with ID %s to position %d", itemTag.get('id'), position);
+			itemTag.set('position', position);
+		}, this);
+		this.endPropertyChanges();
 	}
 });
