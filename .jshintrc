@@ -2,8 +2,8 @@
   "predef": {
     "document": true,
     "window": true,
-    "EmberTodoENV": true,
-    "moment": true
+    "-Promise": true,
+    "EmberTodoENV": true
   },
   "browser" : true,
   "boss" : true,
