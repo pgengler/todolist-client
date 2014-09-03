@@ -30,5 +30,8 @@ export default Ember.ObjectController.extend({
 			var position = positions[ itemTag.get('id') ];
 			itemTag.set('position', position);
 		}, this);
+		this.get('itemTags').filterBy('isDirty', true).forEach(function(itemTag) {
+			itemTag.save();
+		});
 	}
 });
