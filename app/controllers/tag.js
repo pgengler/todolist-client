@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
-	sortedItemTags: Ember.computed.sort('itemTags', 'sortProperties'),
+	sortedItemTags: Ember.computed.sort('savedItemTags', 'sortProperties'),
 	sortProperties: [ 'position:asc' ],
 	actions: {
 		saveItem: function() {
