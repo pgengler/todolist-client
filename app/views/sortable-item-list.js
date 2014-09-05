@@ -18,7 +18,7 @@ export default Ember.View.extend({
 
 				$this.sortable('cancel');
 
-				controller.updateSortOrder(positions);
+				controller.send('updateSortOrder', positions);
 			}
 		});
 		this.$().disableSelection();

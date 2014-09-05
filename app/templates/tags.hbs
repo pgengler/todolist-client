@@ -1,5 +1,13 @@
 <div class="tags">
 	{{#each}}
-		{{partial "tag"}}
+		<div class="items">
+			<h3>{{name}}</h3>
+
+			{{view "sortable-item-list"}}
+
+			<form {{action "saveItem" on="submit"}}>
+				{{input type="text" value=newItem}}
+			</form>
+		</div>
 	{{/each}}
 </div>
