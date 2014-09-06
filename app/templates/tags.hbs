@@ -10,4 +10,9 @@
 			</form>
 		</div>
 	{{/each}}
+	<div class="items">
+		<form {{action "saveTag" on="submit"}}>
+			<h3>{{input type="text" value=newTag}}</h3>
+		</form>
+	</div>
 </div>
