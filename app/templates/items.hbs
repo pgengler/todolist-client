@@ -1,8 +1,12 @@
 <ul>
-	{{#each}}
-	<li {{bind-attr class="done"}}>
+	{{#each itemController="item"}}
+	<li {{bind-attr class="isDone:done isEditing:editing"}}>
 		{{input type="checkbox" checked=isDone}}
-		{{event}}
+		{{#if isEditing}}
+			{{view "edit-item" class="edit" value=event insert-newline="updateItem"}}
+		{{else}}
+			<span {{action "editItem" on="doubleClick"}}>{{event}}</span>
+		{{/if}}
 	</li>
 	{{/each}}
 	<li>
