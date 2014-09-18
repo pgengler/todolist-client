@@ -1,7 +1,8 @@
 <ul>
-  {{#each}}
-  <li>
-    {{event}}
-  </li>
-  {{/each}}
+	{{#each}}
+	<li {{bind-attr class="done"}}>
+		{{input type="checkbox" checked=isDone}}
+		{{event}}
+	</li>
+	{{/each}}
 </ul>
