@@ -5,4 +5,9 @@
 		{{event}}
 	</li>
 	{{/each}}
+	<li>
+		<form {{action "addItem" on="submit"}}>
+			{{input type="text" value=newItemEvent placeholder="Add new item"}}
+		</form>
+	</li>
 </ul>
