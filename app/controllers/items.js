@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.ArrayController.extend({
-	sortProperties: [ 'date' ],
+	sortProperties: [ 'event' ],
 
 	actions: {
 		addItem: function() {
@@ -16,28 +16,5 @@ export default Ember.ArrayController.extend({
 				self.set('newItemEvent', '');
 			});
 		}
-	},
-
-	dateGroups: function() {
-		var groups = Ember.A([]);
-		this.get('arrangedContent').forEach(function(item) {
-			var date = item.get('date');
-			var group = groups.filter(function(g) {
-				return g.date === date;
-			})[0];
-			var needToAppendGroup = false;
-			if (!group) {
-				group = Ember.ArrayProxy.create({
-					content: Ember.A([]),
-					date: date
-				});
-				needToAppendGroup = true;
-			}
-			group.get('content').pushObject(item);
-			if (needToAppendGroup) {
-				groups.push(group);
-			}
-		});
-		return groups;
-	}.property('content.@each')
+	}
 });
