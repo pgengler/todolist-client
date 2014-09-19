@@ -1,5 +1,7 @@
+{{#each groupedContent}}
+<h1>{{name}}</h1>
 <ul>
-	{{#each itemController="item"}}
+	{{#each}}
 	<li {{bind-attr class="isDone:done isEditing:editing"}}>
 		{{input type="checkbox" checked=isDone}}
 		{{#if isEditing}}
@@ -15,3 +17,4 @@
 		</form>
 	</li>
 </ul>
+{{/each}}

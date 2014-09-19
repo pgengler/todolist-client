@@ -2,6 +2,7 @@ import DS from 'ember-data';
 
 var Item = DS.Model.extend({
 	done: DS.attr('boolean'),
+	date: DS.attr('date'),
 	event: DS.attr('string'),
 
 	isDone: function(key, value) {
@@ -19,8 +20,8 @@ var Item = DS.Model.extend({
 
 Item.reopenClass({
 	FIXTURES: [
-		{ id: 1, done: false, event: 'A thing' },
-		{ id: 2, done: false, event: 'Something else' },
+		{ id: 1, done: false, event: 'A thing', date: new Date("September 19, 2014") },
+		{ id: 2, done: false, event: 'Something else', date: new Date("July 3, 2014") },
 		{ id: 3, done: true, event: 'A finished thing' }
 	]
 });
