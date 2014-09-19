@@ -1,7 +1,7 @@
-{{#each}}
+{{#each itemController="day"}}
 <h1>{{format-date date}}</h1>
 	<ul>
-	{{#each items itemController="item"}}
+	{{#each sortedItems itemController="item"}}
 		<li {{bind-attr class="isDone:done isEditing:editing"}}>
 			{{input type="checkbox" checked=isDone}}
 			{{#if isEditing}}
