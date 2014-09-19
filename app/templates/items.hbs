@@ -1,7 +1,9 @@
-{{#each groupedContent}}
-<h1>{{name}}</h1>
+{{#each dateGroups}}
+{{#if date}}
+<h1>{{format-date date}}</h1>
+{{/if}}
 <ul>
-	{{#each}}
+	{{#each itemController="item"}}
 	<li {{bind-attr class="isDone:done isEditing:editing"}}>
 		{{input type="checkbox" checked=isDone}}
 		{{#if isEditing}}

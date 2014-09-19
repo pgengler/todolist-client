@@ -20,8 +20,8 @@ var Item = DS.Model.extend({
 
 Item.reopenClass({
 	FIXTURES: [
-		{ id: 1, done: false, event: 'A thing', date: new Date("September 19, 2014") },
-		{ id: 2, done: false, event: 'Something else', date: new Date("July 3, 2014") },
+		{ id: 1, done: false, event: 'A thing', date: "2014-09-19" },
+		{ id: 2, done: false, event: 'Something else', date: "2014-07-03" },
 		{ id: 3, done: true, event: 'A finished thing' }
 	]
 });
