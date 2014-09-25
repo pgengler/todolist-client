@@ -9,7 +9,6 @@ export default Ember.ObjectController.extend({
 			if (!itemEvent) {
 				return;
 			}
-			var self = this;
 			this.get('items').addObject(this.store.createRecord('item', {
 				event: itemEvent
 			}));
