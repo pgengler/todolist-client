@@ -3,7 +3,6 @@
     "document": true,
     "window": true,
     "-Promise": true,
-    "EmberTodoENV": true,
     "moment": true
   },
   "browser" : true,
