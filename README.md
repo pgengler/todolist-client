@@ -10,6 +10,7 @@ You will need the following things properly installed on your computer.
 
 * [Git](http://git-scm.com/)
 * [Node.js](http://nodejs.org/) (with NPM) and [Bower](http://bower.io/)
+* The Rails-based API from [pgengler/ember-todo-api](https://github.com/pgengler/ember-todo-api)
 
 ## Installation
 
@@ -20,7 +21,8 @@ You will need the following things properly installed on your computer.
 
 ## Running / Development
 
-* `ember server`
+* Start the Rails API server
+* `ember server --proxy http://localhost:3000`
 * Visit your app at http://localhost:4200.
 
 ### Code Generators
