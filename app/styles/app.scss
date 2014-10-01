@@ -1,14 +1,8 @@
-.item-list {
-	overflow-x: scroll;
-	overflow-y: hidden;
-	white-space: nowrap;
-}
-
 .items {
 	display: inline-block;
 	overflow: auto;
 	vertical-align: top;
-	width: 20%;
+	width: 19%;
 
 	ul {
 		padding: 0;
