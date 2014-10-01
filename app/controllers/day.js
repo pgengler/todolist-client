@@ -9,10 +9,14 @@ export default Ember.ObjectController.extend({
 			if (!itemEvent) {
 				return;
 			}
-			this.get('items').addObject(this.store.createRecord('item', {
-				event: itemEvent
-			}));
-			this.set('newItemEvent', '');
+			var self = this;
+			this.store.createRecord('item', {
+				event: itemEvent,
+				day: this.get('model')
+			}).save().then(function(item) {
+				self.get('items').addObject(item);
+				self.set('newItemEvent', '');
+			});
 		},
 
 		moveItemToDay: function(id) {
