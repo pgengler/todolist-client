@@ -3,6 +3,7 @@ import DS from 'ember-data';
 var Item = DS.Model.extend({
 	done: DS.attr('boolean'),
 	event: DS.attr('string'),
+	day: DS.belongsTo('day'),
 
 	isDone: function(key, value) {
 		if (typeof(value) === 'undefined') {

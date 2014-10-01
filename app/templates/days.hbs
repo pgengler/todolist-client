@@ -1,15 +1,16 @@
 {{#each itemController="day"}}
-<h1>{{format-date date}}</h1>
+{{#draggable-dropzone dropped="moveItemToDay"}}
+	<h1>{{format-date date}}</h1>
 	<ul>
 	{{#each sortedItems itemController="item"}}
-		<li {{bind-attr class="isDone:done isEditing:editing"}}>
+		{{#draggable-item item=this}}
 			{{input type="checkbox" checked=isDone}}
 			{{#if isEditing}}
 				{{view "edit-item" class="edit" value=event insert-newline="updateItem"}}
 			{{else}}
 				<span {{action "editItem" on="doubleClick"}}>{{event}}</span>
 			{{/if}}
-		</li>
+		{{/draggable-item}}
 	{{/each}}
   <li>
 		<form {{action "addItem" on="submit"}}>
@@ -17,4 +18,5 @@
 		</form>
 	</li>
 	</ul>
+	{{/draggable-dropzone}}
 {{/each}}

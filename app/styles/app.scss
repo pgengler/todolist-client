@@ -24,3 +24,9 @@
 	color: #666;
 	text-decoration: line-through;
 }
+
+.draggable-item[draggable=true] {
+	-moz-user-select: none;
+	-khtml-user-drag: element;
+	cursor: move;
+}
