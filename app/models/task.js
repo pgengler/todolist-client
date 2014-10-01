@@ -2,7 +2,7 @@ import DS from 'ember-data';
 
 export default DS.Model.extend({
 	done: DS.attr('boolean'),
-	event: DS.attr('string'),
+	description: DS.attr('string'),
 	day: DS.belongsTo('day'),
 
 	isDone: function(key, value) {

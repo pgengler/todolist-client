@@ -1,34 +1,34 @@
 import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
-	itemSort: [ 'event' ],
-	sortedItems: Ember.computed.sort('items', 'itemSort'),
+	taskSort: [ 'description' ],
+	sortedTasks: Ember.computed.sort('tasks', 'taskSort'),
 	actions: {
-		addItem: function() {
-			var itemEvent = this.get('newItemEvent').trim();
-			if (!itemEvent) {
+		addTask: function() {
+			var taskDescription = this.get('newTaskDescription').trim();
+			if (!taskDescription) {
 				return;
 			}
 			var self = this;
-			this.store.createRecord('item', {
-				event: itemEvent,
+			this.store.createRecord('task', {
+				description: taskDescription,
 				day: this.get('model')
-			}).save().then(function(item) {
-				self.get('items').addObject(item);
-				self.set('newItemEvent', '');
+			}).save().then(function(task) {
+				self.get('tasks').addObject(task);
+				self.set('newTaskDescription', '');
 			});
 		},
 
-		moveItemToDay: function(id) {
+		moveTaskToDay: function(id) {
 			var self = this;
-			this.store.find('item', id).then(function(item) {
-				item.get('day.items').removeObject(item);
-				self.get('items').pushObject(item);
-				item.set('day', self.get('model'));
-				item.save();
+			this.store.find('task', id).then(function(task) {
+				task.get('day.tasks').removeObject(task);
+				self.get('tasks').pushObject(task);
+				task.set('day', self.get('model'));
+				task.save();
 			});
 		}
 	},
 
-	newItemEvent: ''
+	newTaskDescription: ''
 });

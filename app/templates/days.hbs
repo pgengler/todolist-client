@@ -1,20 +1,20 @@
 {{#each itemController="day"}}
-{{#draggable-dropzone dropped="moveItemToDay" otherClassNames="items"}}
+{{#draggable-dropzone dropped="moveTaskToDay" otherClassNames="tasks"}}
 	<h1>{{format-date date}}</h1>
 	<ul>
-		{{#each sortedItems itemController="item"}}
-			{{#draggable-item item=this}}
+		{{#each sortedTasks itemController="task"}}
+			{{#draggable-task task=this}}
 				{{input type="checkbox" checked=isDone}}
 				{{#if isEditing}}
-					{{view "edit-item" class="edit" value=event insert-newline="updateItem"}}
+					{{view "edit-task" class="edit" value=description insert-newline="updateTask"}}
 				{{else}}
-					<span {{action "editItem" on="doubleClick"}}>{{event}}</span>
+					<span {{action "editTask" on="doubleClick"}}>{{description}}</span>
 				{{/if}}
-			{{/draggable-item}}
+			{{/draggable-task}}
 		{{/each}}
 		<li>
-			<form {{action "addItem" on="submit"}}>
-				{{input type="text" value=newItemEvent placeholder="Add new item"}}
+			<form {{action "addTask" on="submit"}}>
+				{{input type="text" value=newTaskDescription placeholder="Add new task"}}
 			</form>
 		</li>
 	</ul>

@@ -2,12 +2,12 @@ import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
 	actions: {
-		editItem: function() {
+		editTask: function() {
 			this.set('isEditing', true);
 		},
 
-		updateItem: function() {
-			if (!Ember.isEmpty(this.get('model.event'))) {
+		updateTask: function() {
+			if (!Ember.isEmpty(this.get('model.description'))) {
 				this.get('model').save();
 				this.set('isEditing', false);
 			}

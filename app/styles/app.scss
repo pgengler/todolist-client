@@ -1,4 +1,4 @@
-.items {
+.tasks {
 	display: inline-block;
 	overflow: auto;
 	vertical-align: top;
@@ -19,7 +19,7 @@
 	text-decoration: line-through;
 }
 
-.draggable-item[draggable=true] {
+.draggable-task[draggable=true] {
 	-moz-user-select: none;
 	-khtml-user-drag: element;
 	cursor: move;
