@@ -2,8 +2,9 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
 	classNames: [ 'draggable-dropzone' ],
-	classNameBindings: [ 'dragClass' ],
+	classNameBindings: [ 'dragClass', 'otherClassNames' ],
 	dragClass: 'deactivated',
+	otherClassNames: '',
 
 	dragLeave: function(event) {
 		event.preventDefault();
