@@ -7,6 +7,7 @@ var Router = Ember.Router.extend({
 
 Router.map(function() {
   this.resource('days');
+  this.resource('recurring');
 });
 
 export default Router;
