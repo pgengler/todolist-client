@@ -5,11 +5,14 @@ export default Ember.ObjectController.extend({
 
 	actions: {
 		editTask: function() {
+			this.set('editDescription', this.get('description'));
 			this.set('isEditing', true);
 		},
 
 		updateTask: function() {
-			if (!Ember.isEmpty(this.get('model.description'))) {
+			var description = this.get('editDescription');
+			if (!Ember.isEmpty(description)) {
+				this.set('description', description);
 				this.get('model').save();
 				this.set('isEditing', false);
 			}
