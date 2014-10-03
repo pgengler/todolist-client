@@ -15,6 +15,10 @@ export default Ember.ObjectController.extend({
 				this.set('description', description);
 				this.get('model').save();
 				this.set('isEditing', false);
+			} else {
+				var model = this.get('model');
+				model.deleteRecord();
+				model.save();
 			}
 		}
 	}
