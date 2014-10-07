@@ -1,21 +1,40 @@
+body {
+	background-color: #25719e;
+	font-family: sans-serif;
+}
+
 .tasks {
+	background-color: #e3e3e3;
+	border-radius: 3px;
 	display: inline-block;
+	font-size: 90%;
+	margin-right: .5em;
+	padding-top: 1em;
 	overflow: auto;
 	vertical-align: top;
 	width: 19%;
 
+	h1, h2 {
+		text-align: center;
+		margin: 0;
+	}
+
 	ul {
-		padding: 0;
-		width: 100%;
+		padding: .25em;
 
 		li {
+			background-color: white;
+			border-radius: 3px;
 			list-style-type: none;
+			margin: 0 0.25em 0.5em 0.25em;
+			padding: 0.5em;
 		}
 	}
 }
 
 .done {
 	color: #666;
+	opacity: 0.7;
 	text-decoration: line-through;
 }
 
@@ -26,5 +45,15 @@
 }
 
 input[type=text] {
-	width: 90%;
+	width: 85%;
+}
+
+input.new-task {
+	background: none;
+	border: 0;
+	height: 100%;
+
+	&:focus {
+		outline: none;
+	}
 }

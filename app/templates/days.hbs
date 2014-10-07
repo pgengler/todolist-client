@@ -1,7 +1,7 @@
 {{#each itemController="day"}}
 {{#draggable-dropzone dropped="moveTaskToDay" otherClassNames="tasks"}}
 	<h1>{{day-name date}}</h1>
-	<h2>{{format-date date}}</h3>
+	<h2>{{format-date date}}</h2>
 	<ul>
 		{{#each sortedTasks itemController="task"}}
 			{{#draggable-task task=this}}
@@ -15,7 +15,7 @@
 		{{/each}}
 		<li>
 			<form {{action "addTask" on="submit"}}>
-				{{input type="text" value=newTaskDescription placeholder="Add new task"}}
+				{{input type="text" class="new-task" value=newTaskDescription placeholder="Add new task"}}
 			</form>
 		</li>
 	</ul>
