@@ -1,5 +1,5 @@
 body {
-	background-color: #25719e;
+	background-color: #23A06A;
 	font-family: sans-serif;
 }
 
@@ -29,6 +29,17 @@ body {
 			margin: 0 0.25em 0.5em 0.25em;
 			padding: 0.5em;
 		}
+	}
+
+	&.past {
+		li:not(.done) {
+			color: #bf4a40;
+			font-weight: bold;
+		}
+	}
+
+	&.future {
+
 	}
 }
 

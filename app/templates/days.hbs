@@ -1,5 +1,6 @@
 {{#each itemController="day"}}
-{{#draggable-dropzone dropped="moveTaskToDay" otherClassNames="tasks"}}
+<div {{bind-attr class=":tasks isPast:past isCurrent:current isFuture:future"}}>
+{{#draggable-dropzone dropped="moveTaskToDay"}}
 	<h1>{{day-name date}}</h1>
 	<h2>{{format-date date}}</h2>
 	<ul>
@@ -20,4 +21,5 @@
 		</li>
 	</ul>
 	{{/draggable-dropzone}}
+</div>
 {{/each}}
