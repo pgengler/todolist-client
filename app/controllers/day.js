@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
-	taskSort: [ 'description' ],
+	taskSort: [ 'done', 'description' ],
 	sortedTasks: Ember.computed.sort('tasks', 'taskSort'),
 
 	newTaskDescription: '',
