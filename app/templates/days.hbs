@@ -8,7 +8,7 @@
 			{{#draggable-task task=this}}
 				{{input type="checkbox" checked=isDone}}
 				{{#if isEditing}}
-					{{autofocus-textfield class="edit" value=editDescription insert-newline="updateTask"}}
+					{{autofocus-textfield class="edit" value=editDescription insert-newline="updateTask" focus-out="cancelEdit"}}
 				{{else}}
 					<span {{action "editTask" on="doubleClick"}}>{{description}}</span>
 				{{/if}}
