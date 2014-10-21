@@ -6,18 +6,16 @@
 	<ul>
 		{{#each sortedTasks itemController="task"}}
 			{{#draggable-task task=this}}
-				{{input type="checkbox" checked=isDone}}
 				{{#if isEditing}}
-					{{autofocus-textfield class="edit" value=editDescription insert-newline="updateTask" focus-out="cancelEdit"}}
+					{{autofocus-elastic-textarea class="edit" value=editDescription insert-newline="updateTask" focus-out="cancelEdit"}}
 				{{else}}
-					<span {{action "editTask" on="doubleClick"}}>{{description}}</span>
+					{{input type="checkbox" checked=isDone}}
+					<div {{action "editTask" on="doubleClick"}}>{{description}}</div>
 				{{/if}}
 			{{/draggable-task}}
 		{{/each}}
 		<li>
-			<form {{action "addTask" on="submit"}}>
-				{{input type="text" class="new-task" value=newTaskDescription placeholder="Add new task"}}
-			</form>
+			{{elastic-textarea class="new-task" value=newTaskDescription placeholder="Add new task" insert-newline="addTask"}}
 		</li>
 	</ul>
 	{{/draggable-dropzone}}
