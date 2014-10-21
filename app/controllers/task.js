@@ -15,7 +15,7 @@ export default Ember.ObjectController.extend({
 		},
 
 		updateTask: function() {
-			var description = this.get('editDescription');
+			var description = this.get('editDescription').trim();
 			if (!Ember.isEmpty(description)) {
 				this.set('description', description);
 				this.get('model').save();
