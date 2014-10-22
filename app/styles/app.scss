@@ -58,7 +58,6 @@ body {
 .done {
 	color: #666;
 	opacity: 0.7;
-	text-decoration: line-through;
 }
 
 .draggable-task[draggable=true] {
@@ -77,14 +76,4 @@ textarea {
 	overflow: hidden;
 	resize: vertical;
 	width: 100%;
-}
-
-input.new-task {
-	background: none;
-	border: 0;
-	height: 100%;
-
-	&:focus {
-		outline: none;
-	}
 }
