@@ -7,7 +7,7 @@
 		{{#each sortedTasks itemController="task"}}
 			{{#draggable-task task=this}}
 				{{#if isEditing}}
-					{{autofocus-elastic-textarea class="edit" value=editDescription insert-newline="updateTask" focus-out="cancelEdit"}}
+					{{autofocus-elastic-textarea class="edit" value=editDescription insert-newline="updateTask" focus-out="cancelEdit" escape-press="cancelEdit"}}
 				{{else}}
 					{{input type="checkbox" checked=isDone}}
 					<div {{action "editTask" on="doubleClick"}}>{{description}}</div>

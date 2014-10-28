@@ -6,7 +6,7 @@
 			{{#each task in sortedTasks itemController="recurringTask"}}
 			<li>
 				{{#if task.isEditing}}
-					{{autofocus-elastic-textarea class="edit" value=task.editDescription insert-newline="updateTask" focus-out="cancelEdit"}}
+					{{autofocus-elastic-textarea class="edit" value=task.editDescription insert-newline="updateTask" focus-out="cancelEdit" escape-press="cancelEdit"}}
 				{{else}}
 					<div {{action "editTask" on="doubleClick"}}>{{task.description}}</div>
 				{{/if}}
