@@ -7,7 +7,7 @@ body {
 	font-size: $body-font-size;
 }
 
-.tasks {
+.task-list {
 	background-color: #e3e3e3;
 	border-radius: 3px;
 	display: inline-block;
@@ -49,9 +49,18 @@ body {
 			font-weight: bold;
 		}
 	}
+}
 
-	&.future {
+.recurring-tasks {
+	overflow-x: scroll;
+	width: 160em;
 
+	.task-list {
+		width: 22em;
+
+		ul li div {
+			width: 100%;
+		}
 	}
 }
 

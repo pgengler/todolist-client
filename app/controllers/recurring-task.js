@@ -9,6 +9,11 @@ export default Ember.ObjectController.extend({
 			this.set('isEditing', true);
 		},
 
+		cancelEdit: function() {
+			this.set('editDescription', '');
+			this.set('isEditing', false);
+		},
+
 		updateTask: function() {
 			var description = this.get('editDescription');
 			if (!Ember.isEmpty(description)) {

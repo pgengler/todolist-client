@@ -1,19 +1,23 @@
-{{#each itemController="recurringTaskDay"}}
-	<h1>{{day}}</h1>
-	<ul>
-		{{#each task in sortedTasks itemController="recurringTask"}}
-		<li>
-			{{#if task.isEditing}}
-				{{autofocus-textfield class="edit" value=task.editDescription insert-newline="updateTask"}}
-			{{else}}
-				<span {{action "editTask" on="doubleClick"}}>{{task.description}}</span>
-			{{/if}}
-		</li>
-		{{/each}}
-		<li>
-			<form {{action "addTask" on="submit"}}>
-				{{input type="text" value=newTaskDescription placeholder="Add new recurring task"}}
-			</form>
-		</li>
-	</ul>
-{{/each}}
+<div class="recurring-tasks">
+	{{#each itemController="recurringTaskDay"}}
+	<div class="task-list">
+		<h1>{{day}}</h1>
+		<ul>
+			{{#each task in sortedTasks itemController="recurringTask"}}
+			<li>
+				{{#if task.isEditing}}
+					{{autofocus-elastic-textarea class="edit" value=task.editDescription insert-newline="updateTask" focus-out="cancelEdit"}}
+				{{else}}
+					<div {{action "editTask" on="doubleClick"}}>{{task.description}}</div>
+				{{/if}}
+			</li>
+			{{/each}}
+			<li>
+				<form {{action "addTask" on="submit"}}>
+					{{elastic-textarea value=newTaskDescription placeholder="Add new recurring task"}}
+				</form>
+			</li>
+		</ul>
+	</div>
+	{{/each}}
+</div>
