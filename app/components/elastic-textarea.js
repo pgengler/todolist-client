@@ -1,6 +1,6 @@
-import Ember from 'ember';
+import SingleLineTextarea from './single-line-textarea';
 
-export default Ember.TextArea.extend({
+export default SingleLineTextarea.extend({
 	didInsertElement: function() {
 		var elem = this.$();
 
