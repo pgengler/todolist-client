@@ -7,7 +7,6 @@ var Router = Ember.Router.extend({
 
 Router.map(function() {
   this.resource('days');
-  this.resource('days', { path: 'days/:date' });
   this.resource('recurring');
 });
 
