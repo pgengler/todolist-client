@@ -12,8 +12,8 @@ export default Ember.Component.extend({
 				component.get('$picker').hide();
 			}
 		});
-		this.set('picker', picker);
 		picker.el.style.position = 'absolute';
+		this.set('picker', picker);
 		var $picker = this.$(picker.el);
 		this.set('$picker', $picker);
 		$picker.hide();
@@ -25,15 +25,23 @@ export default Ember.Component.extend({
 	},
 
 	actions: {
-		toggleDatepicker: function() {
+		showDatepicker: function() {
 			var $picker = this.get('$picker');
-			if ($picker.is(':visible')) {
-				$picker.hide();
+			$picker.show();
+			var position = this.$().position();
+			position.left -= $picker.width();
+			$picker.css(position);
+		},
+
+		hideDatepicker: function() {
+			this.get('$picker').hide();
+		},
+
+		toggleDatepicker: function() {
+			if (this.get('$picker').is(':visible')) {
+				this.send('hideDatepicker');
 			} else {
-				$picker.show();
-				var position = this.$().position();
-				position.left -= $picker.width();
-				$picker.css(position);
+				this.send('showDatepicker');
 			}
 		}
 	}
