@@ -15,7 +15,7 @@ body {
 	padding-top: 1em;
 	overflow: auto;
 	vertical-align: top;
-	width: 19%;
+	width: 22em;
 
 	h1, h2 {
 		text-align: center;
@@ -55,12 +55,8 @@ body {
 	overflow-x: scroll;
 	width: 160em;
 
-	.task-list {
-		width: 22em;
-
-		ul li div {
-			width: 100%;
-		}
+	.task-list ul li div {
+		width: 100%;
 	}
 }
 
@@ -85,4 +81,8 @@ textarea {
 	overflow: hidden;
 	resize: vertical;
 	width: 100%;
+}
+
+.date-picker i {
+	font-size: 3em;
 }
