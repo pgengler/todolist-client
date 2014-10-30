@@ -1,7 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-	classNames: [ 'date-picker' ],
+	classNames: [ 'date-picker', 'fa', 'fa-calendar' ],
+	tagName: 'i',
 
 	didInsertElement: function() {
 		var component = this;
@@ -16,9 +17,9 @@ export default Ember.Component.extend({
 		var $picker = this.$(picker.el);
 		this.set('$picker', $picker);
 		$picker.hide();
-		this.$().append($picker);
+		this.$().closest('body').append($picker);
 
-		this.$().find('i').click(function() {
+		this.$().click(function() {
 			component.send('toggleDatepicker');
 		});
 	},
@@ -28,9 +29,9 @@ export default Ember.Component.extend({
 			var $picker = this.get('$picker');
 			$picker.show();
 
-			var $icon = this.$().find('i');
+			var $icon = this.$();
 			var position = $icon.position();
-			position.left -= $picker.width();
+			position.left += ($icon.width() / 2);
 			position.top += ($icon.height() / 2);
 			$picker.css(position);
 		},
