@@ -1,25 +1,26 @@
-{{#each itemController="day"}}
-<div {{bind-attr class=":task-list isPast:past isCurrent:current isFuture:future"}}>
-{{#draggable-dropzone dropped="moveTaskToDay"}}
-	<h1>{{day-name date}}</h1>
-	<h2>{{format-date date}}</h2>
-	<ul>
-		{{#each sortedTasks itemController="task"}}
-			{{#draggable-task task=this}}
-				{{#if isEditing}}
-					{{autofocus-elastic-textarea class="edit" value=editDescription insert-newline="updateTask" focus-out="cancelEdit" escape-press="cancelEdit"}}
-				{{else}}
-					{{input type="checkbox" checked=isDone}}
-					<div {{action "editTask" on="doubleClick"}}>{{description}}</div>
-				{{/if}}
-			{{/draggable-task}}
-		{{/each}}
-		<li>
-			{{elastic-textarea class="new-task" value=newTaskDescription placeholder="Add new task" insert-newline="addTask"}}
-		</li>
-	</ul>
-	{{/draggable-dropzone}}
-</div>
-{{/each}}
-
 {{date-picker action="changeDate"}}
+<div class="days">
+	{{#each itemController="day"}}
+	<div {{bind-attr class=":task-list isPast:past isCurrent:current isFuture:future"}}>
+	{{#draggable-dropzone dropped="moveTaskToDay"}}
+		<h1>{{day-name date}}</h1>
+		<h2>{{format-date date}}</h2>
+		<ul>
+			{{#each sortedTasks itemController="task"}}
+				{{#draggable-task task=this}}
+					{{#if isEditing}}
+						{{autofocus-elastic-textarea class="edit" value=editDescription insert-newline="updateTask" focus-out="cancelEdit" escape-press="cancelEdit"}}
+					{{else}}
+						{{input type="checkbox" checked=isDone}}
+						<div {{action "editTask" on="doubleClick"}}>{{description}}</div>
+					{{/if}}
+				{{/draggable-task}}
+			{{/each}}
+			<li>
+				{{elastic-textarea class="new-task" value=newTaskDescription placeholder="Add new task" insert-newline="addTask"}}
+			</li>
+		</ul>
+		{{/draggable-dropzone}}
+	</div>
+	{{/each}}
+</div>

@@ -2,7 +2,6 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
 	classNames: [ 'date-picker' ],
-	tagName: 'span',
 
 	didInsertElement: function() {
 		var component = this;
@@ -28,8 +27,11 @@ export default Ember.Component.extend({
 		showDatepicker: function() {
 			var $picker = this.get('$picker');
 			$picker.show();
-			var position = this.$().position();
+
+			var $icon = this.$('i');
+			var position = $icon.position();
 			position.left -= $picker.width();
+			position.top += ($icon.height() / 2);
 			$picker.css(position);
 		},
 

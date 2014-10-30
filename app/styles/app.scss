@@ -15,6 +15,7 @@ body {
 	padding-top: 1em;
 	overflow: auto;
 	vertical-align: top;
+	white-space: normal;
 	width: 22em;
 
 	h1, h2 {
@@ -51,10 +52,17 @@ body {
 	}
 }
 
-.recurring-tasks {
+.days, .recurring-task-days {
 	overflow-x: scroll;
-	width: 160em;
+	white-space: nowrap;
+	width: 100%;
+}
 
+.days {
+	margin-top: 0.5em;
+}
+
+.recurring-task-days {
 	.task-list ul li div {
 		width: 100%;
 	}
@@ -83,6 +91,10 @@ textarea {
 	width: 100%;
 }
 
-.date-picker i {
-	font-size: 3em;
+.date-picker {
+	text-align: right;
+
+	i {
+		font-size: 3em;
+	}
 }
