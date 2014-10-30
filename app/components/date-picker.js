@@ -18,7 +18,7 @@ export default Ember.Component.extend({
 		$picker.hide();
 		this.$().append($picker);
 
-		this.$('i').click(function() {
+		this.$().find('i').click(function() {
 			component.send('toggleDatepicker');
 		});
 	},
@@ -28,7 +28,7 @@ export default Ember.Component.extend({
 			var $picker = this.get('$picker');
 			$picker.show();
 
-			var $icon = this.$('i');
+			var $icon = this.$().find('i');
 			var position = $icon.position();
 			position.left -= $picker.width();
 			position.top += ($icon.height() / 2);
