@@ -13,9 +13,7 @@
 			</li>
 			{{/each}}
 			<li>
-				<form {{action "addTask" on="submit"}}>
-					{{elastic-textarea value=newTaskDescription placeholder="Add new recurring task"}}
-				</form>
+				{{elastic-textarea value=newTaskDescription placeholder="Add new recurring task" insert-newline="addTask"}}
 			</li>
 		</ul>
 	</div>
