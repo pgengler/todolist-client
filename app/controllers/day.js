@@ -8,6 +8,7 @@ export default Ember.ObjectController.extend({
 	isPast: function() {
 		var date = this.get('date');
 		var now  = moment();
+		now.subtract(now.zone(), 'minutes').utc();
 		return (date.isBefore(now, 'day') && !date.isSame(now, 'day'));
 	}.property('date'),
 
