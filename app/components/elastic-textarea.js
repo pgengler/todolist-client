@@ -5,9 +5,8 @@ export default SingleLineTextarea.extend({
 		var elem = this.$();
 
 		var updateHeight = function() {
-			if (elem[0].scrollHeight > elem.height() + 10) {
-				elem[0].style.height = elem[0].scrollHeight + 'px';
-			}
+			elem.height(1);
+			elem[0].style.height = elem[0].scrollHeight + 'px';
 		};
 
 		updateHeight();
