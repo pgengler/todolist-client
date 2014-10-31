@@ -1,4 +1,7 @@
-{{#link-to 'days' (query-params date=null) title='Home'}}{{fa-icon 'home'}}{{/link-to}}
-{{#link-to 'recurring' title='Recurring tasks'}}{{fa-icon 'list'}}{{/link-to}}
+<nav>
+	{{#link-to 'days' (query-params date=null) title='Home'}}{{fa-icon 'home'}}{{/link-to}}
+	{{#link-to 'recurring' title='Recurring tasks'}}{{fa-icon 'list'}}{{/link-to}}
+	{{date-picker action="changeDate"}}
+</nav>
 
 {{outlet}}
