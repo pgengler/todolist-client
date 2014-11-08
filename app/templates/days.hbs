@@ -3,13 +3,13 @@
 {{/view}}
 <div class="days">
 	{{#each itemController="day"}}
-	<div {{bind-attr class=":task-list isPast:past isCurrent:current isFuture:future"}}>
+	<div {{bind-attr class=":task-list :spec-day isPast:past isCurrent:current isFuture:future"}}>
 	{{#draggable-dropzone dropped="moveTaskToDay"}}
 		<h1>{{day-name date}}</h1>
 		<h2>{{format-date date}}</h2>
 		<ul>
 			{{#each sortedTasks itemController="task"}}
-				{{#draggable-task task=this}}
+				{{#draggable-task task=this class="spec-task"}}
 					{{#if isEditing}}
 						{{autofocus-elastic-textarea class="edit" value=editDescription insert-newline="updateTask" focus-out="cancelEdit" escape-press="cancelEdit"}}
 					{{else}}
@@ -19,7 +19,7 @@
 				{{/draggable-task}}
 			{{/each}}
 			<li>
-				{{elastic-textarea class="new-task" value=newTaskDescription placeholder="Add new task" insert-newline="addTask"}}
+				{{elastic-textarea class="new-task spec-new-task" value=newTaskDescription placeholder="Add new task" insert-newline="addTask"}}
 			</li>
 		</ul>
 		{{/draggable-dropzone}}
