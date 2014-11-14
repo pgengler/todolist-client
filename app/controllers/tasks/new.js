@@ -22,6 +22,8 @@ export default Ember.ObjectController.extend({
 				task.save().then(function() {
 					controller.set('newTaskDescription', '');
 					controller.set('newTaskDate', '');
+
+					controller.transitionToRoute('days');
 				});
 			});
 		}
