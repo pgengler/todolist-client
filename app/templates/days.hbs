@@ -1,5 +1,5 @@
 {{#view "nav"}}
-{{date-picker action="changeDate"}}
+{{date-picker-icon action="changeDate"}}
 {{/view}}
 <div class="days">
 	{{#each itemController="day"}}
@@ -19,7 +19,7 @@
 				{{/draggable-task}}
 			{{/each}}
 			<li>
-				{{elastic-textarea class="new-task spec-new-task" value=newTaskDescription placeholder="Add new task" insert-newline="addTask"}}
+				{{elastic-textarea class="spec-new-task" value=newTaskDescription placeholder="Add new task" insert-newline="addTask"}}
 			</li>
 		</ul>
 		{{/draggable-dropzone}}

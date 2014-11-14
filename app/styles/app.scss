@@ -11,6 +11,18 @@ nav {
 	margin-bottom: 1em;
 }
 
+.new-task {
+	background-color: #e3e3e3;
+	border-radius: 3px;
+	margin: 0 0.25em 0.5em 0.25em;
+	padding: 0.5em;
+	width: 25%;
+
+	textarea, input[type=text] {
+		background-color: white;
+	}
+}
+
 .task-list {
 	background-color: #e3e3e3;
 	border-radius: 3px;
@@ -83,7 +95,7 @@ nav {
 	cursor: move;
 }
 
-textarea {
+textarea, input[type=text] {
 	background: none;
 	border: 0;
 	font-family: $body-font;

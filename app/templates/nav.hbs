@@ -1,5 +1,6 @@
 <nav>
 	{{#link-to 'days' (query-params date=null) title='Home'}}{{fa-icon 'home'}}{{/link-to}}
 	{{#link-to 'recurring' title='Recurring tasks'}}{{fa-icon 'list'}}{{/link-to}}
+	{{#link-to 'tasks.new' (query-params date=null) title='Add new task'}}{{fa-icon 'plus'}}{{/link-to}}
 	{{yield}}
 </nav>
