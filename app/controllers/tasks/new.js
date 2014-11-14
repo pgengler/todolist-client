@@ -19,7 +19,10 @@ export default Ember.ObjectController.extend({
 					description: description,
 					day: day
 				});
-				task.save();
+				task.save().then(function() {
+					controller.set('newTaskDescription', '');
+					controller.set('newTaskDate', '');
+				});
 			});
 		}
 	}
