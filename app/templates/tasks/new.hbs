@@ -1,6 +1,6 @@
 {{view "nav"}}
 <form class='new-task' {{action "createTask"}}>
-	{{autofocus-elastic-textarea value=newTaskDescription placeholder="New task"}}
-	{{date-picker-text-field value=newTaskDate placeholder="Date"}}
-	{{input type="submit" value="Add"}}
+	{{autofocus-elastic-textarea value=newTaskDescription placeholder="New task" class="spec-new-task-description"}}
+	{{date-picker-text-field value=newTaskDate placeholder="Date" class="spec-new-task-date"}}
+	{{input type="submit" value="Add" class="spec-create-task"}}
 </form>
