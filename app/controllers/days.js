@@ -10,7 +10,9 @@ export default Ember.ArrayController.extend({
 	}.on('init'),
 
 	poll: function() {
-		Ember.run.later(this, this.fetchNewData, 5000);
+		if (!Ember.testing) {
+			Ember.run.later(this, this.fetchNewData, 5000);
+		}
 	},
 
 	fetchNewData: function() {
