@@ -14,5 +14,10 @@ export default Ember.Route.extend({
 		};
 		Ember.$.extend(searchParams, defaultParams, params);
 		return this.store.find('day', searchParams);
+	},
+	afterModel: function() {
+		if (!Ember.testing) {
+			Ember.run.later(this, this.refresh, 5000);
+		}
 	}
 });
