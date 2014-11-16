@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import dateParams from 'ember-todo/utils/date-params';
 
 export default Ember.Route.extend({
 	queryParams: {
@@ -6,18 +7,7 @@ export default Ember.Route.extend({
 	},
 
 	model: function(params) {
-		var searchParams = { };
-		var defaultParams = {
-			after_days: 3,
-			before_days: 1,
-			date: moment().format('YYYY-MM-DD')
-		};
-		Ember.$.extend(searchParams, defaultParams, params);
+		var searchParams = dateParams(params.date);
 		return this.store.find('day', searchParams);
-	},
-	afterModel: function() {
-		if (!Ember.testing) {
-			Ember.run.later(this, this.refresh, 5000);
-		}
 	}
 });
