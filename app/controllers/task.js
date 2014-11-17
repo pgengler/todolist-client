@@ -7,11 +7,13 @@ export default Ember.ObjectController.extend({
 		editTask: function() {
 			this.set('editDescription', this.get('description'));
 			this.set('isEditing', true);
+			this.send('editingStart');
 		},
 
 		cancelEdit: function() {
 			this.set('editDescription', '');
 			this.set('isEditing', false);
+			this.send('editingEnd');
 		},
 
 		updateTask: function() {
@@ -24,6 +26,7 @@ export default Ember.ObjectController.extend({
 				this.get('model').deleteRecord();
 				this.get('model').save();
 			}
+			this.send('editingEnd');
 		}
 	}
 });
