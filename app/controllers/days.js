@@ -4,6 +4,7 @@ import dateParams from 'ember-todo/utils/date-params';
 export default Ember.ArrayController.extend({
 	sortProperties: [ 'date' ],
 	queryParams: [ 'date' ],
+	itemController: 'day',
 	pausePolling: false,
 
 	initiatePolling: function() {
