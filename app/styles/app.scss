@@ -66,6 +66,10 @@ nav {
 			color: #bf4a40;
 			font-weight: bold;
 		}
+
+		&:not(.has-unfinished-tasks) {
+			opacity: 0.75;
+		}
 	}
 }
 

@@ -3,6 +3,8 @@ import Ember from 'ember';
 export default Ember.ObjectController.extend({
 	taskSort: [ 'done', 'description' ],
 	sortedTasks: Ember.computed.sort('tasks', 'taskSort'),
+	unfinishedTasks: Ember.computed.filterBy('tasks', 'done', false),
+	hasUnfinishedTasks: Ember.computed.notEmpty('unfinishedTasks'),
 
 	newTaskDescription: '',
 	isPast: function() {

@@ -3,7 +3,7 @@
 {{/view}}
 <div class="days">
 	{{#each itemController="day"}}
-	<div {{bind-attr class=":task-list :spec-day isPast:past isCurrent:current isFuture:future"}}>
+	<div {{bind-attr class=":task-list :spec-day isPast:past isCurrent:current isFuture:future hasUnfinishedTasks"}}>
 	{{#draggable-dropzone dropped="moveTaskToDay"}}
 		<h1>{{day-name date}}</h1>
 		<h2>{{format-date date}}</h2>
