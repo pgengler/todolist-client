@@ -29,7 +29,6 @@ nav {
 	display: inline-block;
 	margin-right: .5em;
 	padding-top: 1em;
-	overflow: auto;
 	vertical-align: top;
 	white-space: normal;
 	width: 22em;
@@ -40,6 +39,8 @@ nav {
 	}
 
 	ul {
+		max-height: 75vh;
+		overflow-y: scroll;
 		padding: .25em;
 
 		li {
