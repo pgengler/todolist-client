@@ -61,6 +61,10 @@ nav {
 		}
 	}
 
+	&.current {
+		background-color: #B2DFDA;
+	}
+
 	&.past {
 		li:not(.done) {
 			color: #bf4a40;
