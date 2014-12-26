@@ -6,6 +6,9 @@ export default Ember.ArrayController.extend({
 	queryParams: [ 'date' ],
 	itemController: 'day',
 	pausePolling: false,
+	sortFunction: function(a, b) {
+		return (a < b) ? -1 : 1;
+	},
 
 	initiatePolling: function() {
 		this.poll();
