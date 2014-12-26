@@ -71,6 +71,12 @@ nav {
 			font-weight: bold;
 		}
 
+		&.has-unfinished-tasks {
+			h1, h2 {
+				color: #bf4a40;
+			}
+		}
+
 		&:not(.has-unfinished-tasks) {
 			opacity: 0.75;
 		}
