@@ -15,11 +15,15 @@ export default Ember.ObjectController.extend({
 	}.property('date'),
 
 	isCurrent: function() {
-		return this.get('date').isSame(moment(), 'day');
+		var now  = moment();
+		now.subtract(now.zone(), 'minutes').utc();
+		return this.get('date').isSame(now, 'day');
 	}.property('date'),
 
 	isFuture: function() {
-		return this.get('date').isAfter(moment(), 'day');
+		var now  = moment();
+		now.subtract(now.zone(), 'minutes').utc();
+		return this.get('date').isAfter(now, 'day');
 	}.property('date'),
 
 	actions: {
