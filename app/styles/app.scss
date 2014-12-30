@@ -8,6 +8,12 @@ body {
 	overflow: hidden;
 }
 
+div.page-wrapper {
+	height: 100%;
+	overflow: auto;
+	width: 100%;
+}
+
 nav {
 	margin-bottom: 1em;
 }
