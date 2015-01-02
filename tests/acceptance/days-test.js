@@ -9,9 +9,9 @@ module('Acceptance: Days', {
   setup: function() {
     App = startApp();
     server = new Pretender(function() { });
-     server.unhandledRequest = function(verb, path, request) {
-      ok( false, "Request not handled: " + verb + " " + path);
-    };
+    server.unhandledRequest = function(verb, path, request) {
+      ok(false, "Request not handled: " + verb + " " + path);
+    };
     mockRequest(server, 'get', '/api/v1/days', Responses.days);
   },
   teardown: function() {
