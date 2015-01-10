@@ -1,9 +1,12 @@
 import Ember from 'ember';
+import { filterBy, sortBy } from '../utils/computed';
 
 export default Ember.ObjectController.extend({
-	taskSort: [ 'done', 'description' ],
-	sortedTasks: Ember.computed.sort('tasks', 'taskSort'),
-	unfinishedTasks: Ember.computed.filterBy('tasks', 'done', false),
+	finishedTasks: filterBy('tasks', 'done', true),
+	sortedFinishedTasks: sortBy('finishedTasks', 'description'),
+	unfinishedTasks: filterBy('tasks', 'done', false),
+	sortedUnfinishedTasks: sortBy('unfinishedTasks', 'description'),
+
 	hasUnfinishedTasks: Ember.computed.notEmpty('unfinishedTasks'),
 
 	newTaskDescription: '',
@@ -45,8 +48,6 @@ export default Ember.ObjectController.extend({
 		moveTaskToDay: function(id) {
 			var self = this;
 			this.store.find('task', id).then(function(task) {
-				task.get('day.tasks').removeObject(task);
-				self.get('tasks').pushObject(task);
 				task.set('day', self.get('model'));
 				task.save();
 			});

@@ -1,0 +1,1 @@
+import Ember from 'ember';export function filterBy(arrProp, field, val) {	return Ember.computed(arrProp + '.@each.' + field, function() {		return this.get(arrProp).filterBy(field, val);	});}export function sortBy(arrProp, sortField) {	return Ember.computed(arrProp, function() {		return this.get(arrProp).toArray().sortBy(sortField);	});}
