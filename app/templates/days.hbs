@@ -9,24 +9,10 @@
 		<h2>{{format-date day.date}}</h2>
 		<ul>
 			{{#each task in day.sortedUnfinishedTasks itemController="task"}}
-				{{#draggable-task task=task class="spec-task"}}
-					{{#if task.isEditing}}
-						{{autofocus-elastic-textarea class="edit" value=task.editDescription insert-newline="updateTask" focus-out="cancelEdit" escape-press="cancelEdit"}}
-					{{else}}
-						{{input type="checkbox" checked=task.isDone}}
-						<div {{action "editTask" on="doubleClick"}}>{{task.description}}</div>
-					{{/if}}
-				{{/draggable-task}}
+				{{draggable-task task=task class="spec-task"}}
 			{{/each}}
 			{{#each task in day.sortedFinishedTasks itemController="task"}}
-				{{#draggable-task task=task class="spec-task"}}
-					{{#if task.isEditing}}
-						{{autofocus-elastic-textarea class="edit" value=task.editDescription insert-newline="updateTask" focus-out="cancelEdit" escape-press="cancelEdit"}}
-					{{else}}
-						{{input type="checkbox" checked=task.isDone}}
-						<div {{action "editTask" on="doubleClick"}}>{{task.description}}</div>
-					{{/if}}
-				{{/draggable-task}}
+				{{draggable-task task=task class="spec-task"}}
 			{{/each}}
 			<li>
 				{{elastic-textarea class="spec-new-task" value=day.newTaskDescription placeholder="Add new task" insert-newline="addTask"}}
