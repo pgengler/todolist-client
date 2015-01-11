@@ -41,7 +41,7 @@ test('visiting / redirects to /days', function() {
 test('adding a new task', function() {
   expect(3);
 
-  mockRequest(server, 'post', '/api/v1/tasks', { }, 200, function(request) {
+  mockRequest(server, 'post', '/api/v1/tasks', { task: { id: 999, description: 'A new task', done: false } }, 200, function(request) {
     equal(request.task.day_id, 46);
     equal(request.task.description, 'A new task');
   });
