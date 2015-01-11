@@ -1,11 +1,16 @@
 import Ember from 'ember';
 import { filterBy, sortBy } from '../utils/computed';
 
+function plaintext(str)
+{
+	return str.replace(/[^A-Za-z0-9]/g, '');
+}
+
 export default Ember.ObjectController.extend({
 	finishedTasks: filterBy('tasks', 'done', true),
-	sortedFinishedTasks: sortBy('finishedTasks', 'description'),
+	sortedFinishedTasks: sortBy('finishedTasks', 'description', plaintext),
 	unfinishedTasks: filterBy('tasks', 'done', false),
-	sortedUnfinishedTasks: sortBy('unfinishedTasks', 'description'),
+	sortedUnfinishedTasks: sortBy('unfinishedTasks', 'description', plaintext),
 
 	hasUnfinishedTasks: Ember.computed.notEmpty('unfinishedTasks'),
 

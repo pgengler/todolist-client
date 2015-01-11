@@ -19,5 +19,6 @@ var app = new EmberApp();
 app.import('bower_components/moment/moment.js');
 app.import('bower_components/pikaday/pikaday.js');
 app.import('bower_components/pikaday/css/pikaday.css');
+app.import('bower_components/showdown/compressed/Showdown.min.js');
 
 module.exports = app.toTree();
