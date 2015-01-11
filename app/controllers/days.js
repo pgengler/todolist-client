@@ -5,7 +5,7 @@ export default Ember.ArrayController.extend({
 	sortProperties: [ 'date' ],
 	queryParams: [ 'date' ],
 	itemController: 'day',
-	pausePolling: false,
+	isPolling: false,
 	sortFunction: function(a, b) {
 		return (a < b) ? -1 : 1;
 	},
@@ -21,7 +21,7 @@ export default Ember.ArrayController.extend({
 	},
 
 	fetchNewData: function() {
-		if (this.get('pausePolling')) {
+		if (this.get('isPolling')) {
 			this.poll();
 			return;
 		}
@@ -42,11 +42,11 @@ export default Ember.ArrayController.extend({
 			this.set('date', dateString);
 		},
 
-		editingStart: function() {
-			this.set('pausePolling', true);
+		pausePolling: function() {
+			this.set('isPolling', true);
 		},
-		editingEnd: function() {
-			this.set('pausePolling', false);
+		unpausePolling: function() {
+			this.set('isPolling', false);
 		}
 	}
 });
