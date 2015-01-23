@@ -8,16 +8,16 @@ export default Ember.Component.extend({
 
 	dragLeave: function(event) {
 		event.preventDefault();
-		this.set('dragClass', 'deactivated');
+		this.set('dragClass', '');
 	},
 
 	dragOver: function(event) {
 		event.preventDefault();
-		this.set('dragClass', 'activated');
+		this.set('dragClass', 'active-drop-target');
 	},
 
 	drop: function(event) {
-		this.set('dragClass', 'deactivated');
+		this.set('dragClass', '');
 		var data = event.dataTransfer.getData('text/data');
 		this.sendAction('dropped', data);
 	}

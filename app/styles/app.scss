@@ -40,6 +40,10 @@ nav {
 	white-space: normal;
 	width: 22em;
 
+	&.active-drop-target {
+		box-shadow: 0px 0px 15px #333;
+	}
+
 	h1, h2 {
 		text-align: center;
 		margin: 0;
