@@ -45,6 +45,8 @@
     "currentURL",
     "currentPath",
     "currentRouteName",
+    "moment",
+    "Pikaday",
     "Pretender"
   ],
   "node": false,
