@@ -18,18 +18,6 @@ nav {
 	margin-bottom: 1em;
 }
 
-.new-task {
-	background-color: #e3e3e3;
-	border-radius: 3px;
-	margin: 0 0.25em 0.5em 0.25em;
-	padding: 0.5em;
-	width: 25%;
-
-	textarea, input[type=text] {
-		background-color: white;
-	}
-}
-
 .task-list {
 	background-color: #e3e3e3;
 	border-radius: 3px;
@@ -139,4 +127,44 @@ textarea, input[type=text] {
 i.fa {
 	color: black;
 	font-size: 2em;
+}
+
+.overlay {
+	background-color: rgba(0, 0, 0, 0.5);
+	height: 100%;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+}
+
+.modal {
+	background-color: #e3e3e3;
+	border-radius: 3px;
+	position: absolute;
+	height: 10em;
+	left: calc(50vw - 10em);
+	margin: 0 0.25em 0.5em 0.25em;
+	top: calc(50vh - 5em);
+	padding: 0 1em;
+	width: 20em;
+
+	.modal-header {
+		button.close {
+			float: right;
+		}
+
+		.modal-title {
+			font-weight: bold;
+			padding: 0.25em 0;
+		}
+	}
+}
+
+.new-task {
+	width: 100%;
+
+	textarea, input[type=text] {
+		background-color: white;
+	}
 }
