@@ -14,7 +14,7 @@ div.page-wrapper {
 }
 
 nav.top-nav {
-	height: 2em;
+	height: 2.5em;
 }
 
 .task-list {
@@ -86,7 +86,7 @@ nav.top-nav {
 }
 
 .days, .recurring-task-days {
-	height: calc(100vh - 3em);
+	height: calc(100vh - 3.5em);
 	overflow-x: scroll;
 	white-space: nowrap;
 	width: 100%;
