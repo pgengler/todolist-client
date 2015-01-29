@@ -1,9 +1,8 @@
-{{#modal-dialog title="Add new task" close="closeModal"}}
-	<form class='new-task' {{action "createTask"}}>
+{{#modal-dialog title="Add new task" close="cancel"}}
+	{{#cancellable-form submitButtonLabel="Add" submitButtonClass="spec-create-task" classNameBindings=":new-task" action="createTask" cancel="cancel"}}
 		{{autofocus-elastic-textarea value=newTaskDescription placeholder="New task" class="spec-new-task-description"}}
 		<br><br>
 		{{date-picker-text-field value=newTaskDate placeholder="Date" class="spec-new-task-date"}}
 		<br><br>
-		{{input type="submit" value="Add" class="spec-create-task"}}
-	</form>
+	{{/cancellable-form}}
 {{/modal-dialog}}

@@ -23,9 +23,15 @@ export default Ember.ObjectController.extend({
 					controller.set('newTaskDescription', '');
 					controller.set('newTaskDate', '');
 
-					controller.transitionToRoute('days');
+					controller.send('closeModal');
 				});
 			});
+		},
+
+		cancel: function() {
+			this.set('newTaskDescription', '');
+			this.set('newTaskDate', null);
+			this.send('closeModal');
 		}
 	}
 });
