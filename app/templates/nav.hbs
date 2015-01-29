@@ -1,6 +1,4 @@
-<nav>
-	{{#link-to 'days' (query-params date=null) title='Home'}}{{fa-icon 'home'}}{{/link-to}}
-	{{#link-to 'recurring' title='Recurring tasks'}}{{fa-icon 'list'}}{{/link-to}}
-	<span {{action 'openModal' 'tasks.new'}}>{{fa-icon 'plus'}}</span>
-	{{yield}}
-</nav>
+{{#link-to 'days' (query-params date=null) title='Home'}}{{fa-icon 'home'}}{{/link-to}}
+{{#link-to 'recurring' title='Recurring tasks'}}{{fa-icon 'list'}}{{/link-to}}
+<span {{action 'openModal' 'tasks.new'}}>{{fa-icon 'plus'}}</span>
+{{yield}}

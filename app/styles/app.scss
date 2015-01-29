@@ -9,13 +9,12 @@ body {
 }
 
 div.page-wrapper {
-	height: 99vh;
-	overflow-x: scroll;
+	height: 100%;
 	width: 100%;
 }
 
-nav {
-	margin-bottom: 1em;
+nav.top-nav {
+	height: 2em;
 }
 
 .task-list {
@@ -87,7 +86,10 @@ nav {
 }
 
 .days, .recurring-task-days {
+	height: calc(100vh - 3em);
+	overflow-x: scroll;
 	white-space: nowrap;
+	width: 100%;
 }
 
 .days {
