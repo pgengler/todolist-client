@@ -146,18 +146,24 @@ i.fa {
 	left: calc(50vw - 10em);
 	margin: 0 0.25em 0.5em 0.25em;
 	top: calc(50vh - 5em);
-	padding: 0 1em;
 	width: 20em;
 
 	.modal-header {
 		button.close {
+			background-color: transparent;
+			border: 0;
 			float: right;
+			font-size: 1.25em;
 		}
 
 		.modal-title {
 			font-weight: bold;
-			padding: 0.25em 0;
+			padding: 0.25em 0 0.25em .5em;
 		}
+	}
+
+	.modal-body {
+		padding: 0 1em;
 	}
 }
 
