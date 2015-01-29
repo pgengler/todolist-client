@@ -1,6 +1,6 @@
-{{#view "nav"}}
+{{#top-nav}}
 {{date-picker-icon action="changeDate"}}
-{{/view}}
+{{/top-nav}}
 <div class="days">
 	{{#each day in controller}}
 		{{#draggable-dropzone dropped="moveTaskToDay" classNameBindings=":task-list :spec-day day.isPast:past day.isCurrent:current day.isFuture:future day.hasUnfinishedTasks"}}
