@@ -4,7 +4,7 @@ export default Ember.Component.extend({
 	className: 'modal-dialog',
 	actions: {
 		close: function() {
-			return this.sendAction();
+			return this.sendAction('close');
 		}
 	}
 });
