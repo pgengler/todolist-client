@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import dateParams from 'ember-todo/utils/date-params';
 
-export default Ember.ArrayController.extend({
+export default Ember.Controller.extend({
 	sortProperties: [ 'date' ],
 	queryParams: [ 'date' ],
 	itemController: 'day',
@@ -10,8 +10,16 @@ export default Ember.ArrayController.extend({
 		return (a < b) ? -1 : 1;
 	},
 
+	days: function() {
+		return this.get('model.days');
+	}.property('model'),
+
+	undated: function() {
+		return this.get('model.undated');
+	}.property('model'),
+
 	initiatePolling: function() {
-		this.poll();
+		// this.poll();
 	}.on('init'),
 
 	poll: function() {
@@ -28,9 +36,9 @@ export default Ember.ArrayController.extend({
 		var controller = this;
 		var searchParams = dateParams(this.get('date'));
 		this.store.find('day', searchParams).then(function(results) {
-			controller.get('model').addObjects(results);
-		}).catch(function() {
-			Ember.Logger.assert(false, 'Failed to fetch days');
+			controller.get('model.days').addObjects(results);
+		}).catch(function(err) {
+			Ember.Logger.assert(false, 'Failed to fetch days: ' + err);
 		}).finally(function() {
 			controller.poll();
 		});

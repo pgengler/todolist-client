@@ -13,6 +13,7 @@ module('Acceptance: Days', {
       ok(false, "Request not handled: " + verb + " " + path);
     };
     mockRequest(server, 'get', '/api/v1/days', Responses.days);
+    mockRequest(server, 'get', '/api/v1/days/undated', Responses.undated);
   },
   teardown: function() {
     Ember.run(App, 'destroy');
@@ -26,7 +27,7 @@ test('visiting /days', function() {
     equal(currentPath(), 'days');
     assertContains('.spec-day h1', 'Thursday');
     assertContains('.spec-day h2', 'Nov 6, 2014');
-    equal(find('.spec-day').length, 5);
+    equal(find('.spec-day').length, 6);
   });
 });
 

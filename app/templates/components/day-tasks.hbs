@@ -1,0 +1,14 @@
+{{#draggable-dropzone dropped="moveTaskToDay"}}
+{{yield}}
+<ul>
+	{{#each task in sortedUnfinishedTasks}}
+		{{draggable-task task=task class="spec-task" editingStart="pausePolling" editingEnd="unpausePolling"}}
+	{{/each}}
+	{{#each task in sortedFinishedTasks}}
+		{{draggable-task task=task class="spec-task" editingStart="pausePolling" editingEnd="unpausePolling"}}
+	{{/each}}
+	<li>
+		{{elastic-textarea class="spec-new-task" value=newTaskDescription placeholder="Add new task" insert-newline="addTask"}}
+	</li>
+</ul>
+{{/draggable-dropzone}}

@@ -6,6 +6,6 @@ export default DS.Transform.extend({
 	},
 
 	deserialize: function(value) {
-		return moment.utc(value);
+		return value ? moment.utc(value) : null;
 	}
 });

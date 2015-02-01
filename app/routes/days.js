@@ -8,6 +8,9 @@ export default Ember.Route.extend({
 
 	model: function(params) {
 		var searchParams = dateParams(params.date);
-		return this.store.find('day', searchParams);
+		return Ember.RSVP.hash({
+			days: this.store.find('day', searchParams),
+			undated: this.store.find('day', 'undated')
+		});
 	}
 });

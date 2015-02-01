@@ -27,7 +27,7 @@ test('visiting /tasks/new', function() {
 });
 
 test('adding a new task', function() {
-  expect(3);
+  expect(2);
 
   mockRequest(server, 'get', '/api/v1/days', Responses.days);
   mockRequest(server, 'get', '/api/v1/days/2014-11-13', Responses.single_day);
@@ -40,8 +40,4 @@ test('adding a new task', function() {
   fillIn('.spec-new-task-description', 'Something');
   fillIn('.spec-new-task-date', '2014-11-13');
   click('.spec-create-task');
-
-  andThen(function() {
-    equal(currentPath(), 'days');
-  });
 });
