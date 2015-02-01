@@ -23,13 +23,13 @@ export default Ember.ObjectController.extend({
 	}.property('date'),
 
 	isCurrent: function() {
-		var now  = moment();
+		var now = moment();
 		now.subtract(now.zone(), 'minutes').utc();
 		return this.get('date').isSame(now, 'day');
 	}.property('date'),
 
 	isFuture: function() {
-		var now  = moment();
+		var now = moment();
 		now.subtract(now.zone(), 'minutes').utc();
 		return this.get('date').isAfter(now, 'day');
 	}.property('date'),
