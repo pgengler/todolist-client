@@ -3,12 +3,12 @@
 {{/top-nav}}
 <div class="days">
 	{{#each day in days}}
-		{{#day-tasks day=day store=store classNameBindings="isPast:past isCurrent:current isFuture:future"}}
+		{{#day-tasks day=day store=store}}
 			<h1>{{day-name day.date}}</h1>
 			<h2>{{format-date day.date}}</h2>
 		{{/day-tasks}}
 	{{/each}}
-	{{#day-tasks day=undated store=store}}
+	{{#task-list day=undated store=store}}
 		<h1>Other</h1>
-	{{/day-tasks}}
+	{{/task-list}}
 </div>
