@@ -42,6 +42,13 @@ export default Ember.Component.extend({
 				task.set('day', day);
 				task.save();
 			});
+		},
+
+		editingStart: function() {
+			this.sendAction('editingStart');
+		},
+		editingEnd: function() {
+			this.sendAction('editingEnd');
 		}
 	}
 });

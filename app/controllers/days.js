@@ -53,7 +53,7 @@ export default Ember.Controller.extend({
 		pausePolling: function() {
 			this.set('isPolling', true);
 		},
-		unpausePolling: function() {
+		resumePolling: function() {
 			this.set('isPolling', false);
 		}
 	}

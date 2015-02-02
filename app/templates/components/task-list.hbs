@@ -2,10 +2,10 @@
 {{yield}}
 <ul>
 	{{#each task in sortedUnfinishedTasks}}
-	{{draggable-task task=task class="spec-task" editingStart="pausePolling" editingEnd="unpausePolling"}}
+		{{draggable-task task=task class="spec-task" editingStart="editingStart" editingEnd="editingEnd"}}
 	{{/each}}
 	{{#each task in sortedFinishedTasks}}
-	{{draggable-task task=task class="spec-task" editingStart="pausePolling" editingEnd="unpausePolling"}}
+		{{draggable-task task=task class="spec-task" editingStart="editingStart" editingEnd="editingEnd"}}
 	{{/each}}
 	<li>
 		{{elastic-textarea class="spec-new-task" value=newTaskDescription placeholder="Add new task" insert-newline="addTask"}}
