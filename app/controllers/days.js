@@ -19,7 +19,7 @@ export default Ember.Controller.extend({
 	}.property('model'),
 
 	initiatePolling: function() {
-		// this.poll();
+		this.poll();
 	}.on('init'),
 
 	poll: function() {
