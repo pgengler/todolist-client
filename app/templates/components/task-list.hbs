@@ -1,4 +1,4 @@
-{{#draggable-dropzone dropped="moveTaskToDay"}}
+{{#draggable-dropzone dropped="moveTaskToDay" dragIn="addDropTargetHighlight" dragOut="removeDropTargetHighlight"}}
 {{yield}}
 <ul>
 	{{#each task in sortedUnfinishedTasks}}

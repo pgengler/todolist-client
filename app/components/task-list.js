@@ -8,9 +8,10 @@ function plaintext(str)
 
 export default Ember.Component.extend({
 	classNames: [ 'task-list', 'spec-day' ],
-	classNameBindings: [ 'hasUnfinishedTasks' ],
+	classNameBindings: [ 'hasUnfinishedTasks', 'dragClass' ],
 	day: null,
 	newTaskDescription: '',
+	dragClass: '',
 
 	finishedTasks: filterBy('day.tasks', 'done', true),
 	sortedFinishedTasks: sortBy('finishedTasks', 'description', plaintext),
@@ -37,6 +38,7 @@ export default Ember.Component.extend({
 		},
 
 		moveTaskToDay: function(id) {
+			this.set('dragClass', '');
 			var day = this.get('day');
 			this.store.find('task', id).then(function(task) {
 				task.set('day', day);
@@ -49,6 +51,13 @@ export default Ember.Component.extend({
 		},
 		editingEnd: function() {
 			this.sendAction('editingEnd');
+		},
+
+		addDropTargetHighlight: function() {
+			this.set('dragClass', 'active-drop-target');
+		},
+		removeDropTargetHighlight: function() {
+			this.set('dragClass', '');
 		}
 	}
 });
