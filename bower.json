@@ -11,7 +11,7 @@
     "ember-cli-test-loader": "ember-cli/ember-cli-test-loader#0.1.0",
     "ember-load-initializers": "ember-cli/ember-load-initializers#0.0.2",
     "ember-qunit": "0.1.8",
-    "ember-qunit-notifications": "0.0.4",
+    "ember-qunit-notifications": "0.0.5",
     "qunit": "~1.17.1",
     "moment": "~2.8.3",
     "pikaday": "~1.2.0",
