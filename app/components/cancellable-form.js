@@ -5,7 +5,7 @@ export default Ember.Component.extend({
 	submitButtonLabel: 'Submit',
 	submitButtonClass: '',
 
-	submit: function(event) {
+	submit: function() {
 		this.sendAction();
 		return false;
 	},
