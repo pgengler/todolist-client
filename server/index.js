@@ -1,5 +1,5 @@
-// To use it create some files under `routes/`
-// e.g. `server/routes/ember-hamsters.js`
+// To use it create some files under `mocks/`
+// e.g. `server/mocks/ember-hamsters.js`
 //
 // module.exports = function(app) {
 //   app.get('/ember-hamsters', function(req, res) {
@@ -7,15 +7,14 @@
 //   });
 // };
 
-var express    = require('express');
-var globSync   = require('glob').sync;
-var routes     = globSync('./routes/*.js', { cwd: __dirname }).map(require);
+module.exports = function(app) {
+  var globSync   = require('glob').sync;
+  var proxies    = globSync('./proxies/**/*.js', { cwd: __dirname }).map(require);
 
-module.exports = function(emberCLIMiddleware) {
-  var app = express();
+  // Log proxy requests
+  var morgan  = require('morgan');
+  app.use(morgan('dev'));
 
-  routes.forEach(function(route) { route(app); });
-  app.use(emberCLIMiddleware);
+  proxies.forEach(function(route) { route(app); });
 
-  return app;
 };
