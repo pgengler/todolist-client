@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
-export default Ember.ArrayController.extend({
+export default Ember.Controller.extend({
 	sortProperties: [ 'description' ],
-	itemController: 'task'
+	tasks: Ember.computed.alias('model'),
+	sortedTasks: Ember.computed.sort('tasks', 'sortProperties')
 });

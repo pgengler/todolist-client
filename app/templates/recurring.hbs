@@ -1,22 +1,6 @@
 {{top-nav}}
 <div class="recurring-task-days">
-	{{#each day in controller}}
-	<div class="task-list">
-		<h1>{{day.day}}</h1>
-		<ul>
-			{{#each task in day.sortedTasks itemController="recurringTask"}}
-			<li>
-				{{#if task.isEditing}}
-					{{autofocus-elastic-textarea class="edit" value=task.editDescription insert-newline="updateTask" focus-out="cancelEdit" escape-press="cancelEdit"}}
-				{{else}}
-					<div {{action "editTask" on="doubleClick"}}>{{task.description}}</div>
-				{{/if}}
-			</li>
-			{{/each}}
-			<li>
-				{{elastic-textarea value=day.newTaskDescription placeholder="Add new recurring task" insert-newline="addTask"}}
-			</li>
-		</ul>
-	</div>
+	{{#each day in days}}
+		{{recurring-task-day day=day store=store}}
 	{{/each}}
 </div>

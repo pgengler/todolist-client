@@ -1,6 +1,9 @@
 import Ember from 'ember';
 
-export default Ember.ObjectController.extend({
+export default Ember.Component.extend({
+	classNames: [ 'task-list' ],
+	day: null,
+	tasks: Ember.computed.alias('day.tasks'),
 	taskSortProperties: [ 'description' ],
 	sortedTasks: Ember.computed.sort('tasks', 'taskSortProperties'),
 
@@ -10,13 +13,14 @@ export default Ember.ObjectController.extend({
 		addTask: function() {
 			var description = this.get('newTaskDescription').trim();
 			if (!Ember.isEmpty(description)) {
-				var self = this;
-				this.store.createRecord('recurringTask', {
+				var day = this.get('day');
+				var component = this;
+				this.get('store').createRecord('recurringTask', {
 					description: description,
-					day: this.get('model')
+					day: day
 				}).save().then(function(task) {
-					self.get('tasks').addObject(task);
-					self.set('newTaskDescription', '');
+					day.get('tasks').addObject(task);
+					component.set('newTaskDescription', '');
 				});
 			}
 		}

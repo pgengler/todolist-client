@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-export default Ember.ArrayController.extend({
+export default Ember.Controller.extend({
 	sortProperties: [ 'id' ],
-	itemController: 'recurring-task-day'
+	days: Ember.computed.sort('model', 'sortProperties')
 });

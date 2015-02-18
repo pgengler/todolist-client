@@ -1,11 +1,13 @@
 import Ember from 'ember';
 
-export default Ember.ObjectController.extend({
+export default Ember.Component.extend({
+	tagName: 'li',
+	editDesciption: Ember.computed.oneWay('task.description'),
 	isEditing: false,
 
 	actions: {
 		editTask: function() {
-			this.set('editDescription', this.get('description'));
+			this.set('editDescription', this.get('task.description'));
 			this.set('isEditing', true);
 		},
 
@@ -15,15 +17,15 @@ export default Ember.ObjectController.extend({
 		},
 
 		updateTask: function() {
+			var task = this.get('task');
 			var description = this.get('editDescription');
 			if (!Ember.isEmpty(description)) {
-				this.set('description', description);
-				this.get('model').save();
+				task.set('description', description);
+				task.save();
 				this.set('isEditing', false);
 			} else {
-				var model = this.get('model');
-				model.deleteRecord();
-				model.save();
+				task.deleteRecord();
+				task.save();
 			}
 		}
 	}

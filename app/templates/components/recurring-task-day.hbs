@@ -1,0 +1,9 @@
+<h1>{{day.day}}</h1>
+<ul>
+	{{#each task in sortedTasks}}
+		{{single-task task=task}}
+	{{/each}}
+	<li>
+		{{elastic-textarea value=newTaskDescription placeholder="Add new recurring task" insert-newline="addTask"}}
+	</li>
+</ul>
