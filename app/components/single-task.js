@@ -9,11 +9,13 @@ export default Ember.Component.extend({
 		editTask: function() {
 			this.set('editDescription', this.get('task.description'));
 			this.set('isEditing', true);
+			this.sendAction('editingStart');
 		},
 
 		cancelEdit: function() {
 			this.set('editDescription', '');
 			this.set('isEditing', false);
+			this.sendAction('editingStart');
 		},
 
 		updateTask: function() {
@@ -27,6 +29,7 @@ export default Ember.Component.extend({
 				task.deleteRecord();
 				task.save();
 			}
+			this.sendAction('editingEnd');
 		}
 	}
 });
