@@ -1,4 +1,3 @@
-import Ember from 'ember';
 import SingleTask from './single-task';
 
 export default SingleTask.extend({
