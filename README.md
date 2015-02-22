@@ -1,4 +1,4 @@
-# Ember-todo
+# Todolist frontend
 
 This README outlines the details of collaborating on this Ember application.
 A short introduction of this app could easily go here.
@@ -12,11 +12,11 @@ You will need the following things properly installed on your computer.
 * [Bower](http://bower.io/)
 * [Ember CLI](http://www.ember-cli.com/)
 * [PhantomJS](http://phantomjs.org/)
-* The Rails-based API from [pgengler/ember-todo-api](https://github.com/pgengler/ember-todo-api)
+* The Rails-based API from [pgengler/todolist-server](https://github.com/pgengler/todolist-server)
 
 ## Installation
 
-* `git clone http://github.com/pgengler/ember-todo` this repository
+* `git clone http://github.com/pgengler/todolist-client` this repository
 * change into the new directory
 * `npm install`
 * `bower install`
@@ -24,7 +24,7 @@ You will need the following things properly installed on your computer.
 ## Running / Development
 
 * Start the Rails API server
-* `ember server --proxy http://localhost:3000`
+* `ember server`
 * Visit your app at [http://localhost:4200](http://localhost:4200).
 
 ### Code Generators
