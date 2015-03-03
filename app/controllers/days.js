@@ -19,6 +19,9 @@ export default Ember.Controller.extend({
 	}.property('model'),
 
 	initiatePolling: function() {
+		if (!Ember.testing) {
+			this.set('isPolling', true);
+		}
 		this.poll();
 	}.on('init'),
 
@@ -29,7 +32,7 @@ export default Ember.Controller.extend({
 	},
 
 	fetchNewData: function() {
-		if (this.get('isPolling')) {
+		if (!this.get('isPolling')) {
 			this.poll();
 			return;
 		}
@@ -51,10 +54,10 @@ export default Ember.Controller.extend({
 		},
 
 		pausePolling: function() {
-			this.set('isPolling', true);
+			this.set('isPolling', false);
 		},
 		resumePolling: function() {
-			this.set('isPolling', false);
+			this.set('isPolling', true);
 		}
 	}
 });

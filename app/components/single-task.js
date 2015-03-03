@@ -15,7 +15,7 @@ export default Ember.Component.extend({
 		cancelEdit: function() {
 			this.set('editDescription', '');
 			this.set('isEditing', false);
-			this.sendAction('editingStart');
+			this.sendAction('editingEnd');
 		},
 
 		updateTask: function() {
