@@ -2,7 +2,7 @@ import SingleTask from './single-task';
 
 export default SingleTask.extend({
 	classNames: [ 'draggable-task' ],
-	classNameBindings: [ , 'task.isDone:done', 'task.isEditing:editing' ],
+	classNameBindings: [ 'task.isDone:done', 'task.isEditing:editing' ],
 	attributeBindings: [ 'draggable' ],
 
 	draggable: 'true',
