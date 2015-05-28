@@ -1,39 +1,40 @@
 import Ember from 'ember';
-import startApp from '../helpers/start-app';
+import { module, test } from 'qunit';
+import startApp from 'ember-todo/tests/helpers/start-app';
 import Responses from '../responses';
 import { mockRequest } from '../helpers';
 
-var App, server;
+var application, server;
 
 module('Acceptance: Tasks', {
-  setup: function() {
-    App = startApp();
+  beforeEach: function(assert) {
+    application = startApp();
     server = new Pretender(function() { });
-     server.unhandledRequest = function(verb, path, request) {
-      ok(false, "Request not handled: " + verb + " " + path);
+    server.unhandledRequest = function(verb, path, request) {
+      assert.ok(false, "Request not handled: " + verb + " " + path);
     };
   },
   teardown: function() {
-    Ember.run(App, 'destroy');
+    Ember.run(application, 'destroy');
   }
 });
 
-test('visiting /tasks/new', function() {
+test('visiting /tasks/new', function(assert) {
   visit('/tasks/new');
 
   andThen(function() {
-    equal(currentPath(), 'tasks.new');
+    assert.equal(currentPath(), 'tasks.new');
   });
 });
 
-test('adding a new task', function() {
-  expect(2);
+test('adding a new task', function(assert) {
+  assert.expect(2);
 
   mockRequest(server, 'get', '/api/v1/days', Responses.days);
   mockRequest(server, 'get', '/api/v1/days/2014-11-13', Responses.single_day);
   mockRequest(server, 'post', '/api/v1/tasks', { }, 200, function(request) {
-    equal(request.task.day_id, 65);
-    equal(request.task.description, 'Something');
+    assert.equal(request.task.day_id, 65);
+    assert.equal(request.task.description, 'Something');
   });
 
   visit('/tasks/new');

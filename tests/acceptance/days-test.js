@@ -1,56 +1,57 @@
 import Ember from 'ember';
-import startApp from '../helpers/start-app';
+import { module, test } from 'qunit';
+import startApp from 'ember-todo/tests/helpers/start-app';
 import Responses from '../responses';
-import { assertContains, mockRequest } from '../helpers';
+import { mockRequest } from '../helpers';
 
-var App, server;
+var application, server;
 
 module('Acceptance: Days', {
-  setup: function() {
-    App = startApp();
+  beforeEach: function(assert) {
+    application = startApp();
     server = new Pretender(function() { });
     server.unhandledRequest = function(verb, path, request) {
-      ok(false, "Request not handled: " + verb + " " + path);
+      assert.ok(false, "Request not handled: " + verb + " " + path);
     };
     mockRequest(server, 'get', '/api/v1/days', Responses.days);
     mockRequest(server, 'get', '/api/v1/days/undated', Responses.undated);
   },
-  teardown: function() {
-    Ember.run(App, 'destroy');
+  afterEach: function() {
+    Ember.run(application, 'destroy');
   }
 });
 
-test('visiting /days', function() {
+test('visiting /days', function(assert) {
   visit('/days');
 
   andThen(function() {
-    equal(currentPath(), 'days');
-    assertContains('.spec-day h1', 'Thursday');
-    assertContains('.spec-day h2', 'Nov 6, 2014');
-    equal(find('.spec-day').length, 6);
+    assert.equal(currentPath(), 'days');
+    assert.contains('.spec-day h1', 'Thursday');
+    assert.contains('.spec-day h2', 'Nov 6, 2014');
+    assert.equal(find('.spec-day').length, 6);
   });
 });
 
-test('visiting / redirects to /days', function() {
+test('visiting / redirects to /days', function(assert) {
   visit('/');
 
   andThen(function() {
-    equal(currentPath(), 'days');
+    assert.equal(currentPath(), 'days');
   });
 });
 
-test('adding a new task', function() {
-  expect(3);
+test('adding a new task', function(assert) {
+  assert.expect(3);
 
   mockRequest(server, 'post', '/api/v1/tasks', { task: { id: 999, description: 'A new task', done: false } }, 200, function(request) {
-    equal(request.task.day_id, 46);
-    equal(request.task.description, 'A new task');
+    assert.equal(request.task.day_id, 46);
+    assert.equal(request.task.description, 'A new task');
   });
   visit('/days');
   fillIn('.spec-new-task:first', 'A new task');
   keyEvent('.spec-new-task:first', 'keyup', 13);
 
   andThen(function() {
-    assertContains('.spec-task', 'A new task');
+    assert.contains('.spec-task', 'A new task');
   });
 });

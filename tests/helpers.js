@@ -1,37 +1,38 @@
 import Ember from 'ember';
+import QUnit from 'qunit';
 
-export function assertContains(selector, value, message) {
+QUnit.assert.contains = function(selector, value, message) {
   var mess = message || "";
   var el = find(selector + ':contains(' + value + ')');
   if (el.length) {
-    ok(true, selector + ' should contain ' + value + ' ' + mess);
+    this.ok(true, selector + ' should contain ' + value + ' ' + mess);
   } else {
-    ok(false, 'Expected ' + selector + ' to contain ' + value + ' but contains ' + findWithAssert(selector).text().trim() + ' ' + mess);
+    this.ok(false, 'Expected ' + selector + ' to contain ' + value + ' but contains ' + findWithAssert(selector).text().trim() + ' ' + mess);
   }
-}
+};
 
-export function assertDoesNotContain(selector, value, message) {
+QUnit.assert.doesNotContain = function(selector, value, message) {
   var el = find(selector + ':contains(' + value + ')');
   if (el.length) {
-    ok(false, selector + ' should NOT contain ' + value + ' but does contain ' + findWithAssert(selector).text().trim() + ' ' + message);
+    this.ok(false, selector + ' should NOT contain ' + value + ' but does contain ' + findWithAssert(selector).text().trim() + ' ' + message);
   } else {
-    ok(true, selector + ' should not contain ' + value + ' ' + message);
+    this.ok(true, selector + ' should not contain ' + value + ' ' + message);
   }
-}
+};
 
-export function exists(selector) {
+function exists(selector) {
   return !!find(selector).length;
 }
 
-export function assertExists(selector, message) {
+QUnit.assert.exists = function(selector, message) {
   message = message || "";
-  ok(exists(selector), message + ('| ' + selector + ' should exist'));
-}
+  this.ok(exists(selector), message + ('| ' + selector + ' should exist'));
+};
 
-export function assertDoesNotExist(selector, message) {
+QUnit.assert.doesNotExist = function(selector, message) {
   message = message || (selector + ' should not exist');
-  ok(!exists(selector), message);
-}
+  this.ok(!exists(selector), message);
+};
 
 export function mockRequest(server, verb, url, responseBody, status, testRequest) {
   status = status || 200;
