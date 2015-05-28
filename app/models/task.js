@@ -1,19 +1,19 @@
 import DS from 'ember-data';
+import Ember from 'ember';
 
 export default DS.Model.extend({
 	done: DS.attr('boolean'),
 	description: DS.attr('string'),
 	day: DS.belongsTo('day'),
 
-	isDone: function(key, value) {
-		if (typeof(value) === 'undefined') {
-			// property being used as a getter
+	isDone: Ember.computed('done', {
+		get() {
 			return this.get('done');
-		} else {
-			// property being used as a setter
+		},
+		set(key, value) {
 			this.set('done', value);
 			this.save();
 			return value;
 		}
-	}.property('done')
+	})
 });
