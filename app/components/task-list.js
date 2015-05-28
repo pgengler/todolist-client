@@ -28,7 +28,7 @@ export default Ember.Component.extend({
 			}
 			var self = this;
 			var day = this.get('day');
-			this.store.createRecord('task', {
+			this.get('store').createRecord('task', {
 				description: taskDescription,
 				day: day
 			}).save().then(function(task) {
