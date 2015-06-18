@@ -1,6 +1,6 @@
 {{top-nav}}
 <div class="recurring-task-days">
-	{{#each day in days}}
+	{{#each days as |day|}}
 		{{recurring-task-day day=day store=store}}
 	{{/each}}
 </div>

@@ -1,6 +1,6 @@
 <h1>{{day.day}}</h1>
 <ul>
-	{{#each task in sortedTasks}}
+	{{#each sortedTasks as |task|}}
 		{{single-task task=task}}
 	{{/each}}
 	<li>

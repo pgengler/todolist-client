@@ -1,10 +1,10 @@
 {{#draggable-dropzone dropped="moveTaskToDay" dragIn="addDropTargetHighlight" dragOut="removeDropTargetHighlight"}}
 {{yield}}
 <ul>
-	{{#each task in sortedUnfinishedTasks}}
+	{{#each sortedUnfinishedTasks as |task|}}
 		{{draggable-task task=task class="spec-task" editingStart="editingStart" editingEnd="editingEnd"}}
 	{{/each}}
-	{{#each task in sortedFinishedTasks}}
+	{{#each sortedFinishedTasks as |task|}}
 		{{draggable-task task=task class="spec-task" editingStart="editingStart" editingEnd="editingEnd"}}
 	{{/each}}
 	<li>
