@@ -13,6 +13,8 @@ export default Ember.Component.extend({
 	newTaskDescription: '',
 	dragClass: '',
 
+	store: Ember.inject.service(),
+
 	finishedTasks: filterBy('day.tasks', 'done', true),
 	sortedFinishedTasks: sortBy('finishedTasks', 'description', plaintext),
 	unfinishedTasks: filterBy('day.tasks', 'done', false),
