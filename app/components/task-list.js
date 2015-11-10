@@ -42,7 +42,7 @@ export default Ember.Component.extend({
 		moveTaskToDay: function(id) {
 			this.set('dragClass', '');
 			var day = this.get('day');
-			this.store.find('task', id).then(function(task) {
+			this.store.findRecord('task', id).then(function(task) {
 				task.set('day', day);
 				task.save();
 			});

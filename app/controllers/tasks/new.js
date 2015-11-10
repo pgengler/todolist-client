@@ -14,7 +14,7 @@ export default Ember.Controller.extend({
 			}
 
 			var controller = this;
-			controller.store.find('day', date).then(function(day) {
+			controller.store.findRecord('day', date).then(function(day) {
 				var task = controller.store.createRecord('task', {
 					description: description,
 					day: day

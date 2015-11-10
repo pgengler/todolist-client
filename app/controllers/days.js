@@ -38,7 +38,7 @@ export default Ember.Controller.extend({
 		}
 		var controller = this;
 		var searchParams = dateParams(this.get('date'));
-		this.store.find('day', searchParams).then(function(results) {
+		this.store.query('day', searchParams).then(function(results) {
 			controller.get('model.days').addObjects(results);
 		}).catch(function(err) {
 			Ember.Logger.assert(false, 'Failed to fetch days: ' + err);
