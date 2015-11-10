@@ -10,7 +10,7 @@ module('Acceptance: Tasks', {
   beforeEach: function(assert) {
     application = startApp();
     server = new Pretender(function() { });
-    server.unhandledRequest = function(verb, path, request) {
+    server.unhandledRequest = function(verb, path) {
       assert.ok(false, "Request not handled: " + verb + " " + path);
     };
   },

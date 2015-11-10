@@ -10,7 +10,7 @@ module('Acceptance: Days', {
   beforeEach: function(assert) {
     application = startApp();
     server = new Pretender(function() { });
-    server.unhandledRequest = function(verb, path, request) {
+    server.unhandledRequest = function(verb, path) {
       assert.ok(false, "Request not handled: " + verb + " " + path);
     };
     mockRequest(server, 'get', '/api/v1/days', Responses.days);

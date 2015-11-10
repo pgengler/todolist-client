@@ -1,4 +1,3 @@
-import Ember from 'ember';
 import QUnit from 'qunit';
 
 QUnit.assert.contains = function(selector, value, message) {
