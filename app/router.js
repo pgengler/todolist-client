@@ -6,9 +6,9 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.resource('days');
-  this.resource('recurring');
-  this.resource('tasks', function() {
+  this.route('days');
+  this.route('recurring');
+  this.route('tasks', function() {
     this.route('new');
   });
 });
