@@ -1,20 +1,12 @@
 import Ember from 'ember';
 import { module, test } from 'qunit';
 import startApp from 'ember-todo/tests/helpers/start-app';
-import Responses from '../responses';
-import { mockRequest } from '../helpers';
 
-var application, server;
+var application;
 
 module('Acceptance: Days', {
-  beforeEach: function(assert) {
+  beforeEach: function() {
     application = startApp();
-    server = new Pretender(function() { });
-    server.unhandledRequest = function(verb, path) {
-      assert.ok(false, "Request not handled: " + verb + " " + path);
-    };
-    mockRequest(server, 'get', '/api/v1/days', Responses.days);
-    mockRequest(server, 'get', '/api/v1/days/undated', Responses.undated);
   },
   afterEach: function() {
     Ember.run(application, 'destroy');
@@ -22,17 +14,21 @@ module('Acceptance: Days', {
 });
 
 test('visiting /days', function(assert) {
+  server.create('day', { date: '2014-11-06' });
+  server.createList('day', 4);
   visit('/days');
 
   andThen(function() {
     assert.equal(currentPath(), 'days');
-    assert.contains('.spec-day h1', 'Thursday');
-    assert.contains('.spec-day h2', 'Nov 6, 2014');
+    assert.contains('.spec-day:first h1', 'Thursday');
+    assert.contains('.spec-day:first h2', 'Nov 6, 2014');
     assert.equal(find('.spec-day').length, 6);
   });
 });
 
 test('visiting / redirects to /days', function(assert) {
+  server.createList('day', 7);
+
   visit('/');
 
   andThen(function() {
@@ -41,12 +37,18 @@ test('visiting / redirects to /days', function(assert) {
 });
 
 test('adding a new task', function(assert) {
+  let day = server.create('day');
   assert.expect(3);
 
-  mockRequest(server, 'post', '/api/v1/tasks', { task: { id: 999, description: 'A new task', done: false } }, 200, function(request) {
-    assert.equal(request.task.day_id, 46);
-    assert.equal(request.task.description, 'A new task');
+  server.post('/tasks', function(db, request) {
+    let params = JSON.parse(request.requestBody);
+    assert.equal(params.task.day_id, day.id);
+    assert.equal(params.task.description, 'A new task');
+
+    let task = db.tasks.insert(params.task);
+    return { task };
   });
+
   visit('/days');
   fillIn('.spec-new-task:first', 'A new task');
   keyEvent('.spec-new-task:first', 'keyup', 13);
