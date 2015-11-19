@@ -37,9 +37,32 @@ test('adding a new task', function(assert) {
   click('.spec-create-task');
 });
 
-test('clicking "new task" link in header opens modal', function(assert) {
+test('clicking "new task" link in header shows the "new task" form', function(assert) {
   visit('/');
   click('.top-nav .new-task');
 
-  assert.exists('.spec-new-task-description');
+  andThen(function() {
+    assert.equal(currentPath(), 'tasks.new');
+  });
+});
+
+test('redirects to /days after adding a new task', function(assert) {
+  let day = server.create('day');
+
+  server.post('/tasks', function(db, request) {
+    let params = JSON.parse(request.requestBody);
+    let task = db.tasks.insert(params);
+    return {
+      task
+    };
+  });
+
+  visit('/tasks/new');
+  fillIn('.spec-new-task-description', 'A new task');
+  fillIn('.spec-new-task-date', day.date);
+  click('.spec-create-task');
+
+  andThen(function() {
+    assert.equal(currentPath(), 'days');
+  });
 });

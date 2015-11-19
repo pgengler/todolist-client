@@ -1,5 +1,4 @@
 {{#link-to 'days' (query-params date=null) title='Home'}}{{fa-icon icon='home'}}{{/link-to}}
 {{#link-to 'recurring' title='Recurring tasks'}}{{fa-icon icon='list'}}{{/link-to}}
-
-<span class='new-task' {{action 'openModal' 'tasks.new'}}>{{fa-icon icon='plus'}}</span>
+{{#link-to 'tasks.new' class='new-task'}}{{fa-icon icon='plus'}}{{/link-to}}
 {{yield}}

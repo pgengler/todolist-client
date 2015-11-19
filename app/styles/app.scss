@@ -132,44 +132,6 @@ i.fa {
 	font-size: 2em;
 }
 
-.overlay {
-	background-color: rgba(0, 0, 0, 0.5);
-	height: 100%;
-	left: 0;
-	position: absolute;
-	top: 0;
-	width: 100%;
-}
-
-.modal {
-	background-color: #e3e3e3;
-	border-radius: 3px;
-	position: absolute;
-	height: 10em;
-	left: calc(50vw - 10em);
-	margin: 0 0.25em 0.5em 0.25em;
-	top: calc(50vh - 5em);
-	width: 20em;
-
-	.modal-header {
-		button.close {
-			background-color: transparent;
-			border: 0;
-			float: right;
-			font-size: 1.25em;
-		}
-
-		.modal-title {
-			font-weight: bold;
-			padding: 0.25em 0 0.25em .5em;
-		}
-	}
-
-	.modal-body {
-		padding: 0 1em;
-	}
-}
-
 .new-task {
 	width: 100%;
 

@@ -13,25 +13,7 @@ export default Ember.Controller.extend({
 				return false;
 			}
 
-			var controller = this;
-			controller.store.findRecord('day', date).then(function(day) {
-				var task = controller.store.createRecord('task', {
-					description: description,
-					day: day
-				});
-				task.save().then(function() {
-					controller.set('newTaskDescription', '');
-					controller.set('newTaskDate', '');
-
-					controller.send('closeModal');
-				});
-			});
-		},
-
-		cancel: function() {
-			this.set('newTaskDescription', '');
-			this.set('newTaskDate', null);
-			this.send('closeModal');
+			this.send('doCreateTask', this.get('model'), date, description);
 		}
 	}
 });
