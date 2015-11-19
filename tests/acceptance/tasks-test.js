@@ -36,3 +36,10 @@ test('adding a new task', function(assert) {
   fillIn('.spec-new-task-date', '2014-11-13');
   click('.spec-create-task');
 });
+
+test('clicking "new task" link in header opens modal', function(assert) {
+  visit('/');
+  click('.top-nav .new-task');
+
+  assert.exists('.spec-new-task-description');
+});
