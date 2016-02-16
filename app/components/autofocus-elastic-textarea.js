@@ -1,7 +1,7 @@
 import ElasticTextarea from './elastic-textarea';
 
 export default ElasticTextarea.extend({
-	didInsertElement: function() {
+	didInsertElement() {
 		this._super();
 		this.$().focus().select();
 	}

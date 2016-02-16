@@ -10,18 +10,17 @@ export default Ember.Component.extend({
 	newTaskDescription: '',
 
 	actions: {
-		addTask: function() {
-			var description = this.get('newTaskDescription').trim();
+		addTask() {
+			const description = this.get('newTaskDescription').trim();
 			if (!Ember.isEmpty(description)) {
-				var day = this.get('day');
-				var component = this;
-				this.get('store').createRecord('recurringTask', {
-					description: description,
-					day: day
-				}).save().then(function(task) {
-					day.get('tasks').addObject(task);
-					component.set('newTaskDescription', '');
-				});
+				const day = this.get('day');
+				this.get('store')
+					.createRecord('recurringTask', { description, day })
+					.save()
+					.then(task => {
+						day.get('tasks').addObject(task);
+						this.set('newTaskDescription', '');
+					});
 			}
 		}
 	}

@@ -1,25 +1,32 @@
+import Ember from 'ember';
 import TaskList from './task-list';
 
 export default TaskList.extend({
 	classNameBindings: [ 'isPast:past', 'isCurrent:current', 'isFuture:future' ],
 	layoutName: 'components/task-list',
 
-	isPast: function() {
-		var date = this.get('day.date');
-		var now  = moment();
-		now.subtract(now.zone(), 'minutes').utc();
-		return (date.isBefore(now, 'day') && !date.isSame(now, 'day'));
-	}.property('day.date'),
+	isPast: Ember.computed('day.date', {
+		get() {
+			let date = this.get('day.date');
+			let now  = moment();
+			now.subtract(now.zone(), 'minutes').utc();
+			return (date.isBefore(now, 'day') && !date.isSame(now, 'day'));
+		}
+	}).readOnly(),
 
-	isCurrent: function() {
-		var now = moment();
-		now.subtract(now.zone(), 'minutes').utc();
-		return this.get('day.date').isSame(now, 'day');
-	}.property('day.date'),
+	isCurrent: Ember.computed('day.date', {
+		get() {
+			let now = moment();
+			now.subtract(now.zone(), 'minutes').utc();
+			return this.get('day.date').isSame(now, 'day');
+		}
+	}).readOnly(),
 
-	isFuture: function() {
-		var now = moment();
-		now.subtract(now.zone(), 'minutes').utc();
-		return this.get('day.date').isAfter(now, 'day');
-	}.property('day.date')
+	isFuture: Ember.computed('day.date', {
+		get() {
+			let now = moment();
+			now.subtract(now.zone(), 'minutes').utc();
+			return this.get('day.date').isAfter(now, 'day');
+		}
+	}).readOnly()
 });

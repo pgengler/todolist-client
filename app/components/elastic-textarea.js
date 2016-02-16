@@ -1,10 +1,11 @@
 import SingleLineTextarea from './single-line-textarea';
 
 export default SingleLineTextarea.extend({
-	didInsertElement: function() {
-		var elem = this.$();
+	didInsertElement() {
+		this._super(...arguments);
+		let elem = this.$();
 
-		var updateHeight = function() {
+		const updateHeight = function() {
 			elem.height(1);
 			elem[0].style.height = elem[0].scrollHeight + 'px';
 		};

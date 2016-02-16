@@ -5,9 +5,9 @@ export default Ember.Controller.extend({
 	newTaskDate: '',
 
 	actions: {
-		createTask: function() {
-			var description = this.get('newTaskDescription').trim();
-			var date = this.get('newTaskDate').trim();
+		createTask() {
+			const description = this.get('newTaskDescription').trim();
+			const date = this.get('newTaskDate').trim();
 
 			if (Ember.isEmpty(description) || Ember.isEmpty(date)) {
 				return false;

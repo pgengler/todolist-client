@@ -8,7 +8,7 @@ export default Ember.Route.extend({
 		doCreateTask(task, date, description) {
 			task.set('description', description);
 			this.store.findRecord('day', date)
-			.then((day) => {
+			.then(day => {
 				task.set('day', day);
 				return task.save();
 			})

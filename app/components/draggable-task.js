@@ -8,7 +8,7 @@ export default SingleTask.extend({
 	draggable: 'true',
 	task: null,
 
-	dragStart: function(event) {
+	dragStart(event) {
 		event.dataTransfer.setData('text/data', this.get('task.id'));
 	}
 });

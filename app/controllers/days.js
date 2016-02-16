@@ -11,53 +11,44 @@ export default Ember.Controller.extend({
 		return (a < b) ? -1 : 1;
 	},
 
-	days: function() {
-		return this.get('model.days');
-	}.property('model'),
+	days: Ember.computed.alias('model.days'),
+	undated: Ember.computed.alias('model.undated'),
 
-	undated: function() {
-		return this.get('model.undated');
-	}.property('model'),
-
-	initiatePolling: function() {
+	initiatePolling: Ember.on('init', function() {
 		if (!Ember.testing) {
 			this.set('isPolling', true);
 		}
 		this.poll();
-	}.on('init'),
+	}),
 
-	poll: function() {
+	poll() {
 		if (!Ember.testing) {
 			Ember.run.later(this, this.fetchNewData, 5000);
 		}
 	},
 
-	fetchNewData: function() {
+	fetchNewData() {
 		if (!this.get('isPolling')) {
 			this.poll();
 			return;
 		}
-		var controller = this;
-		var searchParams = dateParams(this.get('date'));
-		this.store.query('day', searchParams).then(function(results) {
-			controller.get('model.days').addObjects(results);
-		}).catch(function(err) {
-			Ember.Logger.assert(false, 'Failed to fetch days: ' + err);
-		}).finally(function() {
-			controller.poll();
-		});
+		const searchParams = dateParams(this.get('date'));
+		this.store.query('day', searchParams)
+			.then(results => this.get('model.days').addObjects(results))
+			.catch(err => Ember.Logger.assert(false, 'Failed to fetch days: ' + err))
+			.finally(() => this.poll());
 	},
 
 	actions: {
-		changeDate: function(date) {
-			var dateString = moment(date).format('YYYY-MM-DD');
+		changeDate(date) {
+			const dateString = moment(date).format('YYYY-MM-DD');
 			this.set('date', dateString);
 		},
 
-		pausePolling: function() {
+		pausePolling() {
 			this.set('isPolling', false);
 		},
-		resumePolling: function() {
+		resumePolling() {
 			this.set('isPolling', true);
 		}
 	}

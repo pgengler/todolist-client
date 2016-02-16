@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { module, test } from 'qunit';
 import startApp from 'ember-todo/tests/helpers/start-app';
 
-var application;
+let application = null;
 
 module('Acceptance: Days', {
   beforeEach: function() {

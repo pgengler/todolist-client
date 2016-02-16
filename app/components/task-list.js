@@ -23,42 +23,41 @@ export default Ember.Component.extend({
 	hasUnfinishedTasks: Ember.computed.notEmpty('unfinishedTasks'),
 
 	actions: {
-		addTask: function() {
-			var taskDescription = this.get('newTaskDescription').trim();
-			if (!taskDescription) {
+		addTask() {
+			const description = this.get('newTaskDescription').trim();
+			if (!description) {
 				return;
 			}
-			var self = this;
-			var day = this.get('day');
-			this.get('store').createRecord('task', {
-				description: taskDescription,
-				day: day
-			}).save().then(function(task) {
-				day.get('tasks').addObject(task);
-				self.set('newTaskDescription', '');
-			});
+			let day = this.get('day');
+			this.get('store')
+				.createRecord('task', { description, day })
+				.save()
+				.then(task => {
+					day.get('tasks').addObject(task);
+					this.set('newTaskDescription', '');
+				});
 		},
 
-		moveTaskToDay: function(id) {
+		moveTaskToDay(id) {
 			this.set('dragClass', '');
-			var day = this.get('day');
-			this.store.findRecord('task', id).then(function(task) {
+			const day = this.get('day');
+			this.store.findRecord('task', id).then(task => {
 				task.set('day', day);
 				task.save();
 			});
 		},
 
-		editingStart: function() {
+		editingStart() {
 			this.sendAction('editingStart');
 		},
-		editingEnd: function() {
+		editingEnd() {
 			this.sendAction('editingEnd');
 		},
 
-		addDropTargetHighlight: function() {
+		addDropTargetHighlight() {
 			this.set('dragClass', 'active-drop-target');
 		},
-		removeDropTargetHighlight: function() {
+		removeDropTargetHighlight() {
 			this.set('dragClass', '');
 		}
 	}

@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { module, test } from 'qunit';
 import startApp from 'ember-todo/tests/helpers/start-app';
 
-var application;
+let application = null;
 
 module('Acceptance: Tasks', {
   beforeEach: function() {
@@ -52,9 +52,7 @@ test('redirects to /days after adding a new task', function(assert) {
   server.post('/tasks', function(db, request) {
     let params = JSON.parse(request.requestBody);
     let task = db.tasks.insert(params);
-    return {
-      task
-    };
+    return { task };
   });
 
   visit('/tasks/new');

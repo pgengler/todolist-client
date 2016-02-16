@@ -6,21 +6,21 @@ export default Ember.Component.extend({
 	isEditing: false,
 
 	actions: {
-		editTask: function() {
+		editTask() {
 			this.set('editDescription', this.get('task.description'));
 			this.set('isEditing', true);
 			this.sendAction('editingStart');
 		},
 
-		cancelEdit: function() {
+		cancelEdit() {
 			this.set('editDescription', '');
 			this.set('isEditing', false);
 			this.sendAction('editingEnd');
 		},
 
-		updateTask: function() {
-			var task = this.get('task');
-			var description = this.get('editDescription');
+		updateTask() {
+			let task = this.get('task');
+			const description = this.get('editDescription');
 			if (!Ember.isEmpty(description)) {
 				task.set('description', description);
 				task.save();

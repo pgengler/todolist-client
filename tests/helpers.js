@@ -6,8 +6,8 @@ function exists(selector) {
 
 export default function addHelpers() {
   QUnit.assert.contains = function(selector, value, message) {
-    var mess = message || "";
-    var el = find(selector + ':contains(' + value + ')');
+    let mess = message || "";
+    let el = find(selector + ':contains(' + value + ')');
     if (el.length) {
       this.ok(true, selector + ' should contain ' + value + ' ' + mess);
     } else {
@@ -16,7 +16,7 @@ export default function addHelpers() {
   };
 
   QUnit.assert.doesNotContain = function(selector, value, message) {
-    var el = find(selector + ':contains(' + value + ')');
+    let el = find(selector + ':contains(' + value + ')');
     if (el.length) {
       this.ok(false, selector + ' should NOT contain ' + value + ' but does contain ' + findWithAssert(selector).text().trim() + ' ' + message);
     } else {

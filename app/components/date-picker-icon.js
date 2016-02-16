@@ -4,43 +4,40 @@ export default Ember.Component.extend({
 	classNames: [ 'date-picker', 'fa', 'fa-calendar' ],
 	tagName: 'i',
 
-	didInsertElement: function() {
-		var component = this;
-		var picker = new Pikaday({
-			onSelect: function(date) {
-				component.sendAction('action', date);
-				component.get('$picker').hide();
+	didInsertElement() {
+		let picker = new Pikaday({
+			onSelect: (date) => {
+				this.sendAction('action', date);
+				this.get('$picker').hide();
 			}
 		});
 		picker.el.style.position = 'absolute';
 		this.set('picker', picker);
-		var $picker = this.$(picker.el);
+		let $picker = this.$(picker.el);
 		this.set('$picker', $picker);
 		$picker.hide();
 		this.$().closest('body').append($picker);
 
-		this.$().click(function() {
-			component.send('toggleDatepicker');
-		});
+		this.$().click(() => this.send('toggleDatepicker'));
 	},
 
 	actions: {
-		showDatepicker: function() {
-			var $picker = this.get('$picker');
+		showDatepicker() {
+			let $picker = this.get('$picker');
 			$picker.show();
 
-			var $icon = this.$();
-			var position = $icon.position();
+			let $icon = this.$();
+			let position = $icon.position();
 			position.left += ($icon.width() / 2);
 			position.top += ($icon.height() / 2);
 			$picker.css(position);
 		},
 
-		hideDatepicker: function() {
+		hideDatepicker() {
 			this.get('$picker').hide();
 		},
 
-		toggleDatepicker: function() {
+		toggleDatepicker() {
 			if (this.get('$picker').is(':visible')) {
 				this.send('hideDatepicker');
 			} else {

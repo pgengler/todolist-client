@@ -1,5 +1,5 @@
 export default function(date) {
-	var params = {
+	let params = {
 		after_days: 3,
 		before_days: 1,
 		date: moment().format('YYYY-MM-DD')
