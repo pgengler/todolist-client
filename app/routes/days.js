@@ -16,6 +16,9 @@ export default Ember.Route.extend({
 	},
 
 	pollForChanges: task(function *() {
+		if (Ember.testing) {
+			return;
+		}
 		yield timeout(5000);
 		const searchParams = dateParams(this.get('controller.date'));
 		this.store.query('day', searchParams)
