@@ -25,7 +25,8 @@
     "currentRouteName",
     "moment",
     "Pikaday",
-    "Pretender"
+    "Pretender",
+    "dragAndDrop"
   ],
   "node": false,
   "browser": false,

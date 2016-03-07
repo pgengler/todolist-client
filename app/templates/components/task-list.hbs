@@ -1,4 +1,3 @@
-{{#draggable-dropzone dropped="moveTaskToDay" dragIn="addDropTargetHighlight" dragOut="removeDropTargetHighlight"}}
 {{yield}}
 <ul>
 	{{#each sortedUnfinishedTasks as |task|}}
@@ -11,4 +10,3 @@
 		{{elastic-textarea class="spec-new-task" value=newTaskDescription placeholder="Add new task" insert-newline="addTask"}}
 	</li>
 </ul>
-{{/draggable-dropzone}}

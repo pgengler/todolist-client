@@ -1,7 +1,9 @@
 import Ember from 'ember';
 import Application from '../../app';
 import config from '../../config/environment';
-import addHelpers from '../helpers';
+
+import './drag-and-drop';
+import './qunit-assertions';
 
 export default function startApp(attrs) {
   let application;
@@ -14,8 +16,6 @@ export default function startApp(attrs) {
     application.setupForTesting();
     application.injectTestHelpers();
   });
-
-  addHelpers();
 
   return application;
 }

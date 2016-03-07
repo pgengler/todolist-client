@@ -1,11 +1,16 @@
 export default function() {
-
   this.namespace = 'api/v1';
+
   this.get('/days', function(db) {
     // return only days with a non-null `date`
-    let days = db.days;
-    days = days.filter(day => day.date);
-    return { days };
+    let days = db.days.filter(day => day.date);
+    let tasks = [ ];
+    days.forEach(day => {
+      let dailyTasks = db.tasks.filter(task => day.task_ids.contains(task.id));
+      tasks = tasks.concat(dailyTasks);
+    });
+
+    return { days, tasks };
   });
 
   this.get('/days/:date', function(db, request) {
@@ -19,7 +24,9 @@ export default function() {
     } else {
       day = db.days.insert({ date });
     }
-    return { day };
+    let tasks = db.tasks.filter(task => day.task_ids && day.task_ids.contains(task.id));
+    return { day, tasks };
   });
 
+  this.get('tasks/:id');
 }

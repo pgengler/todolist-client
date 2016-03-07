@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import DraggableDropzone from '../mixins/draggable-dropzone';
 import { filterBy, sortBy } from '../utils/computed';
 
 function plaintext(str)
@@ -6,7 +7,7 @@ function plaintext(str)
 	return str.replace(/[^A-Za-z0-9]/g, '');
 }
 
-export default Ember.Component.extend({
+export default Ember.Component.extend(DraggableDropzone, {
 	classNames: [ 'task-list', 'spec-day' ],
 	classNameBindings: [ 'hasUnfinishedTasks', 'dragClass' ],
 	day: null,
@@ -38,7 +39,7 @@ export default Ember.Component.extend({
 				});
 		},
 
-		moveTaskToDay(id) {
+		dropped(id) {
 			this.set('dragClass', '');
 			const day = this.get('day');
 			this.store.findRecord('task', id).then(task => {
@@ -54,10 +55,10 @@ export default Ember.Component.extend({
 			this.sendAction('editingEnd');
 		},
 
-		addDropTargetHighlight() {
+		dragIn() {
 			this.set('dragClass', 'active-drop-target');
 		},
-		removeDropTargetHighlight() {
+		dragOut() {
 			this.set('dragClass', '');
 		}
 	}
