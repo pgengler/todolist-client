@@ -39,12 +39,22 @@ export default Ember.Component.extend(DraggableDropzone, {
 				});
 		},
 
-		dropped(id) {
+		dropped(id, event) {
+			let updateTask = event.ctrlKey ? false : true;
 			this.set('dragClass', '');
 			const day = this.get('day');
+
 			this.store.findRecord('task', id).then(task => {
-				task.set('day', day);
-				task.save();
+				if (updateTask) {
+					task.set('day', day);
+					task.save();
+				} else {
+					let newTask = this.store.createRecord('task', {
+						description: task.get('description'),
+						day
+					});
+					newTask.save();
+				}
 			});
 		},
 

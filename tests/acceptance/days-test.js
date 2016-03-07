@@ -71,6 +71,24 @@ test('dragging a task to another day', function(assert) {
   });
 });
 
+test('dragging and dropping a task with Control held copies a task', function(assert) {
+  assert.expect(3);
+
+  let task = server.create('task');
+  server.create('day', { date: '2016-03-07', task_ids: [ task.id ]});
+  let targetDay = server.create('day', { date: '2016-03-08' });
+
+  server.post('/tasks', function(db, request) {
+    let params = JSON.parse(request.requestBody)['task'];
+    assert.ok(true, 'makes POST request to create new task');
+    assert.equal(params.description, task.description, 'creates new task with same description');
+    assert.equal(params.day_id, targetDay.id, 'creates new task on the correct day');
+  });
+
+  visit('/days');
+  dragAndDrop('.spec-task', `.spec-day:contains(Mar 8, 2016)`, { ctrlKey: true });
+});
+
 test('updating the description for a task', function(assert) {
   assert.expect(3);
   let task = server.create('task', { description: "I'm a task" });
