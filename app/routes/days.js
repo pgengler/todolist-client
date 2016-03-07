@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import dateParams from 'ember-todo/utils/date-params';
+import { task, timeout } from 'ember-concurrency';
 
 export default Ember.Route.extend({
 	queryParams: {
@@ -12,5 +13,23 @@ export default Ember.Route.extend({
 			days: this.store.query('day', searchParams),
 			undated: this.store.findRecord('day', 'undated')
 		});
+	},
+
+	pollForChanges: task(function *() {
+		yield timeout(5000);
+		const searchParams = dateParams(this.get('controller.date'));
+		this.store.query('day', searchParams)
+			.then(results => this.get('controller.model.days').addObjects(results))
+			.catch(err => Ember.Logger.assert(false, `Failed to fetch days: ${err}`));
+		this.get('pollForChanges').perform();
+	}).on('activate').cancelOn('deactivate').restartable(),
+
+	actions: {
+		pausePolling() {
+			this.get('pollForChanges').cancelAll();
+		},
+		resumePolling() {
+			this.get('pollForChanges').perform();
+		}
 	}
 });
