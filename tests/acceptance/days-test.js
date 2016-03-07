@@ -70,3 +70,38 @@ test('dragging a task to another day', function(assert) {
     assert.equal(find('.spec-day:contains(Mar 8, 2016) .spec-task').length, 1, 'task is displayed under new day');
   });
 });
+
+test('updating the description for a task', function(assert) {
+  assert.expect(3);
+  let task = server.create('task', { description: "I'm a task" });
+  server.create('day', { date: '2016-03-07', task_ids: [ task.id ]});
+
+  server.put('/tasks/:id', function(db, request) {
+    let params = JSON.parse(request.requestBody)['task'];
+
+    assert.ok(true, 'makes a PUT request');
+    assert.equal(request.params.id, task.id, 'makes a PUT request for the correct task');
+    assert.equal(params.description, 'New description', 'sends the new description in the request');
+  });
+
+  visit('/days');
+  triggerEvent('.spec-task', 'dblclick');
+  fillIn('.spec-task textarea', 'New description');
+  keyEvent('.spec-task textarea', 'keyup', 13);
+});
+
+test('setting an empty description for a task deletes it', function(assert) {
+  assert.expect(2);
+  let task = server.create('task');
+  server.create('day', { date: '2016-03-07', task_ids: [ task.id ]});
+
+  server.delete('/tasks/:id', function(db, request) {
+    assert.ok(true, 'makes a DELETE request');
+    assert.equal(request.params.id, task.id, 'makes a DELETE request for the right ID');
+  });
+
+  visit('/days');
+  triggerEvent('.spec-task', 'dblclick');
+  fillIn('.spec-task textarea', '');
+  keyEvent('.spec-task textarea', 'keyup', 13);
+});

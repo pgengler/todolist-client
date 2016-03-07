@@ -1,5 +1,5 @@
 {{#if isEditing}}
 	{{autofocus-elastic-textarea class="edit" value=editDescription insert-newline="updateTask" focus-out="cancelEdit" escape-press="cancelEdit"}}
 {{else}}
-	<div {{action "editTask" on="doubleClick"}}>{{markdown-format task.description}}</div>
+	{{markdown-format task.description}}
 {{/if}}
