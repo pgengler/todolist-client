@@ -1,17 +1,7 @@
-import Ember from 'ember';
-import { module, test } from 'qunit';
-import startApp from 'ember-todo/tests/helpers/start-app';
+import { test } from 'qunit';
+import moduleForAcceptance from 'ember-todo/tests/helpers/module-for-acceptance';
 
-let application = null;
-
-module('Acceptance: Tasks', {
-  beforeEach: function() {
-    application = startApp();
-  },
-  teardown: function() {
-    Ember.run(application, 'destroy');
-  }
-});
+moduleForAcceptance('Acceptance | Tasks');
 
 test('visiting /tasks/new', function(assert) {
   visit('/tasks/new');

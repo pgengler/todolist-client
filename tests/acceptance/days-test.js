@@ -1,17 +1,7 @@
-import Ember from 'ember';
-import { module, test } from 'qunit';
-import startApp from 'ember-todo/tests/helpers/start-app';
+import { test } from 'qunit';
+import moduleForAcceptance from 'ember-todo/tests/helpers/module-for-acceptance';
 
-let application = null;
-
-module('Acceptance: Days', {
-  beforeEach: function() {
-    application = startApp();
-  },
-  afterEach: function() {
-    Ember.run(application, 'destroy');
-  }
-});
+moduleForAcceptance('Acceptance | Days');
 
 test('visiting /days', function(assert) {
   server.create('day', { date: '2014-11-06' });
