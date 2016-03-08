@@ -23,6 +23,18 @@ export default Ember.Component.extend(DraggableDropzone, {
 
 	hasUnfinishedTasks: Ember.computed.notEmpty('unfinishedTasks'),
 
+	cloneTask(task) {
+		let newTask = this.store.createRecord('task', {
+			day: this.get('day'),
+			description: task.get('description')
+		});
+		newTask.save();
+	},
+	moveTaskToDay(task) {
+		task.set('day', this.get('day'));
+		task.save();
+	},
+
 	actions: {
 		addTask() {
 			const description = this.get('newTaskDescription').trim();
@@ -40,22 +52,11 @@ export default Ember.Component.extend(DraggableDropzone, {
 		},
 
 		dropped(id, event) {
-			let updateTask = event.ctrlKey ? false : true;
-			this.set('dragClass', '');
-			const day = this.get('day');
+			let cloningTask = event.ctrlKey ? true : false;
 
-			this.store.findRecord('task', id).then(task => {
-				if (updateTask) {
-					task.set('day', day);
-					task.save();
-				} else {
-					let newTask = this.store.createRecord('task', {
-						description: task.get('description'),
-						day
-					});
-					newTask.save();
-				}
-			});
+			this.set('dragClass', '');
+
+			this.store.findRecord('task', id).then(task => cloningTask ? this.cloneTask(task) : this.moveTaskToDay(task));
 		},
 
 		editingStart() {
