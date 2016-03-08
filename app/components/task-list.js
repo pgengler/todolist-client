@@ -51,6 +51,10 @@ export default Ember.Component.extend(DraggableDropzone, {
 				});
 		},
 
+		clearTextarea() {
+			this.set('newTaskDescription', '');
+		},
+
 		dropped(id, event) {
 			let cloningTask = event.ctrlKey ? true : false;
 

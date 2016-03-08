@@ -48,6 +48,17 @@ test('adding a new task sends right data to server', function(assert) {
   });
 });
 
+test('pressing Escape clears textarea for new tasks', function(assert) {
+  server.create('day');
+  visit('/days');
+
+  fillIn('.spec-new-task', 'New task');
+  keyEvent('.spec-new-task', 'keyup', 27);
+  andThen(function() {
+    assert.equal(find('.spec-new-task').val(), '', 'textarea is cleared after pressing Escape');
+  });
+});
+
 test('dragging a task to another day', function(assert) {
   assert.expect(3);
 
