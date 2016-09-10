@@ -6,7 +6,7 @@ export default function() {
     let days = db.days.filter(day => day.date);
     let tasks = [ ];
     days.forEach(day => {
-      let dailyTasks = db.tasks.filter(task => day.task_ids.contains(task.id));
+      let dailyTasks = db.tasks.filter(task => day.task_ids.includes(task.id));
       tasks = tasks.concat(dailyTasks);
     });
 
@@ -24,7 +24,7 @@ export default function() {
     } else {
       day = db.days.insert({ date });
     }
-    let tasks = db.tasks.filter(task => day.task_ids && day.task_ids.contains(task.id));
+    let tasks = db.tasks.filter(task => day.task_ids && day.task_ids.includes(task.id));
     return { day, tasks };
   });
 
