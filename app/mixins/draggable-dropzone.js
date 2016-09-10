@@ -1,20 +1,20 @@
 import Ember from 'ember';
 
 export default Ember.Mixin.create({
-	classNames: [ 'draggable-dropzone' ],
+  classNames: [ 'draggable-dropzone' ],
 
-	dragLeave(event) {
-		event.preventDefault();
-		this.send('dragOut');
-	},
+  dragLeave(event) {
+    event.preventDefault();
+    this.send('dragOut');
+  },
 
-	dragOver(event) {
-		event.preventDefault();
-		this.send('dragIn');
-	},
+  dragOver(event) {
+    event.preventDefault();
+    this.send('dragIn');
+  },
 
-	drop(event) {
-		const data = event.dataTransfer.getData('text/data');
-		this.send('dropped', data, event);
-	}
+  drop(event) {
+    const data = event.dataTransfer.getData('text/data');
+    this.send('dropped', data, event);
+  }
 });

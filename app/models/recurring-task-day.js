@@ -1,7 +1,7 @@
 import DS from 'ember-data';
 
 export default DS.Model.extend({
-	day: DS.attr('string'),
+  day: DS.attr('string'),
 
-	tasks: DS.hasMany('recurringTask', { async: false })
+  tasks: DS.hasMany('recurringTask', { async: false })
 });

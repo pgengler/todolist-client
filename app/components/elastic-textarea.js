@@ -1,16 +1,16 @@
 import SingleLineTextarea from './single-line-textarea';
 
 export default SingleLineTextarea.extend({
-	didInsertElement() {
-		this._super(...arguments);
-		let elem = this.$();
+  didInsertElement() {
+    this._super(...arguments);
+    let elem = this.$();
 
-		const updateHeight = function() {
-			elem.height(1);
-			elem[0].style.height = elem[0].scrollHeight + 'px';
-		};
+    const updateHeight = function() {
+      elem.height(1);
+      elem[0].style.height = elem[0].scrollHeight + 'px';
+    };
 
-		updateHeight();
-		elem.on('keyup', updateHeight);
-	}
+    updateHeight();
+    elem.on('keyup', updateHeight);
+  }
 });

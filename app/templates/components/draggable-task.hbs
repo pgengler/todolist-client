@@ -1,6 +1,6 @@
 {{#if isEditing}}
-	{{autofocus-elastic-textarea class="edit" value=editDescription insert-newline="updateTask" focus-out="cancelEdit" escape-press="cancelEdit"}}
+  {{autofocus-elastic-textarea class="edit" value=editDescription insert-newline="updateTask" focus-out="cancelEdit" escape-press="cancelEdit"}}
 {{else}}
-	{{input type="checkbox" checked=task.isDone}}
-	<div {{action "editTask" on="doubleClick"}}>{{markdown-format task.description}}</div>
+  {{input type="checkbox" checked=task.isDone}}
+  <div {{action "editTask" on="doubleClick"}}>{{markdown-format task.description}}</div>
 {{/if}}

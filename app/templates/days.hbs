@@ -2,13 +2,13 @@
 {{date-picker-icon action="changeDate"}}
 {{/top-nav}}
 <div class="days">
-	{{#each days as |day|}}
-		{{#day-tasks day=day store=store editingStart="pausePolling" editingEnd="resumePolling"}}
-			<h1>{{day-name day.date}}</h1>
-			<h2>{{format-date day.date}}</h2>
-		{{/day-tasks}}
-	{{/each}}
-	{{#task-list day=undated store=store editingStart="pausePolling" editingEnd="resumePolling"}}
-		<h1>Other</h1>
-	{{/task-list}}
+  {{#each days as |day|}}
+    {{#day-tasks day=day store=store editingStart="pausePolling" editingEnd="resumePolling"}}
+      <h1>{{day-name day.date}}</h1>
+      <h2>{{format-date day.date}}</h2>
+    {{/day-tasks}}
+  {{/each}}
+  {{#task-list day=undated store=store editingStart="pausePolling" editingEnd="resumePolling"}}
+    <h1>Other</h1>
+  {{/task-list}}
 </div>
