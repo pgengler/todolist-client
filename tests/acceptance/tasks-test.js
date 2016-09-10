@@ -16,9 +16,12 @@ test('adding a new task', function(assert) {
   assert.expect(2);
 
   server.post('/tasks', function(db, request) {
-    let params = JSON.parse(request.requestBody);
-    assert.equal(params.task.day_id, day.id);
-    assert.equal(params.task.description, 'Something');
+    let params = JSON.parse(request.requestBody)['task'];
+    assert.equal(params.day_id, day.id);
+    assert.equal(params.description, 'Something');
+
+    let task = server.create('task', params);
+    return { task };
   });
 
   visit('/tasks/new');

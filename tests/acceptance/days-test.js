@@ -94,6 +94,9 @@ test('dragging and dropping a task with Control held copies a task', function(as
     assert.ok(true, 'makes POST request to create new task');
     assert.equal(params.description, task.description, 'creates new task with same description');
     assert.equal(params.day_id, targetDay.id, 'creates new task on the correct day');
+
+    let newTask = server.create('task', params);
+    return { task: newTask };
   });
 
   visit('/days');
