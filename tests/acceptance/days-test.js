@@ -30,13 +30,13 @@ test('adding a new task sends right data to server', function(assert) {
   let day = server.create('day');
   assert.expect(3);
 
-  server.post('/tasks', function(db, request) {
+  server.post('/tasks', function(schema, request) {
     let params = JSON.parse(request.requestBody);
     assert.equal(params.task.day_id, day.id, 'request includes correct day ID');
     assert.equal(params.task.description, 'A new task', 'request includes correct description');
 
-    let task = db.tasks.insert(params.task);
-    return { task };
+    let task = schema.tasks.create(this.normalizedRequestAttrs());
+    return task;
   });
 
   visit('/days');
@@ -63,14 +63,16 @@ test('dragging a task to another day', function(assert) {
   assert.expect(3);
 
   let task = server.create('task');
-  server.create('day', { date: '2016-03-07', task_ids: [ task.id ]});
+  server.create('day', { date: '2016-03-07', taskIds: [ task.id ]});
   let targetDay = server.create('day', { date: '2016-03-08' });
 
-  server.put('/tasks/:id', function(db, request) {
+  server.put('/tasks/:id', function(schema, request) {
     let requestBody = JSON.parse(request.requestBody);
     assert.equal(requestBody.task.day_id, targetDay.id, 'makes PUT request with new day ID');
 
-    db.tasks.update(request.params.id, requestBody.task);
+    let task = schema.tasks.find(request.params.id);
+    task.update(this.normalizedRequestAttrs());
+    return task;
   });
 
   visit('/days');
@@ -86,17 +88,16 @@ test('dragging and dropping a task with Control held copies a task', function(as
   assert.expect(3);
 
   let task = server.create('task');
-  server.create('day', { date: '2016-03-07', task_ids: [ task.id ]});
+  server.create('day', { date: '2016-03-07', taskIds: [ task.id ]});
   let targetDay = server.create('day', { date: '2016-03-08' });
 
-  server.post('/tasks', function(db, request) {
+  server.post('/tasks', function(schema, request) {
     let params = JSON.parse(request.requestBody)['task'];
     assert.ok(true, 'makes POST request to create new task');
     assert.equal(params.description, task.description, 'creates new task with same description');
     assert.equal(params.day_id, targetDay.id, 'creates new task on the correct day');
 
-    let newTask = server.create('task', params);
-    return { task: newTask };
+    return schema.tasks.create(this.normalizedRequestAttrs());
   });
 
   visit('/days');
@@ -106,14 +107,18 @@ test('dragging and dropping a task with Control held copies a task', function(as
 test('updating the description for a task', function(assert) {
   assert.expect(3);
   let task = server.create('task', { description: "I'm a task" });
-  server.create('day', { date: '2016-03-07', task_ids: [ task.id ]});
+  server.create('day', { date: '2016-03-07', taskIds: [ task.id ]});
 
-  server.put('/tasks/:id', function(db, request) {
+  server.put('/tasks/:id', function(schema, request) {
     let params = JSON.parse(request.requestBody)['task'];
 
     assert.ok(true, 'makes a PUT request');
     assert.equal(request.params.id, task.id, 'makes a PUT request for the correct task');
     assert.equal(params.description, 'New description', 'sends the new description in the request');
+
+    let matchingTask = schema.tasks.find(request.params.id);
+    matchingTask.update(this.normalizedRequestAttrs());
+    return matchingTask;
   });
 
   visit('/days');
@@ -125,7 +130,7 @@ test('updating the description for a task', function(assert) {
 test('setting an empty description for a task deletes it', function(assert) {
   assert.expect(2);
   let task = server.create('task');
-  server.create('day', { date: '2016-03-07', task_ids: [ task.id ]});
+  server.create('day', { date: '2016-03-07', taskIds: [ task.id ]});
 
   server.delete('/tasks/:id', function(db, request) {
     assert.ok(true, 'makes a DELETE request');

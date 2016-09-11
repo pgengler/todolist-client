@@ -15,13 +15,12 @@ test('adding a new task', function(assert) {
   let day = server.create('day', { date: '2014-11-13' });
   assert.expect(2);
 
-  server.post('/tasks', function(db, request) {
+  server.post('/tasks', function(schema, request) {
     let params = JSON.parse(request.requestBody)['task'];
-    assert.equal(params.day_id, day.id);
+    assert.equal(params.day_id, day.id, 'makes request with the correct day ID');
     assert.equal(params.description, 'Something');
 
-    let task = server.create('task', params);
-    return { task };
+    return schema.tasks.create(this.normalizedRequestAttrs());
   });
 
   visit('/tasks/new');
@@ -42,11 +41,7 @@ test('clicking "new task" link in header shows the "new task" form', function(as
 test('redirects to /days after adding a new task', function(assert) {
   let day = server.create('day');
 
-  server.post('/tasks', function(db, request) {
-    let params = JSON.parse(request.requestBody);
-    let task = db.tasks.insert(params);
-    return { task };
-  });
+  server.post('/tasks');
 
   visit('/tasks/new');
   fillIn('.spec-new-task-description', 'A new task');
