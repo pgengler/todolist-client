@@ -19,6 +19,8 @@ export default Ember.Component.extend(DraggableDropzone, {
   sortedFinishedTasks: sortBy('finishedTasks', 'description', plaintext),
   unfinishedTasks: filterBy('day.tasks', 'done', false),
   sortedUnfinishedTasks: sortBy('unfinishedTasks', 'description', plaintext),
+  pendingTasks: filterBy('day.tasks', 'isNew', true),
+  sortedPendingTasks: sortBy('pendingTasks', 'description', plaintext),
 
   hasUnfinishedTasks: Ember.computed.notEmpty('unfinishedTasks'),
 

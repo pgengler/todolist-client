@@ -142,3 +142,27 @@ test('setting an empty description for a task deletes it', function(assert) {
   fillIn('.spec-task textarea', '');
   keyEvent('.spec-task textarea', 'keyup', 13);
 });
+
+test('newly-created-but-still-saving tasks appear in the "pending" state', function(assert) {
+  assert.expect(4);
+
+  server.create('day', { date: '2016-09-10' });
+
+  server.post('/tasks', function(schema) {
+    andThen(function() {
+      assert.equal(find('.spec-task').length, 1, 'displays the new task');
+      assert.exists('.spec-task.pending', 'new task gets the "pending" CSS class');
+    });
+
+    // return schema.tasks.create(this.normalizedRequestAttrs());
+  });
+
+  visit('/days');
+  fillIn('.spec-new-task', 'new thing');
+  keyEvent('.spec-new-task', 'keyup', 13);
+
+  andThen(function() {
+    assert.equal(find('.spec-task').length, 1, 'still only displays one item after save finishes');
+    assert.doesNotExist('.spec-task.pending', '"pending" CSS class is no longer applied');
+  });
+});

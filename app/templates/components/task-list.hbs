@@ -1,5 +1,8 @@
 {{yield}}
 <ul>
+  {{#each sortedPendingTasks as |task|}}
+    {{single-task task=task class="spec-task pending"}}
+  {{/each}}
   {{#each sortedUnfinishedTasks as |task|}}
     {{draggable-task task=task class="spec-task" editingStart="editingStart" editingEnd="editingEnd"}}
   {{/each}}
