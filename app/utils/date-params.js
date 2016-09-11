@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default function(date) {
   let params = {
     after_days: 3,

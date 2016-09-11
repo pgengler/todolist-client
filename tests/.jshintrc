@@ -23,7 +23,6 @@
     "currentURL",
     "currentPath",
     "currentRouteName",
-    "moment",
     "Pikaday",
     "Pretender",
     "dragAndDrop"

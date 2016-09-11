@@ -4,7 +4,6 @@
     "document",
     "window",
     "-Promise",
-    "moment",
     "Pikaday"
   ],
   "browser": true,
