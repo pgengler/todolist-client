@@ -10,7 +10,7 @@ export default TaskList.extend({
     get() {
       let date = this.get('day.date');
       let now  = moment();
-      now.subtract(now.utcOffset(), 'minutes').utc();
+      now.add(now.utcOffset(), 'minutes').utc();
       return (date.isBefore(now, 'day') && !date.isSame(now, 'day'));
     }
   }).readOnly(),
@@ -18,7 +18,7 @@ export default TaskList.extend({
   isCurrent: Ember.computed('day.date', {
     get() {
       let now = moment();
-      now.subtract(now.utcOffset(), 'minutes').utc();
+      now.add(now.utcOffset(), 'minutes').utc();
       return this.get('day.date').isSame(now, 'day');
     }
   }).readOnly(),
@@ -26,7 +26,7 @@ export default TaskList.extend({
   isFuture: Ember.computed('day.date', {
     get() {
       let now = moment();
-      now.subtract(now.utcOffset(), 'minutes').utc();
+      now.add(now.utcOffset(), 'minutes').utc();
       return this.get('day.date').isAfter(now, 'day');
     }
   }).readOnly()
