@@ -16,7 +16,7 @@ test('adding a new task', function(assert) {
   assert.expect(2);
 
   server.post('/tasks', function(schema, request) {
-    let params = JSON.parse(request.requestBody)['task'];
+    let params = JSON.parse(request.requestBody).task;
     assert.equal(params.day_id, day.id, 'makes request with the correct day ID');
     assert.equal(params.description, 'Something');
 

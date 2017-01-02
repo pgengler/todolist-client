@@ -14,7 +14,7 @@ export default Ember.Mixin.create({
   },
 
   drop(event) {
-    const data = event.dataTransfer.getData('text/data');
+    let data = event.dataTransfer.getData('text/data');
     this.send('dropped', data, event);
   }
 });

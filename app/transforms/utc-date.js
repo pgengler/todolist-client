@@ -2,11 +2,11 @@ import DS from 'ember-data';
 import moment from 'moment';
 
 export default DS.Transform.extend({
-  serialize: function(value) {
+  serialize(value) {
     return value ? value.toJSON() : null;
   },
 
-  deserialize: function(value) {
+  deserialize(value) {
     return value ? moment.utc(value) : null;
   }
 });

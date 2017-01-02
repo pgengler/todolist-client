@@ -5,9 +5,9 @@ export default SingleLineTextarea.extend({
     this._super(...arguments);
     let elem = this.$();
 
-    const updateHeight = function() {
+    let updateHeight = function() {
       elem.height(1);
-      elem[0].style.height = elem[0].scrollHeight + 'px';
+      elem[0].style.height = `${elem[0].scrollHeight}px`;
     };
 
     updateHeight();

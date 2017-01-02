@@ -2,8 +2,7 @@ import Ember from 'ember';
 import DraggableDropzone from '../mixins/draggable-dropzone';
 import { filterBy, sortBy } from '../utils/computed';
 
-function plaintext(str)
-{
+function plaintext(str) {
   return str.replace(/[^A-Za-z0-9]/g, '');
 }
 
@@ -37,7 +36,7 @@ export default Ember.Component.extend(DraggableDropzone, {
 
   actions: {
     addTask() {
-      const description = this.get('newTaskDescription').trim();
+      let description = this.get('newTaskDescription').trim();
       if (!description) {
         return;
       }
@@ -45,7 +44,7 @@ export default Ember.Component.extend(DraggableDropzone, {
       this.get('store')
         .createRecord('task', { description, day })
         .save()
-        .then(task => {
+        .then((task) => {
           day.get('tasks').addObject(task);
           this.set('newTaskDescription', '');
         });
@@ -60,7 +59,7 @@ export default Ember.Component.extend(DraggableDropzone, {
 
       this.set('dragClass', '');
 
-      this.store.findRecord('task', id).then(task => cloningTask ? this.cloneTask(task) : this.moveTaskToDay(task));
+      this.store.findRecord('task', id).then((task) => cloningTask ? this.cloneTask(task) : this.moveTaskToDay(task));
     },
 
     editingStart() {

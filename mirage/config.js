@@ -3,7 +3,7 @@ export default function() {
 
   this.get('/days', function(schema) {
     // return only days with a non-null `date`
-    return schema.days.all().filter(day => day.date);
+    return schema.days.all().filter((day) => day.date);
   });
 
   this.get('/days/:date', function(schema, request) {

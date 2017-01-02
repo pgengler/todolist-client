@@ -24,7 +24,7 @@ export default Ember.Component.extend({
 
     updateTask() {
       let task = this.get('task');
-      const description = this.get('editDescription');
+      let description = this.get('editDescription');
       if (!Ember.isEmpty(description)) {
         task.set('description', description);
         task.save();

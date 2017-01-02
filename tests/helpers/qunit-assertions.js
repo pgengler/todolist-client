@@ -5,30 +5,30 @@ function exists(selector) {
 }
 
 QUnit.assert.contains = function(selector, value, message) {
-  let mess = message || "";
-  let el = find(selector + ':contains(' + value + ')');
+  let mess = message || '';
+  let el = find(`${selector}:contains(${value})`);
   if (el.length) {
-    this.ok(true, selector + ' should contain ' + value + ' ' + mess);
+    this.ok(true, `${selector} should contain ${value} ${mess}`);
   } else {
-    this.ok(false, 'Expected ' + selector + ' to contain ' + value + ' but contains ' + findWithAssert(selector).text().trim() + ' ' + mess);
+    this.ok(false, `Expected ${selector} to contain ${value} but contains ${findWithAssert(selector).text().trim()} ${mess}`);
   }
 };
 
 QUnit.assert.doesNotContain = function(selector, value, message) {
-  let el = find(selector + ':contains(' + value + ')');
+  let el = find(`${selector}:contains(${value})`);
   if (el.length) {
-    this.ok(false, selector + ' should NOT contain ' + value + ' but does contain ' + findWithAssert(selector).text().trim() + ' ' + message);
+    this.ok(false, `${selector} should NOT contain ${value} but does contain ${findWithAssert(selector).text().trim()} ${message}`);
   } else {
-    this.ok(true, selector + ' should not contain ' + value + ' ' + message);
+    this.ok(true, `${selector} should not contain ${value} ${message}`);
   }
 };
 
 QUnit.assert.exists = function(selector, message) {
-  message = message || "";
-  this.ok(exists(selector), message + ('| ' + selector + ' should exist'));
+  message = message || '';
+  this.ok(exists(selector), `${message} | ${selector} should exist`);
 };
 
 QUnit.assert.doesNotExist = function(selector, message) {
-  message = message || (selector + ' should not exist');
+  message = message || (`${selector} should not exist`);
   this.ok(!exists(selector), message);
 };

@@ -10,7 +10,7 @@ export default Ember.Controller.extend({
 
   actions: {
     changeDate(date) {
-      const dateString = moment(date).format('YYYY-MM-DD');
+      let dateString = moment(date).format('YYYY-MM-DD');
       this.set('date', dateString);
     }
   }
