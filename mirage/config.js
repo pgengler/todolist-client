@@ -1,5 +1,6 @@
 export default function() {
   this.namespace = '/api/v1';
+  this.logging = true;
 
   this.get('/days', function(schema) {
     // return only days with a non-null `date`
