@@ -56,6 +56,24 @@ nav.top-nav {
         vertical-align: top;
       }
 
+      &.pending {
+        background-color: #b2dfda;
+        opacity: 0.33;
+
+        .fa-spinner {
+          font-size: 20px;
+          vertical-align: middle;
+        }
+
+        span {
+          vertical-align: middle;
+        }
+      }
+
+      p {
+        margin: 0;
+      }
+
       div {
         display: inline-block;
         width: 85%;
