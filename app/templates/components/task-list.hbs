@@ -1,13 +1,13 @@
 {{yield}}
 <ul>
-  {{#each sortedPendingTasks as |task|}}
-    {{single-task task=task class="spec-task pending"}}
-  {{/each}}
   {{#each sortedUnfinishedTasks as |task|}}
     {{draggable-task task=task class="spec-task" editingStart="editingStart" editingEnd="editingEnd"}}
   {{/each}}
   {{#each sortedFinishedTasks as |task|}}
     {{draggable-task task=task class="spec-task" editingStart="editingStart" editingEnd="editingEnd"}}
+  {{/each}}
+  {{#each sortedPendingTasks as |task|}}
+    {{single-task task=task class="spec-task pending"}}
   {{/each}}
   <li>
     {{elastic-textarea class="spec-new-task" value=newTaskDescription placeholder="Add new task" insert-newline="addTask" escape-press=(action 'clearTextarea')}}

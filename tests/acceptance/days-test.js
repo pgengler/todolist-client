@@ -149,12 +149,10 @@ test('newly-created-but-still-saving tasks appear in the "pending" state', funct
   server.create('day', { date: '2016-09-10' });
 
   server.post('/tasks', function(schema) {
-    andThen(function() {
-      assert.equal(find('.spec-task').length, 1, 'displays the new task');
-      assert.exists('.spec-task.pending', 'new task gets the "pending" CSS class');
-    });
+    assert.equal(find('.spec-task').length, 1, 'displays the new task');
+    assert.exists('.spec-task.pending', 'new task gets the "pending" CSS class');
 
-    // return schema.tasks.create(this.normalizedRequestAttrs());
+    return schema.tasks.create(this.normalizedRequestAttrs());
   });
 
   visit('/days');

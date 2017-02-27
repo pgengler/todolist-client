@@ -43,13 +43,10 @@ export default Ember.Component.extend(DraggableDropzone, {
         return;
       }
       let day = this.get('day');
-      this.get('store')
-        .createRecord('task', { description, day })
-        .save()
-        .then((task) => {
-          day.get('tasks').addObject(task);
-          this.set('newTaskDescription', '');
-        });
+      let task = this.get('store').createRecord('task', { description, day });
+      day.get('tasks').addObject(task);
+      this.set('newTaskDescription', '');
+      Ember.run.next(() => task.save());
     },
 
     clearTextarea() {
