@@ -5,7 +5,10 @@ body {
   background-color: #23A08D;
   font-family: $body-font;
   font-size: $body-font-size;
-  overflow: hidden;
+
+  &:not(.testing) {
+    overflow: hidden;
+  }
 }
 
 div.page-wrapper {
