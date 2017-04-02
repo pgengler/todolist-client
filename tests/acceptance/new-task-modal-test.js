@@ -57,7 +57,7 @@ test('cannot submit form when some information is missing', function(assert) {
 test('clicking the Cancel button closes the modal', function(assert) {
   visit('/days');
   click('.top-nav .spec-add-task');
-  click('.spec-cancel-create');
+  click('.spec-cancel-button');
 
   andThen(() => {
     assert.doesNotExist('.new-task-dialog', '"new task" modal is not displayed after clicking Cancel button');
