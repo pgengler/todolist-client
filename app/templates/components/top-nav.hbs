@@ -1,4 +1,18 @@
 {{#link-to 'days' (query-params date=null) title='Home'}}{{fa-icon icon='home'}}{{/link-to}}
 {{#link-to 'recurring' title='Recurring tasks'}}{{fa-icon icon='list'}}{{/link-to}}
-{{#link-to 'tasks.new' class='new-task'}}{{fa-icon icon='plus'}}{{/link-to}}
+{{fa-icon icon='plus' class='spec-add-task' click=(action 'toggleModal')}}
 {{yield}}
+
+{{#if isShowingNewTaskModal}}
+  {{#modal-dialog
+    close=(action 'toggleModal')
+    targetAttachment='center'
+    translucentOverlay=true
+    container-class="new-task-dialog"
+  }}
+    {{new-task-form
+      formCancelled=(action 'closeModal')
+      taskCreated=(action 'closeModal')
+    }}
+  {{/modal-dialog}}
+{{/if}}

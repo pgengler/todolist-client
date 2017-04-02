@@ -4,6 +4,8 @@ module.exports = {
   },
   globals: {
     server: true,
-    dragAndDrop: true
+    datepickerSelect: true,
+    dragAndDrop: true,
+    keyDown: true
   }
 };

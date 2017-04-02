@@ -1,0 +1,27 @@
+<h1>Add new task</h1>
+<form class="new-task" onsubmit={{action "createTask"}}>
+  {{autofocus-elastic-textarea
+    value=newTaskDescription
+    placeholder="New task"
+    class="spec-new-task-description"
+    insert-newline=(action 'createTask')
+    escape-press=(action 'cancel')
+  }}
+  <br><br>
+  <span class="spec-new-task-date">
+    {{#power-datepicker selected=newTaskDate onSelect=(action 'changeDate') renderInPlace=true as |dp|}}
+      {{#dp.trigger}}
+        <input type="text" placeholder="Date" value={{newTaskDate}} readonly>
+      {{/dp.trigger}}
+      {{#dp.content}}
+        {{dp.nav}}
+        {{dp.days}}
+      {{/dp.content}}
+    {{/power-datepicker}}
+  </span>
+  <br><br>
+  <input type="submit" value="Add" class="spec-create-task">
+  <button type="button" class="spec-cancel-button" onclick={{action 'cancel'}}>
+    Cancel
+  </button>
+</form>

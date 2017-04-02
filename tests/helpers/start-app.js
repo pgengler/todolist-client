@@ -4,6 +4,8 @@ import config from '../../config/environment';
 
 import './drag-and-drop';
 import './qunit-assertions';
+import keyboardRegisterTestHelpers from './ember-keyboard/register-test-helpers';
+import registerPowerDatepickerHelpers from '../../tests/helpers/ember-power-datepicker';
 
 export default function startApp(attrs) {
   let application;
@@ -14,6 +16,8 @@ export default function startApp(attrs) {
   Ember.run(() => {
     application = Application.create(attributes);
     application.setupForTesting();
+    keyboardRegisterTestHelpers();
+    registerPowerDatepickerHelpers();
     application.injectTestHelpers();
   });
 

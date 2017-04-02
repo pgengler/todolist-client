@@ -1,8 +1,13 @@
+@import "ember-modal-dialog/ember-modal-structure";
+@import "ember-modal-dialog/ember-modal-appearance";
+@import "ember-power-datepicker";
+
 $body-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
 $body-font-size: 10pt;
+$body-background-color: #23A08D;
 
 body {
-  background-color: #23A08D;
+  background-color: $body-background-color;
   font-family: $body-font;
   font-size: $body-font-size;
 
@@ -159,4 +164,10 @@ i.fa {
   textarea, input[type=text] {
     background-color: white;
   }
+}
+
+.new-task-dialog {
+  background-color: lightgray;
+
+  padding: 0 2em 1em 2em;
 }
