@@ -164,3 +164,12 @@ test('newly-created-but-still-saving tasks appear in the "pending" state', funct
     assert.doesNotExist('.spec-task.pending', '"pending" CSS class is no longer applied');
   });
 });
+
+test('clicking a date column header focuses the "add new task" for it', function(assert) {
+  server.create('day', { date: '2017-04-02' });
+  visit('/days');
+  click('h1:first');
+  andThen(() => {
+    assert.ok(find('.spec-new-task:first').is(':focus'));
+  });
+});

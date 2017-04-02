@@ -1,4 +1,8 @@
-{{yield}}
+{{#if hasBlock}}
+  <div class="task-list-header">
+    {{yield}}
+  </div>
+{{/if}}
 <ul>
   {{#each sortedUnfinishedTasks as |task|}}
     {{draggable-task task=task class="spec-task" editingStart="editingStart" editingEnd="editingEnd"}}
@@ -10,6 +14,6 @@
     {{pending-task task=task class="spec-task pending"}}
   {{/each}}
   <li>
-    {{elastic-textarea class="spec-new-task" value=newTaskDescription placeholder="Add new task" insert-newline="addTask" escape-press=(action 'clearTextarea')}}
+    {{elastic-textarea class="new-task spec-new-task" value=newTaskDescription placeholder="Add new task" insert-newline="addTask" escape-press=(action 'clearTextarea')}}
   </li>
 </ul>

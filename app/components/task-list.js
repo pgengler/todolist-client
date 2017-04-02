@@ -24,6 +24,14 @@ export default Ember.Component.extend(DraggableDropzone, {
 
   hasUnfinishedTasks: Ember.computed.notEmpty('unfinishedTasks'),
 
+  didInsertElement() {
+    this.$('.task-list-header').on('click', () => this.$('.new-task').focus());
+  },
+
+  willDestroyElement() {
+    this.$('.task-list-header').off('click');
+  },
+
   cloneTask(task) {
     let newTask = this.store.createRecord('task', {
       day: this.get('day'),
