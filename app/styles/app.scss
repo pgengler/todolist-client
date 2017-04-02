@@ -32,12 +32,6 @@ nav.top-nav {
   i {
     vertical-align: top;
   }
-
-  .date-picker {
-    background-color: white;
-    display: inline-block;
-    position: absolute;
-  }
 }
 
 .task-list {
@@ -184,4 +178,23 @@ i.fa {
   background-color: lightgray;
 
   padding: 0 2em 1em 2em;
+}
+
+.date-picker-content {
+  background-color: white;
+  box-shadow: 2px 2px 1em #333;
+  display: inline-block;
+  position: absolute;
+
+  .ember-power-calendar-nav-title {
+    font-weight: bold;
+  }
+
+  .ember-power-calendar-day {
+    padding: 5px;
+  }
+
+  .ember-basic-dropdown-trigger:focus {
+    outline: none;
+  }
 }
