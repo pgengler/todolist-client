@@ -2,19 +2,20 @@ export default function() {
   this.namespace = '/api/v1';
   this.logging = true;
 
-  this.get('/days', function(schema) {
-    // return only days with a non-null `date`
+  this.get('/days', function(schema, request) {
+    let requestedDate = request.queryParams.date;
+    if (requestedDate && !(request.queryParams.before_days || request.queryParams.after_days)) {
+      requestedDate = (requestedDate === 'undated' ? null : requestedDate);
+      let day = schema.days.findBy({ date: requestedDate });
+      if (!day) {
+        day = schema.days.create({ date: requestedDate });
+      }
+
+      return day;
+    }
     return schema.days.all().filter((day) => day.date);
   });
 
-  this.get('/days/:date', function(schema, request) {
-    let date = request.params.date;
-    if (date === 'undated') {
-      date = null;
-    }
-    let day = schema.days.where({ date }).models[0];
-    return day || schema.days.create({ date });
-  });
-
+  this.get('/days/:id');
   this.get('tasks/:id');
 }

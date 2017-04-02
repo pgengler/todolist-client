@@ -25,7 +25,7 @@ export default Ember.Component.extend({
         return false;
       }
 
-      this.get('store').findRecord('day', date).then((day) => {
+      this.get('store').queryRecord('day', { date }).then((day) => {
         let task = this.get('store').createRecord('task', {
           description,
           day

@@ -11,7 +11,7 @@ export default Ember.Route.extend({
     let searchParams = dateParams(params.date);
     return Ember.RSVP.hash({
       days: this.store.query('day', searchParams),
-      undated: this.store.findRecord('day', 'undated')
+      undated: this.store.queryRecord('day', { date: 'undated' })
     });
   },
 
