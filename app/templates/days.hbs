@@ -1,6 +1,3 @@
-{{#top-nav}}
-  {{date-picker-icon action="changeDate"}}
-{{/top-nav}}
 <div class="days">
   {{#each days as |day|}}
     {{#day-tasks day=day store=store editingStart="pausePolling" editingEnd="resumePolling"}}

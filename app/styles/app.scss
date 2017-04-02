@@ -24,6 +24,20 @@ div.page-wrapper {
 
 nav.top-nav {
   height: 2.5em;
+
+  > div {
+    display: inline-block;
+  }
+
+  i {
+    vertical-align: top;
+  }
+
+  .date-picker {
+    background-color: white;
+    display: inline-block;
+    position: absolute;
+  }
 }
 
 .task-list {

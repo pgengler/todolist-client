@@ -20,7 +20,6 @@ module.exports = {
     // 'ember-suave/require-access-in-comments': 'off',
   },
   globals: {
-    Pikaday: true,
     Showdown: true
   }
 };

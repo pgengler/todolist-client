@@ -1,0 +1,11 @@
+ {{#power-datepicker onSelect=(action 'changeDate') renderInPlace=true as |dp|}}
+  {{#dp.trigger}}
+    {{fa-icon 'calendar'}}
+  {{/dp.trigger}}
+  {{#dp.content}}
+    <div class="date-picker">
+      {{dp.nav}}
+      {{dp.days}}
+    </div>
+  {{/dp.content}}
+{{/power-datepicker}}

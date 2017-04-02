@@ -1,7 +1,6 @@
 {
   "name": "ember-todo",
   "dependencies": {
-    "pikaday": "~1.2.0",
     "showdown": "~0.3.4",
     "font-awesome": "~4.4.0"
   }

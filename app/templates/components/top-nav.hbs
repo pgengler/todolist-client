@@ -1,7 +1,7 @@
 {{#link-to 'days' (query-params date=null) title='Home'}}{{fa-icon icon='home'}}{{/link-to}}
 {{#link-to 'recurring' title='Recurring tasks'}}{{fa-icon icon='list'}}{{/link-to}}
 {{fa-icon icon='plus' class='spec-add-task' click=(action 'toggleModal')}}
-{{yield}}
+{{date-picker-icon dateSelected=(action changeDate)}}
 
 {{#if isShowingNewTaskModal}}
   {{#modal-dialog
