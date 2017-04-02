@@ -5,6 +5,9 @@ export default Ember.Component.extend({
   editDesciption: Ember.computed.oneWay('task.description'),
   isEditing: false,
 
+  classNames: [ 'task' ],
+  classNameBindings: [ 'isEditing:editing' ],
+
   doubleClick() {
     this.send('editTask');
   },

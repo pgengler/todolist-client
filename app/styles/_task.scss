@@ -1,0 +1,48 @@
+.task {
+  background-color: white;
+  border-radius: 3px;
+  list-style-type: none;
+  margin: 0 0.25em 0.5em 0.25em;
+  padding: 0.5em;
+
+  &.pending {
+    background-color: #b2dfda;
+    opacity: 0.33;
+
+    .fa-spinner {
+      font-size: 20px;
+      vertical-align: middle;
+    }
+
+    span {
+      vertical-align: middle;
+    }
+  }
+
+  &.editing {
+    box-shadow: 2px 2px 1em #999;
+  }
+
+  &[draggable=true] {
+    -moz-user-select: none;
+    -khtml-user-drag: element;
+    cursor: move;
+  }
+
+  input[type=checkbox] {
+    vertical-align: top;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  div {
+    display: inline-block;
+    width: 85%;
+
+    p {
+      display: inline;
+    }
+  }
+}

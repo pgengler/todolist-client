@@ -2,6 +2,9 @@
 @import "ember-modal-dialog/ember-modal-appearance";
 @import "ember-power-datepicker";
 
+@import "datepicker";
+@import "task";
+
 $body-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
 $body-font-size: 10pt;
 $body-background-color: #23A08D;
@@ -57,45 +60,6 @@ nav.top-nav {
     max-height: 78vh;
     overflow-y: scroll;
     padding: .25em;
-
-    li {
-      background-color: white;
-      border-radius: 3px;
-      list-style-type: none;
-      margin: 0 0.25em 0.5em 0.25em;
-      padding: 0.5em;
-
-      input[type=checkbox] {
-        vertical-align: top;
-      }
-
-      &.pending {
-        background-color: #b2dfda;
-        opacity: 0.33;
-
-        .fa-spinner {
-          font-size: 20px;
-          vertical-align: middle;
-        }
-
-        span {
-          vertical-align: middle;
-        }
-      }
-
-      p {
-        margin: 0;
-      }
-
-      div {
-        display: inline-block;
-        width: 85%;
-
-        p {
-          display: inline;
-        }
-      }
-    }
   }
 
   &.current {
@@ -142,12 +106,6 @@ nav.top-nav {
   opacity: 0.7;
 }
 
-.draggable-task[draggable=true] {
-  -moz-user-select: none;
-  -khtml-user-drag: element;
-  cursor: move;
-}
-
 textarea, input[type=text] {
   background: none;
   border: 0;
@@ -178,23 +136,4 @@ i.fa {
   background-color: lightgray;
 
   padding: 0 2em 1em 2em;
-}
-
-.date-picker-content {
-  background-color: white;
-  box-shadow: 2px 2px 1em #333;
-  display: inline-block;
-  position: absolute;
-
-  .ember-power-calendar-nav-title {
-    font-weight: bold;
-  }
-
-  .ember-power-calendar-day {
-    padding: 5px;
-  }
-
-  .ember-basic-dropdown-trigger:focus {
-    outline: none;
-  }
 }

@@ -13,7 +13,7 @@
   {{#each sortedPendingTasks as |task|}}
     {{pending-task task=task class="spec-task pending"}}
   {{/each}}
-  <li>
+  <li class="task">
     {{elastic-textarea class="new-task spec-new-task" value=newTaskDescription placeholder="Add new task" insert-newline="addTask" escape-press=(action 'clearTextarea')}}
   </li>
 </ul>
