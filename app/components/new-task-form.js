@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import moment from 'moment';
 
 export default Ember.Component.extend({
   newTaskDescription: '',
@@ -13,7 +12,7 @@ export default Ember.Component.extend({
     },
 
     changeDate(newDate) {
-      this.set('newTaskDate', moment(newDate.moment).utc().format('YYYY-MM-DD'));
+      this.set('newTaskDate', newDate.moment.format('YYYY-MM-DD'));
       this.$('input[type=submit]').focus();
     },
 
