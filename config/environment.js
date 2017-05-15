@@ -1,9 +1,10 @@
 /* eslint-env node */
 
 module.exports = function(environment) {
-  var ENV = {
+  let ENV = {
+    environment,
+
     modulePrefix: 'ember-todo',
-    environment: environment,
     rootURL: '/',
     locationType: 'auto',
     EmberENV: {
@@ -20,6 +21,14 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
+    },
+
+    showdown: {
+      excludeTrailingPunctuationFromURLs: true,
+      literalMidWordAsterisks: true,
+      literalMidWordUnderscores: true,
+      simplifiedAutoLink: true,
+      strikethrough: true
     }
   };
 
@@ -42,9 +51,9 @@ module.exports = function(environment) {
     ENV.APP.rootElement = '#ember-testing';
   }
 
-  if (environment === 'production') {
-
-  }
+  // if (environment === 'production') {
+  //
+  // }
 
   return ENV;
 };
