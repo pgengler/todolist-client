@@ -1,7 +1,0 @@
-{
-  "name": "ember-todo",
-  "dependencies": {
-    "showdown": "~0.3.4",
-    "font-awesome": "~4.4.0"
-  }
-}
