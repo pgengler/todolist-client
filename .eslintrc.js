@@ -16,10 +16,5 @@ module.exports = {
     'ember-suave/no-direct-property-access': 'off',
     'ember-suave/prefer-destructuring': 'off',
     'new-cap': 'off'
-
-    // 'ember-suave/require-access-in-comments': 'off',
-  },
-  globals: {
-    Showdown: true
   }
 };
