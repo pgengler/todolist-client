@@ -3,7 +3,7 @@
   {{#each sortedTasks as |task|}}
     {{single-task task=task}}
   {{/each}}
-  <li>
+  <li class="task">
     {{elastic-textarea value=newTaskDescription placeholder="Add new recurring task" insert-newline="addTask"}}
   </li>
 </ul>
