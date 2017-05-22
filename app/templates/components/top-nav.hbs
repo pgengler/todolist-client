@@ -5,10 +5,10 @@
 
 {{#if isShowingNewTaskModal}}
   {{#modal-dialog
-    close=(action 'toggleModal')
+    containerClass="new-task-dialog"
+    onClose=(action 'toggleModal')
     targetAttachment='center'
     translucentOverlay=true
-    container-class="new-task-dialog"
   }}
     {{new-task-form
       formCancelled=(action 'closeModal')
