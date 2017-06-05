@@ -1,4 +1,5 @@
 import { skip, test } from 'qunit';
+import moment from 'moment';
 import moduleForAcceptance from 'ember-todo/tests/helpers/module-for-acceptance';
 
 moduleForAcceptance('Acceptance | Days');
@@ -172,5 +173,41 @@ skip('clicking a date column header focuses the "add new task" for it', function
   click('h1:first');
   andThen(() => {
     assert.ok(find('.spec-new-task:first').is(':focus'));
+  });
+});
+
+test('tasks are resorted correctly when editing descriptions', function(assert) {
+  let tasks = [
+    server.create('task', { description: 'xyz' }),
+    server.create('task', { description: 'abc' }),
+    server.create('task', { description: 'mno' })
+  ];
+  server.create('day', {
+    date: moment().format('YYYY-MM-DD'),
+    taskIds: tasks.map((t) => t.id)
+  });
+
+  server.put('/tasks/:id', function(schema, request) {
+    let matchingTask = schema.tasks.find(request.params.id);
+    matchingTask.update(this.normalizedRequestAttrs());
+    return matchingTask;
+  });
+
+  visit('/days');
+
+  andThen(() => {
+    assert.contains('.spec-task:eq(0)', 'abc');
+    assert.contains('.spec-task:eq(1)', 'mno');
+    assert.contains('.spec-task:eq(2)', 'xyz');
+  });
+
+  triggerEvent('.spec-task:eq(1)', 'dblclick');
+  fillIn('.spec-task:eq(1) textarea', 'zzz');
+  keyEvent('.spec-task:eq(1) textarea', 'keyup', 13);
+
+  andThen(() => {
+    assert.contains('.spec-task:eq(0)', 'abc');
+    assert.contains('.spec-task:eq(1)', 'xyz');
+    assert.contains('.spec-task:eq(2)', 'zzz');
   });
 });

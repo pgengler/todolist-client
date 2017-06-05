@@ -9,7 +9,7 @@ export function filterBy(arrProp, field, val) {
 }
 
 export function sortBy(arrProp, sortField, func) {
-  return Ember.computed(arrProp, {
+  return Ember.computed(`${arrProp}.@each.${sortField}`, {
     get() {
       if (func) {
         return this.get(arrProp).toArray().sort(function(a, b) {

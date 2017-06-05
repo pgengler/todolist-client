@@ -15,14 +15,12 @@ export default Ember.Component.extend(DraggableDropzone, {
 
   store: Ember.inject.service(),
 
-  finishedTasks: filterBy('day.tasks', 'done', true),
-  sortedFinishedTasks: sortBy('finishedTasks', 'description', plaintext),
-  unfinishedTasks: filterBy('day.tasks', 'done', false),
-  sortedUnfinishedTasks: sortBy('unfinishedTasks', 'description', plaintext),
-  pendingTasks: filterBy('day.tasks', 'isNew', true),
-  sortedPendingTasks: sortBy('pendingTasks', 'description', plaintext),
+  sortedTasks: sortBy('day.tasks', 'description', plaintext),
+  sortedFinishedTasks: filterBy('sortedTasks', 'done', true),
+  sortedUnfinishedTasks: filterBy('sortedTasks', 'done', false),
+  sortedPendingTasks: filterBy('sortedTasks', 'isNew', true),
 
-  hasUnfinishedTasks: Ember.computed.notEmpty('unfinishedTasks'),
+  hasUnfinishedTasks: Ember.computed.notEmpty('sortedUnfinishedTasks'),
 
   didInsertElement() {
     this.$('.task-list-header').on('click', () => this.$('.new-task').focus());
