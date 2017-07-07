@@ -2,9 +2,9 @@
 
 module.exports = function(environment) {
   let ENV = {
+    modulePrefix: 'ember-todo',
     environment,
 
-    modulePrefix: 'ember-todo',
     rootURL: '/',
     locationType: 'auto',
     EmberENV: {
@@ -54,9 +54,9 @@ module.exports = function(environment) {
     ENV.APP.rootElement = '#ember-testing';
   }
 
-  // if (environment === 'production') {
-  //
-  // }
+  if (environment === 'production') {
+
+  }
 
   return ENV;
 };
