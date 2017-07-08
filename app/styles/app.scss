@@ -57,7 +57,7 @@ nav.top-nav {
   }
 
   ul {
-    max-height: 78vh;
+    max-height: calc(100vh - 12em);
     overflow-y: scroll;
     padding: .25em;
   }
