@@ -12,7 +12,7 @@ export function sortBy(arrProp, sortField, func) {
   return computed(`${arrProp}.@each.${sortField}`, {
     get() {
       if (func) {
-        return this.get(arrProp).toArray().sort(function(a, b) {
+        return this.getWithDefault(arrProp, []).toArray().sort(function(a, b) {
           let modifiedA = func(a.get(sortField));
           let modifiedB = func(b.get(sortField));
           return (modifiedA < modifiedB) ? -1 : ((modifiedA > modifiedB) ? 1 : 0);
