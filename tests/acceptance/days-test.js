@@ -2,6 +2,11 @@ import { skip, test } from 'qunit';
 import moment from 'moment';
 import moduleForAcceptance from 'ember-todo/tests/helpers/module-for-acceptance';
 
+function fillInAndPressEnter(selector, text) {
+  fillIn(selector, text);
+  keyEvent(selector, 'keyup', 13);
+}
+
 moduleForAcceptance('Acceptance | Days');
 
 test('visiting / redirects to /days', function(assert) {
@@ -17,7 +22,7 @@ test('visiting / redirects to /days', function(assert) {
 test('visiting /days', function(assert) {
   server.create('day', { date: '2014-11-06' });
   server.createList('day', 4);
-  visit('/days');
+  visit('/days?date=2014-11-07');
 
   andThen(function() {
     assert.equal(currentPath(), 'days');
@@ -28,21 +33,19 @@ test('visiting /days', function(assert) {
 });
 
 test('adding a new task sends right data to server', function(assert) {
-  let day = server.create('day');
+  let day = server.create('day', { date: '2017-08-20' });
   assert.expect(3);
 
-  server.post('/tasks', function(schema, request) {
-    let params = JSON.parse(request.requestBody);
-    assert.equal(params.task.day_id, day.id, 'request includes correct day ID');
-    assert.equal(params.task.description, 'A new task', 'request includes correct description');
+  server.post('/tasks', function({ tasks }, request) {
+    let requestData = JSON.parse(request.requestBody).data;
+    assert.equal(requestData.relationships.day.data.id, day.id, 'request includes correct day ID');
+    assert.equal(requestData.attributes.description, 'A new task', 'request includes correct description');
 
-    let task = schema.tasks.create(this.normalizedRequestAttrs());
-    return task;
+    return tasks.create(this.normalizedRequestAttrs());
   });
 
-  visit('/days');
-  fillIn('.spec-new-task:first', 'A new task');
-  keyEvent('.spec-new-task:first', 'keyup', 13);
+  visit('/days?date=2017-08-20');
+  fillInAndPressEnter('.spec-day:contains(Aug 20, 2017) .spec-new-task', 'A new task');
 
   andThen(function() {
     assert.contains('.spec-task', 'A new task', 'new task is added');
@@ -67,16 +70,16 @@ test('dragging a task to another day', function(assert) {
   server.create('day', { date: '2016-03-07', taskIds: [ task.id ] });
   let targetDay = server.create('day', { date: '2016-03-08' });
 
-  server.put('/tasks/:id', function(schema, request) {
-    let requestBody = JSON.parse(request.requestBody);
-    assert.equal(requestBody.task.day_id, targetDay.id, 'makes PUT request with new day ID');
+  server.patch('/tasks/:id', function({ tasks }, request) {
+    let requestData = JSON.parse(request.requestBody).data;
+    assert.equal(requestData.relationships.day.data.id, targetDay.id, 'makes PATCH request with new day ID');
 
-    let task = schema.tasks.find(request.params.id);
+    let task = tasks.find(request.params.id);
     task.update(this.normalizedRequestAttrs());
     return task;
   });
 
-  visit('/days');
+  visit('/days?date=2016-03-07');
 
   dragAndDrop('.spec-task', '.spec-day:contains(Mar 8, 2016)');
   andThen(function() {
@@ -92,16 +95,16 @@ test('dragging and dropping a task with Control held copies a task', function(as
   server.create('day', { date: '2016-03-07', taskIds: [ task.id ] });
   let targetDay = server.create('day', { date: '2016-03-08' });
 
-  server.post('/tasks', function(schema, request) {
-    let params = JSON.parse(request.requestBody).task;
+  server.post('/tasks', function({ tasks }, request) {
+    let requestData = JSON.parse(request.requestBody).data;
     assert.ok(true, 'makes POST request to create new task');
-    assert.equal(params.description, task.description, 'creates new task with same description');
-    assert.equal(params.day_id, targetDay.id, 'creates new task on the correct day');
+    assert.equal(requestData.attributes.description, task.description, 'creates new task with same description');
+    assert.equal(requestData.relationships.day.data.id, targetDay.id, 'creates new task on the correct day');
 
-    return schema.tasks.create(this.normalizedRequestAttrs());
+    return tasks.create(this.normalizedRequestAttrs());
   });
 
-  visit('/days');
+  visit('/days?date=2016-03-07');
   dragAndDrop('.spec-task', '.spec-day:contains(Mar 8, 2016)', { ctrlKey: true });
 });
 
@@ -110,22 +113,21 @@ test('updating the description for a task', function(assert) {
   let task = server.create('task', { description: "I'm a task" });
   server.create('day', { date: '2016-03-07', taskIds: [ task.id ] });
 
-  server.put('/tasks/:id', function(schema, request) {
-    let params = JSON.parse(request.requestBody).task;
+  server.patch('/tasks/:id', function({ tasks }, request) {
+    let requestData = JSON.parse(request.requestBody).data;
 
-    assert.ok(true, 'makes a PUT request');
+    assert.ok(true, 'makes a PATCH request');
     assert.equal(request.params.id, task.id, 'makes a PUT request for the correct task');
-    assert.equal(params.description, 'New description', 'sends the new description in the request');
+    assert.equal(requestData.attributes.description, 'New description', 'sends the new description in the request');
 
-    let matchingTask = schema.tasks.find(request.params.id);
+    let matchingTask = tasks.find(request.params.id);
     matchingTask.update(this.normalizedRequestAttrs());
     return matchingTask;
   });
 
-  visit('/days');
+  visit('/days?date=2016-03-07');
   triggerEvent('.spec-task', 'dblclick');
-  fillIn('.spec-task textarea', 'New description');
-  keyEvent('.spec-task textarea', 'keyup', 13);
+  fillInAndPressEnter('.spec-task textarea', 'New description');
 });
 
 test('setting an empty description for a task deletes it', function(assert) {
@@ -138,10 +140,9 @@ test('setting an empty description for a task deletes it', function(assert) {
     assert.equal(request.params.id, task.id, 'makes a DELETE request for the right ID');
   });
 
-  visit('/days');
+  visit('/days?date=2016-03-07');
   triggerEvent('.spec-task', 'dblclick');
-  fillIn('.spec-task textarea', '');
-  keyEvent('.spec-task textarea', 'keyup', 13);
+  fillInAndPressEnter('.spec-task textarea', '');
 });
 
 test('newly-created-but-still-saving tasks appear in the "pending" state', function(assert) {
@@ -157,8 +158,7 @@ test('newly-created-but-still-saving tasks appear in the "pending" state', funct
   });
 
   visit('/days');
-  fillIn('.spec-new-task', 'new thing');
-  keyEvent('.spec-new-task', 'keyup', 13);
+  fillInAndPressEnter('.spec-new-task', 'new thing');
 
   andThen(function() {
     assert.equal(find('.spec-task').length, 1, 'still only displays one item after save finishes');
@@ -187,8 +187,8 @@ test('tasks are resorted correctly when editing descriptions', function(assert) 
     taskIds: tasks.map((t) => t.id)
   });
 
-  server.put('/tasks/:id', function(schema, request) {
-    let matchingTask = schema.tasks.find(request.params.id);
+  server.patch('/tasks/:id', function({ tasks }, request) {
+    let matchingTask = tasks.find(request.params.id);
     matchingTask.update(this.normalizedRequestAttrs());
     return matchingTask;
   });
@@ -202,8 +202,7 @@ test('tasks are resorted correctly when editing descriptions', function(assert) 
   });
 
   triggerEvent('.spec-task:eq(1)', 'dblclick');
-  fillIn('.spec-task:eq(1) textarea', 'zzz');
-  keyEvent('.spec-task:eq(1) textarea', 'keyup', 13);
+  fillInAndPressEnter('.spec-task:eq(1) textarea', 'zzz');
 
   andThen(() => {
     assert.contains('.spec-task:eq(0)', 'abc');

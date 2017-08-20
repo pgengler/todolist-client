@@ -8,12 +8,12 @@ test('adding a new task', function(assert) {
 
   let day = server.create('day', { date: '2014-11-13' });
 
-  server.post('/tasks', function(schema, request) {
-    let params = JSON.parse(request.requestBody).task;
-    assert.equal(params.day_id, day.id, 'makes request with the correct day ID');
-    assert.equal(params.description, 'Something', 'makes request with the entered description');
+  server.post('/tasks', function({ tasks }, request) {
+    let requestData = JSON.parse(request.requestBody).data;
+    assert.equal(requestData.relationships.day.data.id, day.id, 'makes request with the correct day ID');
+    assert.equal(requestData.attributes.description, 'Something', 'makes request with the entered description');
 
-    return schema.tasks.create(this.normalizedRequestAttrs());
+    return tasks.create(this.normalizedRequestAttrs());
   });
 
   visit('/days');

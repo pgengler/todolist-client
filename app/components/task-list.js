@@ -1,4 +1,5 @@
 import { next } from '@ember/runloop';
+import { computed } from '@ember/object';
 import { notEmpty } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
@@ -12,9 +13,15 @@ function plaintext(str) {
 export default Component.extend(DraggableDropzone, {
   classNames: [ 'task-list', 'spec-day' ],
   classNameBindings: [ 'hasUnfinishedTasks', 'dragClass' ],
+  attributeBindings: [ 'formattedDate:spec-date' ],
   day: null,
   newTaskDescription: '',
   dragClass: '',
+
+  formattedDate: computed('day.date', function() {
+    let date = this.get('day.date');
+    return date ? date.format('YYYY-MM-DD') : '';
+  }),
 
   store: service(),
 
