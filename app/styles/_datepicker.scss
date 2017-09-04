@@ -10,6 +10,19 @@
 
   .ember-power-calendar-day {
     padding: 5px;
+
+    &.ember-power-calendar-day--other-month {
+      color: rgb(187, 187, 187);
+    }
+
+    &.ember-power-calendar-day--current-month {
+      color: rgb(101, 109, 120);
+      background-color: rgb(245, 247, 250);
+    }
+
+    &.ember-power-calendar-day--today, &:not([disabled]):hover {
+      background-color: rgb(238, 238, 238);
+    }
   }
 
   .ember-basic-dropdown-trigger:focus {
