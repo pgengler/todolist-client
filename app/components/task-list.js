@@ -1,4 +1,7 @@
-import Ember from 'ember';
+import { next } from '@ember/runloop';
+import { notEmpty } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 import DraggableDropzone from '../mixins/draggable-dropzone';
 import { filterBy, sortBy } from '../utils/computed';
 
@@ -6,21 +9,21 @@ function plaintext(str) {
   return str.replace(/[^A-Za-z0-9]/g, '');
 }
 
-export default Ember.Component.extend(DraggableDropzone, {
+export default Component.extend(DraggableDropzone, {
   classNames: [ 'task-list', 'spec-day' ],
   classNameBindings: [ 'hasUnfinishedTasks', 'dragClass' ],
   day: null,
   newTaskDescription: '',
   dragClass: '',
 
-  store: Ember.inject.service(),
+  store: service(),
 
   sortedTasks: sortBy('day.tasks', 'description', plaintext),
   sortedFinishedTasks: filterBy('sortedTasks', 'done', true),
   sortedUnfinishedTasks: filterBy('sortedTasks', 'done', false),
   sortedPendingTasks: filterBy('sortedTasks', 'isNew', true),
 
-  hasUnfinishedTasks: Ember.computed.notEmpty('sortedUnfinishedTasks'),
+  hasUnfinishedTasks: notEmpty('sortedUnfinishedTasks'),
 
   didInsertElement() {
     this.$('.task-list-header').on('click', () => this.$('.new-task').focus());
@@ -52,7 +55,7 @@ export default Ember.Component.extend(DraggableDropzone, {
       let task = this.get('store').createRecord('task', { description, day });
       day.get('tasks').addObject(task);
       this.set('newTaskDescription', '');
-      Ember.run.next(() => task.save());
+      next(() => task.save());
     },
 
     clearTextarea() {

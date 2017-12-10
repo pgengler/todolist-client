@@ -1,4 +1,6 @@
-import Ember from 'ember';
+import $ from 'jquery';
+import { run } from '@ember/runloop';
+import { registerAsyncHelper } from '@ember/test';
 
 export class DataTransferMock {
   constructor() {
@@ -17,15 +19,15 @@ export class DataTransferMock {
   }
 }
 
-export default Ember.Test.registerAsyncHelper('dragAndDrop', function(app, draggedElementSelector, targetElementSelector, eventOptions = { }) {
+export default registerAsyncHelper('dragAndDrop', function(app, draggedElementSelector, targetElementSelector, eventOptions = { }) {
   let draggedElement = find(draggedElementSelector);
   let dropTargetElement = find(targetElementSelector);
-  Ember.run(function() {
-    let dragStartEvent = Ember.$.Event('dragstart', eventOptions);
+  run(function() {
+    let dragStartEvent = $.Event('dragstart', eventOptions);
     dragStartEvent.dataTransfer = new DataTransferMock();
     draggedElement.trigger(dragStartEvent);
 
-    let dropEvent = Ember.$.Event('drop', eventOptions);
+    let dropEvent = $.Event('drop', eventOptions);
     dropEvent.dataTransfer = dragStartEvent.dataTransfer;
     dropTargetElement.trigger(dropEvent);
 

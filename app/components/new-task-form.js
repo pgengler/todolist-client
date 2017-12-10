@@ -1,10 +1,12 @@
-import Ember from 'ember';
+import { isEmpty } from '@ember/utils';
+import { inject as service } from '@ember/service';
+import Component from '@ember/component';
 
-export default Ember.Component.extend({
+export default Component.extend({
   newTaskDescription: '',
   newTaskDate: null,
 
-  store: Ember.inject.service(),
+  store: service(),
 
   actions: {
     cancel() {
@@ -20,7 +22,7 @@ export default Ember.Component.extend({
       let description = this.get('newTaskDescription').trim();
       let date = this.get('newTaskDate');
 
-      if (Ember.isEmpty(description) || Ember.isEmpty(date)) {
+      if (isEmpty(description) || isEmpty(date)) {
         return false;
       }
 

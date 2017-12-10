@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
 import TaskList from './task-list';
 import moment from 'moment';
 
@@ -6,7 +6,7 @@ export default TaskList.extend({
   classNameBindings: [ 'isPast:past', 'isCurrent:current', 'isFuture:future' ],
   layoutName: 'components/task-list',
 
-  isPast: Ember.computed('day.date', {
+  isPast: computed('day.date', {
     get() {
       let date = this.get('day.date');
       let now  = moment();
@@ -15,7 +15,7 @@ export default TaskList.extend({
     }
   }).readOnly(),
 
-  isCurrent: Ember.computed('day.date', {
+  isCurrent: computed('day.date', {
     get() {
       let now = moment();
       now.add(now.utcOffset(), 'minutes').utc();
@@ -23,7 +23,7 @@ export default TaskList.extend({
     }
   }).readOnly(),
 
-  isFuture: Ember.computed('day.date', {
+  isFuture: computed('day.date', {
     get() {
       let now = moment();
       now.add(now.utcOffset(), 'minutes').utc();

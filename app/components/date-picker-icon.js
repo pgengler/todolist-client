@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import moment from 'moment';
 
-export default Ember.Component.extend({
+export default Component.extend({
   actions: {
     changeDate(newDate) {
       let date = moment(newDate.moment).utc().format('YYYY-MM-DD');

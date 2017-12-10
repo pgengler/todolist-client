@@ -1,7 +1,7 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
 
 export function filterBy(arrProp, field, val) {
-  return Ember.computed(`${arrProp}.@each.${field}`, {
+  return computed(`${arrProp}.@each.${field}`, {
     get() {
       return this.get(arrProp).filterBy(field, val);
     }
@@ -9,7 +9,7 @@ export function filterBy(arrProp, field, val) {
 }
 
 export function sortBy(arrProp, sortField, func) {
-  return Ember.computed(`${arrProp}.@each.${sortField}`, {
+  return computed(`${arrProp}.@each.${sortField}`, {
     get() {
       if (func) {
         return this.get(arrProp).toArray().sort(function(a, b) {

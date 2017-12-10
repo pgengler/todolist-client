@@ -1,6 +1,6 @@
-import Ember from 'ember';
+import { helper } from '@ember/component/helper';
 import moment from 'moment';
 
-export default Ember.Helper.helper(function([ date ]) {
+export default helper(function([ date ]) {
   return moment(date).format('MMM D, YYYY');
 });

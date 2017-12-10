@@ -1,15 +1,17 @@
+import { hash } from 'rsvp';
+import Route from '@ember/routing/route';
 import Ember from 'ember';
 import dateParams from 'ember-todo/utils/date-params';
 import { task, timeout } from 'ember-concurrency';
 
-export default Ember.Route.extend({
+export default Route.extend({
   queryParams: {
     date: { refreshModel: true }
   },
 
   model(params) {
     let searchParams = dateParams(params.date);
-    return Ember.RSVP.hash({
+    return hash({
       days: this.store.query('day', searchParams),
       undated: this.store.queryRecord('day', { date: 'undated' })
     });

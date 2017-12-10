@@ -1,6 +1,9 @@
-import Ember from 'ember';
+import { on } from '@ember/object/evented';
 import ModalDialog from 'ember-modal-dialog/components/modal-dialog';
-import { EKMixin as EmberKeyboardMixin, keyDown } from 'ember-keyboard';
+import {
+  EKMixin as EmberKeyboardMixin,
+  keyDown
+} from 'ember-keyboard';
 
 export default ModalDialog.extend(EmberKeyboardMixin, {
   init() {
@@ -9,7 +12,7 @@ export default ModalDialog.extend(EmberKeyboardMixin, {
     this.set('keyboardActivated', true);
   },
 
-  closeOnEsc: Ember.on(keyDown('Escape'), function() {
+  closeOnEsc: on(keyDown('Escape'), function() {
     this.sendAction('close');
   })
 });

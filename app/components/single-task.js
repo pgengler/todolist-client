@@ -1,8 +1,10 @@
-import Ember from 'ember';
+import { isEmpty } from '@ember/utils';
+import { oneWay } from '@ember/object/computed';
+import Component from '@ember/component';
 
-export default Ember.Component.extend({
+export default Component.extend({
   tagName: 'li',
-  editDesciption: Ember.computed.oneWay('task.description'),
+  editDesciption: oneWay('task.description'),
   isEditing: false,
 
   classNames: [ 'task' ],
@@ -28,7 +30,7 @@ export default Ember.Component.extend({
     updateTask() {
       let task = this.get('task');
       let description = this.get('editDescription');
-      if (!Ember.isEmpty(description)) {
+      if (!isEmpty(description)) {
         task.set('description', description);
         task.save();
         this.set('isEditing', false);

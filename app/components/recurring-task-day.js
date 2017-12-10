@@ -1,18 +1,20 @@
-import Ember from 'ember';
+import { isEmpty } from '@ember/utils';
+import { alias, sort } from '@ember/object/computed';
+import Component from '@ember/component';
 
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: [ 'task-list' ],
   day: null,
-  tasks: Ember.computed.alias('day.tasks'),
+  tasks: alias('day.tasks'),
   taskSortProperties: [ 'description' ],
-  sortedTasks: Ember.computed.sort('tasks', 'taskSortProperties'),
+  sortedTasks: sort('tasks', 'taskSortProperties'),
 
   newTaskDescription: '',
 
   actions: {
     addTask() {
       let description = this.get('newTaskDescription').trim();
-      if (!Ember.isEmpty(description)) {
+      if (!isEmpty(description)) {
         let day = this.get('day');
         this.get('store')
           .createRecord('recurringTask', { description, day })
