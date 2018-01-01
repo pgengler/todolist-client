@@ -1,8 +1,4 @@
-{{#if hasBlock}}
-  <div class="task-list-header">
-    {{yield}}
-  </div>
-{{/if}}
+{{component headerComponent list=list}}
 <ul>
   {{#each sortedUnfinishedTasks as |task|}}
     {{draggable-task task=task class="spec-task" editingStart="editingStart" editingEnd="editingEnd"}}

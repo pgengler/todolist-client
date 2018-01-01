@@ -7,7 +7,7 @@ export default Controller.extend({
   date: null,
 
   days: alias('model.days'),
-  undated: alias('model.undated'),
+  lists: alias('model.lists'),
 
   actions: {
     changeDate(date) {

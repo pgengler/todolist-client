@@ -1,5 +1,4 @@
 import { next } from '@ember/runloop';
-import { computed } from '@ember/object';
 import { notEmpty } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
@@ -11,21 +10,15 @@ function plaintext(str) {
 }
 
 export default Component.extend(DraggableDropzone, {
-  classNames: [ 'task-list', 'spec-day' ],
+  classNames: [ 'task-list' ],
   classNameBindings: [ 'hasUnfinishedTasks', 'dragClass' ],
-  attributeBindings: [ 'formattedDate:spec-date' ],
-  day: null,
+  headerComponent: 'task-list/header',
   newTaskDescription: '',
   dragClass: '',
 
-  formattedDate: computed('day.date', function() {
-    let date = this.get('day.date');
-    return date ? date.format('YYYY-MM-DD') : '';
-  }),
-
   store: service(),
 
-  sortedTasks: sortBy('day.tasks', 'description', plaintext),
+  sortedTasks: sortBy('list.tasks', 'description', plaintext),
   sortedFinishedTasks: filterBy('sortedTasks', 'done', true),
   sortedUnfinishedTasks: filterBy('sortedTasks', 'done', false),
   sortedPendingTasks: filterBy('sortedTasks', 'isNew', true),
@@ -42,13 +35,13 @@ export default Component.extend(DraggableDropzone, {
 
   cloneTask(task) {
     let newTask = this.store.createRecord('task', {
-      day: this.get('day'),
+      list: this.get('list'),
       description: task.get('description')
     });
     newTask.save();
   },
-  moveTaskToDay(task) {
-    task.set('day', this.get('day'));
+  moveTaskToList(task) {
+    task.set('list', this.get('list'));
     task.save();
   },
 
@@ -58,9 +51,9 @@ export default Component.extend(DraggableDropzone, {
       if (!description) {
         return;
       }
-      let day = this.get('day');
-      let task = this.get('store').createRecord('task', { description, day });
-      day.get('tasks').addObject(task);
+      let list = this.get('list');
+      let task = this.get('store').createRecord('task', { description, list });
+      list.get('tasks').addObject(task);
       this.set('newTaskDescription', '');
       next(() => task.save());
     },
@@ -74,7 +67,7 @@ export default Component.extend(DraggableDropzone, {
 
       this.set('dragClass', '');
 
-      this.store.findRecord('task', id).then((task) => cloningTask ? this.cloneTask(task) : this.moveTaskToDay(task));
+      this.store.findRecord('task', id).then((task) => cloningTask ? this.cloneTask(task) : this.moveTaskToList(task));
     },
 
     editingStart() {

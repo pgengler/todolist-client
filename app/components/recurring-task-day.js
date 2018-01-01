@@ -4,8 +4,7 @@ import Component from '@ember/component';
 
 export default Component.extend({
   classNames: [ 'task-list' ],
-  day: null,
-  tasks: alias('day.tasks'),
+  tasks: alias('list.tasks'),
   taskSortProperties: [ 'description' ],
   sortedTasks: sort('tasks', 'taskSortProperties'),
 
@@ -15,12 +14,12 @@ export default Component.extend({
     addTask() {
       let description = this.get('newTaskDescription').trim();
       if (!isEmpty(description)) {
-        let day = this.get('day');
+        let list = this.get('list');
         this.get('store')
-          .createRecord('recurringTask', { description, day })
+          .createRecord('task', { description, list })
           .save()
           .then((task) => {
-            day.get('tasks').addObject(task);
+            this.get('tasks').addObject(task);
             this.set('newTaskDescription', '');
           });
       }

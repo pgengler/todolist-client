@@ -21,14 +21,20 @@ export default Route.extend({
   model(params) {
     let date = params.date ? moment(params.date) : moment();
     return hash({
-      days: this.store.query('day', {
+      days: this.store.query('list', {
         include: 'tasks',
         filter: {
+          'list-type': 'day',
           date: datesAround(date)
         },
-        sort: 'date'
+        sort: 'name'
+      }),
+      lists: this.store.query('list', {
+        include: 'tasks',
+        filter: {
+          'list-type': 'list'
+        }
       })
-      // undated: this.store.queryRecord('day', { date: 'undated' })
     });
   },
 

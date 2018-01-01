@@ -4,7 +4,7 @@ import DS from 'ember-data';
 export default DS.Model.extend({
   done: DS.attr('boolean'),
   description: DS.attr('string'),
-  day: DS.belongsTo('day'),
+  list: DS.belongsTo('list'),
 
   isDone: computed('done', {
     get() {

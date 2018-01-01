@@ -26,10 +26,18 @@ export default Component.extend({
         return false;
       }
 
-      this.get('store').queryRecord('day', { date }).then((day) => {
+      this.get('store').query('list', {
+        filter: {
+          'list-type': 'day',
+          name: date
+        },
+        page: {
+          size: 1
+        }
+      }).then((lists) => {
         let task = this.get('store').createRecord('task', {
           description,
-          day
+          list: lists.get('firstObject')
         });
         return task.save();
       }).then(() => {

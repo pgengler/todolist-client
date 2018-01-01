@@ -2,6 +2,11 @@ import Route from '@ember/routing/route';
 
 export default Route.extend({
   model() {
-    return this.store.findAll('recurringTaskDay');
+    return this.store.query('list', {
+      filter: {
+        'list-type': 'recurring-task-day'
+      },
+      include: 'tasks'
+    });
   }
 });

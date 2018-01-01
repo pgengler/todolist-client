@@ -1,4 +1,4 @@
-import { skip, test } from 'qunit';
+import { test } from 'qunit';
 import moment from 'moment';
 import moduleForAcceptance from 'ember-todo/tests/helpers/module-for-acceptance';
 
@@ -10,7 +10,7 @@ function fillInAndPressEnter(selector, text) {
 moduleForAcceptance('Acceptance | Days');
 
 test('visiting / redirects to /days', function(assert) {
-  server.createList('day', 7);
+  server.createList('list', 7, { listType: 'day' });
 
   visit('/');
 
@@ -20,25 +20,32 @@ test('visiting / redirects to /days', function(assert) {
 });
 
 test('visiting /days', function(assert) {
-  server.create('day', { date: '2014-11-06' });
-  server.createList('day', 4);
+  server.create('list', {
+    listType: 'day',
+    name: '2014-11-06'
+  });
+  server.createList('list', 4, { listType: 'day' });
+  server.create('list', { listType: 'list' });
   visit('/days?date=2014-11-07');
 
   andThen(function() {
     assert.equal(currentPath(), 'days');
     assert.contains('.spec-day:first h1', 'Thursday');
     assert.contains('.spec-day:first h2', 'Nov 6, 2014');
-    assert.equal(find('.spec-day').length, 6);
+    assert.equal(find('.task-list').length, 6);
   });
 });
 
 test('adding a new task sends right data to server', function(assert) {
-  let day = server.create('day', { date: '2017-08-20' });
+  let list = server.create('list', {
+    listType: 'day',
+    name: '2017-08-20'
+  });
   assert.expect(3);
 
   server.post('/tasks', function({ tasks }, request) {
     let requestData = JSON.parse(request.requestBody).data;
-    assert.equal(requestData.relationships.day.data.id, day.id, 'request includes correct day ID');
+    assert.equal(requestData.relationships.list.data.id, list.id, 'request includes correct list ID');
     assert.equal(requestData.attributes.description, 'A new task', 'request includes correct description');
 
     return tasks.create(this.normalizedRequestAttrs());
@@ -53,7 +60,7 @@ test('adding a new task sends right data to server', function(assert) {
 });
 
 test('pressing Escape clears textarea for new tasks', function(assert) {
-  server.create('day');
+  server.create('list', { type: 'date' });
   visit('/days');
 
   fillIn('.spec-new-task', 'New task');
@@ -67,12 +74,19 @@ test('dragging a task to another day', function(assert) {
   assert.expect(3);
 
   let task = server.create('task');
-  server.create('day', { date: '2016-03-07', taskIds: [ task.id ] });
-  let targetDay = server.create('day', { date: '2016-03-08' });
+  server.create('list', {
+    listType: 'day',
+    name: '2016-03-07',
+    taskIds: [ task.id ]
+  });
+  let targetDay = server.create('list', {
+    listType: 'day',
+    name: '2016-03-08'
+  });
 
   server.patch('/tasks/:id', function({ tasks }, request) {
     let requestData = JSON.parse(request.requestBody).data;
-    assert.equal(requestData.relationships.day.data.id, targetDay.id, 'makes PATCH request with new day ID');
+    assert.equal(requestData.relationships.list.data.id, targetDay.id, 'makes PATCH request with new list ID');
 
     let task = tasks.find(request.params.id);
     task.update(this.normalizedRequestAttrs());
@@ -92,14 +106,21 @@ test('dragging and dropping a task with Control held copies a task', function(as
   assert.expect(3);
 
   let task = server.create('task');
-  server.create('day', { date: '2016-03-07', taskIds: [ task.id ] });
-  let targetDay = server.create('day', { date: '2016-03-08' });
+  server.create('list', {
+    listType: 'day',
+    name: '2016-03-07',
+    taskIds: [ task.id ]
+  });
+  let targetDay = server.create('list', {
+    listType: 'day',
+    name: '2016-03-08'
+  });
 
   server.post('/tasks', function({ tasks }, request) {
     let requestData = JSON.parse(request.requestBody).data;
     assert.ok(true, 'makes POST request to create new task');
     assert.equal(requestData.attributes.description, task.description, 'creates new task with same description');
-    assert.equal(requestData.relationships.day.data.id, targetDay.id, 'creates new task on the correct day');
+    assert.equal(requestData.relationships.list.data.id, targetDay.id, 'creates new task on the correct day');
 
     return tasks.create(this.normalizedRequestAttrs());
   });
@@ -111,7 +132,11 @@ test('dragging and dropping a task with Control held copies a task', function(as
 test('updating the description for a task', function(assert) {
   assert.expect(3);
   let task = server.create('task', { description: "I'm a task" });
-  server.create('day', { date: '2016-03-07', taskIds: [ task.id ] });
+  server.create('list', {
+    listType: 'day',
+    name: '2016-03-07',
+    taskIds: [ task.id ]
+  });
 
   server.patch('/tasks/:id', function({ tasks }, request) {
     let requestData = JSON.parse(request.requestBody).data;
@@ -133,7 +158,11 @@ test('updating the description for a task', function(assert) {
 test('setting an empty description for a task deletes it', function(assert) {
   assert.expect(2);
   let task = server.create('task');
-  server.create('day', { date: '2016-03-07', taskIds: [ task.id ] });
+  server.create('list', {
+    listType: 'day',
+    name: '2016-03-07',
+    taskIds: [ task.id ]
+  });
 
   server.delete('/tasks/:id', function(db, request) {
     assert.ok(true, 'makes a DELETE request');
@@ -148,7 +177,10 @@ test('setting an empty description for a task deletes it', function(assert) {
 test('newly-created-but-still-saving tasks appear in the "pending" state', function(assert) {
   assert.expect(4);
 
-  server.create('day', { date: '2016-09-10' });
+  server.create('list', {
+    listType: 'day',
+    name: '2016-09-10'
+  });
 
   server.post('/tasks', function(schema) {
     assert.equal(find('.spec-task').length, 1, 'displays the new task');
@@ -166,9 +198,11 @@ test('newly-created-but-still-saving tasks appear in the "pending" state', funct
   });
 });
 
-skip('clicking a date column header focuses the "add new task" for it', function(assert) {
-  // passes in Chrome but fails in Firefox/Phantom
-  server.create('day', { date: '2017-04-02' });
+test('clicking a date column header focuses the "add new task" for it', function(assert) {
+  server.create('list', {
+    listType: 'day',
+    name: '2017-04-02'
+  });
   visit('/days');
   click('h1:first');
   andThen(() => {
@@ -182,8 +216,9 @@ test('tasks are resorted correctly when editing descriptions', function(assert) 
     server.create('task', { description: 'abc' }),
     server.create('task', { description: 'mno' })
   ];
-  server.create('day', {
-    date: moment().format('YYYY-MM-DD'),
+  server.create('list', {
+    listType: 'day',
+    name: moment().format('YYYY-MM-DD'),
     taskIds: tasks.map((t) => t.id)
   });
 

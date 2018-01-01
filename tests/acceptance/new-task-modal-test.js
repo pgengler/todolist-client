@@ -6,11 +6,14 @@ moduleForAcceptance('Acceptance | New Task modal');
 test('adding a new task', function(assert) {
   assert.expect(4);
 
-  let day = server.create('day', { date: '2014-11-13' });
+  let list = server.create('list', {
+    listType: 'day',
+    name: '2014-11-13'
+  });
 
   server.post('/tasks', function({ tasks }, request) {
     let requestData = JSON.parse(request.requestBody).data;
-    assert.equal(requestData.relationships.day.data.id, day.id, 'makes request with the correct day ID');
+    assert.equal(requestData.relationships.list.data.id, list.id, 'makes request with the correct list ID');
     assert.equal(requestData.attributes.description, 'Something', 'makes request with the entered description');
 
     return tasks.create(this.normalizedRequestAttrs());
