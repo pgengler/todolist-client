@@ -1,8 +1,8 @@
 import { hash } from 'rsvp';
+import Ember from 'ember';
 import Route from '@ember/routing/route';
-// import dateParams from 'ember-todo/utils/date-params';
 import moment from 'moment';
-// import { task, timeout } from 'ember-concurrency';
+import { task, timeout } from 'ember-concurrency';
 
 function datesAround(date) {
   let days = [
@@ -38,25 +38,30 @@ export default Route.extend({
     });
   },
 
-  // pollForChanges: task(function* () {
-  //   if (Ember.testing) {
-  //     return;
-  //   }
-  //   yield timeout(5000);
-  //   let searchParams = dateParams(this.get('controller.date'));
-  //   this.store.query('day', searchParams)
-  //     .then((results) => this.get('controller.model.days').addObjects(results))
-  //     // .then(days => this.set('controller.model.days', days))
-  //     .catch((err) => Ember.Logger.assert(false, `Failed to fetch days: ${err}`));
-  //   this.get('pollForChanges').perform();
-  // }).on('activate').cancelOn('deactivate').restartable(),
+  pollForChanges: task(function* () {
+    if (Ember.testing) {
+      return;
+    }
+    yield timeout(5000);
+    this.store.query('list', {
+      include: 'tasks',
+      filter: {
+        'list-type': 'day',
+        date: datesAround(this.get('controller.date') || moment())
+      }
+    })
+      .then((results) => this.get('controller.model.days').addObjects(results))
+      .catch((err) => Ember.Logger.assert(false, `Failed to fetch days: ${err}`));
+
+    this.get('pollForChanges').perform();
+  }).on('activate').cancelOn('deactivate').restartable(),
 
   actions: {
     pausePolling() {
-      // this.get('pollForChanges').cancelAll();
+      this.get('pollForChanges').cancelAll();
     },
     resumePolling() {
-      // this.get('pollForChanges').perform();
+      this.get('pollForChanges').perform();
     }
   }
 });

@@ -1,9 +1,10 @@
 import { next } from '@ember/runloop';
-import { notEmpty } from '@ember/object/computed';
+import { computed } from '@ember/object';
+import { filterBy, notEmpty } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
+import { compare } from '@ember/utils';
 import Component from '@ember/component';
 import DraggableDropzone from '../mixins/draggable-dropzone';
-import { filterBy, sortBy } from '../utils/computed';
 
 function plaintext(str) {
   return str.replace(/[^A-Za-z0-9]/g, '');
@@ -18,7 +19,11 @@ export default Component.extend(DraggableDropzone, {
 
   store: service(),
 
-  sortedTasks: sortBy('list.tasks', 'description', plaintext),
+  sortedTasks: computed('list.tasks.@each.description', function() {
+    return this.get('list.tasks').toArray().sort(function(a, b) {
+      return compare(plaintext(a.get('description')), plaintext(b.get('description')));
+    });
+  }),
   sortedFinishedTasks: filterBy('sortedTasks', 'done', true),
   sortedUnfinishedTasks: filterBy('sortedTasks', 'done', false),
   sortedPendingTasks: filterBy('sortedTasks', 'isNew', true),

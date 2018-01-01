@@ -1,5 +1,4 @@
 export default function() {
-  this.logging = true;
   this.namespace = '/api/v2';
 
   this.get('/lists', function({ lists }, request) {
