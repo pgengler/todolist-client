@@ -8,13 +8,12 @@
 // };
 
 module.exports = function(app) {
-  var globSync   = require('glob').sync;
-  var proxies    = globSync('./proxies/**/*.js', { cwd: __dirname }).map(require);
+  let globSync = require('glob').sync;
+  let proxies = globSync('./proxies/**/*.js', { cwd: __dirname }).map(require);
 
   // Log proxy requests
-  var morgan  = require('morgan');
+  let morgan = require('morgan');
   app.use(morgan('dev'));
 
-  proxies.forEach(function(route) { route(app); });
-
+  proxies.forEach((route) => route(app));
 };

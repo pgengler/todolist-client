@@ -10,15 +10,15 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:ember/recommended',
-    // 'plugin:ember-suave/recommended'
+    'plugin:ember-suave/recommended'
   ],
   env: {
     browser: true
   },
   rules: {
     'array-bracket-spacing': 'off',
+    'camelcase': 'off',
     'ember-suave/no-direct-property-access': 'off',
-    'ember-suave/prefer-destructuring': 'off',
     'new-cap': 'off'
   },
   overrides: [
