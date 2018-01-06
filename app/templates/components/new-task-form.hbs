@@ -5,7 +5,7 @@
     placeholder="New task"
     class="spec-new-task-description"
     insert-newline=(action 'createTask')
-    escape-press=(action 'cancel')
+    escape-press=(action cancel)
   }}
   <br><br>
   <span class="spec-new-task-date">
@@ -23,7 +23,7 @@
   </span>
   <br><br>
   <input type="submit" value="Add" class="spec-create-task">
-  <button type="button" class="spec-cancel-button" {{action 'cancel'}}>
+  <button type="button" class="spec-cancel-button" {{action cancel}}>
     Cancel
   </button>
 </form>

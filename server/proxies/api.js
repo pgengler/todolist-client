@@ -6,10 +6,10 @@ module.exports = function(app) {
   var proxy = require('http-proxy').createProxyServer({});
 
   proxy.on('error', function(err, req) {
-    console.error(err, req.url);
+    console.error(err, req.url); // eslint-disable-line no-console
   });
 
-  app.use(proxyPath, function(req, res, next){
+  app.use(proxyPath, function(req, res/* , next */) {
     // include root path in proxied request
     req.url = proxyPath + '/' + req.url;
     proxy.web(req, res, { target: 'http://localhost:3000' });

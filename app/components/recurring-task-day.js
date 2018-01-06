@@ -2,10 +2,12 @@ import { isEmpty } from '@ember/utils';
 import { alias, sort } from '@ember/object/computed';
 import Component from '@ember/component';
 
+const TASK_SORT_PROPERTIES = [ 'description' ];
+
 export default Component.extend({
   classNames: [ 'task-list' ],
   tasks: alias('list.tasks'),
-  taskSortProperties: [ 'description' ],
+  taskSortProperties: TASK_SORT_PROPERTIES,
   sortedTasks: sort('tasks', 'taskSortProperties'),
 
   newTaskDescription: '',

@@ -10,7 +10,7 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:ember/recommended',
-    'plugin:ember-suave/recommended'
+    // 'plugin:ember-suave/recommended'
   ],
   env: {
     browser: true
@@ -27,7 +27,8 @@ module.exports = {
       files: [
         'testem.js',
         'ember-cli-build.js',
-        'config/**/*.js'
+        'config/**/*.js',
+        'server/**/*.js'
       ],
       parserOptions: {
         sourceType: 'script',
@@ -45,6 +46,12 @@ module.exports = {
       excludedFiles: ['tests/dummy/**/*.js'],
       env: {
         embertest: true
+      },
+      globals: {
+        server: true,
+        datepickerSelect: true,
+        dragAndDrop: true,
+        keyDown: true
       }
     }
   ]

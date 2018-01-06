@@ -1,8 +1,8 @@
 <div class="days">
   {{#each days as |list|}}
-    {{day-tasks list=list store=store editingStart="pausePolling" editingEnd="resumePolling"}}
+    {{day-tasks list=list store=store editingStart=(route-action "pausePolling") editingEnd=(route-action "resumePolling")}}
   {{/each}}
   {{#each lists as |list|}}
-    {{task-list list=list store=store editingStart="pausePolling" editingEnd="resumePolling"}}
+    {{task-list list=list store=store editingStart=(route-action "pausePolling") editingEnd=(route-action "resumePolling")}}
   {{/each}}
 </div>

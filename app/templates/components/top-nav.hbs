@@ -11,8 +11,8 @@
     translucentOverlay=true
   }}
     {{new-task-form
-      formCancelled=(action 'closeModal')
-      taskCreated=(action 'closeModal')
+      cancel=(action 'closeModal')
+      onTaskCreated=(action 'closeModal')
     }}
   {{/modal-dialog}}
 {{/if}}

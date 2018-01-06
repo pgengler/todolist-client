@@ -75,13 +75,6 @@ export default Component.extend(DraggableDropzone, {
       this.store.findRecord('task', id).then((task) => cloningTask ? this.cloneTask(task) : this.moveTaskToList(task));
     },
 
-    editingStart() {
-      this.sendAction('editingStart');
-    },
-    editingEnd() {
-      this.sendAction('editingEnd');
-    },
-
     dragIn() {
       this.set('dragClass', 'active-drop-target');
     },

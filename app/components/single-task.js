@@ -18,13 +18,13 @@ export default Component.extend({
     editTask() {
       this.set('editDescription', this.get('task.description'));
       this.set('isEditing', true);
-      this.sendAction('editingStart');
+      this.editingStart();
     },
 
     cancelEdit() {
       this.set('editDescription', '');
       this.set('isEditing', false);
-      this.sendAction('editingEnd');
+      this.editingEnd();
     },
 
     updateTask() {
@@ -38,7 +38,7 @@ export default Component.extend({
         task.deleteRecord();
         task.save();
       }
-      this.sendAction('editingEnd');
+      this.editingEnd();
     }
   }
 });

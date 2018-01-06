@@ -8,11 +8,9 @@ export default Component.extend({
 
   store: service(),
 
-  actions: {
-    cancel() {
-      this.sendAction('formCancelled');
-    },
+  onTaskCreated() { /* noop */ },
 
+  actions: {
     changeDate(newDate) {
       this.set('newTaskDate', newDate.moment.format('YYYY-MM-DD'));
       this.$('input[type=submit]').focus();
@@ -41,7 +39,7 @@ export default Component.extend({
         });
         return task.save();
       }).then(() => {
-        this.sendAction('taskCreated');
+        this.onTaskCreated();
       });
 
       return false;
