@@ -1,22 +1,17 @@
 import { test } from 'qunit';
 import moment from 'moment';
 import moduleForAcceptance from 'ember-todo/tests/helpers/module-for-acceptance';
+import { authenticateSession } from 'ember-todo/tests/helpers/ember-simple-auth';
 
 function fillInAndPressEnter(selector, text) {
   fillIn(selector, text);
   keyEvent(selector, 'keyup', 13);
 }
 
-moduleForAcceptance('Acceptance | Days');
-
-test('visiting / redirects to /days', function(assert) {
-  server.createList('list', 7, { listType: 'day' });
-
-  visit('/');
-
-  andThen(function() {
-    assert.equal(currentPath(), 'days');
-  });
+moduleForAcceptance('Acceptance | Days', {
+  beforeEach() {
+    authenticateSession(this.application);
+  }
 });
 
 test('visiting /days', function(assert) {

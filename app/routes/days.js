@@ -3,6 +3,7 @@ import Ember from 'ember';
 import Route from '@ember/routing/route';
 import moment from 'moment';
 import { task, timeout } from 'ember-concurrency';
+import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
 function datesAround(date) {
   let days = [
@@ -13,7 +14,7 @@ function datesAround(date) {
   return days.map((day) => day.format('YYYY-MM-DD'));
 }
 
-export default Route.extend({
+export default Route.extend(AuthenticatedRouteMixin, {
   queryParams: {
     date: { refreshModel: true }
   },

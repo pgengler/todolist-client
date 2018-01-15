@@ -53,6 +53,7 @@
     "ember-power-datepicker": "^0.4.0",
     "ember-resolver": "^4.0.0",
     "ember-route-action-helper": "^2.0.6",
+    "ember-simple-auth": "^1.4.2",
     "ember-source": "~2.18.0",
     "eslint-plugin-ember": "^5.0.0",
     "eslint-plugin-ember-suave": "^1.0.0",

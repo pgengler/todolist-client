@@ -106,18 +106,19 @@ nav.top-nav {
   opacity: 0.7;
 }
 
-textarea, input[type=text] {
-  background: none;
-  border: 0;
-  font-family: $body-font;
-  font-size: $body-font-size;
-  height: 100%;
-  outline: 0;
-  overflow: hidden;
-  resize: vertical;
-  width: 100%;
+.task {
+  textarea {
+    background: none;
+    border: 0;
+    font-family: $body-font;
+    font-size: $body-font-size;
+    height: 100%;
+    outline: 0;
+    overflow: hidden;
+    resize: vertical;
+    width: 100%;
+  }
 }
-
 
 i.fa {
   color: black;

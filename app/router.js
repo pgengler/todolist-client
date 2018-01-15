@@ -9,6 +9,7 @@ const Router = EmberRouter.extend({
 Router.map(function() {
   this.route('days');
   this.route('recurring');
+  this.route('login');
 });
 
 export default Router;
