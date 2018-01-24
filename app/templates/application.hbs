@@ -1,5 +1,8 @@
 <div class="page-wrapper">
-  {{top-nav changeDate=(action 'changeDate')}}
+  {{top-nav
+    changeDate=(action 'changeDate')
+    logout=(action 'logout')
+  }}
 
   {{outlet}}
 </div>

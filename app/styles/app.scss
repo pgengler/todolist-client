@@ -26,14 +26,24 @@ div.page-wrapper {
 }
 
 nav.top-nav {
+  display: flex;
   height: 2.5em;
-
-  > div {
-    display: inline-block;
-  }
 
   i {
     vertical-align: top;
+  }
+
+  .todolist-actions {
+    flex-grow: 1;
+
+    & > div {
+      display: inline-block;
+    }
+  }
+
+  .user-actions {
+    flex-grow: 1;
+    text-align: right;
   }
 }
 
