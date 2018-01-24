@@ -1,8 +1,10 @@
 <div class="page-wrapper">
-  {{top-nav
-    changeDate=(action 'changeDate')
-    logout=(action 'logout')
-  }}
+  {{#if session.isAuthenticated}}
+    {{top-nav
+      changeDate=(action 'changeDate')
+      logout=(action 'logout')
+    }}
+  {{/if}}
 
   {{outlet}}
 </div>

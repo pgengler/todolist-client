@@ -1,7 +1,12 @@
 import { test } from 'qunit';
 import moduleForAcceptance from 'ember-todo/tests/helpers/module-for-acceptance';
+import { authenticateSession } from 'ember-todo/tests/helpers/ember-simple-auth';
 
-moduleForAcceptance('Acceptance | New Task modal');
+moduleForAcceptance('Acceptance | New Task modal', {
+  beforeEach() {
+    authenticateSession(this.application);
+  }
+});
 
 test('adding a new task', function(assert) {
   assert.expect(4);
