@@ -1,11 +1,25 @@
-<form {{action 'login' on='submit'}}>
-  <label>
-    Email address
-    {{input type='text' value=email}}
-  </label>
-  <label>
-    Password
-    {{input type='password' value=password}}
-  </label>
-  <button>Log in</button>
+<form class='login-form' {{action 'login' on='submit'}}>
+  <table>
+    <tr>
+      <td>
+        <label for='email'>Email address</label>
+      </td>
+      <td>
+        {{input type='text' value=email id='email'}}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label for='password'>Password</label>
+      </td>
+      <td>
+        {{input type='password' value=password id='password'}}
+      </td>
+    </tr>
+    <tr>
+      <td colspan='2'>
+        <button>Log in</button>
+      </td>
+    </tr>
+  </table>
 </form>
