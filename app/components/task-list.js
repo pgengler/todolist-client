@@ -1,5 +1,6 @@
 import { computed } from '@ember/object';
 import { filterBy, notEmpty } from '@ember/object/computed';
+import { next } from '@ember/runloop';
 import { inject as service } from '@ember/service';
 import { compare } from '@ember/utils';
 import Component from '@ember/component';
@@ -60,9 +61,11 @@ export default Component.extend(DraggableDropzone, {
       let task = this.get('store').createRecord('task', { description, list });
       list.get('tasks').addObject(task);
 
-      task.save()
-        .then(() => this.set('newTaskDescription', ''))
-        .catch((err) => this.get('flashMessages').error(err));
+      next(() => {
+        task.save()
+          .then(() => this.set('newTaskDescription', ''))
+          .catch((err) => this.get('flashMessages').error(err));
+      });
     },
 
     clearTextarea() {

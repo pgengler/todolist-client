@@ -243,7 +243,6 @@ test('tasks are resorted correctly when editing descriptions', function(assert) 
 });
 
 test('displays an error message if adding a task fails', function(assert) {
-  server.logging = true;
   server.create('list', { listType: 'list', name: 'Other' });
 
   server.post('/tasks', function() {
