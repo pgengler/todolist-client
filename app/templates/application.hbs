@@ -1,6 +1,7 @@
 <div class="page-wrapper">
   {{#if session.isAuthenticated}}
     {{top-nav
+      selectedDate=selectedDate
       changeDate=(action 'changeDate')
       logout=(action 'logout')
     }}

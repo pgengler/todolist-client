@@ -17,6 +17,7 @@ function datesAround(date) {
 
 export default Route.extend(AuthenticatedRouteMixin, {
   flashMessages: service(),
+  selectedDate: service(),
 
   queryParams: {
     date: { refreshModel: true }
@@ -25,6 +26,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
   model(params) {
     let date = params.date ? moment(params.date) : moment();
     return hash({
+      date,
       days: this.store.query('list', {
         include: 'tasks',
         filter: {
@@ -42,6 +44,10 @@ export default Route.extend(AuthenticatedRouteMixin, {
     });
   },
 
+  afterModel(model) {
+    this.set('selectedDate.date', model.date);
+  },
+
   pollForChanges: task(function* () {
     if (Ember.testing) {
       return;
@@ -51,7 +57,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
       include: 'tasks',
       filter: {
         'list-type': 'day',
-        date: datesAround(this.get('controller.date') || moment())
+        date: datesAround(this.get('selectedDate.date'))
       }
     })
       .then((results) => this.get('controller.model.days').addObjects(results))

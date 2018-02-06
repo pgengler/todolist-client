@@ -1,4 +1,10 @@
-{{#power-datepicker onSelect=(action 'changeDate') renderInPlace=true as |dp|}}
+{{#power-datepicker
+    center=date
+    selected=date
+    onSelect=(action 'changeDate')
+    renderInPlace=true
+  as |dp|
+}}
   {{#dp.trigger}}
     {{fa-icon 'calendar'}}
   {{/dp.trigger}}

@@ -6,7 +6,7 @@
     {{fa-icon icon='list'}}
   {{/link-to}}
   {{fa-icon icon='plus' class='spec-add-task' click=(action 'toggleModal')}}
-  {{date-picker-icon dateSelected=(action changeDate)}}
+  {{date-picker-icon dateSelected=(action changeDate) date=selectedDate.date}}
 </div>
 <div class="user-actions">
   {{fa-icon 'sign-out' class='spec-logout' click=(action logout)}}
