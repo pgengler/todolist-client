@@ -23,6 +23,10 @@
     &.ember-power-calendar-day--today, &:not([disabled]):hover {
       background-color: rgb(238, 238, 238);
     }
+
+    &.ember-power-calendar-day--selected {
+      background-color: #ddeedd;
+    }
   }
 
   .ember-basic-dropdown-trigger:focus {

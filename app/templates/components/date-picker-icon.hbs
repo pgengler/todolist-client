@@ -1,7 +1,6 @@
-{{#power-datepicker
-    center=date
-    selected=date
+{{#range-datepicker
     onSelect=(action 'changeDate')
+    selected=dateRange
     renderInPlace=true
   as |dp|
 }}
@@ -14,4 +13,4 @@
       {{dp.days}}
     </div>
   {{/dp.content}}
-{{/power-datepicker}}
+{{/range-datepicker}}

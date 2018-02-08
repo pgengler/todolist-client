@@ -11,11 +11,15 @@ module('Integration | Component | date-picker-icon', function(hooks) {
 
   test('triggers a dateSelected action when selecting a date', async function(assert) {
     let newDate;
-    this.set('dateSelected', function(date) {
-      newDate = date;
+    this.setProperties({
+      dateSelected: (date) => newDate = date,
+      dateRange: {
+        start: moment('2018-02-02'),
+        end: moment('2018-02-04')
+      }
     });
     await render(hbs`
-      {{date-picker-icon dateSelected=(action dateSelected)}}
+      {{date-picker-icon dateSelected=(action dateSelected) dateRange=dateRange}}
     `);
 
     await clickTrigger();
@@ -24,14 +28,18 @@ module('Integration | Component | date-picker-icon', function(hooks) {
     assert.equal(newDate, '2018-02-01');
   });
 
-  test('it highlights the currently-selected day', async function(assert) {
-    let date = moment('2017-12-04');
-    this.set('date', date);
+  test('it highlights the currently-viewed dates', async function(assert) {
+    this.set('dateRange', {
+      start: moment('2017-12-04'),
+      end: moment('2017-12-06')
+    });
     await render(hbs`
-      {{date-picker-icon date=date}}
+      {{date-picker-icon dateRange=dateRange}}
     `);
 
     await clickTrigger();
-    assert.equal(this.element.querySelector('.ember-power-calendar-day--selected').textContent.trim(), '4');
+    let selectedDayElements = this.element.querySelectorAll('.ember-power-calendar-day--selected');
+    let highlightedDates = Array.from(selectedDayElements).map((elem) => elem.textContent.trim());
+    assert.deepEqual(highlightedDates, ['4', '5', '6']);
   });
 });

@@ -6,15 +6,6 @@ import moment from 'moment';
 import { task, timeout } from 'ember-concurrency';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-function datesAround(date) {
-  let days = [
-    moment(date).subtract(1, 'day'),
-    date,
-    ...[1, 2, 3].map((val) => moment(date).add(val, 'days'))
-  ];
-  return days.map((day) => day.format('YYYY-MM-DD'));
-}
-
 export default Route.extend(AuthenticatedRouteMixin, {
   flashMessages: service(),
   selectedDate: service(),
@@ -25,13 +16,15 @@ export default Route.extend(AuthenticatedRouteMixin, {
 
   model(params) {
     let date = params.date ? moment(params.date) : moment();
+    let selectedDateService = this.get('selectedDate');
+    selectedDateService.set('date', date);
     return hash({
       date,
       days: this.store.query('list', {
         include: 'tasks',
         filter: {
           'list-type': 'day',
-          date: datesAround(date)
+          date: selectedDateService.get('dates').map((date) => date.format('YYYY-MM-DD'))
         },
         sort: 'name'
       }),
@@ -44,20 +37,17 @@ export default Route.extend(AuthenticatedRouteMixin, {
     });
   },
 
-  afterModel(model) {
-    this.set('selectedDate.date', model.date);
-  },
-
   pollForChanges: task(function* () {
     if (Ember.testing) {
       return;
     }
     yield timeout(5000);
+    let selectedDateService = this.get('selectedDate');
     this.store.query('list', {
       include: 'tasks',
       filter: {
         'list-type': 'day',
-        date: datesAround(this.get('selectedDate.date'))
+        date: selectedDateService.get('dates').map((date) => date.format('YYYY-MM-DD'))
       }
     })
       .then((results) => this.get('controller.model.days').addObjects(results))
