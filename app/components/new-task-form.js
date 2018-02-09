@@ -27,7 +27,7 @@ export default Component.extend({
       this.get('store').query('list', {
         filter: {
           'list-type': 'day',
-          name: date
+          date
         },
         page: {
           size: 1
