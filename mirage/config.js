@@ -7,6 +7,7 @@ export default function() {
     let matchingLists = lists.all();
     if (request.queryParams['filter[date]']) {
       let dates = request.queryParams['filter[date]'];
+      dates = Array.isArray(dates) ? dates : [dates];
       dates.forEach((date) => {
         if (!lists.findBy({ name: date, listType: 'day' })) {
           lists.create({ name: date, listType: 'day' });
