@@ -32,7 +32,8 @@ export default Route.extend(AuthenticatedRouteMixin, {
         include: 'tasks',
         filter: {
           'list-type': 'list'
-        }
+        },
+        sort: 'sort-order'
       })
     });
   },

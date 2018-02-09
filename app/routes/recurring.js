@@ -7,7 +7,8 @@ export default Route.extend(AuthenticatedRouteMixin, {
       filter: {
         'list-type': 'recurring-task-day'
       },
-      include: 'tasks'
+      include: 'tasks',
+      sort: 'sort-order'
     });
   }
 });
