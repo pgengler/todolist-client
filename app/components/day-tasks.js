@@ -9,7 +9,7 @@ export default TaskList.extend({
   layoutName: 'components/task-list',
 
   date: computed('list.name', function() {
-    return moment(this.get('list.name')).utc();
+    return moment(this.get('list.name'));
   }),
 
   formattedDate: computed('date', function() {
@@ -19,17 +19,17 @@ export default TaskList.extend({
 
   isPast: computed('date', function() {
     let date = this.get('date');
-    let now = moment().utc();
+    let now = moment();
     return (date.isBefore(now, 'day') && !date.isSame(now, 'day'));
   }).readOnly(),
 
   isCurrent: computed('date', function() {
-    let now = moment().utc();
+    let now = moment();
     return this.get('date').isSame(now, 'day');
   }).readOnly(),
 
   isFuture: computed('date', function() {
-    let now = moment().utc();
+    let now = moment();
     return this.get('date').isAfter(now, 'day');
   }).readOnly()
 });
