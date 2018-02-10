@@ -1,15 +1,12 @@
 <div class="page-wrapper">
   {{#if session.isAuthenticated}}
     {{top-nav
+      flashMessages=flashMessages
       selectedDate=selectedDate
       changeDate=(action 'changeDate')
       logout=(action 'logout')
     }}
   {{/if}}
-
-  {{#each flashMessages.queue as |flash|}}
-    {{flash-message flash=flash}}
-  {{/each}}
 
   {{outlet}}
 </div>

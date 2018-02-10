@@ -23,6 +23,7 @@ module.exports = function(environment) {
     },
 
     flashMessageDefaults: {
+      preventDuplicates: true,
       types: [ 'success', 'error' ]
     },
 
