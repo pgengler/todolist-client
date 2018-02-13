@@ -5,17 +5,30 @@ import Component from '@ember/component';
 export default Component.extend({
   tagName: 'li',
   editDesciption: oneWay('task.description'),
+
+  editable: true,
   isEditing: false,
 
   classNames: [ 'task' ],
-  classNameBindings: [ 'isEditing:editing' ],
+  classNameBindings: [ 'task.isDone:done', 'isEditing:editing' ],
+  attributeBindings: [ 'draggable' ],
+  draggable: 'true',
 
   doubleClick() {
-    this.send('editTask');
+    if (this.get('editable')) {
+      this.send('editTask');
+    }
+  },
+
+  dragStart(event) {
+    event.dataTransfer.setData('text/data', this.get('task.id'));
   },
 
   actions: {
     editTask() {
+      if (!this.get('editable')) {
+        return;
+      }
       this.set('editDescription', this.get('task.description'));
       this.set('isEditing', true);
       this.editingStart();
@@ -28,6 +41,9 @@ export default Component.extend({
     },
 
     updateTask() {
+      if (!this.get('editable')) {
+        return;
+      }
       let task = this.get('task');
       let description = this.get('editDescription');
       if (!isEmpty(description)) {

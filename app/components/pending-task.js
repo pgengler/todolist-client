@@ -1,5 +1,7 @@
-import Component from '@ember/component';
+import SingleTask from './single-task';
 
-export default Component.extend({
-  tagName: 'li'
+export default SingleTask.extend({
+  classNames: 'pending',
+  draggable: false,
+  editable: false
 });

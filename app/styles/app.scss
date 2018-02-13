@@ -28,10 +28,16 @@ div.page-wrapper {
 
 nav.top-nav {
   display: flex;
+  align-items: center;
   height: 2.5em;
 
-  i {
-    vertical-align: top;
+  a {
+    text-decoration: none;
+  }
+
+  i.fa {
+    color: black;
+    font-size: 2em;
   }
 
   & > div {
@@ -132,11 +138,6 @@ nav.top-nav {
     resize: vertical;
     width: 100%;
   }
-}
-
-i.fa {
-  color: black;
-  font-size: 2em;
 }
 
 .new-task {

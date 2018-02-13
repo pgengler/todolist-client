@@ -1,5 +1,6 @@
 {{#if isEditing}}
   {{autofocus-elastic-textarea class="edit" value=editDescription insert-newline="updateTask" focus-out="cancelEdit" escape-press="cancelEdit"}}
 {{else}}
+  {{input type="checkbox" checked=task.isDone}}
   {{markdown-to-html task.description}}
 {{/if}}
