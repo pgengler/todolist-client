@@ -2107,11 +2107,12 @@ ember-assign-helper@0.1.2:
     ember-cli-babel "^6.0.0-beta.9"
 
 ember-basic-dropdown@^1.0.0-beta.0:
-  version "1.0.0-beta.0"
-  resolved "https://registry.yarnpkg.com/ember-basic-dropdown/-/ember-basic-dropdown-1.0.0-beta.0.tgz#1815bc57f622febc7de3d2181472de046d3e5982"
+  version "1.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/ember-basic-dropdown/-/ember-basic-dropdown-1.0.0-beta.3.tgz#c6fb53d4cc8e4ddc1ec9f09e23207f15be7b1f04"
   dependencies:
     ember-cli-babel "^6.11.0"
     ember-cli-htmlbars "^2.0.3"
+    ember-maybe-in-element "^0.1.0"
     ember-native-dom-helpers "^0.5.10"
 
 ember-cli-app-version@^3.0.0:
@@ -2121,7 +2122,7 @@ ember-cli-app-version@^3.0.0:
     ember-cli-babel "^6.8.0"
     git-repo-version "^1.0.0"
 
-ember-cli-babel@^6.0.0, ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.0.0-beta.7, ember-cli-babel@^6.0.0-beta.9, ember-cli-babel@^6.8.0, ember-cli-babel@^6.8.2, ember-cli-babel@^6.9.0:
+ember-cli-babel@^6.0.0, ember-cli-babel@^6.0.0-beta.7, ember-cli-babel@^6.8.0, ember-cli-babel@^6.9.0:
   version "6.10.0"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-6.10.0.tgz#81424acd1d97fb13658168121eeb2007d6edee84"
   dependencies:
@@ -2139,7 +2140,7 @@ ember-cli-babel@^6.0.0, ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.0.0-be
     ember-cli-version-checker "^2.1.0"
     semver "^5.4.1"
 
-ember-cli-babel@^6.10.0, ember-cli-babel@^6.11.0, ember-cli-babel@^6.3.0, ember-cli-babel@^6.6.0, ember-cli-babel@^6.7.2, ember-cli-babel@^6.8.1:
+ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.0.0-beta.9, ember-cli-babel@^6.10.0, ember-cli-babel@^6.11.0, ember-cli-babel@^6.3.0, ember-cli-babel@^6.6.0, ember-cli-babel@^6.7.2, ember-cli-babel@^6.8.1, ember-cli-babel@^6.8.2:
   version "6.11.0"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-6.11.0.tgz#79cb184bac3c05bfe181ddc306bac100ab1f9493"
   dependencies:
@@ -2754,6 +2755,12 @@ ember-maybe-import-regenerator@^0.1.5, ember-maybe-import-regenerator@^0.1.6:
     ember-cli-babel "^6.0.0-beta.4"
     regenerator-runtime "^0.9.5"
 
+ember-maybe-in-element@^0.1.0:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/ember-maybe-in-element/-/ember-maybe-in-element-0.1.3.tgz#1c89be49246e580c1090336ad8be31e373f71b60"
+  dependencies:
+    ember-cli-babel "^6.11.0"
+
 ember-modal-dialog@^2.2.0:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/ember-modal-dialog/-/ember-modal-dialog-2.4.1.tgz#8dec3e13aa7f6172f7ffb83a94d02251cd4d6e66"
@@ -2792,8 +2799,8 @@ ember-power-calendar@^0.7.0:
     ember-native-dom-helpers "^0.5.10"
 
 ember-power-datepicker@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/ember-power-datepicker/-/ember-power-datepicker-0.5.0.tgz#a0ee170c9522e402cd12cc20e658b0090da72b59"
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/ember-power-datepicker/-/ember-power-datepicker-0.5.1.tgz#1aa1f73f71f94b4065b76d37cea3e84c2e119fe0"
   dependencies:
     ember-basic-dropdown "^1.0.0-beta.0"
     ember-cli-babel "^6.11.0"
@@ -5343,9 +5350,13 @@ moment-timezone@^0.5.13:
   dependencies:
     moment ">= 2.9.0"
 
-"moment@>= 2.6.0", "moment@>= 2.9.0", moment@^2.18.0, moment@^2.18.1:
+"moment@>= 2.6.0", moment@^2.18.0:
   version "2.19.3"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.19.3.tgz#bdb99d270d6d7fda78cc0fbace855e27fe7da69f"
+
+"moment@>= 2.9.0", moment@^2.18.1:
+  version "2.20.1"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.20.1.tgz#d6eb1a46cbcc14a2b2f9434112c1ff8907f313fd"
 
 morgan@^1.6.1, morgan@^1.8.1:
   version "1.9.0"
