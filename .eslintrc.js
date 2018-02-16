@@ -45,14 +45,8 @@ module.exports = {
     {
       files: ['tests/**/*.js'],
       excludedFiles: ['tests/dummy/**/*.js'],
-      env: {
-        embertest: true
-      },
       globals: {
-        server: true,
-        datepickerSelect: true,
-        dragAndDrop: true,
-        keyDown: true
+        server: true
       }
     }
   ]

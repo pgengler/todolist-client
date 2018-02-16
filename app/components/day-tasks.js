@@ -4,7 +4,7 @@ import moment from 'moment';
 
 export default TaskList.extend({
   attributeBindings: [ 'formattedDate:spec-date' ],
-  classNameBindings: [ ':spec-day', 'isPast:past', 'isCurrent:current', 'isFuture:future' ],
+  classNameBindings: [ 'isPast:past', 'isCurrent:current', 'isFuture:future' ],
   headerComponent: 'day-tasks/header',
   layoutName: 'components/task-list',
 

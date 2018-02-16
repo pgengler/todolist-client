@@ -1,35 +1,33 @@
-import { computed } from '@ember/object';
-import { filterBy, notEmpty } from '@ember/object/computed';
+import { filterBy, notEmpty, sort } from '@ember/object/computed';
 import { next } from '@ember/runloop';
 import { inject as service } from '@ember/service';
-import { compare } from '@ember/utils';
 import Component from '@ember/component';
 import DraggableDropzone from '../mixins/draggable-dropzone';
 
-function plaintext(str) {
-  return str.replace(/[^A-Za-z0-9]/g, '');
-}
+const taskSorting = [ 'plaintextDescription' ];
 
 export default Component.extend(DraggableDropzone, {
+  attributeBindings: [ 'list.name:data-test-list-name' ],
   classNames: [ 'task-list' ],
   classNameBindings: [ 'hasUnfinishedTasks', 'dragClass' ],
+
+  dragClass: '',
   headerComponent: 'task-list/header',
   newTaskDescription: '',
-  dragClass: '',
+  taskSorting,
 
   flashMessages: service(),
   store: service(),
 
-  sortedTasks: computed('list.tasks.@each.description', function() {
-    return this.get('list.tasks').toArray().sort(function(a, b) {
-      return compare(plaintext(a.get('description')), plaintext(b.get('description')));
-    });
-  }),
-  sortedFinishedTasks: filterBy('sortedTasks', 'done', true),
-  sortedUnfinishedTasks: filterBy('sortedTasks', 'done', false),
-  sortedPendingTasks: filterBy('sortedTasks', 'isNew', true),
+  finishedTasks: filterBy('list.tasks', 'done', true),
+  unfinishedTasks: filterBy('list.tasks', 'done', false),
+  pendingTasks: filterBy('list.tasks', 'isNew'),
 
-  hasUnfinishedTasks: notEmpty('sortedUnfinishedTasks'),
+  sortedFinishedTasks: sort('finishedTasks', 'taskSorting'),
+  sortedUnfinishedTasks: sort('unfinishedTasks', 'taskSorting'),
+  sortedPendingTasks: sort('pendingTasks', 'taskSorting'),
+
+  hasUnfinishedTasks: notEmpty('unfinishedTasks'),
 
   didInsertElement() {
     this.$('.task-list-header').on('click', () => this.$('.new-task').focus());
@@ -59,7 +57,6 @@ export default Component.extend(DraggableDropzone, {
       }
       let list = this.get('list');
       let task = this.get('store').createRecord('task', { description, list });
-      list.get('tasks').addObject(task);
 
       next(() => {
         task.save()

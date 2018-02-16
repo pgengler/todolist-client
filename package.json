@@ -56,14 +56,16 @@
     "ember-power-datepicker": "^0.5.0",
     "ember-resolver": "^4.0.0",
     "ember-route-action-helper": "^2.0.6",
-    "ember-simple-auth": "^1.4.2",
+    "ember-simple-auth": "^1.5.0",
     "ember-source": "~3.0.0",
+    "ember-test-selectors": "^0.3.8",
     "eslint-plugin-ember": "^5.0.0",
     "eslint-plugin-ember-suave": "^1.0.0",
     "glob": "^7.1.1",
     "http-proxy": "^1.12.0",
     "loader.js": "^4.2.3",
-    "morgan": "^1.6.1"
+    "morgan": "^1.6.1",
+    "qunit-dom": "^0.5.0"
   },
   "engines": {
     "node": "^4.5 || 6.* || >= 7.*"

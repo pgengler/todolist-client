@@ -15,5 +15,9 @@ export default DS.Model.extend({
       this.save();
       return value;
     }
+  }),
+
+  plaintextDescription: computed('description', function() {
+    return this.get('description').replace(/[^A-Za-z0-9]/g, '');
   })
 });

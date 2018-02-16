@@ -1,12 +1,13 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'ember-todo/tests/helpers/module-for-acceptance';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
+import { currentRouteName, visit } from '@ember/test-helpers';
 
-moduleForAcceptance('Acceptance | recurring tasks');
+module('Acceptance | recurring tasks', function(hooks) {
+  setupApplicationTest(hooks);
 
-test('redirects to login if user is not authenticated', function(assert) {
-  visit('/recurring');
+  test('redirects to login if user is not authenticated', async function(assert) {
+    await visit('/recurring');
 
-  andThen(function() {
     assert.equal(currentRouteName(), 'login');
   });
 });

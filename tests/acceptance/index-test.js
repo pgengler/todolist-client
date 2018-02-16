@@ -1,24 +1,23 @@
-import { test } from 'qunit';
-import moduleForAcceptance from 'ember-todo/tests/helpers/module-for-acceptance';
-import { authenticateSession } from 'ember-todo/tests/helpers/ember-simple-auth';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
+import { currentRouteName, visit } from '@ember/test-helpers';
+import { authenticateSession } from 'ember-simple-auth/test-support';
 
-moduleForAcceptance('Acceptance | index');
+module('Acceptance | index', function(hooks) {
+  setupApplicationTest(hooks);
 
-test('redirects to login page when user is not authenticated', function(assert) {
-  visit('/');
+  test('redirects to login page when user is not authenticated', async function(assert) {
+    await visit('/');
 
-  andThen(function() {
     assert.equal(currentRouteName(), 'login', 'redirected to login page');
-    assert.equal(find('.top-nav').length, 0, 'does not show top nav when not logged in');
+    assert.dom('.top-nav').doesNotExist('does not show top nav when not logged in');
   });
-});
 
-test('redirects to days view when user is authenticated', function(assert) {
-  authenticateSession(this.application);
-  visit('/');
+  test('redirects to days view when user is authenticated', async function(assert) {
+    await authenticateSession(this.application);
+    await visit('/');
 
-  andThen(function() {
     assert.equal(currentRouteName(), 'days', 'redirected to days page');
-    assert.equal(find('.top-nav').length, 1, 'shows top nav when logged in');
+    assert.dom('.top-nav').exists('shows top nav when logged in');
   });
 });
