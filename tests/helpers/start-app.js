@@ -4,7 +4,6 @@ import { merge } from '@ember/polyfills';
 import { run } from '@ember/runloop';
 
 import keyboardRegisterTestHelpers from './ember-keyboard/register-test-helpers';
-import registerPowerDatepickerHelpers from '../../tests/helpers/ember-power-datepicker';
 
 export default function startApp(attrs) {
   let attributes = merge({}, config.APP);
@@ -15,7 +14,6 @@ export default function startApp(attrs) {
     let application = Application.create(attributes);
     application.setupForTesting();
     keyboardRegisterTestHelpers();
-    registerPowerDatepickerHelpers();
     application.injectTestHelpers();
     return application;
   });

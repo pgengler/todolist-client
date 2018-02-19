@@ -1,5 +1,4 @@
 import { triggerEvent } from '@ember/test-helpers';
-import { run } from '@ember/runloop';
 
 export class DataTransferMock {
   constructor() {
@@ -18,11 +17,9 @@ export class DataTransferMock {
   }
 }
 
-export default function dragAndDrop(draggedElementSelector, targetElementSelector, eventOptions = { }) {
-  return run(async function() {
-    let dataTransfer = new DataTransferMock();
-    await triggerEvent(draggedElementSelector, 'dragstart', Object.assign(eventOptions, { dataTransfer }));
-    await triggerEvent(targetElementSelector, 'drop', Object.assign(eventOptions, { dataTransfer }));
-    return await triggerEvent(draggedElementSelector, 'dragend', { dataTransfer });
-  });
+export default async function dragAndDrop(draggedElementSelector, targetElementSelector, eventOptions = { }) {
+  let dataTransfer = new DataTransferMock();
+  await triggerEvent(draggedElementSelector, 'dragstart', Object.assign(eventOptions, { dataTransfer }));
+  await triggerEvent(targetElementSelector, 'drop', Object.assign(eventOptions, { dataTransfer }));
+  return await triggerEvent(draggedElementSelector, 'dragend', { dataTransfer });
 }

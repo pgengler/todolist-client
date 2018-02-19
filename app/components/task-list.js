@@ -38,7 +38,7 @@ export default Component.extend(DraggableDropzone, {
   },
 
   cloneTask(task) {
-    let newTask = this.store.createRecord('task', {
+    let newTask = this.get('store').createRecord('task', {
       list: this.get('list'),
       description: task.get('description')
     });
@@ -74,7 +74,7 @@ export default Component.extend(DraggableDropzone, {
 
       this.set('dragClass', '');
 
-      this.store.findRecord('task', id).then((task) => cloningTask ? this.cloneTask(task) : this.moveTaskToList(task));
+      this.get('store').findRecord('task', id).then((task) => cloningTask ? this.cloneTask(task) : this.moveTaskToList(task));
     },
 
     dragIn() {

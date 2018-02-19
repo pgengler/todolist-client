@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
-import { click, currentRouteName, fillIn, find, findAll, pauseTest, triggerEvent, triggerKeyEvent, visit } from '@ember/test-helpers';
+import { click, currentRouteName, fillIn, findAll, triggerEvent, triggerKeyEvent, visit } from '@ember/test-helpers';
 import dragAndDrop from 'ember-todo/tests/helpers/drag-and-drop';
 import { authenticateSession } from 'ember-simple-auth/test-support';
 import { Response } from 'ember-cli-mirage';
@@ -57,7 +57,7 @@ module('Acceptance | Days', function(hooks) {
     await fillIn('.spec-new-task', 'New task');
     await triggerKeyEvent('.spec-new-task', 'keyup', 27);
 
-    assert.equal(find('.spec-new-task').value, '', 'textarea is cleared after pressing Escape');
+    assert.dom('.spec-new-task').hasValue('', 'textarea is cleared after pressing Escape');
   });
 
   test('dragging a task to another day', async function(assert) {
