@@ -59,10 +59,10 @@ export default Component.extend(DraggableDropzone, {
       let task = this.get('store').createRecord('task', { description });
 
       task.set('list', list);
+      this.set('newTaskDescription', '');
 
       next(() => {
         task.save()
-          .then(() => this.set('newTaskDescription', ''))
           .catch((err) => this.get('flashMessages').error(err));
       });
     },

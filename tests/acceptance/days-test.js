@@ -164,11 +164,12 @@ module('Acceptance | Days', function(hooks) {
   });
 
   test('newly-created-but-still-saving tasks appear in the "pending" state', async function(assert) {
-    assert.expect(4);
+    assert.expect(5);
 
     server.post('/tasks', function(schema) {
       assert.equal(findAll('.spec-task').length, 1, 'displays the new task');
       assert.dom('.spec-task.pending').exists('new task gets the "pending" CSS class');
+      assert.dom('.spec-new-task').hasValue('', '"new task" textarea is cleared');
 
       return schema.tasks.create(this.normalizedRequestAttrs());
     });
