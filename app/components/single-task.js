@@ -1,4 +1,5 @@
 import { isEmpty } from '@ember/utils';
+import { computed } from '@ember/object';
 import { oneWay } from '@ember/object/computed';
 import Component from '@ember/component';
 
@@ -6,11 +7,16 @@ export default Component.extend({
   tagName: 'li',
   editDesciption: oneWay('task.description'),
 
-  editable: true,
+  editingStart() { /* noop */ },
+  editingEnd() { /* noop */ },
+
+  editable: computed('task.{isError,isNew}', function() {
+    return !this.get('task.isNew') || this.get('task.isError');
+  }),
   isEditing: false,
 
   classNames: [ 'task' ],
-  classNameBindings: [ 'task.isDone:done', 'isEditing:editing' ],
+  classNameBindings: [ 'task.isDone:done', 'isEditing:editing', 'task.isError:error', 'task.isNew:pending' ],
   attributeBindings: [ 'draggable' ],
   draggable: 'true',
 
