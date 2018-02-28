@@ -2,7 +2,6 @@ export default function() {
   this.passthrough('/write-coverage');
 
   this.namespace = '/api/v2';
-  this.logging = true;
 
   this.get('/lists', function({ lists }, request) {
     let matchingLists = lists.all();

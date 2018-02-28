@@ -51,7 +51,6 @@ module('Acceptance | Days', function(hooks) {
   });
 
   test('pressing Escape clears textarea for new tasks', async function(assert) {
-    server.create('list', { type: 'date' });
     await visit('/days');
 
     await fillIn('.spec-new-task', 'New task');
