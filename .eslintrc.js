@@ -9,8 +9,7 @@ module.exports = {
   ],
   extends: [
     'eslint:recommended',
-    'plugin:ember/recommended',
-    'plugin:ember-suave/recommended'
+    'plugin:ember/recommended'
   ],
   env: {
     browser: true
@@ -18,7 +17,6 @@ module.exports = {
   rules: {
     'array-bracket-spacing': 'off',
     'camelcase': 'off',
-    'ember-suave/no-direct-property-access': 'off',
     'new-cap': 'off'
   },
   overrides: [
