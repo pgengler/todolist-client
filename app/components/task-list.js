@@ -16,6 +16,9 @@ export default Component.extend(DraggableDropzone, {
   newTaskDescription: '',
   taskSorting,
 
+  editingStart() { /* noop */ },
+  editingEnd() { /* noop */ },
+
   flashMessages: service(),
   store: service(),
 
