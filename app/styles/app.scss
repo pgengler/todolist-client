@@ -175,3 +175,9 @@ nav.top-nav {
     text-align: center;
   }
 }
+
+@media (max-width: 25em) {
+  input, textarea {
+    font-size: 16px !important;
+  }
+}
