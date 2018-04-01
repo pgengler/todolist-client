@@ -2,13 +2,13 @@
 @import "ember-modal-dialog/ember-modal-appearance";
 @import "ember-power-datepicker";
 
-@import "datepicker";
-@import "flash-messages";
-@import "task";
-
 $body-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
 $body-font-size: 10pt;
 $body-background-color: #23A08D;
+
+@import "datepicker";
+@import "flash-messages";
+@import "task";
 
 body {
   background-color: $body-background-color;
@@ -109,12 +109,6 @@ nav.top-nav {
   }
 }
 
-@media (max-width: 25em) {
-  .task-list {
-    width: calc(100vw - 8px - .25em);
-  }
-}
-
 .days, .recurring-task-days {
   height: calc(100vh - 3.5em);
   -webkit-overflow-scrolling: touch;
@@ -131,20 +125,6 @@ nav.top-nav {
 .done {
   color: #666;
   opacity: 0.7;
-}
-
-.task {
-  textarea {
-    background: none;
-    border: 0;
-    font-family: $body-font;
-    font-size: $body-font-size;
-    height: 100%;
-    outline: 0;
-    overflow: hidden;
-    resize: vertical;
-    width: 100%;
-  }
 }
 
 .new-task {
@@ -179,5 +159,13 @@ nav.top-nav {
 @media (max-width: 25em) {
   input, textarea {
     font-size: 16px !important;
+  }
+
+  .task-list {
+    width: calc(100vw - 8px - .25em);
+
+    ul {
+      max-height: calc(100vh - 16em);
+    }
   }
 }

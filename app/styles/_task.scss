@@ -33,4 +33,17 @@
   & > div:not(:first-child) {
     flex-grow: 1;
   }
+
+  textarea {
+    background: none;
+    border: 0;
+    font-family: $body-font;
+    font-size: $body-font-size;
+    height: 100%;
+    outline: 0;
+    overflow: hidden;
+    position: relative;
+    resize: vertical;
+    width: 100%;
+  }
 }
