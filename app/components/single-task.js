@@ -7,6 +7,8 @@ export default Component.extend({
   tagName: 'li',
   editDesciption: oneWay('task.description'),
 
+  editingStart() { /* noop */ },
+
   editable: computed('task.{isError,isNew}', function() {
     return !this.get('task.isNew') || this.get('task.isError');
   }),

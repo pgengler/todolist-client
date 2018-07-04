@@ -45,12 +45,22 @@ module('Integration | Component | single-task', function(hooks) {
   });
 
   test('double-clicking a task enters edit mode', async function(assert) {
+    let editingStartCalled = false;
     this.set('task', EmberObject.create({
       description: 'foo bar'
     }));
-    await render(hbs`{{single-task task=task}}`);
+    this.set('editingStart', () => {
+      editingStartCalled = true;
+    });
+    await render(hbs`
+      {{single-task
+        task=task
+        editingStart=editingStart
+      }}
+    `);
     await triggerEvent('.task', 'dblclick');
 
+    assert.ok(editingStartCalled, 'made call to "editStart" action');
     assert.dom('.task').hasClass('editing');
     assert.dom('input[type=checkbox]').doesNotExist('checkbox is no longer displayed');
     assert.dom('textarea').exists('displays a textarea for editing');
