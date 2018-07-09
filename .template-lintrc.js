@@ -5,6 +5,6 @@ module.exports = {
   extends: 'recommended',
 
   rules: {
-    'invalid-interactive': false
+    'no-invalid-interactive': false
   }
 };
