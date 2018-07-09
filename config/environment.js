@@ -22,6 +22,10 @@ module.exports = function(environment) {
       // when it is created
     },
 
+    emberKeyboard: {
+      listeners: [ 'keyUp', 'keyDown', 'keyPress' ],
+    },
+
     flashMessageDefaults: {
       preventDuplicates: true,
       types: [ 'success', 'error' ]

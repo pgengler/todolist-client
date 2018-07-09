@@ -2788,11 +2788,11 @@ ember-inflector@^2.0.0:
   dependencies:
     ember-cli-babel "^6.0.0"
 
-ember-keyboard@~2.2.2:
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/ember-keyboard/-/ember-keyboard-2.2.2.tgz#868e5bf409d49e90922eb63a7738375c18c2db94"
+ember-keyboard@~3.0.0:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/ember-keyboard/-/ember-keyboard-3.0.2.tgz#839ab5c32a6b3d3ce0b735728c1e1bc362107464"
   dependencies:
-    ember-cli-babel "^6.8.2"
+    ember-cli-babel "^6.6.0"
 
 ember-load-initializers@^1.1.0:
   version "1.1.0"
