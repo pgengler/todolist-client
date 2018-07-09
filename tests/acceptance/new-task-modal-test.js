@@ -1,11 +1,11 @@
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
+import setupAcceptanceTest from 'ember-todo/tests/helpers/setup-acceptance-test';
 import { click, fillIn, visit } from '@ember/test-helpers';
 import { authenticateSession } from 'ember-simple-auth/test-support';
 import datepickerSelect from 'ember-todo/tests/helpers/datepicker-select';
 
 module('Acceptance | New Task modal', function(hooks) {
-  setupApplicationTest(hooks);
+  setupAcceptanceTest(hooks);
   hooks.beforeEach(() => authenticateSession());
 
   test('adding a new task', async function(assert) {

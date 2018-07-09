@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
+import setupAcceptanceTest from 'ember-todo/tests/helpers/setup-acceptance-test';
 import { click, currentRouteName, visit } from '@ember/test-helpers';
 import { authenticateSession } from 'ember-simple-auth/test-support';
 
 module('Acceptance | login & logout', function(hooks) {
-  setupApplicationTest(hooks);
+  setupAcceptanceTest(hooks);
 
   test('logging out redirects to login', async function(assert) {
     await authenticateSession();

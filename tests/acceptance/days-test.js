@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
 import { click, currentRouteName, fillIn, findAll, triggerEvent, triggerKeyEvent, visit } from '@ember/test-helpers';
+import setupAcceptanceTest from 'ember-todo/tests/helpers/setup-acceptance-test';
 import dragAndDrop from 'ember-todo/tests/helpers/drag-and-drop';
 import { authenticateSession } from 'ember-simple-auth/test-support';
 import { Response } from 'ember-cli-mirage';
@@ -11,7 +11,7 @@ async function fillInAndPressEnter(selector, text) {
 }
 
 module('Acceptance | Days', function(hooks) {
-  setupApplicationTest(hooks);
+  setupAcceptanceTest(hooks);
   hooks.beforeEach(() => authenticateSession());
 
   test('visiting /days', async function(assert) {

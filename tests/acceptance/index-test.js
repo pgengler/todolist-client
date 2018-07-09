@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
-import { setupApplicationTest } from 'ember-qunit';
+import setupAcceptanceTest from 'ember-todo/tests/helpers/setup-acceptance-test';
 import { currentRouteName, visit } from '@ember/test-helpers';
 import { authenticateSession } from 'ember-simple-auth/test-support';
 
 module('Acceptance | index', function(hooks) {
-  setupApplicationTest(hooks);
+  setupAcceptanceTest(hooks);
 
   test('redirects to login page when user is not authenticated', async function(assert) {
     await visit('/');
