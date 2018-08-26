@@ -1,0 +1,19 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/todolist/client
+    docker:
+      - image: circleci/node:10-browsers
+    steps:
+      - checkout
+      - restore_cache:
+          key: v1-yarn-{{ checksum "yarn.lock" }}
+      - run: yarn
+      - save_cache:
+          key: v1-yarn-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
+            - ~/.cache/yarn
+      - run: COVERAGE=true yarn test
+      - store_artifacts:
+          path: coverage
