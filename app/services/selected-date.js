@@ -7,7 +7,7 @@ export default Service.extend({
   date: null,
 
   dates: computed('date', function() {
-    let date = this.get('date');
+    let date = this.date;
     return [
       moment(date).subtract(1, 'day'),
       date,
@@ -20,8 +20,8 @@ export default Service.extend({
 
   dateRange: computed('startDate', 'endDate', function() {
     return {
-      start: this.get('startDate'),
-      end: this.get('endDate')
+      start: this.startDate,
+      end: this.endDate
     };
   })
 });

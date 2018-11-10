@@ -41,25 +41,25 @@ export default Component.extend(DraggableDropzone, {
   },
 
   cloneTask(task) {
-    let newTask = this.get('store').createRecord('task', {
-      list: this.get('list'),
+    let newTask = this.store.createRecord('task', {
+      list: this.list,
       description: task.get('description')
     });
     newTask.save();
   },
   moveTaskToList(task) {
-    task.set('list', this.get('list'));
+    task.set('list', this.list);
     task.save();
   },
 
   actions: {
     addTask() {
-      let description = this.get('newTaskDescription').trim();
+      let description = this.newTaskDescription.trim();
       if (!description) {
         return;
       }
-      let list = this.get('list');
-      let task = this.get('store').createRecord('task', {
+      let list = this.list;
+      let task = this.store.createRecord('task', {
         description,
         list
       });
@@ -68,7 +68,7 @@ export default Component.extend(DraggableDropzone, {
 
       next(() => {
         task.save()
-          .catch((err) => this.get('flashMessages').error(err));
+          .catch((err) => this.flashMessages.error(err));
       });
     },
 
@@ -81,7 +81,7 @@ export default Component.extend(DraggableDropzone, {
 
       this.set('dragClass', '');
 
-      this.get('store').findRecord('task', id).then((task) => cloningTask ? this.cloneTask(task) : this.moveTaskToList(task));
+      this.store.findRecord('task', id).then((task) => cloningTask ? this.cloneTask(task) : this.moveTaskToList(task));
     },
 
     dragIn() {

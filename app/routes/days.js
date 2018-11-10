@@ -16,7 +16,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
 
   model(params) {
     let date = params.date ? moment(params.date) : moment();
-    let selectedDateService = this.get('selectedDate');
+    let selectedDateService = this.selectedDate;
     selectedDateService.set('date', date);
     return hash({
       date,
@@ -43,7 +43,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
       return;
     }
     yield timeout(5000);
-    let selectedDateService = this.get('selectedDate');
+    let selectedDateService = this.selectedDate;
     this.store.query('list', {
       include: 'tasks',
       filter: {
@@ -52,17 +52,17 @@ export default Route.extend(AuthenticatedRouteMixin, {
       }
     })
       .then((results) => this.get('controller.model.days').addObjects(results))
-      .catch((err) => this.get('flashMessages').error(`Failed to fetch days: ${err}`));
+      .catch((err) => this.flashMessages.error(`Failed to fetch days: ${err}`));
 
-    this.get('pollForChanges').perform();
+    this.pollForChanges.perform();
   }).on('activate').cancelOn('deactivate').restartable(),
 
   actions: {
     pausePolling() {
-      this.get('pollForChanges').cancelAll();
+      this.pollForChanges.cancelAll();
     },
     resumePolling() {
-      this.get('pollForChanges').perform();
+      this.pollForChanges.perform();
     }
   }
 });

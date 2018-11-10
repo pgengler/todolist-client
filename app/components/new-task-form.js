@@ -17,14 +17,14 @@ export default Component.extend({
     },
 
     createTask() {
-      let description = this.get('newTaskDescription').trim();
-      let date = this.get('newTaskDate');
+      let description = this.newTaskDescription.trim();
+      let date = this.newTaskDate;
 
       if (isEmpty(description) || isEmpty(date)) {
         return false;
       }
 
-      this.get('store').query('list', {
+      this.store.query('list', {
         filter: {
           'list-type': 'day',
           date
@@ -33,7 +33,7 @@ export default Component.extend({
           size: 1
         }
       }).then((lists) => {
-        let task = this.get('store').createRecord('task', {
+        let task = this.store.createRecord('task', {
           description,
           list: lists.get('firstObject')
         });

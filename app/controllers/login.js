@@ -7,8 +7,8 @@ export default Controller.extend({
 
   actions: {
     login() {
-      let { email, password } = this.getProperties('email', 'password');
-      this.get('session').authenticate('authenticator:oauth2', email, password)
+      let { email, password } = this;
+      this.session.authenticate('authenticator:oauth2', email, password)
         .then(() => next(() => this.transitionToRoute('index')))
         .catch(() => alert('Login failed'))
         .finally(() => this.setProperties({ email: null, password: null }));

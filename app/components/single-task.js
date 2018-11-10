@@ -20,7 +20,7 @@ export default Component.extend({
   draggable: 'true',
 
   doubleClick() {
-    if (this.get('editable')) {
+    if (this.editable) {
       this.send('editTask');
     }
   },
@@ -29,7 +29,7 @@ export default Component.extend({
     let now = Date.now();
     let touch = event.changedTouches[0];
 
-    let lastTouchEndEventInfo = this.get('lastTouchEndEventInfo');
+    let lastTouchEndEventInfo = this.lastTouchEndEventInfo;
     this.set('lastTouchEndEventInfo', {
       clientX: touch.clientX,
       clientY: touch.clientY,
@@ -78,7 +78,7 @@ export default Component.extend({
 
   actions: {
     editTask() {
-      if (!this.get('editable')) {
+      if (!this.editable) {
         return;
       }
       this.set('editDescription', this.get('task.description'));
@@ -93,11 +93,11 @@ export default Component.extend({
     },
 
     updateTask() {
-      if (!this.get('editable')) {
+      if (!this.editable) {
         return;
       }
-      let task = this.get('task');
-      let description = this.get('editDescription');
+      let task = this.task;
+      let description = this.editDescription;
       if (!isEmpty(description)) {
         task.set('description', description);
         task.save();
