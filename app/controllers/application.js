@@ -11,7 +11,7 @@ export default Controller.extend({
     },
 
     logout() {
-      this.get('session').invalidate();
+      this.session.invalidate();
     }
   }
 });

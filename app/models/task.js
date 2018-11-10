@@ -8,7 +8,7 @@ export default DS.Model.extend({
 
   isDone: computed('done', {
     get() {
-      return this.get('done');
+      return this.done;
     },
     set(key, value) {
       this.set('done', value);
@@ -18,6 +18,6 @@ export default DS.Model.extend({
   }),
 
   plaintextDescription: computed('description', function() {
-    return this.get('description').replace(/[^A-Za-z0-9]/g, '');
+    return this.description.replace(/[^A-Za-z0-9]/g, '');
   })
 });

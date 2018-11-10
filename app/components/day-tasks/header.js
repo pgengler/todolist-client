@@ -8,10 +8,10 @@ export default TaskListHeader.extend({
   }),
 
   dayOfWeek: computed('date', function() {
-    return this.get('date').format('dddd');
+    return this.date.format('dddd');
   }),
 
   formattedDate: computed('date', function() {
-    return this.get('date').format('MMM D, YYYY');
+    return this.date.format('MMM D, YYYY');
   })
 });
