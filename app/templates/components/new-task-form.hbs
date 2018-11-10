@@ -4,12 +4,12 @@
     value=newTaskDescription
     placeholder="New task"
     class="spec-new-task-description"
-    insert-newline=(action 'createTask')
+    insert-newline=(action "createTask")
     escape-press=(action cancel)
   }}
   <br><br>
   <div class="spec-new-task-date">
-    {{#power-datepicker selected=newTaskDate onSelect=(action 'changeDate') renderInPlace=true as |dp|}}
+    {{#power-datepicker selected=newTaskDate onSelect=(action "changeDate") renderInPlace=true as |dp|}}
       {{#dp.trigger}}
         <input type="text" placeholder="Date" value={{newTaskDate}} readonly>
       {{/dp.trigger}}

@@ -1,11 +1,11 @@
 <div class="todolist-actions">
-  {{#link-to 'days' (query-params date=null) title='Home'}}
-    {{fa-icon icon='home'}}
+  {{#link-to "days" (query-params date=null) title="Home"}}
+    {{fa-icon icon="home"}}
   {{/link-to}}
-  {{#link-to 'recurring' title='Recurring tasks'}}
-    {{fa-icon icon='list'}}
+  {{#link-to "recurring" title="Recurring tasks"}}
+    {{fa-icon icon="list"}}
   {{/link-to}}
-  {{fa-icon icon='plus' class='spec-add-task' click=(action 'toggleModal')}}
+  {{fa-icon icon="plus" class="spec-add-task" click=(action "toggleModal")}}
   {{date-picker-icon dateSelected=(action changeDate) dateRange=selectedDate.dateRange}}
 </div>
 <div class="flash-messages">
@@ -14,19 +14,19 @@
   {{/each}}
 </div>
 <div class="user-actions">
-  {{fa-icon 'sign-out' class='spec-logout' click=(action logout)}}
+  {{fa-icon "sign-out" class="spec-logout" click=(action logout)}}
 </div>
 
 {{#if isShowingNewTaskModal}}
   {{#modal-dialog
     containerClass="new-task-dialog"
-    onClose=(action 'toggleModal')
-    targetAttachment='center'
+    onClose=(action "toggleModal")
+    targetAttachment="center"
     translucentOverlay=true
   }}
     {{new-task-form
-      cancel=(action 'closeModal')
-      onTaskCreated=(action 'closeModal')
+      cancel=(action "closeModal")
+      onTaskCreated=(action "closeModal")
     }}
   {{/modal-dialog}}
 {{/if}}
