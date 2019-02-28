@@ -59,7 +59,7 @@
     "ember-power-datepicker": "^0.5.0",
     "ember-qunit": "^3.4.1",
     "ember-resolver": "^5.0.1",
-    "ember-simple-auth": "^1.7.0",
+    "ember-simple-auth": "^1.8.1",
     "ember-source": "~3.8.0",
     "ember-test-selectors": "^1.0.0",
     "eslint-plugin-ember": "^5.2.0",
