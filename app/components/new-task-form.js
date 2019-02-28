@@ -12,7 +12,7 @@ export default Component.extend({
 
   actions: {
     changeDate(newDate) {
-      this.set('newTaskDate', newDate.moment.format('YYYY-MM-DD'));
+      this.set('newTaskDate', newDate.moment);
       this.$('input[type=submit]').focus();
     },
 
@@ -27,7 +27,7 @@ export default Component.extend({
       this.store.query('list', {
         filter: {
           'list-type': 'day',
-          date
+          date: date.format('YYYY-MM-DD')
         },
         page: {
           size: 1

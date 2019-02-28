@@ -4,7 +4,9 @@
   onClose=onClose
   onFocus=onFocus
   destination=destination
+  initiallyOpened=initiallyOpened
   horizontalPosition=horizontalPosition
+  calculatePosition=calculatePosition
   verticalPosition=verticalPosition
   renderInPlace=renderInPlace
   as |dd|}}
@@ -13,7 +15,7 @@
     center=center
     locale=locale
     onCenterChange=onCenterChange
-    onSelect=(action "onSelect")
+    onSelect=onSelect
     selected=selected as |cal|}}
 
     {{#with (hash
@@ -36,9 +38,6 @@
           content=(component dd.content dropdown=datepicker defaultClass="ember-power-datepicker-content")
           nav=(component cal.nav calendar=datepicker)
           days=(component cal.days calendar=datepicker data-power-calendar-id=datepicker.calendarUniqueId)
-        )
-        (hash
-          helpers=(hash format-date=(action formatDate selected format))
         )
       )}}
     {{/with}}
