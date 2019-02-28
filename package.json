@@ -40,7 +40,6 @@
     "ember-cli-inject-live-reload": "^1.8.2",
     "ember-cli-mirage": "^0.4.1",
     "ember-cli-moment-shim": "^3.1.0",
-    "ember-cli-release": "^0.2.9",
     "ember-cli-sass": "^7.0.0",
     "ember-cli-showdown": "^4.1.0",
     "ember-cli-sri": "^2.1.1",
