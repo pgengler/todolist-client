@@ -2,15 +2,15 @@
   {{#each days as |list|}}
     {{day-tasks
       list=list
-      editingStart=(route-action "pausePolling")
-      editingEnd=(route-action "resumePolling")
+      editingStart=(action "stopPolling")
+      editingEnd=(action "startPolling")
     }}
   {{/each}}
   {{#each lists as |list|}}
     {{task-list
       list=list
-      editingStart=(route-action "pausePolling")
-      editingEnd=(route-action "resumePolling")
+      editingStart=(action "stopPolling")
+      editingEnd=(action "startPolling")
     }}
   {{/each}}
 </div>

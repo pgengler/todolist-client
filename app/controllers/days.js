@@ -13,6 +13,13 @@ export default Controller.extend({
     changeDate(date) {
       let dateString = moment(date).format('YYYY-MM-DD');
       this.set('date', dateString);
+    },
+
+    stopPolling() {
+      this.send('pausePolling');
+    },
+    startPolling() {
+      this.send('resumePolling');
     }
   }
 });
