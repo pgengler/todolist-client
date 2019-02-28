@@ -3,14 +3,21 @@ import SingleLineTextarea from './single-line-textarea';
 export default SingleLineTextarea.extend({
   didInsertElement() {
     this._super(...arguments);
-    let elem = this.$();
 
-    let updateHeight = function() {
-      elem.height(1);
-      elem[0].style.height = `${elem[0].scrollHeight}px`;
+    let updateHeight = () => {
+      this.element.style.height = '1px';
+      window.requestAnimationFrame(() => {
+        if (this.element) this.element.style.height = `${this.element.scrollHeight}px`;
+      });
     };
+    this.set('updateHeight', updateHeight);
 
     updateHeight();
-    elem.on('keyup', updateHeight);
-  }
+    this.element.addEventListener('keyup', updateHeight);
+  },
+
+  willDestroyElement() {
+    this._super(...arguments);
+    this.element.removeEventListener('keyup', this.updateHeight);
+  },
 });

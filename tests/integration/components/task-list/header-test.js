@@ -16,7 +16,7 @@ module('Integration | Component | task list/header', function(hooks) {
       {{task-list/header list=list}}
     `);
 
-    assert.equal(this.$('.task-list-header').length, 1, 'has header class');
-    assert.equal(this.$('h1').text().trim(), 'Foo Bar Baz', 'renders list name');
+    assert.dom('.task-list-header').exists('has header class');
+    assert.dom('h1').hasText('Foo Bar Baz', 'renders list name');
   });
 });

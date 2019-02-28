@@ -16,7 +16,7 @@ module('Integration | Component | day tasks/header', function(hooks) {
       {{day-tasks/header list=list}}
     `);
 
-    assert.equal(this.$('h1').text().trim(), 'Sunday');
-    assert.equal(this.$('h2').text().trim(), 'Dec 31, 2017');
+    assert.dom('h1').hasText('Sunday');
+    assert.dom('h2').hasText('Dec 31, 2017');
   });
 });

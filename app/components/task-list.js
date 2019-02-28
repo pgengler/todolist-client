@@ -33,11 +33,13 @@ export default Component.extend(DraggableDropzone, {
   hasUnfinishedTasks: notEmpty('unfinishedTasks'),
 
   didInsertElement() {
-    this.$('.task-list-header').on('click', () => this.$('.new-task').focus());
+    let clickHandler = () => this.element.querySelector('.new-task').focus();
+    this.set('clickHandler', clickHandler);
+    this.element.querySelector('.task-list-header').addEventListener('click', clickHandler);
   },
 
   willDestroyElement() {
-    this.$('.task-list-header').off('click');
+    this.element.querySelector('.task-list-header').removeEventListener('click', this.clickHandler);
   },
 
   cloneTask(task) {

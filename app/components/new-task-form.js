@@ -13,7 +13,7 @@ export default Component.extend({
   actions: {
     changeDate(newDate) {
       this.set('newTaskDate', newDate.moment);
-      this.$('input[type=submit]').focus();
+      this.element.querySelector('input[type=submit]').focus();
     },
 
     createTask() {
