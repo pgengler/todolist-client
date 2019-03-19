@@ -31,7 +31,7 @@
     "ember-cli-deploy-build": "^1.1.0",
     "ember-cli-deploy-display-revisions": "^1.0.0",
     "ember-cli-deploy-revision-data": "^1.0.0",
-    "ember-cli-deploy-with-rsync": "^0.2.0",
+    "ember-cli-deploy-with-rsync": "^0.3.0",
     "ember-cli-deprecation-workflow": "^1.0.1",
     "ember-cli-eslint": "^5.1.0",
     "ember-cli-flash": "^1.7.1",
