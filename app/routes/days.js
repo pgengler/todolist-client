@@ -43,16 +43,19 @@ export default Route.extend(AuthenticatedRouteMixin, {
       return;
     }
     yield timeout(5000);
-    let selectedDateService = this.selectedDate;
-    this.store.query('list', {
-      include: 'tasks',
-      filter: {
-        'list-type': 'day',
-        date: selectedDateService.get('dates').map((date) => date.format('YYYY-MM-DD'))
-      }
-    })
-      .then((results) => this.get('controller.model.days').addObjects(results))
-      .catch((err) => this.flashMessages.error(`Failed to fetch days: ${err}`));
+    try {
+      let results = yield this.store.query('list', {
+        include: 'tasks',
+        filter: {
+          'list-type': 'day',
+          date: this.selectedDate.dates.map((date) => date.format('YYYY-MM-DD'))
+        }
+      });
+      this.get('controller.model.days').addObjects(results);
+    }
+    catch (err) {
+      this.flashMessages.error(`Failed to fetch days: ${err}`);
+    }
 
     this.pollForChanges.perform();
   }).on('activate').cancelOn('deactivate').restartable(),
