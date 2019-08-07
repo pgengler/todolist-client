@@ -1,21 +1,21 @@
-{{#if isEditing}}
-  {{autofocus-elastic-textarea
-    class="edit"
-    value=editDescription
-    insert-newline=(action "updateTask")
-    focus-out=(action "cancelEdit")
-    escape-press=(action "cancelEdit")
-  }}
+{{#if this.isEditing}}
+  <AutofocusElasticTextarea
+    @class="edit"
+    @value={{this.editDescription}}
+    @insert-newline={{action "updateTask"}}
+    @focus-out={{action "cancelEdit"}}
+    @escape-press={{action "cancelEdit"}}
+  />
 {{else}}
   <div class="state">
-    {{#if task.isError}}
+    {{#if @task.isError}}
       {{fa-icon "warning" title="Task failed to save"}}
-    {{else if task.isNew}}
+    {{else if @task.isNew}}
       {{fa-icon "spinner" spin=true}}
     {{else}}
-      {{input type="checkbox" checked=task.isDone}}
+      <Input @type="checkbox" @checked={{@task.isDone}} />
     {{/if}}
   </div>
 
-  {{markdown-to-html task.description}}
+  {{markdown-to-html @task.description}}
 {{/if}}

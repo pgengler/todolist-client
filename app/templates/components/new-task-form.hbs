@@ -1,17 +1,17 @@
 <h1>Add new task</h1>
 <form class="new-task" onsubmit={{action "createTask"}}>
-  {{autofocus-elastic-textarea
-    value=newTaskDescription
-    placeholder="New task"
-    class="spec-new-task-description"
-    insert-newline=(action "createTask")
-    escape-press=(action cancel)
-  }}
+  <AutofocusElasticTextarea
+    @value={{this.newTaskDescription}}
+    @placeholder="New task"
+    @class="spec-new-task-description"
+    @insert-newline={{action "createTask"}}
+    @escape-press={{action @cancel}}
+  />
   <br><br>
   <div class="spec-new-task-date">
-    <PowerDatepicker @selected={{newTaskDate}} @onSelect={{action "changeDate"}} @renderInPlace={{true}} as |dp|>
+    <PowerDatepicker @selected={{this.newTaskDate}} @onSelect={{action "changeDate"}} @renderInPlace={{true}} as |dp|>
       <dp.Trigger>
-        <input type="text" placeholder="Date" value={{moment-format newTaskDate "YYYY-MM-DD" allow-empty=true}} readonly>
+        <input type="text" placeholder="Date" value={{moment-format this.newTaskDate "YYYY-MM-DD" allow-empty=true}} readonly>
       </dp.Trigger>
       <dp.Content>
         <div class="date-picker-content">
@@ -23,7 +23,7 @@
   </div>
   <br><br>
   <input type="submit" value="Add" class="spec-create-task">
-  <button type="button" class="spec-cancel-button" {{action cancel}}>
+  <button type="button" class="spec-cancel-button" {{action @cancel}}>
     Cancel
   </button>
 </form>

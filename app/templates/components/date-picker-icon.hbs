@@ -1,16 +1,16 @@
-{{#range-datepicker
-    onSelect=(action "changeDate")
-    selected=dateRange
-    renderInPlace=true
+<RangeDatepicker
+    @onSelect={{action "changeDate"}}
+    @selected={{@dateRange}}
+    @renderInPlace={{true}}
   as |dp|
-}}
-  {{#dp.Trigger}}
+>
+  <dp.Trigger>
     {{fa-icon "calendar"}}
-  {{/dp.Trigger}}
-  {{#dp.Content}}
+  </dp.Trigger>
+  <dp.Content>
     <div class="date-picker-content">
       {{dp.Nav}}
       {{dp.Days}}
     </div>
-  {{/dp.Content}}
-{{/range-datepicker}}
+  </dp.Content>
+</RangeDatepicker>

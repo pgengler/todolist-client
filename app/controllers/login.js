@@ -3,6 +3,9 @@ import { inject as service } from '@ember/service';
 import { next } from '@ember/runloop';
 
 export default Controller.extend({
+  email: null,
+  password: null,
+
   session: service(),
 
   actions: {

@@ -1,11 +1,11 @@
 <div class="page-wrapper">
-  {{#if session.isAuthenticated}}
-    {{top-nav
-      flashMessages=flashMessages
-      selectedDate=selectedDate
-      changeDate=(action "changeDate")
-      logout=(action "logout")
-    }}
+  {{#if this.session.isAuthenticated}}
+    <TopNav
+      @flashMessages={{this.flashMessages}}
+      @selectedDate={{this.selectedDate}}
+      @changeDate={{action "changeDate"}}
+      @logout={{action "logout"}}
+    />
   {{/if}}
 
   {{outlet}}

@@ -1,15 +1,21 @@
-{{component headerComponent list=list}}
+{{component this.headerComponent list=@list}}
 <ul>
-  {{#each sortedUnfinishedTasks as |task|}}
-    {{single-task task=task class="spec-task" editingStart=editingStart editingEnd=editingEnd}}
+  {{#each this.sortedUnfinishedTasks as |task|}}
+    <SingleTask @task={{task}} @class="spec-task" @editingStart={{@editingStart}} @editingEnd={{@editingEnd}} />
   {{/each}}
-  {{#each sortedFinishedTasks as |task|}}
-    {{single-task task=task class="spec-task" editingStart=editingStart editingEnd=editingEnd}}
+  {{#each this.sortedFinishedTasks as |task|}}
+    <SingleTask @task={{task}} @class="spec-task" @editingStart={{@editingStart}} @editingEnd={{@editingEnd}} />
   {{/each}}
-  {{#each sortedPendingTasks as |task|}}
-    {{single-task task=task class="spec-task" editingStart=editingStart editingEnd=editingEnd}}
+  {{#each this.sortedPendingTasks as |task|}}
+    <SingleTask @task={{task}} @class="spec-task" @editingStart={{@editingStart}} @editingEnd={{@editingEnd}} />
   {{/each}}
   <li class="task">
-    {{elastic-textarea class="new-task spec-new-task" value=newTaskDescription placeholder="Add new task" insert-newline=(action "addTask") escape-press=(action "clearTextarea")}}
+    <ElasticTextarea
+      @class="new-task spec-new-task"
+      @value={{this.newTaskDescription}}
+      @placeholder="Add new task"
+      @insert-newline={{action "addTask"}}
+      @escape-press={{action "clearTextarea"}}
+    />
   </li>
 </ul>

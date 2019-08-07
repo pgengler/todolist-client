@@ -6,7 +6,7 @@
           <label for="email">Email address</label>
         </td>
         <td>
-          {{input type="text" value=email id="email"}}
+          <Input @type="text" @value={{this.email}} @id="email" />
         </td>
       </tr>
       <tr>
@@ -14,7 +14,7 @@
           <label for="password">Password</label>
         </td>
         <td>
-          {{input type="password" value=password id="password"}}
+          <Input @type="password" @value={{this.password}} id="password" />
         </td>
       </tr>
       <tr>
