@@ -1,8 +1,8 @@
-import DS from 'ember-data';
+import Model, { attr, hasMany } from '@ember-data/model';
 
-export default DS.Model.extend({
-  listType: DS.attr('string'),
-  name: DS.attr('string'),
+export default Model.extend({
+  listType: attr('string'),
+  name: attr('string'),
 
-  tasks: DS.hasMany()
+  tasks: hasMany()
 });

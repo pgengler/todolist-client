@@ -1,10 +1,10 @@
 import { computed } from '@ember/object';
-import DS from 'ember-data';
+import Model, { attr, belongsTo } from '@ember-data/model';
 
-export default DS.Model.extend({
-  done: DS.attr('boolean'),
-  description: DS.attr('string'),
-  list: DS.belongsTo('list'),
+export default Model.extend({
+  done: attr('boolean'),
+  description: attr('string'),
+  list: belongsTo('list'),
 
   isDone: computed('done', {
     get() {
