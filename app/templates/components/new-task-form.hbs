@@ -9,17 +9,17 @@
   }}
   <br><br>
   <div class="spec-new-task-date">
-    {{#power-datepicker selected=newTaskDate onSelect=(action "changeDate") renderInPlace=true as |dp|}}
-      {{#dp.trigger}}
+    <PowerDatepicker @selected={{newTaskDate}} @onSelect={{action "changeDate"}} @renderInPlace={{true}} as |dp|>
+      <dp.Trigger>
         <input type="text" placeholder="Date" value={{moment-format newTaskDate "YYYY-MM-DD" allow-empty=true}} readonly>
-      {{/dp.trigger}}
-      {{#dp.content}}
+      </dp.Trigger>
+      <dp.Content>
         <div class="date-picker-content">
-          {{dp.nav}}
-          {{dp.days}}
+          <dp.Nav />
+          <dp.Days />
         </div>
-      {{/dp.content}}
-    {{/power-datepicker}}
+      </dp.Content>
+    </PowerDatepicker>
   </div>
   <br><br>
   <input type="submit" value="Add" class="spec-create-task">
