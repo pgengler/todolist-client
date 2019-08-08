@@ -1,20 +1,20 @@
 import Controller from '@ember/controller';
-import { inject as service } from '@ember/service';
+import { action } from '@ember/object';
 import { next } from '@ember/runloop';
+import { inject as service } from '@ember/service';
 
-export default Controller.extend({
-  email: null,
-  password: null,
+export default class extends Controller {
+  email = null;
+  password = null;
 
-  session: service(),
+  @service session;
 
-  actions: {
-    login() {
-      let { email, password } = this;
-      this.session.authenticate('authenticator:oauth2', email, password)
-        .then(() => next(() => this.transitionToRoute('index')))
-        .catch(() => alert('Login failed'))
-        .finally(() => this.setProperties({ email: null, password: null }));
-    }
+  @action
+  login() {
+    let { email, password } = this;
+    this.session.authenticate('authenticator:oauth2', email, password)
+      .then(() => next(() => this.transitionToRoute('index')))
+      .catch(() => alert('Login failed'))
+      .finally(() => this.setProperties({ email: null, password: null }));
   }
-});
+}

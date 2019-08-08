@@ -10,7 +10,7 @@ export class DataTransferMock {
   }
 
   getData(format) {
-    if (this.savedData.hasOwnProperty(format)) {
+    if (Object.prototype.hasOwnProperty.call(this.savedData, format)) {
       return this.savedData[ format ];
     }
     return null;

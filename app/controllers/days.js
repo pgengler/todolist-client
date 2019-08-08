@@ -1,25 +1,28 @@
-import { alias } from '@ember/object/computed';
 import Controller from '@ember/controller';
+import { action } from '@ember/object';
+import { alias } from '@ember/object/computed';
 import moment from 'moment';
 
-export default Controller.extend({
-  queryParams: [ 'date' ],
-  date: null,
+export default class extends Controller {
+  queryParams = [ 'date' ];
+  date = null;
 
-  days: alias('model.days'),
-  lists: alias('model.lists'),
+  @alias('model.days') days;
+  @alias('model.lists') lists;
 
-  actions: {
-    changeDate(date) {
-      let dateString = moment(date).format('YYYY-MM-DD');
-      this.set('date', dateString);
-    },
-
-    stopPolling() {
-      this.send('pausePolling');
-    },
-    startPolling() {
-      this.send('resumePolling');
-    }
+  @action
+  changeDate(date) {
+    let dateString = moment(date).format('YYYY-MM-DD');
+    this.set('date', dateString);
   }
-});
+
+  @action
+  stopPolling() {
+    this.send('pausePolling');
+  }
+
+  @action
+  startPolling() {
+    this.send('resumePolling');
+  }
+}
