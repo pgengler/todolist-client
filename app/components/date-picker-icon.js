@@ -1,17 +1,16 @@
 import Component from '@ember/component';
+import { action } from '@ember/object';
 import { alias } from '@ember/object/computed';
 import moment from 'moment';
 
-export default Component.extend({
+export default class extends Component {
+  tagName = '';
 
-  dateSelected() { /* noop */ },
+  @alias('selectedDate.date') date;
 
-  date: alias('selectedDate.date'),
-
-  actions: {
-    changeDate(newDate) {
-      let date = moment(newDate.moment.start).utc().format('YYYY-MM-DD');
-      this.dateSelected(date);
-    }
+  @action
+  changeDate(newDate) {
+    let date = moment(newDate.moment.start).utc().format('YYYY-MM-DD');
+    if (this.dateSelected) this.dateSelected(date);
   }
-});
+}

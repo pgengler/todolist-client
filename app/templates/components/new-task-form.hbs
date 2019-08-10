@@ -2,10 +2,10 @@
 <form class="new-task" onsubmit={{action "createTask"}}>
   <AutofocusElasticTextarea
     @value={{this.newTaskDescription}}
-    @placeholder="New task"
-    @class="spec-new-task-description"
     @insert-newline={{action "createTask"}}
-    @escape-press={{action @cancel}}
+    @escape-press={{@cancel}}
+    class="spec-new-task-description"
+    placeholder="New task"
   />
   <br><br>
   <div class="spec-new-task-date">

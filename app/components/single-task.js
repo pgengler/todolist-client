@@ -1,31 +1,34 @@
 import { isEmpty } from '@ember/utils';
-import { computed } from '@ember/object';
+import { action, computed } from '@ember/object';
 import { oneWay } from '@ember/object/computed';
 import Component from '@ember/component';
 
-export default Component.extend({
-  tagName: 'li',
-  editDesciption: oneWay('task.description'),
+export default class extends Component {
+  tagName = '';
 
-  editingStart() { /* noop */ },
+  @oneWay('task.description') editDesciption;
 
-  editable: computed('task.{isError,isNew}', function() {
+  @computed('task.{isError,isNew}')
+  get editable() {
     return !this.get('task.isNew') || this.get('task.isError');
-  }),
-  isEditing: false,
+  }
 
-  classNames: [ 'task' ],
-  classNameBindings: [ 'task.isDone:done', 'isEditing:editing', 'task.isError:error', 'task.isNew:pending' ],
-  attributeBindings: [ 'draggable' ],
-  draggable: 'true',
+  isEditing = false;
 
-  doubleClick() {
-    if (this.editable) {
-      this.send('editTask');
+  draggable = 'true';
+
+  @action
+  editTask() {
+    if (!this.editable) {
+      return;
     }
-  },
+    this.set('editDescription', this.get('task.description'));
+    this.set('isEditing', true);
+    if (this.editingStart) this.editingStart();
+  }
 
-  touchEnd(event) {
+  @action
+  simulateDoubleClicks(event) {
     let now = Date.now();
     let touch = event.changedTouches[0];
 
@@ -70,43 +73,35 @@ export default Component.extend({
         event.preventDefault();
       }
     }
-  },
-
-  dragStart(event) {
-    event.dataTransfer.setData('text/data', this.get('task.id'));
-  },
-
-  actions: {
-    editTask() {
-      if (!this.editable) {
-        return;
-      }
-      this.set('editDescription', this.get('task.description'));
-      this.set('isEditing', true);
-      this.editingStart();
-    },
-
-    cancelEdit() {
-      this.set('editDescription', '');
-      this.set('isEditing', false);
-      this.editingEnd();
-    },
-
-    updateTask() {
-      if (!this.editable) {
-        return;
-      }
-      let task = this.task;
-      let description = this.editDescription;
-      if (!isEmpty(description)) {
-        task.set('description', description);
-        task.save();
-        this.set('isEditing', false);
-      } else {
-        task.deleteRecord();
-        task.save();
-      }
-      this.editingEnd();
-    }
   }
-});
+
+  @action
+  onDragStart(event) {
+    event.dataTransfer.setData('text/data', this.get('task.id'));
+  }
+
+  @action
+  cancelEdit() {
+    this.set('editDescription', '');
+    this.set('isEditing', false);
+    if (this.editingEnd) this.editingEnd();
+  }
+
+  @action
+  updateTask() {
+    if (!this.editable) {
+      return;
+    }
+    let task = this.task;
+    let description = this.editDescription;
+    if (!isEmpty(description)) {
+      task.set('description', description);
+      task.save();
+      this.set('isEditing', false);
+    } else {
+      task.deleteRecord();
+      task.save();
+    }
+    if (this.editingEnd) this.editingEnd();
+  }
+}

@@ -1,17 +1,22 @@
-import TaskListHeader from 'ember-todo/components/task-list/header';
+import Component from '@ember/component';
 import { computed } from '@ember/object';
 import moment from 'moment';
 
-export default TaskListHeader.extend({
-  date: computed('list.name', function() {
+export default class extends Component {
+  tagName = '';
+
+  @computed('list.name')
+  get date() {
     return moment(this.get('list.name'));
-  }),
+  }
 
-  dayOfWeek: computed('date', function() {
+  @computed('date')
+  get dayOfWeek() {
     return this.date.format('dddd');
-  }),
+  }
 
-  formattedDate: computed('date', function() {
+  @computed('date')
+  get formattedDate() {
     return this.date.format('MMM D, YYYY');
-  })
-});
+  }
+}

@@ -16,10 +16,12 @@ body {
   font-family: $body-font;
   font-size: $body-font-size;
   margin: 0;
+  overflow: hidden;
   position: fixed;
 
-  &:not(.testing) {
-    overflow: hidden;
+  &.testing {
+    overflow: visible;
+    position: static;
   }
 }
 

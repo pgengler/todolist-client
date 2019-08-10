@@ -7,7 +7,7 @@ import { Response } from 'ember-cli-mirage';
 
 async function fillInAndPressEnter(selector, text) {
   await fillIn(selector, text);
-  return triggerKeyEvent(selector, 'keyup', 13);
+  return triggerKeyEvent(selector, 'keyup', 'Enter');
 }
 
 module('Acceptance | Days', function(hooks) {

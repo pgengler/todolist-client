@@ -1,48 +1,49 @@
-import { isEmpty } from '@ember/utils';
-import { inject as service } from '@ember/service';
 import Component from '@ember/component';
+import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
+import { isEmpty } from '@ember/utils';
 
-export default Component.extend({
-  newTaskDescription: '',
-  newTaskDate: null,
+export default class extends Component {
+  tagName = '';
 
-  store: service(),
+  newTaskDescription = '';
+  newTaskDate = null;
 
-  onTaskCreated() { /* noop */ },
+  @service store;
 
-  actions: {
-    changeDate(newDate) {
-      this.set('newTaskDate', newDate.moment);
-      this.element.querySelector('input[type=submit]').focus();
-    },
+  @action
+  changeDate(newDate) {
+    this.set('newTaskDate', newDate.moment);
+    document.querySelector('.new-task input[type=submit]').focus();
+  }
 
-    createTask() {
-      let description = this.newTaskDescription.trim();
-      let date = this.newTaskDate;
+  @action
+  createTask() {
+    let description = this.newTaskDescription.trim();
+    let date = this.newTaskDate;
 
-      if (isEmpty(description) || isEmpty(date)) {
-        return false;
-      }
-
-      this.store.query('list', {
-        filter: {
-          'list-type': 'day',
-          date: date.format('YYYY-MM-DD')
-        },
-        page: {
-          size: 1
-        }
-      }).then((lists) => {
-        let task = this.store.createRecord('task', {
-          description,
-          list: lists.get('firstObject')
-        });
-        return task.save();
-      }).then(() => {
-        this.onTaskCreated();
-      });
-
+    if (isEmpty(description) || isEmpty(date)) {
       return false;
     }
+
+    this.store.query('list', {
+      filter: {
+        'list-type': 'day',
+        date: date.format('YYYY-MM-DD')
+      },
+      page: {
+        size: 1
+      }
+    }).then((lists) => {
+      let task = this.store.createRecord('task', {
+        description,
+        list: lists.get('firstObject')
+      });
+      return task.save();
+    }).then(() => {
+      if (this.onTaskCreate) this.onTaskCreated();
+    });
+
+    return false;
   }
-});
+}

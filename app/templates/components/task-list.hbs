@@ -1,21 +1,31 @@
-{{component this.headerComponent list=@list}}
-<ul>
-  {{#each this.sortedUnfinishedTasks as |task|}}
-    <SingleTask @task={{task}} @class="spec-task" @editingStart={{@editingStart}} @editingEnd={{@editingEnd}} />
-  {{/each}}
-  {{#each this.sortedFinishedTasks as |task|}}
-    <SingleTask @task={{task}} @class="spec-task" @editingStart={{@editingStart}} @editingEnd={{@editingEnd}} />
-  {{/each}}
-  {{#each this.sortedPendingTasks as |task|}}
-    <SingleTask @task={{task}} @class="spec-task" @editingStart={{@editingStart}} @editingEnd={{@editingEnd}} />
-  {{/each}}
-  <li class="task">
-    <ElasticTextarea
-      @class="new-task spec-new-task"
-      @value={{this.newTaskDescription}}
-      @placeholder="Add new task"
-      @insert-newline={{action "addTask"}}
-      @escape-press={{action "clearTextarea"}}
-    />
-  </li>
-</ul>
+<div
+  class="task-list {{if this.hasUnfinishedTasks 'has-unfinished-tasks'}} {{this.dragClass}}"
+  data-test-list-name={{@list.name}}
+  {{on "dragleave" (action this.dragOut)}}
+  {{on "dragover" (action this.dragIn)}}
+  {{on "drop" (action this.dropped)}}
+  {{did-insert this.initializeHeaderClickHandler}}
+  ...attributes
+>
+  {{component this.headerComponent list=@list}}
+  <ul>
+    {{#each this.sortedUnfinishedTasks as |task|}}
+      <SingleTask @task={{task}} @editingStart={{@editingStart}} @editingEnd={{@editingEnd}} class="spec-task" />
+    {{/each}}
+    {{#each this.sortedFinishedTasks as |task|}}
+      <SingleTask @task={{task}} @editingStart={{@editingStart}} @editingEnd={{@editingEnd}} class="spec-task" />
+    {{/each}}
+    {{#each this.sortedPendingTasks as |task|}}
+      <SingleTask @task={{task}} @editingStart={{@editingStart}} @editingEnd={{@editingEnd}} class="spec-task" />
+    {{/each}}
+    <li class="task">
+      <ElasticTextarea
+        @escape-press={{action "clearTextarea"}}
+        @insert-newline={{action "addTask"}}
+        @value={{this.newTaskDescription}}
+        class="new-task spec-new-task"
+        placeholder="Add new task"
+      />
+    </li>
+  </ul>
+</div>

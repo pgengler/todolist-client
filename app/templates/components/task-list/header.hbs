@@ -1,1 +1,7 @@
-<h1>{{@list.name}}</h1>
+<div class="task-list-header">
+  {{#if hasBlock}}
+    {{yield @list}}
+  {{else}}
+    <h1>{{@list.name}}</h1>
+  {{/if}}
+</div>

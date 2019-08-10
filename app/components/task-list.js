@@ -2,14 +2,11 @@ import { filterBy, notEmpty, sort } from '@ember/object/computed';
 import { next } from '@ember/runloop';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import DraggableDropzone from '../mixins/draggable-dropzone';
 
 const taskSorting = [ 'plaintextDescription' ];
 
-export default Component.extend(DraggableDropzone, {
-  attributeBindings: [ 'list.name:data-test-list-name' ],
-  classNames: [ 'task-list' ],
-  classNameBindings: [ 'hasUnfinishedTasks', 'dragClass' ],
+export default Component.extend({
+  tagName: '',
 
   dragClass: '',
   headerComponent: 'task-list/header',
@@ -32,14 +29,9 @@ export default Component.extend(DraggableDropzone, {
 
   hasUnfinishedTasks: notEmpty('unfinishedTasks'),
 
-  didInsertElement() {
-    let clickHandler = () => this.element.querySelector('.new-task').focus();
-    this.set('clickHandler', clickHandler);
-    this.element.querySelector('.task-list-header').addEventListener('click', clickHandler);
-  },
-
-  willDestroyElement() {
-    this.element.querySelector('.task-list-header').removeEventListener('click', this.clickHandler);
+  initializeHeaderClickHandler(element) {
+    let clickHandler = () => element.querySelector('.new-task').focus();
+    element.querySelector('.task-list-header').addEventListener('click', clickHandler);
   },
 
   cloneTask(task) {
@@ -49,6 +41,26 @@ export default Component.extend(DraggableDropzone, {
     });
     newTask.save();
   },
+
+  dragIn(event) {
+    event.preventDefault();
+    this.set('dragClass', 'active-drop-target');
+  },
+
+  dragOut(event) {
+    event.preventDefault();
+    this.set('dragClass', '');
+  },
+
+  dropped(event) {
+    let id = event.dataTransfer.getData('text/data');
+    let cloningTask = event.ctrlKey ? true : false;
+
+    this.set('dragClass', '');
+
+    this.store.findRecord('task', id).then((task) => cloningTask ? this.cloneTask(task) : this.moveTaskToList(task));
+  },
+
   moveTaskToList(task) {
     task.set('list', this.list);
     task.save();
@@ -77,20 +89,5 @@ export default Component.extend(DraggableDropzone, {
     clearTextarea() {
       this.set('newTaskDescription', '');
     },
-
-    dropped(id, event) {
-      let cloningTask = event.ctrlKey ? true : false;
-
-      this.set('dragClass', '');
-
-      this.store.findRecord('task', id).then((task) => cloningTask ? this.cloneTask(task) : this.moveTaskToList(task));
-    },
-
-    dragIn() {
-      this.set('dragClass', 'active-drop-target');
-    },
-    dragOut() {
-      this.set('dragClass', '');
-    }
   }
 });

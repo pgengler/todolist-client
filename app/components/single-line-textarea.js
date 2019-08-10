@@ -1,16 +1,22 @@
-import TextArea from '@ember/component/text-area';
+import Component from '@ember/component';
+import { action } from '@ember/object';
 
-export default TextArea.extend({
-  keyDown(event) {
-    // Prevent newlines when using bare Enter key
-    if (event.which === 13 && !event.shiftKey) {
-      event.preventDefault();
-    }
-  },
+export default class extends Component {
+  tagName = '';
 
-  insertNewline(event) {
+  @action
+  insertNewline(value, event) {
     if (!event.shiftKey) {
-      this._super(event);
+      if (this['insert-newline']) this['insert-newline'](...arguments);
     }
   }
-});
+
+  @action
+  preventDefaultOnShiftlessEnter(event) {
+    if (event.key === "Enter") {
+      if (!event.shiftKey) {
+        event.preventDefault();
+      }
+    }
+  }
+}

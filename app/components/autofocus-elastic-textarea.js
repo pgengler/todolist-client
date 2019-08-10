@@ -1,10 +1,12 @@
-import ElasticTextarea from './elastic-textarea';
+import Component from '@ember/component';
+import { action } from '@ember/object';
 
-export default ElasticTextarea.extend({
-  didInsertElement() {
-    this._super();
+export default class extends Component {
+  tagName = '';
 
-    this.element.focus();
-    this.element.select();
+  @action
+  setFocus(element) {
+    element.focus();
+    element.select();
   }
-});
+}

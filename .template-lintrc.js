@@ -6,6 +6,7 @@ module.exports = {
   rules: {
     'attribute-indentation': false,
     'no-implicit-this': true,
-    'no-invalid-interactive': false
+    'no-invalid-interactive': false,
+    quotes: false,
   }
 };

@@ -1,32 +1,34 @@
-<div class="todolist-actions">
-  {{#link-to "days" (query-params date=null) title="Home"}}
-    {{fa-icon icon="home"}}
-  {{/link-to}}
-  {{#link-to "recurring" title="Recurring tasks"}}
-    {{fa-icon icon="list"}}
-  {{/link-to}}
-  {{fa-icon icon="plus" class="spec-add-task" click=(action "toggleModal")}}
-  <DatePickerIcon @dateSelected={{action @changeDate}} @dateRange={{@selectedDate.dateRange}} />
-</div>
-<div class="flash-messages">
-  {{#each @flashMessages.queue as |flash|}}
-    <FlashMessage @flash={{flash}} />
-  {{/each}}
-</div>
-<div class="user-actions">
-  {{fa-icon "sign-out" class="spec-logout" click=(action @logout)}}
-</div>
+<nav class="top-nav">
+  <div class="todolist-actions">
+    {{#link-to "days" (query-params date=null) title="Home"}}
+      {{fa-icon icon="home"}}
+    {{/link-to}}
+    {{#link-to "recurring" title="Recurring tasks"}}
+      {{fa-icon icon="list"}}
+    {{/link-to}}
+    {{fa-icon icon="plus" class="spec-add-task" click=(action "toggleModal")}}
+    <DatePickerIcon @dateSelected={{action @changeDate}} @dateRange={{@selectedDate.dateRange}} />
+  </div>
+  <div class="flash-messages">
+    {{#each @flashMessages.queue as |flash|}}
+      <FlashMessage @flash={{flash}} />
+    {{/each}}
+  </div>
+  <div class="user-actions">
+    {{fa-icon "sign-out" class="spec-logout" click=(action @logout)}}
+  </div>
 
-{{#if this.isShowingNewTaskModal}}
-  <ModalDialog
-    @containerClass="new-task-dialog"
-    @onClose={{action "toggleModal"}}
-    @targetAttachment="center"
-    @translucentOverlay={{true}}
-  >
-    <NewTaskForm
-      @cancel={{action "closeModal"}}
-      @onTaskCreated={{action "closeModal"}}
-    />
-  </ModalDialog>
-{{/if}}
+  {{#if this.isShowingNewTaskModal}}
+    <ModalDialog
+      @containerClass="new-task-dialog"
+      @onClose={{action "toggleModal"}}
+      @targetAttachment="center"
+      @translucentOverlay={{true}}
+    >
+      <NewTaskForm
+        @cancel={{action "closeModal"}}
+        @onTaskCreated={{action "closeModal"}}
+      />
+    </ModalDialog>
+  {{/if}}
+</nav>
