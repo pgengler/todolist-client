@@ -3,25 +3,27 @@ import { computed } from '@ember/object';
 import { alias } from '@ember/object/computed';
 import moment from 'moment';
 
-export default Service.extend({
-  date: null,
+export default class SelectedDateService extends Service {
+  date = null;
 
-  dates: computed('date', function() {
+  @computed('date')
+  get dates() {
     let date = this.date;
     return [
       moment(date).subtract(1, 'day'),
       date,
       ...[1, 2, 3].map((val) => moment(date).add(val, 'days'))
     ];
-  }),
+  }
 
-  startDate: alias('dates.firstObject'),
-  endDate: alias('dates.lastObject'),
+  @alias('dates.firstObject') startDate;
+  @alias('dates.lastObject') endDate;
 
-  dateRange: computed('startDate', 'endDate', function() {
+  @computed('startDate', 'endDate')
+  get dateRange() {
     return {
       start: this.startDate,
       end: this.endDate
     };
-  })
-});
+  }
+}

@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 import { action } from '@ember/object';
 
-export default class extends Component {
+export default class AutofocusElasticTextarea extends Component {
   tagName = '';
 
   @action

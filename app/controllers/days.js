@@ -3,7 +3,7 @@ import { action } from '@ember/object';
 import { alias } from '@ember/object/computed';
 import moment from 'moment';
 
-export default class extends Controller {
+export default class DaysController extends Controller {
   queryParams = [ 'date' ];
   date = null;
 

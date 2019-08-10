@@ -6,7 +6,7 @@
     {{#link-to "recurring" title="Recurring tasks"}}
       {{fa-icon icon="list"}}
     {{/link-to}}
-    {{fa-icon icon="plus" class="spec-add-task" click=(action "toggleModal")}}
+    {{fa-icon icon="plus" class="spec-add-task" click=(action this.toggleModal)}}
     <DatePickerIcon @dateSelected={{action @changeDate}} @dateRange={{@selectedDate.dateRange}} />
   </div>
   <div class="flash-messages">
@@ -21,13 +21,13 @@
   {{#if this.isShowingNewTaskModal}}
     <ModalDialog
       @containerClass="new-task-dialog"
-      @onClose={{action "toggleModal"}}
+      @onClose={{action this.toggleModal}}
       @targetAttachment="center"
       @translucentOverlay={{true}}
     >
       <NewTaskForm
-        @cancel={{action "closeModal"}}
-        @onTaskCreated={{action "closeModal"}}
+        @cancel={{action this.closeModal}}
+        @onTaskCreated={{action this.closeModal}}
       />
     </ModalDialog>
   {{/if}}

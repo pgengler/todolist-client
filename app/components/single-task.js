@@ -3,7 +3,7 @@ import { action, computed } from '@ember/object';
 import { oneWay } from '@ember/object/computed';
 import Component from '@ember/component';
 
-export default class extends Component {
+export default class SingleTask extends Component {
   tagName = '';
 
   @oneWay('task.description') editDesciption;
@@ -85,6 +85,13 @@ export default class extends Component {
     this.set('editDescription', '');
     this.set('isEditing', false);
     if (this.editingEnd) this.editingEnd();
+  }
+
+  @action
+  toggleTaskDone(event) {
+    this.task.toggleProperty('done');
+    this.task.save();
+    event.preventDefault();
   }
 
   @action

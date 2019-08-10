@@ -3,7 +3,7 @@ import { action } from '@ember/object';
 import { alias } from '@ember/object/computed';
 import moment from 'moment';
 
-export default class extends Component {
+export default class DatePickerIcon extends Component {
   tagName = '';
 
   @alias('selectedDate.date') date;

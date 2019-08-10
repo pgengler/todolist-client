@@ -3,7 +3,7 @@ import { action } from '@ember/object';
 import { next } from '@ember/runloop';
 import { inject as service } from '@ember/service';
 
-export default class extends Controller {
+export default class LoginController extends Controller {
   email = null;
   password = null;
 

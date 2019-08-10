@@ -3,8 +3,8 @@
     <TopNav
       @flashMessages={{this.flashMessages}}
       @selectedDate={{this.selectedDate}}
-      @changeDate={{action "changeDate"}}
-      @logout={{action "logout"}}
+      @changeDate={{action this.changeDate}}
+      @logout={{action this.logout}}
     />
   {{/if}}
 

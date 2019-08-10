@@ -1,8 +1,8 @@
 import Model, { attr, hasMany } from '@ember-data/model';
 
-export default Model.extend({
-  listType: attr('string'),
-  name: attr('string'),
+export default class List extends Model {
+  @attr('string') listType;
+  @attr('string') name;
 
-  tasks: hasMany()
-});
+  @hasMany('task') tasks;
+}

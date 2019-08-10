@@ -3,7 +3,7 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
 
-export default class extends Component {
+export default class NewTaskForm extends Component {
   tagName = '';
 
   newTaskDescription = '';
@@ -18,15 +18,16 @@ export default class extends Component {
   }
 
   @action
-  createTask() {
+  async createTask(event) {
+    event.preventDefault();
     let description = this.newTaskDescription.trim();
     let date = this.newTaskDate;
 
     if (isEmpty(description) || isEmpty(date)) {
-      return false;
+      return;
     }
 
-    this.store.query('list', {
+    let lists = await this.store.query('list', {
       filter: {
         'list-type': 'day',
         date: date.format('YYYY-MM-DD')
@@ -34,16 +35,14 @@ export default class extends Component {
       page: {
         size: 1
       }
-    }).then((lists) => {
-      let task = this.store.createRecord('task', {
-        description,
-        list: lists.get('firstObject')
-      });
-      return task.save();
-    }).then(() => {
-      if (this.onTaskCreate) this.onTaskCreated();
     });
 
-    return false;
+    let task = this.store.createRecord('task', {
+      description,
+      list: lists.get('firstObject')
+    });
+    await task.save();
+
+    if (this.onTaskCreated) this.onTaskCreated();
   }
 }

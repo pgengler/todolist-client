@@ -1,15 +1,15 @@
 <h1>Add new task</h1>
-<form class="new-task" onsubmit={{action "createTask"}}>
+<form class="new-task" {{on "submit" this.createTask}}>
   <AutofocusElasticTextarea
     @value={{this.newTaskDescription}}
-    @insert-newline={{action "createTask"}}
+    @insert-newline={{action this.createTask}}
     @escape-press={{@cancel}}
     class="spec-new-task-description"
     placeholder="New task"
   />
   <br><br>
   <div class="spec-new-task-date">
-    <PowerDatepicker @selected={{this.newTaskDate}} @onSelect={{action "changeDate"}} @renderInPlace={{true}} as |dp|>
+    <PowerDatepicker @selected={{this.newTaskDate}} @onSelect={{action this.changeDate}} @renderInPlace={{true}} as |dp|>
       <dp.Trigger>
         <input type="text" placeholder="Date" value={{moment-format this.newTaskDate "YYYY-MM-DD" allow-empty=true}} readonly>
       </dp.Trigger>

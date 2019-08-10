@@ -1,5 +1,5 @@
 <li
-  class="task {{if this.isEditing 'editing'}} {{if @task.isDone 'done'}} {{if @task.isError 'error'}} {{if @task.isNew 'pending'}}"
+  class="task {{if this.isEditing 'editing'}} {{if @task.done 'done'}} {{if @task.isError 'error'}} {{if @task.isNew 'pending'}}"
   draggable={{this.draggable}}
   {{on "dblclick" this.editTask}}
   {{on "dragstart" this.onDragStart}}
@@ -21,7 +21,7 @@
       {{else if @task.isNew}}
         {{fa-icon "spinner" spin=true}}
       {{else}}
-        <Input @type="checkbox" @checked={{@task.isDone}} />
+        <input type="checkbox" checked={{@task.done}} onchange={{action this.toggleTaskDone}}>
       {{/if}}
     </div>
 

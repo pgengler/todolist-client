@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import moment from 'moment';
 
-export default class extends Component {
+export default class DayTasksHeader extends Component {
   tagName = '';
 
   @computed('list.name')
