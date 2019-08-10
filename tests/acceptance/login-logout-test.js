@@ -9,7 +9,7 @@ module('Acceptance | login & logout', function(hooks) {
   test('logging out redirects to login', async function(assert) {
     await authenticateSession();
     await visit('/days');
-    await click('.spec-logout');
+    await click('[data-test-logout]');
 
     assert.equal(currentRouteName(), 'login');
   });

@@ -10,21 +10,22 @@
   {{component this.headerComponent list=@list}}
   <ul>
     {{#each this.sortedUnfinishedTasks as |task|}}
-      <SingleTask @task={{task}} @editingStart={{@editingStart}} @editingEnd={{@editingEnd}} class="spec-task" />
+      <SingleTask @task={{task}} @editingStart={{@editingStart}} @editingEnd={{@editingEnd}} data-test-task />
     {{/each}}
     {{#each this.sortedFinishedTasks as |task|}}
-      <SingleTask @task={{task}} @editingStart={{@editingStart}} @editingEnd={{@editingEnd}} class="spec-task" />
+      <SingleTask @task={{task}} @editingStart={{@editingStart}} @editingEnd={{@editingEnd}} data-test-task />
     {{/each}}
     {{#each this.sortedPendingTasks as |task|}}
-      <SingleTask @task={{task}} @editingStart={{@editingStart}} @editingEnd={{@editingEnd}} class="spec-task" />
+      <SingleTask @task={{task}} @editingStart={{@editingStart}} @editingEnd={{@editingEnd}} data-test-task />
     {{/each}}
     <li class="task">
       <ElasticTextarea
         @escape-press={{action this.clearTextarea}}
         @insert-newline={{action this.addTask}}
         @value={{this.newTaskDescription}}
-        class="new-task spec-new-task"
+        class="new-task"
         placeholder="Add new task"
+        data-test-new-task
       />
     </li>
   </ul>

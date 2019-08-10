@@ -25,38 +25,38 @@ module('Acceptance | New Task modal', function(hooks) {
     });
 
     await visit('/days');
-    await click('.top-nav .spec-add-task');
+    await click('.top-nav [data-test-add-task]');
 
     assert.dom('.new-task-dialog').exists('"new task" modal displays after clicking icon in header');
 
-    await fillIn('.spec-new-task-description', 'Something');
-    await datepickerSelect('.spec-new-task-date', '2014-11-13');
-    await click('.spec-create-task');
+    await fillIn('[data-test-new-task-description]', 'Something');
+    await datepickerSelect('[data-test-new-task-date]', '2014-11-13');
+    await click('[data-test-create-task]');
 
     assert.dom('.new-task-dialog').doesNotExist('"new task" modal is no longer displayed after filling out the form');
   });
 
   test('cannot submit form when some information is missing', async function(assert) {
     await visit('/days');
-    await click('.top-nav .spec-add-task');
-    await click('.spec-create-task');
+    await click('.top-nav [data-test-add-task]');
+    await click('[data-test-create-task]');
 
     assert.dom('.new-task-dialog').exists('"new task" modal continues to display after submitting with both fields missing');
 
-    await fillIn('.spec-new-task-description', 'Something');
-    await click('.spec-create-task');
+    await fillIn('[data-test-new-task-description]', 'Something');
+    await click('[data-test-create-task]');
     assert.dom('.new-task-dialog').exists('"new task" modal continues to display after submitting with date missing');
 
-    await fillIn('.spec-new-task-description', '');
-    await datepickerSelect('.spec-new-task-date', '2014-11-13');
-    await click('.spec-create-task');
+    await fillIn('[data-test-new-task-description]', '');
+    await datepickerSelect('[data-test-new-task-date]', '2014-11-13');
+    await click('[data-test-create-task]');
     assert.dom('.new-task-dialog').exists('"new task" modal continues to display after submitting with description missing');
   });
 
   test('clicking the Cancel button closes the modal', async function(assert) {
     await visit('/days');
-    await click('.top-nav .spec-add-task');
-    await click('.spec-cancel-button');
+    await click('.top-nav [data-test-add-task]');
+    await click('[data-test-cancel-button]');
 
     assert.dom('.new-task-dialog').doesNotExist('"new task" modal is not displayed after clicking Cancel button');
   });
