@@ -10,7 +10,8 @@ export default class LoginController extends Controller {
   @service session;
 
   @action
-  login() {
+  login(event) {
+    event.preventDefault();
     let { email, password } = this;
     this.session.authenticate('authenticator:oauth2', email, password)
       .then(() => next(() => this.transitionToRoute('index')))
