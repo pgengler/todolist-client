@@ -1,19 +1,18 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
 
 export default class NewTaskForm extends Component {
-  tagName = '';
-
-  newTaskDescription = '';
-  newTaskDate = null;
+  @tracked newTaskDescription = '';
+  @tracked newTaskDate = null;
 
   @service store;
 
   @action
   changeDate(newDate) {
-    this.set('newTaskDate', newDate.moment);
+    this.newTaskDate = newDate.moment;
     document.querySelector('.new-task input[type=submit]').focus();
   }
 
@@ -43,6 +42,6 @@ export default class NewTaskForm extends Component {
     });
     await task.save();
 
-    if (this.onTaskCreated) this.onTaskCreated();
+    if (this.args.onTaskCreated) this.args.onTaskCreated();
   }
 }

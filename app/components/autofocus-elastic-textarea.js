@@ -1,9 +1,7 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { action } from '@ember/object';
 
 export default class AutofocusElasticTextarea extends Component {
-  tagName = '';
-
   @action
   setFocus(element) {
     element.focus();

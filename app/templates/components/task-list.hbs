@@ -9,13 +9,13 @@
 >
   {{component this.headerComponent list=@list}}
   <ul>
-    {{#each this.sortedUnfinishedTasks as |task|}}
+    {{#each this.unfinishedTasks as |task|}}
       <SingleTask @task={{task}} @editingStart={{@editingStart}} @editingEnd={{@editingEnd}} data-test-task />
     {{/each}}
-    {{#each this.sortedFinishedTasks as |task|}}
+    {{#each this.finishedTasks as |task|}}
       <SingleTask @task={{task}} @editingStart={{@editingStart}} @editingEnd={{@editingEnd}} data-test-task />
     {{/each}}
-    {{#each this.sortedPendingTasks as |task|}}
+    {{#each this.pendingTasks as |task|}}
       <SingleTask @task={{task}} @editingStart={{@editingStart}} @editingEnd={{@editingEnd}} data-test-task />
     {{/each}}
     <li class="task">

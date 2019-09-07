@@ -1,16 +1,15 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import { alias } from '@ember/object/computed';
 import moment from 'moment';
 
 export default class DatePickerIcon extends Component {
-  tagName = '';
-
-  @alias('selectedDate.date') date;
+  get date() {
+    return this.args.selectedDate.date;
+  }
 
   @action
   changeDate(newDate) {
     let date = moment(newDate.moment.start).utc().format('YYYY-MM-DD');
-    if (this.dateSelected) this.dateSelected(date);
+    if (this.args.dateSelected) this.args.dateSelected(date);
   }
 }

@@ -1,9 +1,7 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { action } from '@ember/object';
 
 export default class ElasticTextarea extends Component {
-  tagName = '';
-
   @action
   resizeArea(element) {
     element.style.height = '1px';

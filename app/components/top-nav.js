@@ -1,18 +1,17 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 
 export default class TopNav extends Component {
-  tagName = '';
-
-  isShowingNewTaskModal = false;
+  @tracked isShowingNewTaskModal = false;
 
   @action
   closeModal() {
-    this.set('isShowingNewTaskModal', false);
+    this.isShowingNewTaskModal = false;
   }
 
   @action
   toggleModal() {
-    this.toggleProperty('isShowingNewTaskModal');
+    this.isShowingNewTaskModal = !this.isShowingNewTaskModal;
   }
 }

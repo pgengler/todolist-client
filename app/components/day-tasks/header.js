@@ -1,21 +1,15 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 import moment from 'moment';
 
 export default class DayTasksHeader extends Component {
-  tagName = '';
-
-  @computed('list.name')
   get date() {
-    return moment(this.get('list.name'));
+    return moment(this.args.list.name);
   }
 
-  @computed('date')
   get dayOfWeek() {
     return this.date.format('dddd');
   }
 
-  @computed('date')
   get formattedDate() {
     return this.date.format('MMM D, YYYY');
   }

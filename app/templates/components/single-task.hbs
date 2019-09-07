@@ -1,6 +1,6 @@
 <li
   class="task {{if this.isEditing 'editing'}} {{if @task.done 'done'}} {{if @task.isError 'error'}} {{if @task.isNew 'pending'}}"
-  draggable={{this.draggable}}
+  draggable="true"
   {{on "dblclick" this.editTask}}
   {{on "dragstart" this.onDragStart}}
   {{on "touchend" this.simulateDoubleClicks}}

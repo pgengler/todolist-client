@@ -1,28 +1,33 @@
-import { filterBy, notEmpty, sort } from '@ember/object/computed';
 import { next } from '@ember/runloop';
 import { inject as service } from '@ember/service';
-import Component from '@ember/component';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 
 export default class TaskList extends Component {
-  tagName = '';
-
-  dragClass = '';
-  headerComponent = 'task-list/header';
-  newTaskDescription = '';
+  @tracked dragClass = '';
+  @tracked newTaskDescription = '';
   taskSorting = [ 'plaintextDescription' ];
 
   @service flashMessages;
   @service store;
 
-  @filterBy('list.tasks', 'done', true) finishedTasks;
-  @filterBy('list.tasks', 'done', false) unfinishedTasks;
-  @filterBy('list.tasks', 'isNew') pendingTasks;
+  get headerComponent() {
+    return this.args.headerComponent || 'task-list/header';
+  }
 
-  @sort('finishedTasks', 'taskSorting') sortedFinishedTasks;
-  @sort('unfinishedTasks', 'taskSorting') sortedUnfinishedTasks;
-  @sort('pendingTasks', 'taskSorting') sortedPendingTasks;
+  get finishedTasks() {
+    return this.args.list.tasks.filterBy('done', true).sortBy('plaintextDescription');
+  }
+  get unfinishedTasks() {
+    return this.args.list.tasks.filterBy('done', false).sortBy('plaintextDescription');
+  }
+  get pendingTasks() {
+    return this.args.list.tasks.filterBy('isNew').sortBy('plaintextDescription');
+  }
 
-  @notEmpty('unfinishedTasks') hasUnfinishedTasks;
+  get hasUnfinishedTasks() {
+    return this.unfinishedTasks.length > 0;
+  }
 
   initializeHeaderClickHandler(element) {
     let clickHandler = () => element.querySelector('.new-task').focus();
@@ -31,33 +36,33 @@ export default class TaskList extends Component {
 
   cloneTask(task) {
     let newTask = this.store.createRecord('task', {
-      list: this.list,
-      description: task.get('description')
+      list: this.args.list,
+      description: task.description
     });
     newTask.save();
   }
 
   dragIn(event) {
     event.preventDefault();
-    this.set('dragClass', 'active-drop-target');
+    this.dragClass = 'active-drop-target';
   }
 
   dragOut(event) {
     event.preventDefault();
-    this.set('dragClass', '');
+    this.dragClass = '';
   }
 
   dropped(event) {
     let id = event.dataTransfer.getData('text/data');
     let cloningTask = event.ctrlKey ? true : false;
 
-    this.set('dragClass', '');
+    this.dragClass = '';
 
     this.store.findRecord('task', id).then((task) => cloningTask ? this.cloneTask(task) : this.moveTaskToList(task));
   }
 
   moveTaskToList(task) {
-    task.set('list', this.list);
+    task.list = this.args.list;
     task.save();
   }
 
@@ -66,13 +71,13 @@ export default class TaskList extends Component {
     if (!description) {
       return;
     }
-    let list = this.list;
+    let list = this.args.list;
     let task = this.store.createRecord('task', {
       description,
       list
     });
 
-    this.set('newTaskDescription', '');
+    this.newTaskDescription = '';
 
     next(() => {
       task.save()
@@ -81,6 +86,6 @@ export default class TaskList extends Component {
   }
 
   clearTextarea() {
-    this.set('newTaskDescription', '');
+    this.newTaskDescription =  '';
   }
 }

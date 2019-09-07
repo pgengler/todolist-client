@@ -1,30 +1,25 @@
 import { isEmpty } from '@ember/utils';
-import { action, computed } from '@ember/object';
-import { oneWay } from '@ember/object/computed';
-import Component from '@ember/component';
+import { action } from '@ember/object';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 
 export default class SingleTask extends Component {
-  tagName = '';
+  @tracked isEditing = false;
+  @tracked editDescription;
 
-  @oneWay('task.description') editDesciption;
-
-  @computed('task.{isError,isNew}')
   get editable() {
-    return !this.get('task.isNew') || this.get('task.isError');
+    let task = this.args.task;
+    return !task.isNew || task.isError;
   }
-
-  isEditing = false;
-
-  draggable = 'true';
 
   @action
   editTask() {
     if (!this.editable) {
       return;
     }
-    this.set('editDescription', this.get('task.description'));
-    this.set('isEditing', true);
-    if (this.editingStart) this.editingStart();
+    this.editDescription = this.args.task.description;
+    this.isEditing = true;
+    if (this.args.editingStart) this.args.editingStart();
   }
 
   @action
@@ -33,11 +28,11 @@ export default class SingleTask extends Component {
     let touch = event.changedTouches[0];
 
     let lastTouchEndEventInfo = this.lastTouchEndEventInfo;
-    this.set('lastTouchEndEventInfo', {
+    this.lastTouchEndEventInfo = {
       clientX: touch.clientX,
       clientY: touch.clientY,
       when: now
-    });
+    };
     if (!lastTouchEndEventInfo) {
       return;
     }
@@ -77,20 +72,21 @@ export default class SingleTask extends Component {
 
   @action
   onDragStart(event) {
-    event.dataTransfer.setData('text/data', this.get('task.id'));
+    event.dataTransfer.setData('text/data', this.args.task.id);
   }
 
   @action
   cancelEdit() {
-    this.set('editDescription', '');
-    this.set('isEditing', false);
-    if (this.editingEnd) this.editingEnd();
+    this.editDescription = '';
+    this.isEditing = false;
+    if (this.args.editingEnd) this.args.editingEnd();
   }
 
   @action
   toggleTaskDone(event) {
-    this.task.toggleProperty('done');
-    this.task.save();
+    let task = this.args.task;
+    task.done = !task.done;
+    task.save();
     event.preventDefault();
   }
 
@@ -99,16 +95,16 @@ export default class SingleTask extends Component {
     if (!this.editable) {
       return;
     }
-    let task = this.task;
+    let task = this.args.task;
     let description = this.editDescription;
     if (!isEmpty(description)) {
-      task.set('description', description);
+      task.description = description;
       task.save();
-      this.set('isEditing', false);
+      this.isEditing = false;
     } else {
       task.deleteRecord();
       task.save();
     }
-    if (this.editingEnd) this.editingEnd();
+    if (this.args.editingEnd) this.args.editingEnd();
   }
 }
