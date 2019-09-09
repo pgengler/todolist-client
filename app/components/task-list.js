@@ -15,6 +15,10 @@ export default class TaskList extends Component {
     return this.args.headerComponent || 'task-list/header';
   }
 
+  get newTaskFieldId() {
+    return `list-${this.args.list.id}-new-task`;
+  }
+
   get finishedTasks() {
     return this.args.list.tasks.filterBy('done', true).sortBy('plaintextDescription');
   }
@@ -81,6 +85,7 @@ export default class TaskList extends Component {
 
     next(() => {
       task.save()
+        .then(() => document.getElementById(this.newTaskFieldId).scrollIntoView())
         .catch((err) => this.flashMessages.error(err));
     });
   }
