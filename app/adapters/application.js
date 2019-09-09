@@ -4,7 +4,7 @@ import DataAdapterMixin from 'ember-simple-auth/mixins/data-adapter-mixin';
 export default JSONAPIAdapter.extend(DataAdapterMixin, {
   namespace: 'api/v2',
   authorize(xhr) {
-    let { access_token } = this.get('session.data.authenticated');
+    let { access_token } = this.session.data.authenticated;
     xhr.setRequestHeader('Authorization', `Bearer ${access_token}`);
   }
 });
