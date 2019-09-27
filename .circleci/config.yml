@@ -14,6 +14,8 @@ jobs:
           paths:
             - node_modules
             - ~/.cache/yarn
+      - run: yarn lint:js
+      - run: yarn lint:hbs
       - run: COVERAGE=true yarn test
       - store_artifacts:
           path: coverage

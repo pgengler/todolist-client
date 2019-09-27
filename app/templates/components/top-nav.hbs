@@ -19,16 +19,6 @@
   </div>
 
   {{#if this.isShowingNewTaskModal}}
-    <ModalDialog
-      @containerClass="new-task-dialog"
-      @onClose={{action this.toggleModal}}
-      @targetAttachment="center"
-      @translucentOverlay={{true}}
-    >
-      <NewTaskForm
-        @cancel={{action this.closeModal}}
-        @onTaskCreated={{action this.closeModal}}
-      />
-    </ModalDialog>
+    <NewTaskModal @onClose={{action this.closeModal}} />
   {{/if}}
 </nav>

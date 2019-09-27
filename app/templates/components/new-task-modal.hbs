@@ -1,0 +1,11 @@
+<ModalDialog
+  @containerClass="new-task-dialog"
+  @onClose={{@onClose}}
+  @targetAttachment="center"
+  @translucentOverlay={{true}}
+>
+  <NewTaskForm
+    @cancel={{@onClose}}
+    @onTaskCreated={{@onClose}}
+  />
+</ModalDialog>
