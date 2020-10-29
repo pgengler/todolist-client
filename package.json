@@ -22,6 +22,8 @@
   "devDependencies": {
     "@ember/optional-features": "^2.0.0",
     "@ember/render-modifiers": "^1.0.2",
+    "@fortawesome/ember-fontawesome": "^0.2.2",
+    "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@glimmer/component": "^1.0.2",
     "@glimmer/tracking": "^1.0.2",
     "babel-eslint": "^10.1.0",
@@ -52,7 +54,6 @@
     "ember-data": "~3.22.0",
     "ember-export-application-global": "^2.0.1",
     "ember-fetch": "^8.0.2",
-    "ember-font-awesome": "^3.0.5",
     "ember-load-initializers": "^2.1.1",
     "ember-maybe-import-regenerator": "^0.1.6",
     "ember-modal-dialog": "^3.0.1",

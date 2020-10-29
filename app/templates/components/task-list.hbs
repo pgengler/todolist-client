@@ -1,9 +1,9 @@
 <div
   class="task-list {{if this.hasUnfinishedTasks 'has-unfinished-tasks'}} {{this.dragClass}}"
   data-test-list-name={{@list.name}}
-  {{on "dragleave" (action this.dragOut)}}
-  {{on "dragover" (action this.dragIn)}}
-  {{on "drop" (action this.dropped)}}
+  {{on "dragleave" this.dragOut}}
+  {{on "dragover" this.dragIn}}
+  {{on "drop" this.dropped}}
   {{did-insert this.initializeHeaderClickHandler}}
   ...attributes
 >

@@ -1,13 +1,13 @@
 <nav class="top-nav">
   <div class="todolist-actions">
-    {{#link-to "days" (query-params date=null) title="Home"}}
-      {{fa-icon icon="home"}}
-    {{/link-to}}
-    {{#link-to "recurring" title="Recurring tasks"}}
-      {{fa-icon icon="list"}}
-    {{/link-to}}
-    {{fa-icon icon="plus" click=(action this.toggleModal) data-test-add-task=true}}
-    <DatePickerIcon @dateSelected={{action @changeDate}} @dateRange={{@selectedDate.dateRange}} />
+    <LinkTo @route="days" @query={{hash date=null}} title="Home">
+      <FaIcon @icon="home" />
+    </LinkTo>
+    <LinkTo @route="recurring" title="Recurring tasks">
+      <FaIcon @icon="list" />
+    </LinkTo>
+    <FaIcon @icon="plus" {{on "click" this.toggleModal}} data-test-add-task />
+    <DatePickerIcon @dateSelected={{@changeDate}} @dateRange={{@selectedDate.dateRange}} />
   </div>
   <div class="flash-messages">
     {{#each @flashMessages.queue as |flash|}}
@@ -15,10 +15,10 @@
     {{/each}}
   </div>
   <div class="user-actions">
-    {{fa-icon "sign-out" click=(action @logout) data-test-logout=true}}
+    <FaIcon @icon="sign-out-alt" {{on "click" @logout}} data-test-logout />
   </div>
 
   {{#if this.isShowingNewTaskModal}}
-    <NewTaskModal @onClose={{action this.closeModal}} />
+    <NewTaskModal @onClose={{this.closeModal}} />
   {{/if}}
 </nav>

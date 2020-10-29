@@ -2,15 +2,15 @@
   {{#each this.days as |list|}}
     <DayTasks
       @list={{list}}
-      @editingStart={{action this.stopPolling}}
-      @editingEnd={{action this.startPolling}}
+      @editingStart={{this.stopPolling}}
+      @editingEnd={{this.startPolling}}
     />
   {{/each}}
   {{#each this.lists as |list|}}
     <TaskList
       @list={{list}}
-      @editingStart={{action this.stopPolling}}
-      @editingEnd={{action this.startPolling}}
+      @editingStart={{this.stopPolling}}
+      @editingEnd={{this.startPolling}}
     />
   {{/each}}
 </div>

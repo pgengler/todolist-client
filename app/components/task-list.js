@@ -47,16 +47,19 @@ export default class TaskList extends Component {
     newTask.save();
   }
 
+  @action
   dragIn(event) {
     event.preventDefault();
     this.dragClass = 'active-drop-target';
   }
 
+  @action
   dragOut(event) {
     event.preventDefault();
     this.dragClass = '';
   }
 
+  @action
   async dropped(event) {
     let id = event.dataTransfer.getData('text/data');
     let cloningTask = event.ctrlKey ? true : false;
@@ -76,7 +79,8 @@ export default class TaskList extends Component {
     task.save();
   }
 
-  @action addTask() {
+  @action
+  addTask() {
     let description = this.newTaskDescription.trim();
     if (!description) {
       return;
@@ -102,7 +106,8 @@ export default class TaskList extends Component {
     });
   }
 
-  @action clearTextarea() {
+  @action
+  clearTextarea() {
     this.newTaskDescription =  '';
   }
 }

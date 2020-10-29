@@ -2,14 +2,14 @@
 <form class="new-task" {{on "submit" this.createTask}}>
   <AutofocusElasticTextarea
     @value={{this.newTaskDescription}}
-    @insert-newline={{action this.createTask}}
+    @insert-newline={{this.createTask}}
     @escape-press={{@cancel}}
     data-test-new-task-description
     placeholder="New task"
   />
   <br><br>
   <div data-test-new-task-date>
-    <PowerDatepicker @selected={{this.newTaskDate}} @onSelect={{action this.changeDate}} @renderInPlace={{true}} as |dp|>
+    <PowerDatepicker @selected={{this.newTaskDate}} @onSelect={{this.changeDate}} @renderInPlace={{true}} as |dp|>
       <dp.Trigger>
         <input type="text" placeholder="Date" value={{moment-format this.newTaskDate "YYYY-MM-DD" allow-empty=true}} readonly>
       </dp.Trigger>
@@ -23,7 +23,7 @@
   </div>
   <br><br>
   <input type="submit" value="Add" data-test-create-task>
-  <button type="button" {{action @cancel}} data-test-cancel-button>
+  <button type="button" {{on "click" @cancel}} data-test-cancel-button>
     Cancel
   </button>
 </form>
