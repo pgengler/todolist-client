@@ -5835,10 +5835,10 @@ ember-runtime-enumerable-includes-polyfill@^2.0.0:
     ember-cli-babel "^6.9.0"
     ember-cli-version-checker "^2.1.0"
 
-ember-simple-auth@^3.1.0-beta.0:
-  version "3.1.0-beta.0"
-  resolved "https://registry.yarnpkg.com/ember-simple-auth/-/ember-simple-auth-3.1.0-beta.0.tgz#283dde8f8ab68aa83360e650ddae39bc652eab4d"
-  integrity sha512-QKhuFD32a0eWUGySp/3oR9aWOwsvmqR+Q1CfMHn3xRR8H0xintE2CjwUEZLMjrC0ixEXzpCu60Gjrltdrbhqzw==
+ember-simple-auth@^3.1.0-beta.1:
+  version "3.1.0-beta.1"
+  resolved "https://registry.yarnpkg.com/ember-simple-auth/-/ember-simple-auth-3.1.0-beta.1.tgz#22df3007aa2897d213dc05532bfcfbff7b853622"
+  integrity sha512-Wg9AUfIcY6nbj4nBSdvMu+juW5GdZH+lztRRu14BjUx39btNpOm5Fe76BiU/ST0PLhGyXPCs1npgT6RBp7CdRg==
   dependencies:
     base-64 "^0.1.0"
     broccoli-file-creator "^2.0.0"
