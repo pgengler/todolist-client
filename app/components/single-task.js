@@ -91,7 +91,7 @@ export default class SingleTask extends Component {
   }
 
   @action
-  updateTask() {
+  async updateTask() {
     if (!this.editable) {
       return;
     }
@@ -99,11 +99,10 @@ export default class SingleTask extends Component {
     let description = this.editDescription;
     if (!isEmpty(description)) {
       task.description = description;
-      task.save();
+      await task.save();
       this.isEditing = false;
     } else {
-      task.deleteRecord();
-      task.save();
+      await task.destroyRecord();
     }
     if (this.args.editingEnd) this.args.editingEnd();
   }

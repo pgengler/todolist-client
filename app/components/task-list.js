@@ -1,3 +1,4 @@
+import { action } from '@ember/object';
 import { next } from '@ember/runloop';
 import { inject as service } from '@ember/service';
 import Component from '@glimmer/component';
@@ -56,13 +57,18 @@ export default class TaskList extends Component {
     this.dragClass = '';
   }
 
-  dropped(event) {
+  async dropped(event) {
     let id = event.dataTransfer.getData('text/data');
     let cloningTask = event.ctrlKey ? true : false;
 
     this.dragClass = '';
 
-    this.store.findRecord('task', id).then((task) => cloningTask ? this.cloneTask(task) : this.moveTaskToList(task));
+    let task = await this.store.findRecord('task', id);
+    if (cloningTask) {
+      this.cloneTask(task);
+    } else {
+      this.moveTaskToList(task);
+    }
   }
 
   moveTaskToList(task) {
@@ -70,27 +76,33 @@ export default class TaskList extends Component {
     task.save();
   }
 
-  addTask() {
+  @action addTask() {
     let description = this.newTaskDescription.trim();
     if (!description) {
       return;
     }
-    let list = this.args.list;
     let task = this.store.createRecord('task', {
       description,
-      list
+      list: this.args.list
     });
 
     this.newTaskDescription = '';
 
-    next(() => {
-      task.save()
-        .then(() => document.getElementById(this.newTaskFieldId).scrollIntoView())
-        .catch((err) => this.flashMessages.error(err));
+    // The "next()" call is necessary to be able to test the 'pending' state
+    // for adding a task; without it, the test never gets into the pending state.'
+    // The actual application works with or without the "next()" call.
+    next(async () => {
+      try {
+        await task.save();
+        document.getElementById(this.newTaskFieldId).scrollIntoView();
+      }
+      catch (err) {
+        this.flashMessages.error(err);
+      }
     });
   }
 
-  clearTextarea() {
+  @action clearTextarea() {
     this.newTaskDescription =  '';
   }
 }

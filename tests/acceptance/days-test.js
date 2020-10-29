@@ -15,12 +15,12 @@ module('Acceptance | Days', function(hooks) {
   hooks.beforeEach(() => authenticateSession());
 
   test('visiting /days', async function(assert) {
-    server.create('list', {
+    this.server.create('list', {
       listType: 'day',
       name: '2014-11-06'
     });
-    server.createList('list', 4, { listType: 'day' });
-    server.create('list', { listType: 'list' });
+    this.server.createList('list', 4, { listType: 'day' });
+    this.server.create('list', { listType: 'list' });
     await visit('/days?date=2014-11-07');
 
     assert.equal(currentRouteName(), 'days');
@@ -30,13 +30,13 @@ module('Acceptance | Days', function(hooks) {
   });
 
   test('adding a new task sends right data to server', async function(assert) {
-    let list = server.create('list', {
+    let list = this.server.create('list', {
       listType: 'day',
       name: '2017-08-20'
     });
     assert.expect(3);
 
-    server.post('/tasks', function({ tasks }, request) {
+    this.server.post('/tasks', function({ tasks }, request) {
       let requestData = JSON.parse(request.requestBody).data;
       assert.equal(requestData.relationships.list.data.id, list.id, 'request includes correct list ID');
       assert.equal(requestData.attributes.description, 'A new task', 'request includes correct description');
@@ -62,18 +62,18 @@ module('Acceptance | Days', function(hooks) {
   test('dragging a task to another day', async function(assert) {
     assert.expect(3);
 
-    let task = server.create('task');
-    server.create('list', {
+    let task = this.server.create('task');
+    this.server.create('list', {
       listType: 'day',
       name: '2016-03-07',
       taskIds: [ task.id ]
     });
-    let targetDay = server.create('list', {
+    let targetDay = this.server.create('list', {
       listType: 'day',
       name: '2016-03-08'
     });
 
-    server.patch('/tasks/:id', function({ tasks }, request) {
+    this.server.patch('/tasks/:id', function({ tasks }, request) {
       let requestData = JSON.parse(request.requestBody).data;
       assert.equal(requestData.relationships.list.data.id, targetDay.id, 'makes PATCH request with new list ID');
 
@@ -93,18 +93,18 @@ module('Acceptance | Days', function(hooks) {
   test('dragging and dropping a task with Control held copies a task', async function(assert) {
     assert.expect(3);
 
-    let task = server.create('task');
-    server.create('list', {
+    let task = this.server.create('task');
+    this.server.create('list', {
       listType: 'day',
       name: '2016-03-07',
       taskIds: [ task.id ]
     });
-    let targetDay = server.create('list', {
+    let targetDay = this.server.create('list', {
       listType: 'day',
       name: '2016-03-08'
     });
 
-    server.post('/tasks', function({ tasks }, request) {
+    this.server.post('/tasks', function({ tasks }, request) {
       let requestData = JSON.parse(request.requestBody).data;
       assert.ok(true, 'makes POST request to create new task');
       assert.equal(requestData.attributes.description, task.description, 'creates new task with same description');
@@ -119,14 +119,14 @@ module('Acceptance | Days', function(hooks) {
 
   test('updating the description for a task', async function(assert) {
     assert.expect(3);
-    let task = server.create('task', { description: "I'm a task" });
-    server.create('list', {
+    let task = this.server.create('task', { description: "I'm a task" });
+    this.server.create('list', {
       listType: 'day',
       name: '2016-03-07',
       taskIds: [ task.id ]
     });
 
-    server.patch('/tasks/:id', function({ tasks }, request) {
+    this.server.patch('/tasks/:id', function({ tasks }, request) {
       let requestData = JSON.parse(request.requestBody).data;
 
       assert.ok(true, 'makes a PATCH request');
@@ -145,14 +145,14 @@ module('Acceptance | Days', function(hooks) {
 
   test('setting an empty description for a task deletes it', async function(assert) {
     assert.expect(2);
-    let task = server.create('task');
-    server.create('list', {
+    let task = this.server.create('task');
+    this.server.create('list', {
       listType: 'day',
       name: '2016-03-07',
       taskIds: [ task.id ]
     });
 
-    server.delete('/tasks/:id', function(db, request) {
+    this.server.delete('/tasks/:id', function(db, request) {
       assert.ok(true, 'makes a DELETE request');
       assert.equal(request.params.id, task.id, 'makes a DELETE request for the right ID');
     });
@@ -165,12 +165,12 @@ module('Acceptance | Days', function(hooks) {
   test('newly-created-but-still-saving tasks appear in the "pending" state', async function(assert) {
     assert.expect(5);
 
-    server.post('/tasks', function(schema) {
+    this.server.post('/tasks', function({ tasks }) {
       assert.equal(findAll('[data-test-task]').length, 1, 'displays the new task');
       assert.dom('[data-test-task].pending').exists('new task gets the "pending" CSS class');
       assert.dom('[data-test-new-task]').hasValue('', '"new task" textarea is cleared');
 
-      return schema.tasks.create(this.normalizedRequestAttrs());
+      return tasks.create(this.normalizedRequestAttrs());
     });
 
     await visit('/days');
@@ -188,15 +188,15 @@ module('Acceptance | Days', function(hooks) {
   });
 
   test('tasks are resorted correctly when editing descriptions', async function(assert) {
-    let list = server.create('list', {
+    let list = this.server.create('list', {
       listType: 'day',
       name: '2018-01-01'
     });
-    server.create('task', { description: 'xyz', list });
-    server.create('task', { description: 'abc', list });
-    server.create('task', { description: 'mno', list });
+    this.server.create('task', { description: 'xyz', list });
+    this.server.create('task', { description: 'abc', list });
+    this.server.create('task', { description: 'mno', list });
 
-    server.patch('/tasks/:id', function({ tasks }, request) {
+    this.server.patch('/tasks/:id', function({ tasks }, request) {
       let matchingTask = tasks.find(request.params.id);
       matchingTask.update(this.normalizedRequestAttrs());
       return matchingTask;
@@ -215,9 +215,9 @@ module('Acceptance | Days', function(hooks) {
   });
 
   test('handles when adding a task fails', async function(assert) {
-    server.create('list', { listType: 'list', name: 'Other' });
+    this.server.create('list', { listType: 'list', name: 'Other' });
 
-    server.post('/tasks', function() {
+    this.server.post('/tasks', function() {
       return new Response(500, { }, {
         errors: [
           {

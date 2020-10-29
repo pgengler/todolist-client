@@ -1,14 +1,12 @@
 import Service from '@ember/service';
-import { computed } from '@ember/object';
-import { alias } from '@ember/object/computed';
+import { tracked } from '@glimmer/tracking';
 import moment from 'moment';
 
 export default class SelectedDateService extends Service {
-  date = null;
+  @tracked date = null;
 
-  @computed('date')
   get dates() {
-    let date = this.date;
+    let date = this.date || moment();
     return [
       moment(date).subtract(1, 'day'),
       date,
@@ -16,10 +14,14 @@ export default class SelectedDateService extends Service {
     ];
   }
 
-  @alias('dates.firstObject') startDate;
-  @alias('dates.lastObject') endDate;
+  get startDate() {
+    return this.dates[0];
+  }
 
-  @computed('startDate', 'endDate')
+  get endDate() {
+    return this.dates[this.dates.length - 1];
+  }
+
   get dateRange() {
     return {
       start: this.startDate,
