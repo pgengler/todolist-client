@@ -38,7 +38,7 @@ export default class NewTaskForm extends Component {
 
     let task = this.store.createRecord('task', {
       description,
-      list: lists.get('firstObject')
+      list: lists.toArray()[0]
     });
     await task.save();
 

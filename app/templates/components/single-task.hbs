@@ -1,3 +1,4 @@
+{{!-- template-lint-disable no-invalid-interactive --}}
 <li
   class="task {{if this.isEditing 'editing'}} {{if @task.done 'done'}} {{if @task.isError 'error'}} {{if @task.isNew 'pending'}}"
   draggable="true"
@@ -8,20 +9,20 @@
 >
   {{#if this.isEditing}}
     <AutofocusElasticTextarea
-      @escape-press={{action this.cancelEdit}}
-      @focus-out={{action this.cancelEdit}}
-      @insert-newline={{action this.updateTask}}
+      @escape-press={{this.cancelEdit}}
+      @focus-out={{this.cancelEdit}}
+      @insert-newline={{this.updateTask}}
       @value={{this.editDescription}}
       class="edit"
     />
   {{else}}
     <div class="state">
       {{#if @task.isError}}
-        {{fa-icon "warning" title="Task failed to save"}}
+        <FaIcon @icon="exclamation-triangle" title="Task failed to save" />
       {{else if @task.isNew}}
-        {{fa-icon "spinner" spin=true}}
+        <FaIcon @icon="spinner" @spin={{true}} />
       {{else}}
-        <input type="checkbox" checked={{@task.done}} onchange={{action this.toggleTaskDone}}>
+        <input type="checkbox" checked={{@task.done}} {{on "change" this.toggleTaskDone}}>
       {{/if}}
     </div>
 

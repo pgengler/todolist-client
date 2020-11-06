@@ -1,9 +1,9 @@
 <div
   class="task-list {{if this.hasUnfinishedTasks 'has-unfinished-tasks'}} {{this.dragClass}}"
   data-test-list-name={{@list.name}}
-  {{on "dragleave" (action this.dragOut)}}
-  {{on "dragover" (action this.dragIn)}}
-  {{on "drop" (action this.dropped)}}
+  {{on "dragleave" this.dragOut}}
+  {{on "dragover" this.dragIn}}
+  {{on "drop" this.dropped}}
   {{did-insert this.initializeHeaderClickHandler}}
   ...attributes
 >
@@ -20,8 +20,8 @@
     {{/each}}
     <li class="task">
       <ElasticTextarea
-        @escape-press={{action this.clearTextarea}}
-        @insert-newline={{action this.addTask}}
+        @escape-press={{this.clearTextarea}}
+        @insert-newline={{this.addTask}}
         @value={{this.newTaskDescription}}
         class="new-task"
         id={{this.newTaskFieldId}}

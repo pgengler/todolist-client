@@ -1,21 +1,25 @@
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
-import { next } from '@ember/runloop';
 import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 
 export default class LoginController extends Controller {
-  email = null;
-  password = null;
+  @tracked email = null;
+  @tracked password = null;
 
   @service session;
 
   @action
-  login(event) {
+  async login(event) {
     event.preventDefault();
-    let { email, password } = this;
-    this.session.authenticate('authenticator:oauth2', email, password)
-      .then(() => next(() => this.transitionToRoute('index')))
-      .catch(() => alert('Login failed'))
-      .finally(() => this.setProperties({ email: null, password: null }));
+    try {
+      await this.session.authenticate('authenticator:oauth2', this.email, this.password);
+      this.transitionToRoute('index');
+    }
+    catch {
+      alert('Login failed');
+    }
+    this.email = null;
+    this.password = null;
   }
 }

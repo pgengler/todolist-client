@@ -9,14 +9,15 @@ module('Acceptance | New Task modal', function(hooks) {
   hooks.beforeEach(() => authenticateSession());
 
   test('adding a new task', async function(assert) {
+    this.server.logging = true;
     assert.expect(4);
 
-    let list = server.create('list', {
+    let list = this.server.create('list', {
       listType: 'day',
       name: '2014-11-13'
     });
 
-    server.post('/tasks', function({ tasks }, request) {
+    this.server.post('/tasks', function({ tasks }, request) {
       let requestData = JSON.parse(request.requestBody).data;
       assert.equal(requestData.relationships.list.data.id, list.id, 'makes request with the correct list ID');
       assert.equal(requestData.attributes.description, 'Something', 'makes request with the entered description');

@@ -3,7 +3,7 @@
 
   @escape-press={{@escape-press}}
   @focus-out={{@focus-out}}
-  @insert-newline={{action this.insertNewline}}
+  @insert-newline={{this.insertNewline}}
 
   {{on "keydown" this.preventDefaultOnShiftlessEnter}}
   ...attributes

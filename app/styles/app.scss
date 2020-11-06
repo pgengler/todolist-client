@@ -40,9 +40,9 @@ nav.top-nav {
     text-decoration: none;
   }
 
-  i.fa {
+  svg.svg-inline--fa {
     color: black;
-    font-size: 2em;
+    font-size: 1.75em;
   }
 
   & > div {
@@ -51,6 +51,10 @@ nav.top-nav {
 
   .todolist-actions > div {
     display: inline-block;
+  }
+
+  .todolist-actions > * {
+    padding-right: .5em;
   }
 
   .flash-messages {
