@@ -1,9 +1,9 @@
-export default function() {
+export default function () {
   this.passthrough('/write-coverage');
 
   this.namespace = '/api/v2';
 
-  this.get('/lists', function({ lists }, request) {
+  this.get('/lists', function ({ lists }, request) {
     let matchingLists = lists.all();
     if (request.queryParams['filter[date]']) {
       let dates = request.queryParams['filter[date]'];
@@ -17,7 +17,9 @@ export default function() {
     }
     if (request.queryParams['filter[list-type]']) {
       let listType = request.queryParams['filter[list-type]'];
-      matchingLists = matchingLists.filter((list) => list.listType === listType);
+      matchingLists = matchingLists.filter(
+        (list) => list.listType === listType
+      );
     }
     return matchingLists;
   });

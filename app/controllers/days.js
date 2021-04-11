@@ -8,7 +8,7 @@ import moment from 'moment';
 export default class DaysController extends Controller {
   @service poller;
 
-  queryParams = [ 'date' ];
+  queryParams = ['date'];
   @tracked date = null;
 
   @alias('poller.days') days;

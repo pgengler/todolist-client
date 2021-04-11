@@ -9,15 +9,17 @@ export default class ApplicationAdapter extends JSONAPIAdapter {
 
   @computed('session.{isAuthenticated,data.authenticated.access_token}')
   get headers() {
-    let headers = { };
+    let headers = {};
     if (this.session.isAuthenticated) {
-      headers['Authorization'] = `Bearer ${this.session.data.authenticated.access_token}`;
+      headers[
+        'Authorization'
+      ] = `Bearer ${this.session.data.authenticated.access_token}`;
     }
 
     return headers;
   }
 
-  handleResponse(status/*, headers, payload, requestData */) {
+  handleResponse(status /*, headers, payload, requestData */) {
     if (status === 401 && this.session.isAuthenticated) {
       this.session.invalidate();
     }

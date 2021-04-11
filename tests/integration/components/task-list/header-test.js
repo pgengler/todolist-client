@@ -4,12 +4,12 @@ import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import EmberObject from '@ember/object';
 
-module('Integration | Component | task list/header', function(hooks) {
+module('Integration | Component | task list/header', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders the list name', async function(assert) {
+  test('it renders the list name', async function (assert) {
     let list = EmberObject.create({
-      name: 'Foo Bar Baz'
+      name: 'Foo Bar Baz',
     });
     this.set('list', list);
     await render(hbs`

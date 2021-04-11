@@ -19,10 +19,7 @@ export default class PollerService extends Service {
 
   @restartableTask
   *pollForChanges() {
-    yield all([
-      this.loadDayLists.perform(),
-      this.loadOtherLists.perform()
-    ]);
+    yield all([this.loadDayLists.perform(), this.loadOtherLists.perform()]);
 
     if (Ember.testing) {
       return;
@@ -37,8 +34,8 @@ export default class PollerService extends Service {
       include: 'tasks',
       filter: {
         'list-type': 'day',
-        date: this.selectedDate.dates.map((date) => date.format('YYYY-MM-DD'))
-      }
+        date: this.selectedDate.dates.map((date) => date.format('YYYY-MM-DD')),
+      },
     });
   }
 
@@ -47,9 +44,9 @@ export default class PollerService extends Service {
     return yield this.store.query('list', {
       include: 'tasks',
       filter: {
-        'list-type': 'list'
+        'list-type': 'list',
       },
-       sort: 'sort-order'
+      sort: 'sort-order',
     });
   }
 

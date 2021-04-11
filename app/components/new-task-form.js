@@ -29,16 +29,16 @@ export default class NewTaskForm extends Component {
     let lists = await this.store.query('list', {
       filter: {
         'list-type': 'day',
-        date: date.format('YYYY-MM-DD')
+        date: date.format('YYYY-MM-DD'),
       },
       page: {
-        size: 1
-      }
+        size: 1,
+      },
     });
 
     let task = this.store.createRecord('task', {
       description,
-      list: lists.toArray()[0]
+      list: lists.toArray()[0],
     });
     await task.save();
 

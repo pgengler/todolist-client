@@ -4,12 +4,12 @@ import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import EmberObject from '@ember/object';
 
-module('Integration | Component | day tasks/header', function(hooks) {
+module('Integration | Component | day tasks/header', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders the day and formatted date', async function(assert) {
+  test('it renders the day and formatted date', async function (assert) {
     let list = EmberObject.create({
-      name: '2017-12-31'
+      name: '2017-12-31',
     });
     this.set('list', list);
     await render(hbs`

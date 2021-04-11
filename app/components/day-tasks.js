@@ -13,7 +13,7 @@ export default class DayTasks extends Component {
   get isPast() {
     let date = this.date;
     let now = moment();
-    return (date.isBefore(now, 'day') && !date.isSame(now, 'day'));
+    return date.isBefore(now, 'day') && !date.isSame(now, 'day');
   }
 
   get isCurrent() {
