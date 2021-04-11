@@ -14,7 +14,6 @@ self.deprecationWorkflow.config = {
       handler: 'silence',
       matchMessage: /A value was injected implicitly on the 'destinationElementId' property of an instance of <ember-todo@service:modal-dialog::(.+?)>, overwriting the original value which was null./,
     },
-    { handler: 'silence', matchId: 'ember-metal.get-with-default' },
     { handler: 'silence', matchId: 'manager-capabilities.modifiers-3-13' },
     { handler: 'silence', matchId: 'this-property-fallback' },
     { handler: 'silence', matchId: 'routing.transition-methods' },
