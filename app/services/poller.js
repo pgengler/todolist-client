@@ -1,13 +1,16 @@
 import Ember from 'ember'; // for Ember.testing
-import { alias } from '@ember/object/computed';
 import Service, { inject as service } from '@ember/service';
 import { all, timeout } from 'ember-concurrency';
 import { restartableTask } from 'ember-concurrency-decorators';
+import { tracked } from '@glimmer/tracking';
 
 export default class PollerService extends Service {
   @service flashMessages;
   @service selectedDate;
   @service store;
+
+  @tracked days;
+  @tracked lists;
 
   start() {
     this.pollForChanges.perform();
@@ -30,7 +33,7 @@ export default class PollerService extends Service {
 
   @restartableTask
   *loadDayLists() {
-    return yield this.store.query('list', {
+    this.days = yield this.store.query('list', {
       include: 'tasks',
       filter: {
         'list-type': 'day',
@@ -41,7 +44,7 @@ export default class PollerService extends Service {
 
   @restartableTask
   *loadOtherLists() {
-    return yield this.store.query('list', {
+    this.lists = yield this.store.query('list', {
       include: 'tasks',
       filter: {
         'list-type': 'list',
@@ -49,7 +52,4 @@ export default class PollerService extends Service {
       sort: 'sort-order',
     });
   }
-
-  @alias('loadDayLists.lastSuccessful.value') days;
-  @alias('loadOtherLists.lastSuccessful.value') lists;
 }
