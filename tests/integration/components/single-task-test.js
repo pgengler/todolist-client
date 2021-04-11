@@ -2,33 +2,26 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import EmberObject from '@ember/object';
 
-module('Integration | Component | single-task', function (hooks) {
+module('Integration | Component | SingleTask', function (hooks) {
   setupRenderingTest(hooks);
 
   test('displays a regular task', async function (assert) {
-    this.set(
-      'task',
-      EmberObject.create({
-        description: 'foo',
-      })
-    );
-    await render(hbs`{{single-task task=task}}`);
+    this.set('task', {
+      description: 'foo',
+    });
+    await render(hbs`<SingleTask @task={{this.task}} />`);
 
     assert.dom('input[type=checkbox]').exists('displays a checkbox');
     assert.dom('.task').hasText('foo', 'displays task description');
   });
 
   test('displays a pending task', async function (assert) {
-    this.set(
-      'task',
-      EmberObject.create({
-        isNew: true,
-        description: 'bar',
-      })
-    );
-    await render(hbs`{{single-task task=task}}`);
+    this.set('task', {
+      isNew: true,
+      description: 'bar',
+    });
+    await render(hbs`<SingleTask @task={{this.task}} />`);
 
     assert
       .dom('input[type=checkbox]')
@@ -41,14 +34,11 @@ module('Integration | Component | single-task', function (hooks) {
   });
 
   test('displays a task that failed to save', async function (assert) {
-    this.set(
-      'task',
-      EmberObject.create({
-        isError: true,
-        description: 'baz',
-      })
-    );
-    await render(hbs`{{single-task task=task}}`);
+    this.set('task', {
+      isError: true,
+      description: 'baz',
+    });
+    await render(hbs`<SingleTask @task={{this.task}} />`);
 
     assert.dom('input[type=checkbox]').doesNotExist('does not show a checkbox');
     assert.dom('.fa-exclamation-triangle').exists('shows the right icon');
@@ -61,20 +51,17 @@ module('Integration | Component | single-task', function (hooks) {
 
   test('double-clicking a task enters edit mode', async function (assert) {
     let editingStartCalled = false;
-    this.set(
-      'task',
-      EmberObject.create({
-        description: 'foo bar',
-      })
-    );
+    this.set('task', {
+      description: 'foo bar',
+    });
     this.set('editingStart', () => {
       editingStartCalled = true;
     });
     await render(hbs`
-      {{single-task
-        task=task
-        editingStart=editingStart
-      }}
+      <SingleTask
+        @task={{this.task}}
+        @editingStart={{this.editingStart}}
+      />
     `);
     await triggerEvent('.task', 'dblclick');
 
@@ -93,14 +80,11 @@ module('Integration | Component | single-task', function (hooks) {
   });
 
   test('pending tasks are not editable', async function (assert) {
-    this.set(
-      'task',
-      EmberObject.create({
-        isNew: true,
-        description: 'xyz',
-      })
-    );
-    await render(hbs`{{single-task task=task}}`);
+    this.set('task', {
+      isNew: true,
+      description: 'xyz',
+    });
+    await render(hbs`<SingleTask @task={{this.task}} />`);
     await triggerEvent('.task', 'dblclick');
 
     assert.dom('.task').doesNotHaveClass('editing');
@@ -108,14 +92,11 @@ module('Integration | Component | single-task', function (hooks) {
   });
 
   test('tasks that failed to save are editable', async function (assert) {
-    this.set(
-      'task',
-      EmberObject.create({
-        isError: true,
-        description: 'abc',
-      })
-    );
-    await render(hbs`{{single-task task=task}}`);
+    this.set('task', {
+      isError: true,
+      description: 'abc',
+    });
+    await render(hbs`<SingleTask @task={{this.task}} />`);
     await triggerEvent('.task', 'dblclick');
 
     assert.dom('.task').hasClass('editing');

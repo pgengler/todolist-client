@@ -6,7 +6,7 @@ import { clickTrigger } from 'ember-basic-dropdown/test-support/helpers';
 import { calendarSelect } from 'ember-power-calendar/test-support';
 import moment from 'moment';
 
-module('Integration | Component | date-picker-icon', function (hooks) {
+module('Integration | Component | DatePickerIcon', function (hooks) {
   setupRenderingTest(hooks);
 
   test('triggers a dateSelected action when selecting a date', async function (assert) {
@@ -19,7 +19,7 @@ module('Integration | Component | date-picker-icon', function (hooks) {
       },
     });
     await render(hbs`
-      {{date-picker-icon dateSelected=(action dateSelected) dateRange=dateRange}}
+      <DatePickerIcon @dateSelected={{this.dateSelected}} @dateRange={{this.dateRange}} />
     `);
 
     await clickTrigger();
@@ -34,7 +34,7 @@ module('Integration | Component | date-picker-icon', function (hooks) {
       end: moment('2017-12-06'),
     });
     await render(hbs`
-      {{date-picker-icon dateRange=dateRange}}
+      <DatePickerIcon @dateRange={{this.dateRange}} />
     `);
 
     await clickTrigger();
