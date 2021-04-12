@@ -35,6 +35,5 @@ self.deprecationWorkflow.config = {
       matchMessage: /The `(.+?)` property path was used in a template for the `ember-power-calendar\/templates\/components\/power-calendar\/nav.hbs` component without using `this`/,
     },
     { handler: 'silence', matchId: 'manager-capabilities.modifiers-3-13' },
-    { handler: 'silence', matchId: 'routing.transition-methods' },
   ],
 };

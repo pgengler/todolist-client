@@ -7,6 +7,7 @@ export default class LoginController extends Controller {
   @tracked email = null;
   @tracked password = null;
 
+  @service router;
   @service session;
 
   @action
@@ -18,7 +19,7 @@ export default class LoginController extends Controller {
         this.email,
         this.password
       );
-      this.transitionToRoute('index');
+      this.router.transitionTo('index');
     } catch {
       alert('Login failed');
     }
