@@ -9,7 +9,6 @@ module('Acceptance | New Task modal', function (hooks) {
   hooks.beforeEach(() => authenticateSession());
 
   test('adding a new task', async function (assert) {
-    this.server.logging = true;
     assert.expect(4);
 
     let list = this.server.create('list', {

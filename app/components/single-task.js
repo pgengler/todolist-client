@@ -96,13 +96,13 @@ export default class SingleTask extends Component {
       return;
     }
     let task = this.args.task;
-    let description = this.editDescription;
-    if (!isEmpty(description)) {
+    let description = this.editDescription.trim();
+    if (isEmpty(description)) {
+      await task.destroyRecord();
+    } else {
       task.description = description;
       await task.save();
       this.isEditing = false;
-    } else {
-      await task.destroyRecord();
     }
     if (this.args.editingEnd) this.args.editingEnd();
   }

@@ -5,6 +5,7 @@
   @focus-out={{@focus-out}}
   @insert-newline={{this.insertNewline}}
 
-  {{on "keydown" this.preventDefaultOnShiftlessEnter}}
+  {{on "keydown" this.preventDefaultWhenSubmitting}}
+
   ...attributes
 />
