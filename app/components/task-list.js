@@ -40,13 +40,6 @@ export default class TaskList extends Component {
     return this.unfinishedTasks.length > 0;
   }
 
-  initializeHeaderClickHandler(element) {
-    let clickHandler = () => element.querySelector('.new-task').focus();
-    element
-      .querySelector('.task-list-header')
-      .addEventListener('click', clickHandler);
-  }
-
   cloneTask(task) {
     let newTask = this.store.createRecord('task', {
       list: this.args.list,
@@ -116,5 +109,10 @@ export default class TaskList extends Component {
   @action
   clearTextarea() {
     this.newTaskDescription = '';
+  }
+
+  @action
+  focusNewTaskField() {
+    document.getElementById(this.newTaskFieldId).focus();
   }
 }
