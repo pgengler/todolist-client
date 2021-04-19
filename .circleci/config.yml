@@ -16,6 +16,9 @@ jobs:
             - ~/.cache/yarn
       - run: yarn lint:js
       - run: yarn lint:hbs
-      - run: COVERAGE=true yarn test
+      - run:
+          environment:
+             NODE_OPTIONS: --max_old_space_size=4096
+          command: COVERAGE=true yarn test
       - store_artifacts:
           path: coverage
