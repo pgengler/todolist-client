@@ -7,7 +7,7 @@
 //   });
 // };
 
-module.exports = function(app) {
+module.exports = function (app) {
   let globSync = require('glob').sync;
   let proxies = globSync('./proxies/**/*.js', { cwd: __dirname }).map(require);
 

@@ -10,7 +10,7 @@ export default class DaysRoute extends Route {
   @service session;
 
   queryParams = {
-    date: { refreshModel: true }
+    date: { refreshModel: true },
   };
 
   beforeModel(transition) {

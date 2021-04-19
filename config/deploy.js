@@ -1,14 +1,14 @@
 /* eslint-env node */
 
-module.exports = function(deployTarget) {
+module.exports = function (deployTarget) {
   let ENV = {
-    build: {}
+    build: {},
     // include other plugin configuration that applies to all deploy targets here
   };
 
   ENV['with-rsync'] = {
     username: 'todolist',
-    root: '/srv/apps/todolist/client'
+    root: '/srv/apps/todolist/client',
   };
 
   if (deployTarget === 'development') {

@@ -7,7 +7,7 @@ import { tracked } from '@glimmer/tracking';
 export default class TaskList extends Component {
   @tracked dragClass = '';
   @tracked newTaskDescription = '';
-  taskSorting = [ 'plaintextDescription' ];
+  taskSorting = ['plaintextDescription'];
 
   @service flashMessages;
   @service store;
@@ -21,13 +21,19 @@ export default class TaskList extends Component {
   }
 
   get finishedTasks() {
-    return this.args.list.tasks.filterBy('done', true).sortBy('plaintextDescription');
+    return this.args.list.tasks
+      .filterBy('done', true)
+      .sortBy('plaintextDescription');
   }
   get unfinishedTasks() {
-    return this.args.list.tasks.filterBy('done', false).sortBy('plaintextDescription');
+    return this.args.list.tasks
+      .filterBy('done', false)
+      .sortBy('plaintextDescription');
   }
   get pendingTasks() {
-    return this.args.list.tasks.filterBy('isNew').sortBy('plaintextDescription');
+    return this.args.list.tasks
+      .filterBy('isNew')
+      .sortBy('plaintextDescription');
   }
 
   get hasUnfinishedTasks() {
@@ -36,13 +42,15 @@ export default class TaskList extends Component {
 
   initializeHeaderClickHandler(element) {
     let clickHandler = () => element.querySelector('.new-task').focus();
-    element.querySelector('.task-list-header').addEventListener('click', clickHandler);
+    element
+      .querySelector('.task-list-header')
+      .addEventListener('click', clickHandler);
   }
 
   cloneTask(task) {
     let newTask = this.store.createRecord('task', {
       list: this.args.list,
-      description: task.description
+      description: task.description,
     });
     newTask.save();
   }
@@ -87,7 +95,7 @@ export default class TaskList extends Component {
     }
     let task = this.store.createRecord('task', {
       description,
-      list: this.args.list
+      list: this.args.list,
     });
 
     this.newTaskDescription = '';
@@ -99,8 +107,7 @@ export default class TaskList extends Component {
       try {
         await task.save();
         document.getElementById(this.newTaskFieldId).scrollIntoView();
-      }
-      catch (err) {
+      } catch (err) {
         this.flashMessages.error(err);
       }
     });
@@ -108,6 +115,6 @@ export default class TaskList extends Component {
 
   @action
   clearTextarea() {
-    this.newTaskDescription =  '';
+    this.newTaskDescription = '';
   }
 }

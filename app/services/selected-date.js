@@ -10,7 +10,7 @@ export default class SelectedDateService extends Service {
     return [
       moment(date).subtract(1, 'day'),
       date,
-      ...[1, 2, 3].map((val) => moment(date).add(val, 'days'))
+      ...[1, 2, 3].map((val) => moment(date).add(val, 'days')),
     ];
   }
 
@@ -25,7 +25,7 @@ export default class SelectedDateService extends Service {
   get dateRange() {
     return {
       start: this.startDate,
-      end: this.endDate
+      end: this.endDate,
     };
   }
 }

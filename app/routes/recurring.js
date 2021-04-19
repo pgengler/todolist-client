@@ -11,10 +11,10 @@ export default class RecurringRoute extends Route {
   model() {
     return this.store.query('list', {
       filter: {
-        'list-type': 'recurring-task-day'
+        'list-type': 'recurring-task-day',
       },
       include: 'tasks',
-      sort: 'sort-order'
+      sort: 'sort-order',
     });
   }
 }

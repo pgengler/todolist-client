@@ -31,7 +31,7 @@ export default class SingleTask extends Component {
     this.lastTouchEndEventInfo = {
       clientX: touch.clientX,
       clientY: touch.clientY,
-      when: now
+      when: now,
     };
     if (!lastTouchEndEventInfo) {
       return;
@@ -48,7 +48,7 @@ export default class SingleTask extends Component {
           true, // click bubbles
           true, // click cancelable
           event.view, // copy view
-          2,  // click count
+          2, // click count
           // copy coordinates
           touch.screenX,
           touch.screenY,

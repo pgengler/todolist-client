@@ -1,5 +1,5 @@
 <div class="recurring-task-days">
-  {{#each this.lists as |list|}}
+  {{#each @model as |list|}}
     <TaskList @list={{list}} />
   {{/each}}
 </div>

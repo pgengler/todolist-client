@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function(environment) {
+module.exports = function (environment) {
   let ENV = {
     modulePrefix: 'ember-todo',
     environment,
@@ -13,8 +13,8 @@ module.exports = function(environment) {
       },
       EXTEND_PROTOTYPES: {
         // Prevent Ember Data from overriding Date.parse.
-        Date: false
-      }
+        Date: false,
+      },
     },
 
     APP: {
@@ -23,12 +23,12 @@ module.exports = function(environment) {
     },
 
     emberKeyboard: {
-      listeners: [ 'keyUp', 'keyDown', 'keyPress' ],
+      listeners: ['keyUp', 'keyDown', 'keyPress'],
     },
 
     flashMessageDefaults: {
       preventDuplicates: true,
-      types: [ 'success', 'error' ]
+      types: ['success', 'error'],
     },
 
     showdown: {
@@ -36,8 +36,8 @@ module.exports = function(environment) {
       literalMidWordAsterisks: true,
       literalMidWordUnderscores: true,
       simplifiedAutoLink: true,
-      strikethrough: true
-    }
+      strikethrough: true,
+    },
   };
 
   if (environment === 'development') {
@@ -47,7 +47,7 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
     ENV['ember-cli-mirage'] = {
-      enabled: false
+      enabled: false,
     };
   }
 

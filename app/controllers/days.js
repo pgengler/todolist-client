@@ -1,6 +1,5 @@
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
-import { alias } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import moment from 'moment';
@@ -8,11 +7,16 @@ import moment from 'moment';
 export default class DaysController extends Controller {
   @service poller;
 
-  queryParams = [ 'date' ];
+  queryParams = ['date'];
   @tracked date = null;
 
-  @alias('poller.days') days;
-  @alias('poller.lists') lists;
+  get days() {
+    return this.poller.days;
+  }
+
+  get lists() {
+    return this.poller.lists;
+  }
 
   @action
   changeDate(date) {

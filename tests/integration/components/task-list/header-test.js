@@ -2,18 +2,16 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import EmberObject from '@ember/object';
 
-module('Integration | Component | task list/header', function(hooks) {
+module('Integration | Component | TaskList::Header', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders the list name', async function(assert) {
-    let list = EmberObject.create({
-      name: 'Foo Bar Baz'
+  test('it renders the list name', async function (assert) {
+    this.set('list', {
+      name: 'Foo Bar Baz',
     });
-    this.set('list', list);
     await render(hbs`
-      {{task-list/header list=list}}
+      <TaskList::Header @list={{this.list}} />
     `);
 
     assert.dom('.task-list-header').exists('has header class');
