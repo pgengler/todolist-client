@@ -83,11 +83,10 @@ export default class SingleTask extends Component {
   }
 
   @action
-  toggleTaskDone(event) {
+  toggleTaskDone() {
     let task = this.args.task;
     task.done = !task.done;
     task.save();
-    event.preventDefault();
   }
 
   @action

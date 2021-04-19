@@ -11,8 +11,7 @@ export default class LoginController extends Controller {
   @service session;
 
   @action
-  async login(event) {
-    event.preventDefault();
+  async login() {
     try {
       await this.session.authenticate(
         'authenticator:oauth2',

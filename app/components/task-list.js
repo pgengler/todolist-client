@@ -50,14 +50,12 @@ export default class TaskList extends Component {
   }
 
   @action
-  dragIn(event) {
-    event.preventDefault();
+  dragIn() {
     this.dragClass = 'active-drop-target';
   }
 
   @action
-  dragOut(event) {
-    event.preventDefault();
+  dragOut() {
     this.dragClass = '';
   }
 

@@ -17,8 +17,7 @@ export default class NewTaskForm extends Component {
   }
 
   @action
-  async createTask(event) {
-    event.preventDefault();
+  async createTask() {
     let description = this.newTaskDescription.trim();
     let date = this.newTaskDate;
 

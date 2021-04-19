@@ -22,7 +22,7 @@
       {{else if @task.isNew}}
         <FaIcon @icon="spinner" @spin={{true}} />
       {{else}}
-        <input type="checkbox" checked={{@task.done}} {{on "change" this.toggleTaskDone}}>
+        <input type="checkbox" checked={{@task.done}} {{on "change" (prevent-default this.toggleTaskDone)}}>
       {{/if}}
     </div>
 

@@ -1,5 +1,5 @@
 <h1>Add new task</h1>
-<form class="new-task" {{on "submit" this.createTask}}>
+<form class="new-task" {{on "submit" (prevent-default this.createTask)}}>
   <AutofocusElasticTextarea
     @value={{this.newTaskDescription}}
     @insert-newline={{this.createTask}}
