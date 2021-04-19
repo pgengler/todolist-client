@@ -4,10 +4,9 @@
   {{on "dragleave" this.dragOut}}
   {{on "dragover" this.dragIn}}
   {{on "drop" this.dropped}}
-  {{did-insert this.initializeHeaderClickHandler}}
   ...attributes
 >
-  {{component this.headerComponent list=@list}}
+  <this.headerComponent @list={{@list}} {{on "click" this.focusNewTaskField}} />
   <ul>
     {{#each this.unfinishedTasks as |task|}}
       <SingleTask @task={{task}} @editingStart={{@editingStart}} @editingEnd={{@editingEnd}} data-test-task />

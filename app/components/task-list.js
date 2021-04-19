@@ -3,6 +3,7 @@ import { next } from '@ember/runloop';
 import { inject as service } from '@ember/service';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
+import TaskListHeaderComponent from 'ember-todo/components/task-list/header';
 
 export default class TaskList extends Component {
   @tracked dragClass = '';
@@ -13,7 +14,7 @@ export default class TaskList extends Component {
   @service store;
 
   get headerComponent() {
-    return this.args.headerComponent || 'task-list/header';
+    return this.args.headerComponent || TaskListHeaderComponent;
   }
 
   get newTaskFieldId() {
@@ -38,13 +39,6 @@ export default class TaskList extends Component {
 
   get hasUnfinishedTasks() {
     return this.unfinishedTasks.length > 0;
-  }
-
-  initializeHeaderClickHandler(element) {
-    let clickHandler = () => element.querySelector('.new-task').focus();
-    element
-      .querySelector('.task-list-header')
-      .addEventListener('click', clickHandler);
   }
 
   cloneTask(task) {
@@ -116,5 +110,10 @@ export default class TaskList extends Component {
   @action
   clearTextarea() {
     this.newTaskDescription = '';
+  }
+
+  @action
+  focusNewTaskField() {
+    document.getElementById(this.newTaskFieldId).focus();
   }
 }
