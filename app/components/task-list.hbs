@@ -6,7 +6,7 @@
   {{on "drop" this.dropped}}
   ...attributes
 >
-  <this.headerComponent @list=@list {{on "click" this.focusNewTaskField}} />
+  <this.headerComponent @list={{@list}} {{on "click" this.focusNewTaskField}} />
   <ul>
     {{#each this.unfinishedTasks as |task|}}
       <SingleTask @task={{task}} @editingStart={{@editingStart}} @editingEnd={{@editingEnd}} data-test-task />

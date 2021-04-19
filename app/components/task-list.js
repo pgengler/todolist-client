@@ -3,6 +3,7 @@ import { next } from '@ember/runloop';
 import { inject as service } from '@ember/service';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
+import TaskListHeaderComponent from 'ember-todo/components/task-list/header';
 
 export default class TaskList extends Component {
   @tracked dragClass = '';
@@ -13,7 +14,7 @@ export default class TaskList extends Component {
   @service store;
 
   get headerComponent() {
-    return this.args.headerComponent || 'task-list/header';
+    return this.args.headerComponent || TaskListHeaderComponent;
   }
 
   get newTaskFieldId() {
