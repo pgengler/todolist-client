@@ -1,7 +1,6 @@
 import Ember from 'ember'; // for Ember.testing
 import Service, { inject as service } from '@ember/service';
-import { all, timeout } from 'ember-concurrency';
-import { restartableTask } from 'ember-concurrency-decorators';
+import { all, restartableTask, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 
 export default class PollerService extends Service {
