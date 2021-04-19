@@ -224,6 +224,42 @@ module('Acceptance | Days', function (hooks) {
     await fillInAndPressEnter('[data-test-task] textarea', '');
   });
 
+  test('pressing Shift+Enter adds a newline to the new description when it is not empty', async function (assert) {
+    assert.expect(1);
+
+    let task = this.server.create('task');
+    this.server.create('list', 'day', { tasks: [task] });
+
+    this.server.delete('/tasks/:id', function () {
+      assert.ok(false, 'does not make a delete request');
+    });
+
+    await visit('/days');
+    await triggerEvent('[data-test-task]', 'dblclick');
+    await triggerKeyEvent('[data-test-task] textarea', 'keyup', 'Enter', {
+      shiftKey: true,
+    });
+    assert.dom('[data-test-task] textarea').exists('remains in edit mode');
+  });
+
+  test('pressing Shift+Enter deletes a task when its description is empty', async function (assert) {
+    assert.expect(2);
+
+    let task = this.server.create('task');
+    this.server.create('list', 'day', { tasks: [task] });
+
+    this.server.delete('/tasks/:id', function ({ tasks }, request) {
+      assert.ok(true, 'makes a delete request');
+      tasks.find(request.params.id).destroy();
+      return new Response(204);
+    });
+
+    await visit('/days');
+    await triggerEvent('[data-test-task]', 'dblclick');
+    await fillInAndPressEnter('[data-test-task] textarea', '');
+    assert.dom('[data-test-task]').doesNotExist('task is removed');
+  });
+
   test('newly-created-but-still-saving tasks appear in the "pending" state', async function (assert) {
     assert.expect(5);
 
