@@ -2,10 +2,9 @@
   @value={{@value}}
 
   @escape-press={{@escape-press}}
-  @focus-out={{@focus-out}}
   @insert-newline={{this.insertNewline}}
 
-  {{on "keydown" this.preventDefaultWhenSubmitting}}
+  {{on "keyup" this.preventDefaultWhenSubmitting}}
 
   ...attributes
 />

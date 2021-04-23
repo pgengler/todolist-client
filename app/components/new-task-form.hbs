@@ -11,7 +11,8 @@
   <div data-test-new-task-date>
     <PowerDatepicker @selected={{this.newTaskDate}} @onSelect={{this.changeDate}} @renderInPlace={{true}} as |dp|>
       <dp.Trigger>
-        <input type="text" placeholder="Date" value={{moment-format this.newTaskDate "YYYY-MM-DD" allow-empty=true}} readonly>
+        <label for="new-task-date-task" class="hidden">Date:</label>
+        <input type="text" placeholder="Date" value={{moment-format this.newTaskDate "YYYY-MM-DD" allow-empty=true}} id="new-task-date" readonly>
       </dp.Trigger>
       <dp.Content>
         <div class="date-picker-content">
@@ -22,7 +23,9 @@
     </PowerDatepicker>
   </div>
   <br><br>
-  <input type="submit" value="Add" data-test-create-task>
+  <button type="submit" data-test-create-task>
+    Add
+  </button>
   <button type="button" {{on "click" @cancel}} data-test-cancel-button>
     Cancel
   </button>
