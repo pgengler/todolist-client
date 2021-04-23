@@ -369,4 +369,25 @@ module('Acceptance | Days', function (hooks) {
       .dom('.task.error')
       .exists('task is displayed with the "error" class');
   });
+
+  test('lists are sorted by date', async function (assert) {
+    this.server.create('list', 'day', { name: '2021-04-26' });
+    this.server.create('list', 'day', { name: '2021-04-22' });
+    this.server.create('list', 'day', { name: '2021-04-23' });
+    this.server.create('list', 'day', { name: '2021-04-24' });
+    this.server.create('list', 'day', { name: '2021-04-25' });
+
+    await visit('/days?date=2021-04-23');
+
+    let listNames = Array.from(findAll('.task-list-header h2')).map(
+      (e) => e.textContent
+    );
+    assert.deepEqual(listNames, [
+      'Apr 22, 2021',
+      'Apr 23, 2021',
+      'Apr 24, 2021',
+      'Apr 25, 2021',
+      'Apr 26, 2021',
+    ]);
+  });
 });

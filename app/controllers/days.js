@@ -11,7 +11,7 @@ export default class DaysController extends Controller {
   @tracked date = null;
 
   get days() {
-    return this.poller.days;
+    return this.poller.days ? this.poller.days.sortBy('name') : [];
   }
 
   get lists() {
