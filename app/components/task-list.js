@@ -107,7 +107,7 @@ export default class TaskList extends Component {
 
   @action
   clearTextarea() {
-    this.newTaskDescription = '';
+    next(() => (this.newTaskDescription = ''));
   }
 
   @action

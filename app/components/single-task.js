@@ -1,5 +1,6 @@
 import { isEmpty } from '@ember/utils';
 import { action } from '@ember/object';
+import { next } from '@ember/runloop';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 
@@ -78,7 +79,13 @@ export default class SingleTask extends Component {
   @action
   cancelEdit() {
     this.editDescription = '';
-    this.isEditing = false;
+
+    // wrapping this in a `next` to avoid double-updating `this.isEditing` twice
+    // (e.g., when `updateTask` runs and sets `this.isEditing`, which then causes
+    // the textarea to stop displaying and thus triggers the "focusout" event
+    // that causes this method to run.)
+    next(() => (this.isEditing = false));
+
     if (this.args.editingEnd) this.args.editingEnd();
   }
 

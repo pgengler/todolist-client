@@ -13,7 +13,7 @@ export default class NewTaskForm extends Component {
   @action
   changeDate(newDate) {
     this.newTaskDate = newDate.moment;
-    document.querySelector('.new-task input[type=submit]').focus();
+    document.querySelector('.new-task button[type=submit]').focus();
   }
 
   @action
