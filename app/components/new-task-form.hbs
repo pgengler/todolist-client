@@ -1,9 +1,9 @@
 <h1>Add new task</h1>
 <form class="new-task" {{on "submit" (prevent-default this.createTask)}}>
   <AutofocusElasticTextarea
-    @value={{this.newTaskDescription}}
     @onEnterPressed={{this.createTask}}
     @onEscapePressed={{@cancel}}
+    id="new-task-description"
     data-test-new-task-description
     placeholder="New task"
   />
