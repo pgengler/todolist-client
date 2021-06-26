@@ -1,10 +1,6 @@
-<Textarea
-  @value={{@value}}
-
-  @escape-press={{@escape-press}}
-  @insert-newline={{this.insertNewline}}
-
-  {{on "keyup" this.preventDefaultWhenSubmitting}}
+<textarea
+  {{on "keydown" this.handleKeyDown}}
+  {{on "keyup" this.handleKeyUp}}
 
   ...attributes
-/>
+>{{@value}}</textarea>

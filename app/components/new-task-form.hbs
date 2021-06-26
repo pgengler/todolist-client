@@ -2,8 +2,8 @@
 <form class="new-task" {{on "submit" (prevent-default this.createTask)}}>
   <AutofocusElasticTextarea
     @value={{this.newTaskDescription}}
-    @insert-newline={{this.createTask}}
-    @escape-press={{@cancel}}
+    @onEnterPressed={{this.createTask}}
+    @onEscapePressed={{@cancel}}
     data-test-new-task-description
     placeholder="New task"
   />

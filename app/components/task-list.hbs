@@ -19,8 +19,8 @@
     {{/each}}
     <li class="task">
       <ElasticTextarea
-        @escape-press={{this.clearTextarea}}
-        @insert-newline={{this.addTask}}
+        @onEscapePressed={{this.clearTextarea}}
+        @onEnterPressed={{this.addTask}}
         @value={{this.newTaskDescription}}
         class="new-task"
         id={{this.newTaskFieldId}}

@@ -1,8 +1,8 @@
 <SingleLineTextarea
   @value={{@value}}
 
-  @escape-press={{@escape-press}}
-  @insert-newline={{@insert-newline}}
+  @onEnterPressed={{@onEnterPressed}}
+  @onEscapePressed={{@onEscapePressed}}
 
   {{did-insert this.resizeArea}}
   {{did-update this.resizeArea @value}}

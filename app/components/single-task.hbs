@@ -9,8 +9,8 @@
 >
   {{#if this.isEditing}}
     <AutofocusElasticTextarea
-      @escape-press={{this.cancelEdit}}
-      @insert-newline={{this.updateTask}}
+      @onEscapePressed={{this.cancelEdit}}
+      @onEnterPressed={{this.updateTask}}
       @value={{this.editDescription}}
       class="edit"
       {{on "focusout" this.cancelEdit}}

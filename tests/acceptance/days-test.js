@@ -5,17 +5,17 @@ import {
   fillIn,
   findAll,
   triggerEvent,
-  triggerKeyEvent,
   visit,
 } from '@ember/test-helpers';
 import setupAcceptanceTest from 'ember-todo/tests/helpers/setup-acceptance-test';
 import dragAndDrop from 'ember-todo/tests/helpers/drag-and-drop';
+import keyEvent from 'ember-todo/tests/helpers/key-event';
 import { authenticateSession } from 'ember-simple-auth/test-support';
 import { Response } from 'ember-cli-mirage';
 
 async function fillInAndPressEnter(selector, text) {
   await fillIn(selector, text);
-  return triggerKeyEvent(selector, 'keyup', 'Enter');
+  return keyEvent(selector, 'Enter');
 }
 
 module('Acceptance | Days', function (hooks) {
@@ -73,7 +73,7 @@ module('Acceptance | Days', function (hooks) {
     await visit('/days');
 
     await fillIn('[data-test-new-task]', 'New task');
-    await triggerKeyEvent('[data-test-new-task]', 'keyup', 27);
+    await keyEvent('[data-test-new-task]', 27);
 
     assert
       .dom('[data-test-new-task]')
@@ -236,7 +236,7 @@ module('Acceptance | Days', function (hooks) {
 
     await visit('/days');
     await triggerEvent('[data-test-task]', 'dblclick');
-    await triggerKeyEvent('[data-test-task] textarea', 'keyup', 'Enter', {
+    await keyEvent('[data-test-task] textarea', 'Enter', {
       shiftKey: true,
     });
     assert.dom('[data-test-task] textarea').exists('remains in edit mode');

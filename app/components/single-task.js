@@ -97,12 +97,12 @@ export default class SingleTask extends Component {
   }
 
   @action
-  async updateTask() {
+  async updateTask(description) {
     if (!this.editable) {
       return;
     }
     let task = this.args.task;
-    let description = this.editDescription.trim();
+    description = description.trim();
     if (isEmpty(description)) {
       await task.destroyRecord();
     } else {
