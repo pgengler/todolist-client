@@ -5,7 +5,6 @@ import { inject as service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
 
 export default class NewTaskForm extends Component {
-  @tracked newTaskDescription = '';
   @tracked newTaskDate = null;
 
   @service store;
@@ -13,12 +12,14 @@ export default class NewTaskForm extends Component {
   @action
   changeDate(newDate) {
     this.newTaskDate = newDate.moment;
-    document.querySelector('.new-task input[type=submit]').focus();
+    document.querySelector('.new-task button[type=submit]').focus();
   }
 
   @action
   async createTask() {
-    let description = this.newTaskDescription.trim();
+    let description = document
+      .getElementById('new-task-description')
+      .value.trim();
     let date = this.newTaskDate;
 
     if (isEmpty(description) || isEmpty(date)) {

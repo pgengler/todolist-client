@@ -9,11 +9,11 @@
 >
   {{#if this.isEditing}}
     <AutofocusElasticTextarea
-      @escape-press={{this.cancelEdit}}
-      @focus-out={{this.cancelEdit}}
-      @insert-newline={{this.updateTask}}
+      @onEscapePressed={{this.cancelEdit}}
+      @onEnterPressed={{this.updateTask}}
       @value={{this.editDescription}}
       class="edit"
+      {{on "focusout" this.cancelEdit}}
     />
   {{else}}
     <div class="state">
@@ -22,6 +22,7 @@
       {{else if @task.isNew}}
         <FaIcon @icon="spinner" @spin={{true}} />
       {{else}}
+        {{!-- template-lint-disable require-input-label --}}
         <input type="checkbox" checked={{@task.done}} {{on "change" (prevent-default this.toggleTaskDone)}}>
       {{/if}}
     </div>

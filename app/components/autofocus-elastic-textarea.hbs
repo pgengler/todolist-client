@@ -1,8 +1,10 @@
 <ElasticTextarea
-  @escape-press={{@escape-press}}
-  @focus-out={{@focus-out}}
-  @insert-newline={{@insert-newline}}
   @value={{@value}}
+
+  @onEnterPressed={{@onEnterPressed}}
+  @onEscapePressed={{@onEscapePressed}}
+
   {{did-insert this.setFocus}}
+
   ...attributes
 />

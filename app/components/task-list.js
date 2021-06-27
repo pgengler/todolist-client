@@ -80,8 +80,8 @@ export default class TaskList extends Component {
   }
 
   @action
-  addTask() {
-    let description = this.newTaskDescription.trim();
+  addTask(description) {
+    description = description.trim();
     if (!description) {
       return;
     }

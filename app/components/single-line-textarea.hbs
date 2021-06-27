@@ -1,11 +1,8 @@
-<Textarea
-  @value={{@value}}
-
-  @escape-press={{@escape-press}}
-  @focus-out={{@focus-out}}
-  @insert-newline={{this.insertNewline}}
-
-  {{on "keydown" this.preventDefaultWhenSubmitting}}
+<textarea
+  {{did-update this.updateValue @value}}
+  {{!-- template-lint-disable no-down-event-binding --}}
+  {{on "keydown" this.handleKeyDown}}
+  {{on "keyup" this.handleKeyUp}}
 
   ...attributes
-/>
+>{{@value}}</textarea>
