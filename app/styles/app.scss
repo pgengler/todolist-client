@@ -119,7 +119,7 @@ nav.top-nav {
   height: calc(100vh - 3.5em);
   -webkit-overflow-scrolling: touch;
   overflow-x: scroll;
-  scroll-snap-type: mandatory;
+  scroll-snap-type: x mandatory;
   -webkit-scroll-snap-type: mandatory;
   white-space: nowrap;
 }
