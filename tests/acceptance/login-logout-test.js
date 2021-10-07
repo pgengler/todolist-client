@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import setupAcceptanceTest from 'ember-todo/tests/helpers/setup-acceptance-test';
-import { click, currentRouteName, visit } from '@ember/test-helpers';
+import { click, currentURL, visit } from '@ember/test-helpers';
 import { authenticateSession } from 'ember-simple-auth/test-support';
 
 module('Acceptance | login & logout', function (hooks) {
@@ -11,6 +11,6 @@ module('Acceptance | login & logout', function (hooks) {
     await visit('/days');
     await click('[data-test-logout]');
 
-    assert.equal(currentRouteName(), 'login');
+    assert.equal(currentURL(), '/login');
   });
 });

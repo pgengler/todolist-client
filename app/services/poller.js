@@ -1,6 +1,6 @@
 import Ember from 'ember'; // for Ember.testing
 import Service, { inject as service } from '@ember/service';
-import { all, restartableTask, timeout } from 'ember-concurrency';
+import { all, didCancel, restartableTask, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 
 export default class PollerService extends Service {
@@ -11,12 +11,16 @@ export default class PollerService extends Service {
   @tracked days;
   @tracked lists;
 
-  start() {
-    this.pollForChanges.perform();
+  async start() {
+    try {
+      await this.pollForChanges.perform();
+    } catch (e) {
+      if (!didCancel(e)) throw e;
+    }
   }
 
   stop() {
-    this.pollForChanges.cancelAll();
+    return this.pollForChanges.cancelAll();
   }
 
   @restartableTask
