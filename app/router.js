@@ -7,7 +7,9 @@ export default class Router extends EmberRouter {
 }
 
 Router.map(function () {
-  this.route('days');
+  this.route('days', function () {
+    /* nothing here, but this does generate index/loading routes */
+  });
   this.route('recurring');
   this.route('login');
 });

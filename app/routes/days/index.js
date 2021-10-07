@@ -15,15 +15,13 @@ export default class DaysRoute extends Route {
 
   beforeModel(transition) {
     this.session.requireAuthentication(transition, 'login');
+    return this.poller.stop();
   }
 
-  model(params) {
+  async model(params) {
     let date = params.date ? moment(params.date) : moment();
     this.selectedDate.date = date;
-  }
-
-  @action activate() {
-    this.poller.start();
+    return this.poller.start();
   }
 
   @action deactivate() {

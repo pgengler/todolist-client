@@ -1,1 +1,3 @@
-export default function (/* server */) {}
+export default function (server) {
+  server.create('list', { name: 'Other', listType: 'list' });
+}

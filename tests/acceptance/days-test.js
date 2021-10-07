@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import {
   click,
-  currentRouteName,
+  currentURL,
   fillIn,
   findAll,
   triggerEvent,
@@ -31,7 +31,7 @@ module('Acceptance | Days', function (hooks) {
     this.server.create('list', { listType: 'list' });
     await visit('/days?date=2014-11-07');
 
-    assert.equal(currentRouteName(), 'days');
+    assert.equal(currentURL(), '/days?date=2014-11-07');
     assert.dom('.task-list h1').hasText('Thursday');
     assert.dom('.task-list h2').hasText('Nov 6, 2014');
     assert.equal(findAll('.task-list').length, 6);

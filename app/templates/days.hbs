@@ -1,16 +1,3 @@
 <div class="days">
-  {{#each this.days as |list|}}
-    <DayTasks
-      @list={{list}}
-      @editingStart={{this.stopPolling}}
-      @editingEnd={{this.startPolling}}
-    />
-  {{/each}}
-  {{#each this.lists as |list|}}
-    <TaskList
-      @list={{list}}
-      @editingStart={{this.stopPolling}}
-      @editingEnd={{this.startPolling}}
-    />
-  {{/each}}
+  {{outlet}}
 </div>
