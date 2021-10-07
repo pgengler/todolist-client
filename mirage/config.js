@@ -1,7 +1,6 @@
 export default function () {
   this.passthrough('/write-coverage');
 
-  this.timing = 1000;
   this.logging = true;
 
   this.namespace = '/api';
