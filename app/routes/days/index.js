@@ -18,7 +18,7 @@ export default class DaysRoute extends Route {
     return this.poller.stop();
   }
 
-  async model(params) {
+  model(params) {
     let date = params.date ? moment(params.date) : moment();
     this.selectedDate.date = date;
     return this.poller.start();
