@@ -5096,7 +5096,7 @@ ember-cli-babel-plugin-helpers@^1.0.0, ember-cli-babel-plugin-helpers@^1.1.0, em
   resolved "https://registry.yarnpkg.com/ember-cli-babel-plugin-helpers/-/ember-cli-babel-plugin-helpers-1.1.1.tgz#5016b80cdef37036c4282eef2d863e1d73576879"
   integrity sha512-sKvOiPNHr5F/60NLd7SFzMpYPte/nnGkq/tMIfXejfKHIhaiIkYFqX8Z9UFTKWLLn+V7NOaby6niNPZUdvKCRw==
 
-ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.10.0, ember-cli-babel@^6.16.0, ember-cli-babel@^6.6.0, ember-cli-babel@^6.7.2, ember-cli-babel@^6.8.1, ember-cli-babel@^6.8.2, ember-cli-babel@^6.9.0:
+ember-cli-babel@^6.0.0-beta.4, ember-cli-babel@^6.10.0, ember-cli-babel@^6.16.0, ember-cli-babel@^6.6.0, ember-cli-babel@^6.7.2, ember-cli-babel@^6.8.2, ember-cli-babel@^6.9.0:
   version "6.18.0"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-6.18.0.tgz#3f6435fd275172edeff2b634ee7b29ce74318957"
   integrity sha512-7ceC8joNYxY2wES16iIBlbPSxwKDBhYwC8drU3ZEvuPDMwVv1KzxCNu1fvxyFEBWhwaRNTUxSCsEVoTd9nosGA==
@@ -5286,7 +5286,7 @@ ember-cli-get-component-path-option@^1.0.0:
   resolved "https://registry.yarnpkg.com/ember-cli-get-component-path-option/-/ember-cli-get-component-path-option-1.0.0.tgz#0d7b595559e2f9050abed804f1d8eff1b08bc771"
   integrity sha1-DXtZVVni+QUKvtgE8djv8bCLx3E=
 
-ember-cli-htmlbars@^2.0.1, ember-cli-htmlbars@^2.0.3:
+ember-cli-htmlbars@^2.0.1:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/ember-cli-htmlbars/-/ember-cli-htmlbars-2.0.5.tgz#b5a105429a6bce4f7c9c97b667e3b8926e31397f"
   integrity sha512-3f3PAxdnQ/fhQa8XP/3z4RLRgLHxV8j4Ln75aHbRdemOCjBa048KxL9l+acRLhCulbGQCMnLiIUIC89PAzLrcA==
@@ -5435,23 +5435,6 @@ ember-cli-sass@^10.0.0:
     broccoli-merge-trees "^3.0.1"
     broccoli-sass-source-maps "^4.0.0"
     ember-cli-version-checker "^2.1.0"
-
-ember-cli-showdown@^4.5.0:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/ember-cli-showdown/-/ember-cli-showdown-4.5.0.tgz#6ea0d28ced62fd5feb92799bc90d6a4857ceb5a7"
-  integrity sha512-i1XXua2oOqJHGozLw+cXI2zjrfSaamH+qAKt8kLnKTjxDXO175bDUnBtrTR1uMH75S56iIkCBdCSyOMq5haB+g==
-  dependencies:
-    broccoli-funnel "^2.0.0"
-    broccoli-source "^1.1.0"
-    broccoli-string-replace "^0.1.2"
-    ember-cli-babel "^6.8.1"
-    ember-cli-htmlbars "^2.0.3"
-    ember-cli-import-polyfill "^0.2.0"
-    ember-cli-version-checker "^2.1.2"
-    ember-getowner-polyfill "^2.0.1"
-    resolve "^1.8.1"
-    semver "^5.5.0"
-    showdown "^1.8.6"
 
 ember-cli-sri@^2.1.1:
   version "2.1.1"
@@ -5828,7 +5811,7 @@ ember-get-config@, "ember-get-config@^0.2.4 || ^0.3.0", ember-get-config@^0.3.0:
     broccoli-file-creator "^1.1.1"
     ember-cli-babel "^7.0.0"
 
-"ember-getowner-polyfill@^1.1.0 || ^2.0.0", ember-getowner-polyfill@^2.0.1, ember-getowner-polyfill@^2.2.0:
+"ember-getowner-polyfill@^1.1.0 || ^2.0.0", ember-getowner-polyfill@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/ember-getowner-polyfill/-/ember-getowner-polyfill-2.2.0.tgz#38e7dccbcac69d5ec694000329ec0b2be651d2b2"
   integrity sha512-rwGMJgbGzxIAiWYjdpAh04Abvt0s3HuS/VjHzUFhVyVg2pzAuz45B9AzOxYXzkp88vFC7FPaiA4kE8NxNk4A4Q==
@@ -6028,6 +6011,20 @@ ember-runtime-enumerable-includes-polyfill@^2.1.0:
   dependencies:
     ember-cli-babel "^6.9.0"
     ember-cli-version-checker "^2.1.0"
+
+ember-showdown@^1.0.0-beta.1:
+  version "1.0.0-beta.1"
+  resolved "https://registry.yarnpkg.com/ember-showdown/-/ember-showdown-1.0.0-beta.1.tgz#8634be88859763ae9558f8cfd0c0ec94424cbafb"
+  integrity sha512-iIKjf7qZ4v3/tL2N11oCWAb6rwHZOnByzg12DbiXBigKytGcGbE/QRlmChhny467/iMGoa8LKzeebxibIIutyw==
+  dependencies:
+    broccoli-funnel "^2.0.0"
+    broccoli-source "^1.1.0"
+    broccoli-string-replace "^0.1.2"
+    ember-cli-babel "^7.26.6"
+    ember-cli-htmlbars "^5.7.1"
+    resolve "^1.8.1"
+    semver "^5.5.0"
+    showdown "^1.8.6"
 
 ember-simple-auth@^3.1.0:
   version "3.1.0"
