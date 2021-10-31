@@ -27,6 +27,6 @@
       {{/if}}
     </div>
 
-    {{markdown-to-html @task.description}}
+    <MarkdownToHtml @markdown={{@task.description}} />
   {{/if}}
 </li>
