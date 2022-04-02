@@ -11,6 +11,6 @@ module('Acceptance | login & logout', function (hooks) {
     await visit('/days');
     await click('[data-test-logout]');
 
-    assert.equal(currentURL(), '/login');
+    assert.strictEqual(currentURL(), '/login');
   });
 });

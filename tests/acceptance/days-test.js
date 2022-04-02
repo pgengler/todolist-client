@@ -31,10 +31,10 @@ module('Acceptance | Days', function (hooks) {
     this.server.create('list', { listType: 'list' });
     await visit('/days?date=2014-11-07');
 
-    assert.equal(currentURL(), '/days?date=2014-11-07');
+    assert.strictEqual(currentURL(), '/days?date=2014-11-07');
     assert.dom('.task-list h1').hasText('Thursday');
     assert.dom('.task-list h2').hasText('Nov 6, 2014');
-    assert.equal(findAll('.task-list').length, 6);
+    assert.strictEqual(findAll('.task-list').length, 6);
   });
 
   test('adding a new task sends right data to server', async function (assert) {
@@ -46,12 +46,12 @@ module('Acceptance | Days', function (hooks) {
 
     this.server.post('/tasks', function ({ tasks }, request) {
       let requestData = JSON.parse(request.requestBody).data;
-      assert.equal(
+      assert.strictEqual(
         requestData.relationships.list.data.id,
         list.id,
         'request includes correct list ID'
       );
-      assert.equal(
+      assert.strictEqual(
         requestData.attributes.description,
         'A new task',
         'request includes correct description'
@@ -96,7 +96,7 @@ module('Acceptance | Days', function (hooks) {
 
     this.server.patch('/tasks/:id', function ({ tasks }, request) {
       let requestData = JSON.parse(request.requestBody).data;
-      assert.equal(
+      assert.strictEqual(
         requestData.relationships.list.data.id,
         targetDay.id,
         'makes PATCH request with new list ID'
@@ -114,13 +114,13 @@ module('Acceptance | Days', function (hooks) {
       '.task-list[data-test-list-name="2016-03-08"]'
     );
 
-    assert.equal(
+    assert.strictEqual(
       findAll('.task-list[data-test-list-name="2016-03-07"] [data-test-task]')
         .length,
       0,
       'task is no longer displays under original day'
     );
-    assert.equal(
+    assert.strictEqual(
       findAll('.task-list[data-test-list-name="2016-03-08"] [data-test-task]')
         .length,
       1,
@@ -145,12 +145,12 @@ module('Acceptance | Days', function (hooks) {
     this.server.post('/tasks', function ({ tasks }, request) {
       let requestData = JSON.parse(request.requestBody).data;
       assert.ok(true, 'makes POST request to create new task');
-      assert.equal(
+      assert.strictEqual(
         requestData.attributes.description,
         task.description,
         'creates new task with same description'
       );
-      assert.equal(
+      assert.strictEqual(
         requestData.relationships.list.data.id,
         targetDay.id,
         'creates new task on the correct day'
@@ -180,12 +180,12 @@ module('Acceptance | Days', function (hooks) {
       let requestData = JSON.parse(request.requestBody).data;
 
       assert.ok(true, 'makes a PATCH request');
-      assert.equal(
+      assert.strictEqual(
         request.params.id,
         task.id,
         'makes a PUT request for the correct task'
       );
-      assert.equal(
+      assert.strictEqual(
         requestData.attributes.description,
         'New description',
         'sends the new description in the request'
@@ -212,7 +212,7 @@ module('Acceptance | Days', function (hooks) {
 
     this.server.delete('/tasks/:id', function (db, request) {
       assert.ok(true, 'makes a DELETE request');
-      assert.equal(
+      assert.strictEqual(
         request.params.id,
         task.id,
         'makes a DELETE request for the right ID'
@@ -264,7 +264,7 @@ module('Acceptance | Days', function (hooks) {
     assert.expect(5);
 
     this.server.post('/tasks', function ({ tasks }) {
-      assert.equal(
+      assert.strictEqual(
         findAll('[data-test-task]').length,
         1,
         'displays the new task'
@@ -282,7 +282,7 @@ module('Acceptance | Days', function (hooks) {
     await visit('/days');
     await fillInAndPressEnter('[data-test-new-task]', 'new thing');
 
-    assert.equal(
+    assert.strictEqual(
       findAll('[data-test-task]').length,
       1,
       'still only displays one item after save finishes'

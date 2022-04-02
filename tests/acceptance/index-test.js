@@ -9,7 +9,7 @@ module('Acceptance | index', function (hooks) {
   test('redirects to login page when user is not authenticated', async function (assert) {
     await visit('/');
 
-    assert.equal(currentURL(), '/login', 'redirected to login page');
+    assert.strictEqual(currentURL(), '/login', 'redirected to login page');
     assert
       .dom('.top-nav')
       .doesNotExist('does not show top nav when not logged in');
@@ -19,7 +19,7 @@ module('Acceptance | index', function (hooks) {
     await authenticateSession(this.application);
     await visit('/');
 
-    assert.equal(currentURL(), '/days', 'redirected to days page');
+    assert.strictEqual(currentURL(), '/days', 'redirected to days page');
     assert.dom('.top-nav').exists('shows top nav when logged in');
   });
 });

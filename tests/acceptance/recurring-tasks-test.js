@@ -8,6 +8,6 @@ module('Acceptance | recurring tasks', function (hooks) {
   test('redirects to login if user is not authenticated', async function (assert) {
     await visit('/recurring');
 
-    assert.equal(currentURL(), '/login');
+    assert.strictEqual(currentURL(), '/login');
   });
 });

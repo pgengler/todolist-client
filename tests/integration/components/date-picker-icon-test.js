@@ -25,7 +25,7 @@ module('Integration | Component | DatePickerIcon', function (hooks) {
     await clickTrigger();
     await calendarSelect('.ember-basic-dropdown-content', new Date(2018, 1, 1));
 
-    assert.equal(newDate, '2018-02-01');
+    assert.strictEqual(newDate, '2018-02-01');
   });
 
   test('it highlights the currently-viewed dates', async function (assert) {
