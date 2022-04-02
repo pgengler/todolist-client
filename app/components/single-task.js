@@ -3,6 +3,7 @@ import { action } from '@ember/object';
 import { next } from '@ember/runloop';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
+import { dropTask, timeout } from 'ember-concurrency';
 
 export default class SingleTask extends Component {
   @tracked isEditing = false;
@@ -13,11 +14,23 @@ export default class SingleTask extends Component {
     return !task.isNew || task.isError;
   }
 
+  @dropTask
+  *quickEditTask() {
+    if (!this.editable) {
+      return;
+    }
+    yield timeout(250);
+    this.editDescription = this.args.task.description;
+    this.isEditing = true;
+    if (this.args.editingStart) this.args.editingStart();
+  }
+
   @action
   editTask() {
     if (!this.editable) {
       return;
     }
+    this.quickEditTask.cancelAll();
     this.editDescription = this.args.task.description;
     this.isEditing = true;
     if (this.args.editingStart) this.args.editingStart();
