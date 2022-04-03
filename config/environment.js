@@ -27,6 +27,7 @@ module.exports = function (environment) {
     },
 
     flashMessageDefaults: {
+      injectionFactories: [],
       preventDuplicates: true,
       types: ['success', 'error'],
     },
