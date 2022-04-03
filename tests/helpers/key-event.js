@@ -5,7 +5,6 @@
  * to return the Event object (or a Promise<Event> in the case of `triggerKeyEvent`).
  */
 
-import { assign } from '@ember/polyfills';
 import { find, settled } from '@ember/test-helpers';
 
 const DEFAULT_EVENT_OPTIONS = { bubbles: true, cancelable: true };
@@ -115,12 +114,12 @@ function buildBasicEvent(type, options = {}) {
   // bubbles and cancelable are readonly, so they can be
   // set when initializing event
   event.initEvent(type, bubbles, cancelable);
-  assign(event, options);
+  Object.assign(event, options);
   return event;
 }
 
 function buildKeyboardEvent(type, options = {}) {
-  let eventOpts = assign({}, DEFAULT_EVENT_OPTIONS, options);
+  let eventOpts = { ...DEFAULT_EVENT_OPTIONS, ...options };
   let event;
   let eventMethodName;
 
@@ -259,7 +258,7 @@ function __triggerKeyEvent__(
     );
   }
 
-  let options = assign(props, modifiers);
+  let options = { ...props, ...modifiers };
 
   return fireEvent(element, eventType, options);
 }

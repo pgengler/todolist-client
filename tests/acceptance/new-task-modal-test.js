@@ -18,12 +18,12 @@ module('Acceptance | New Task modal', function (hooks) {
 
     this.server.post('/tasks', function ({ tasks }, request) {
       let requestData = JSON.parse(request.requestBody).data;
-      assert.equal(
+      assert.strictEqual(
         requestData.relationships.list.data.id,
         list.id,
         'makes request with the correct list ID'
       );
-      assert.equal(
+      assert.strictEqual(
         requestData.attributes.description,
         'Something',
         'makes request with the entered description'

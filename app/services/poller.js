@@ -1,7 +1,7 @@
-import Ember from 'ember'; // for Ember.testing
-import Service, { inject as service } from '@ember/service';
+import Service, { service } from '@ember/service';
 import { all, didCancel, restartableTask, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
+import { isTesting, macroCondition } from '@embroider/macros';
 
 export default class PollerService extends Service {
   @service flashMessages;
@@ -27,7 +27,7 @@ export default class PollerService extends Service {
   *pollForChanges() {
     yield all([this.loadDayLists.perform(), this.loadOtherLists.perform()]);
 
-    if (Ember.testing) {
+    if (macroCondition(isTesting())) {
       return;
     }
     yield timeout(5000);

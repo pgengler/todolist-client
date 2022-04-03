@@ -5,7 +5,7 @@ module.exports = function (environment) {
     modulePrefix: 'ember-todo',
     environment,
     rootURL: '/',
-    locationType: 'auto',
+    locationType: 'history',
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -27,6 +27,7 @@ module.exports = function (environment) {
     },
 
     flashMessageDefaults: {
+      injectionFactories: [],
       preventDuplicates: true,
       types: ['success', 'error'],
     },
