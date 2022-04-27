@@ -1,27 +1,14 @@
-<h1>Add new task</h1>
-<form class="new-task" {{on "submit" (prevent-default this.createTask)}}>
+<form class="new-task" {{on "submit" (prevent-default this.createTask)}} id={{this.formId}}>
   <AutofocusElasticTextarea
     @onEnterPressed={{this.createTask}}
     @onEscapePressed={{@cancel}}
     id="new-task-description"
     data-test-new-task-description
     placeholder="New task"
+    style="width: 100%"
   />
   <br><br>
-  <div data-test-new-task-date>
-    <PowerDatepicker @selected={{this.newTaskDate}} @onSelect={{this.changeDate}} @renderInPlace={{true}} as |dp|>
-      <dp.Trigger>
-        <label for="new-task-date-task" class="hidden">Date:</label>
-        <input type="text" placeholder="Date" value={{moment-format this.newTaskDate "YYYY-MM-DD" allow-empty=true}} id="new-task-date" readonly>
-      </dp.Trigger>
-      <dp.Content>
-        <div class="date-picker-content">
-          <dp.Nav />
-          <dp.Days />
-        </div>
-      </dp.Content>
-    </PowerDatepicker>
-  </div>
+  <input type="date" id="new-task-date" {{on "focus" this.showPicker}} data-test-new-task-date>
   <br><br>
   <button type="submit" data-test-create-task>
     Add

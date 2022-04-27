@@ -1,8 +1,11 @@
 import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import moment from 'moment';
 
 export default class DatePickerIcon extends Component {
+  @tracked showingCalendar = false;
+
   get date() {
     return this.args.selectedDate.date;
   }
@@ -11,5 +14,10 @@ export default class DatePickerIcon extends Component {
   changeDate(newDate) {
     let date = moment(newDate.moment.start).utc().format('YYYY-MM-DD');
     if (this.args.dateSelected) this.args.dateSelected(date);
+  }
+
+  @action
+  toggleCalendar() {
+    this.showingCalendar = !this.showingCalendar;
   }
 }

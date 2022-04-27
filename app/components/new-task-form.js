@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import { guidFor } from '@ember/object/internals';
 import { service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
 
@@ -9,18 +10,23 @@ export default class NewTaskForm extends Component {
 
   @service store;
 
-  @action
-  changeDate(newDate) {
-    this.newTaskDate = newDate.moment;
-    document.querySelector('.new-task button[type=submit]').focus();
+  get formId() {
+    return `new-task-form-${guidFor(this)}`;
+  }
+
+  showPicker(event) {
+    try {
+      event.target.showPicker();
+    } catch {
+      // this can fail in tests and we don't care
+    }
   }
 
   @action
   async createTask() {
-    let description = document
-      .getElementById('new-task-description')
-      .value.trim();
-    let date = this.newTaskDate;
+    let form = document.getElementById(this.formId);
+    let description = form.querySelector('#new-task-description').value.trim();
+    let date = form.querySelector('#new-task-date').value;
 
     if (isEmpty(description) || isEmpty(date)) {
       return;
@@ -29,7 +35,7 @@ export default class NewTaskForm extends Component {
     let lists = await this.store.query('list', {
       filter: {
         'list-type': 'day',
-        date: date.format('YYYY-MM-DD'),
+        date,
       },
       page: {
         size: 1,

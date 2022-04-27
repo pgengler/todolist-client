@@ -2,7 +2,6 @@ import { module, test } from 'qunit';
 import setupAcceptanceTest from 'ember-todo/tests/helpers/setup-acceptance-test';
 import { click, fillIn, visit } from '@ember/test-helpers';
 import { authenticateSession } from 'ember-simple-auth/test-support';
-import datepickerSelect from 'ember-todo/tests/helpers/datepicker-select';
 
 module('Acceptance | New Task modal', function (hooks) {
   setupAcceptanceTest(hooks);
@@ -16,20 +15,20 @@ module('Acceptance | New Task modal', function (hooks) {
       name: '2014-11-13',
     });
 
-    this.server.post('/tasks', function ({ tasks }, request) {
-      let requestData = JSON.parse(request.requestBody).data;
+    this.server.post('/tasks', function ({ tasks }) {
+      let attrs = this.normalizedRequestAttrs();
       assert.strictEqual(
-        requestData.relationships.list.data.id,
+        attrs.listId,
         list.id,
         'makes request with the correct list ID'
       );
       assert.strictEqual(
-        requestData.attributes.description,
+        attrs.description,
         'Something',
         'makes request with the entered description'
       );
 
-      return tasks.create(this.normalizedRequestAttrs());
+      return tasks.create(attrs);
     });
 
     await visit('/days');
@@ -40,7 +39,7 @@ module('Acceptance | New Task modal', function (hooks) {
       .exists('"new task" modal displays after clicking icon in header');
 
     await fillIn('[data-test-new-task-description]', 'Something');
-    await datepickerSelect('[data-test-new-task-date]', '2014-11-13');
+    await fillIn('[data-test-new-task-date]', '2014-11-13');
     await click('[data-test-create-task]');
 
     assert
@@ -70,7 +69,7 @@ module('Acceptance | New Task modal', function (hooks) {
       );
 
     await fillIn('[data-test-new-task-description]', '');
-    await datepickerSelect('[data-test-new-task-date]', '2014-11-13');
+    await fillIn('[data-test-new-task-date]', '2014-11-13');
     await click('[data-test-create-task]');
     assert
       .dom('.new-task-dialog')

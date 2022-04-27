@@ -1,16 +1,6 @@
-<RangeDatepicker
-    @onSelect={{this.changeDate}}
-    @selected={{@dateRange}}
-    @renderInPlace={{true}}
-  as |dp|
->
-  <dp.Trigger>
-    <FaIcon @icon="calendar-alt" @prefix="far" />
-  </dp.Trigger>
-  <dp.Content>
-    <div class="date-picker-content">
-      {{dp.Nav}}
-      {{dp.Days}}
-    </div>
-  </dp.Content>
-</RangeDatepicker>
+<div>
+  <FaIcon @icon="calendar-alt" @prefix="far" {{on "click" this.toggleCalendar}} ...attributes />
+  {{#if this.showingCalendar}}
+    <PowerCalendarRange @onSelect={{this.changeDate}} @selected={{@dateRange}} @renderInPlace={{true}} class="date-picker-content" />
+  {{/if}}
+</div>
