@@ -1,8 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { click, findAll, render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { clickTrigger } from 'ember-basic-dropdown/test-support/helpers';
 import { calendarSelect } from 'ember-power-calendar/test-support';
 import moment from 'moment';
 
@@ -19,11 +18,11 @@ module('Integration | Component | DatePickerIcon', function (hooks) {
       },
     });
     await render(hbs`
-      <DatePickerIcon @dateSelected={{this.dateSelected}} @dateRange={{this.dateRange}} />
+      <DatePickerIcon @dateSelected={{this.dateSelected}} @dateRange={{this.dateRange}} data-test-change-date />
     `);
 
-    await clickTrigger();
-    await calendarSelect('.ember-basic-dropdown-content', new Date(2018, 1, 1));
+    await click('[data-test-change-date]');
+    await calendarSelect('.date-picker-content', new Date(2018, 1, 1));
 
     assert.strictEqual(newDate, '2018-02-01');
   });
@@ -34,12 +33,12 @@ module('Integration | Component | DatePickerIcon', function (hooks) {
       end: moment('2017-12-06'),
     });
     await render(hbs`
-      <DatePickerIcon @dateRange={{this.dateRange}} />
+      <DatePickerIcon @dateRange={{this.dateRange}} data-test-change-date />
     `);
 
-    await clickTrigger();
-    let selectedDayElements = this.element.querySelectorAll(
-      '.ember-power-calendar-day--selected'
+    await click('[data-test-change-date]');
+    let selectedDayElements = findAll(
+      '.date-picker-content .ember-power-calendar-day--selected'
     );
     let highlightedDates = Array.from(selectedDayElements).map((elem) =>
       elem.textContent.trim()

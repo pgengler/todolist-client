@@ -3,6 +3,7 @@ import { service } from '@ember/service';
 
 export default class RecurringRoute extends Route {
   @service session;
+  @service store;
 
   beforeModel(transition) {
     this.session.requireAuthentication(transition, 'login');

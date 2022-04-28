@@ -1,6 +1,4 @@
-@import "ember-modal-dialog/ember-modal-structure";
-@import "ember-modal-dialog/ember-modal-appearance";
-@import "ember-power-datepicker";
+@import "ember-power-calendar";
 
 $body-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
 $body-font-size: 10pt;
@@ -178,4 +176,20 @@ nav.top-nav {
 
 .hidden {
   display: none;
+}
+
+dialog {
+  border-radius: 3px;
+  box-shadow: 10px 10px 15px #222;
+  width: 25vw;
+  height: 25vh;
+  min-height: 15em;
+
+  &::backdrop {
+    background: rgba(128, 128, 128, .77);
+  }
+}
+
+.w-100 {
+  width: 100%;
 }

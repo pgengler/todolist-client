@@ -1,11 +1,7 @@
-<ModalDialog
-  @containerClass="new-task-dialog"
-  @onClose={{@onClose}}
-  @targetAttachment="center"
-  @translucentOverlay={{true}}
->
+<dialog class="new-task-dialog" {{show-dialog-on-insert onClose=@onClose}}>
+  <h1>Add new task</h1>
   <NewTaskForm
     @cancel={{@onClose}}
     @onTaskCreated={{@onClose}}
   />
-</ModalDialog>
+</dialog>
