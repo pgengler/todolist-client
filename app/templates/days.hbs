@@ -1,3 +1,20 @@
 <div class="days">
-  {{outlet}}
+  {{#if this.isLoading}}
+    <FaIcon @icon="spinner" @spin={{true}} @size="4x" />
+  {{else}}
+    {{#each this.days as |list|}}
+      <DayTasks
+        @list={{list}}
+        @editingStart={{this.stopPolling}}
+        @editingEnd={{this.startPolling}}
+      />
+    {{/each}}
+    {{#each this.lists as |list|}}
+      <TaskList
+        @list={{list}}
+        @editingStart={{this.stopPolling}}
+        @editingEnd={{this.startPolling}}
+      />
+    {{/each}}
+  {{/if}}
 </div>

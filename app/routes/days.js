@@ -21,7 +21,7 @@ export default class DaysRoute extends Route {
   model(params) {
     let date = params.date ? moment(params.date) : moment();
     this.selectedDate.date = date;
-    return this.poller.start();
+    this.poller.start();
   }
 
   @action deactivate() {

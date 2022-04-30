@@ -10,6 +10,10 @@ export default class DaysController extends Controller {
   queryParams = ['date'];
   @tracked date = null;
 
+  get isLoading() {
+    return !this.poller.loaded;
+  }
+
   get days() {
     return this.poller.days ? this.poller.days.sortBy('name') : [];
   }
