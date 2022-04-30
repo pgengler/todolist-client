@@ -10,6 +10,7 @@ export default class PollerService extends Service {
 
   @tracked days;
   @tracked lists;
+  @tracked loaded = false;
 
   async start() {
     try {
@@ -26,6 +27,7 @@ export default class PollerService extends Service {
   @restartableTask
   *pollForChanges() {
     yield all([this.loadDayLists.perform(), this.loadOtherLists.perform()]);
+    this.loaded = true;
 
     if (macroCondition(isTesting())) {
       return;
