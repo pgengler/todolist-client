@@ -34,7 +34,7 @@ module('Acceptance | Days', function (hooks) {
     assert.strictEqual(currentURL(), '/days?date=2014-11-07');
     assert.dom('.task-list h1').hasText('Thursday');
     assert.dom('.task-list h2').hasText('Nov 6, 2014');
-    assert.strictEqual(findAll('.task-list').length, 6);
+    assert.dom('.task-list').exists({ count: 6 });
   });
 
   test('adding a new task sends right data to server', async function (assert) {
@@ -297,12 +297,6 @@ module('Acceptance | Days', function (hooks) {
     this.server.create('task', { description: 'xyz', list });
     this.server.create('task', { description: 'abc', list });
     this.server.create('task', { description: 'mno', list });
-
-    this.server.patch('/tasks/:id', function ({ tasks }, request) {
-      let matchingTask = tasks.find(request.params.id);
-      matchingTask.update(this.normalizedRequestAttrs());
-      return matchingTask;
-    });
 
     await visit('/days?date=2018-01-01');
 
