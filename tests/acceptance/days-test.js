@@ -114,18 +114,12 @@ module('Acceptance | Days', function (hooks) {
       '.task-list[data-test-list-name="2016-03-08"]'
     );
 
-    assert.strictEqual(
-      findAll('.task-list[data-test-list-name="2016-03-07"] [data-test-task]')
-        .length,
-      0,
-      'task is no longer displays under original day'
-    );
-    assert.strictEqual(
-      findAll('.task-list[data-test-list-name="2016-03-08"] [data-test-task]')
-        .length,
-      1,
-      'task is displayed under new day'
-    );
+    assert
+      .dom('.task-list[data-test-list-name="2016-03-07"] [data-test-task]')
+      .doesNotExist('task is no longer displays under original day');
+    assert
+      .dom('.task-list[data-test-list-name="2016-03-08"] [data-test-task]')
+      .exists({ count: 1 }, 'task is displayed under new day');
   });
 
   test('dragging and dropping a task with Control held copies a task', async function (assert) {
@@ -264,11 +258,9 @@ module('Acceptance | Days', function (hooks) {
     assert.expect(5);
 
     this.server.post('/tasks', function ({ tasks }) {
-      assert.strictEqual(
-        findAll('[data-test-task]').length,
-        1,
-        'displays the new task'
-      );
+      assert
+        .dom('[data-test-task]')
+        .exists({ count: 1 }, 'displays the new task');
       assert
         .dom('[data-test-task].pending')
         .exists('new task gets the "pending" CSS class');
@@ -282,11 +274,9 @@ module('Acceptance | Days', function (hooks) {
     await visit('/days');
     await fillInAndPressEnter('[data-test-new-task]', 'new thing');
 
-    assert.strictEqual(
-      findAll('[data-test-task]').length,
-      1,
-      'still only displays one item after save finishes'
-    );
+    assert
+      .dom('[data-test-task]')
+      .exists({ count: 1 }, 'still only displays one item after save finishes');
     assert
       .dom('[data-test-task].pending')
       .doesNotExist('"pending" CSS class is no longer applied');
