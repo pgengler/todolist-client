@@ -2,19 +2,13 @@ import { module, test } from 'qunit';
 import {
   click,
   currentURL,
-  fillIn,
   findAll,
   triggerEvent,
   visit,
 } from '@ember/test-helpers';
+import fillInAndPressEnter from 'ember-todo/tests/helpers/fill-in-and-press-enter';
 import setupAcceptanceTest from 'ember-todo/tests/helpers/setup-acceptance-test';
-import keyEvent from 'ember-todo/tests/helpers/key-event';
 import { authenticateSession } from 'ember-simple-auth/test-support';
-
-async function fillInAndPressEnter(selector, text) {
-  await fillIn(selector, text);
-  return keyEvent(selector, 'Enter');
-}
 
 module('Acceptance | Days', function (hooks) {
   setupAcceptanceTest(hooks);

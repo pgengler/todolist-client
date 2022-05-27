@@ -1,15 +1,11 @@
 import { module, test } from 'qunit';
 import { fillIn, triggerEvent, visit } from '@ember/test-helpers';
-import setupAcceptanceTest from 'ember-todo/tests/helpers/setup-acceptance-test';
 import dragAndDrop from 'ember-todo/tests/helpers/drag-and-drop';
+import fillInAndPressEnter from 'ember-todo/tests/helpers/fill-in-and-press-enter';
 import keyEvent from 'ember-todo/tests/helpers/key-event';
+import setupAcceptanceTest from 'ember-todo/tests/helpers/setup-acceptance-test';
 import { authenticateSession } from 'ember-simple-auth/test-support';
 import { Response } from 'ember-cli-mirage';
-
-async function fillInAndPressEnter(selector, text) {
-  await fillIn(selector, text);
-  return keyEvent(selector, 'Enter');
-}
 
 module('Acceptance | Tasks', function (hooks) {
   setupAcceptanceTest(hooks);
