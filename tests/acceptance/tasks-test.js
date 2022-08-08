@@ -1,5 +1,6 @@
 import { module, test } from 'qunit';
-import { fillIn, triggerEvent, visit } from '@ember/test-helpers';
+import { doubleClick, fillIn, visit } from '@ember/test-helpers';
+import clickToEdit from 'ember-todo/tests/helpers/click-to-edit';
 import dragAndDrop from 'ember-todo/tests/helpers/drag-and-drop';
 import fillInAndPressEnter from 'ember-todo/tests/helpers/fill-in-and-press-enter';
 import keyEvent from 'ember-todo/tests/helpers/key-event';
@@ -41,6 +42,46 @@ module('Acceptance | Tasks', function (hooks) {
     );
 
     assert.dom('[data-test-task]').hasText('A new task');
+  });
+
+  test('single-clicking a task enables quick-edit mode', async function (assert) {
+    let list = this.server.create('list', {
+      listType: 'list',
+      name: 'List',
+    });
+    this.server.create('task', {
+      description: 'initial description',
+      list,
+    });
+
+    await visit('/days');
+    assert.dom('[data-test-task]').doesNotHaveClass('editing');
+    assert.dom('[data-test-task]').hasText('initial description');
+    assert.dom('[data-test-task] textarea').doesNotExist();
+
+    await clickToEdit('[data-test-task]');
+    assert.dom('[data-test-task]').hasClass('editing');
+    assert.dom('[data-test-task] textarea').exists();
+    assert.dom('[data-test-task] textarea').hasValue('initial description');
+  });
+
+  test('double-clicking a task opens dialog with form', async function (assert) {
+    let list = this.server.create('list', {
+      listType: 'list',
+      name: 'List',
+    });
+    this.server.create('task', {
+      description: 'initial description',
+      list,
+    });
+
+    await visit('/days');
+    await doubleClick('[data-test-task]');
+    // make sure we're not in quick-edit state
+    assert.dom('[data-test-task]').doesNotHaveClass('editing');
+    assert.dom('[data-test-task] textarea').doesNotExist();
+
+    assert.dom('[data-test-task-form]').exists();
   });
 
   test('pressing Escape clears textarea for new tasks', async function (assert) {
@@ -165,7 +206,7 @@ module('Acceptance | Tasks', function (hooks) {
     });
 
     await visit('/days?date=2016-03-07');
-    await triggerEvent('[data-test-task]', 'dblclick');
+    await clickToEdit('[data-test-task]');
     await fillInAndPressEnter('[data-test-task] textarea', 'New description');
   });
 
@@ -188,7 +229,7 @@ module('Acceptance | Tasks', function (hooks) {
     });
 
     await visit('/days?date=2016-03-07');
-    await triggerEvent('[data-test-task]', 'dblclick');
+    await clickToEdit('[data-test-task]');
     await fillInAndPressEnter('[data-test-task] textarea', '');
   });
 
@@ -203,7 +244,7 @@ module('Acceptance | Tasks', function (hooks) {
     });
 
     await visit('/days');
-    await triggerEvent('[data-test-task]', 'dblclick');
+    await clickToEdit('[data-test-task]');
     await keyEvent('[data-test-task] textarea', 'Enter', {
       shiftKey: true,
     });
@@ -223,7 +264,7 @@ module('Acceptance | Tasks', function (hooks) {
     });
 
     await visit('/days');
-    await triggerEvent('[data-test-task]', 'dblclick');
+    await clickToEdit('[data-test-task]');
     await fillInAndPressEnter('[data-test-task] textarea', '');
     assert.dom('[data-test-task]').doesNotExist('task is removed');
   });

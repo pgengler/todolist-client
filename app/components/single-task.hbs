@@ -1,6 +1,6 @@
 {{!-- template-lint-disable no-invalid-interactive --}}
 <li
-  class="task {{if this.isEditing 'editing'}} {{if @task.done 'done'}} {{if @task.isError 'error'}} {{if @task.isNew 'pending'}}"
+  class="task {{if this.isQuickEditing 'editing'}} {{if @task.done 'done'}} {{if @task.isError 'error'}} {{if @task.isNew 'pending'}}"
   draggable="true"
   {{on "click" (perform this.quickEditTask)}}
   {{on "dblclick" this.editTask}}
@@ -8,7 +8,7 @@
   {{on "touchend" this.simulateDoubleClicks}}
   ...attributes
 >
-  {{#if this.isEditing}}
+  {{#if this.isQuickEditing}}
     <AutofocusElasticTextarea
       @onEscapePressed={{this.cancelEdit}}
       @onEnterPressed={{this.updateTask}}
@@ -16,6 +16,7 @@
       class="edit"
       {{on "focusout" this.cancelEdit}}
     />
+  {{else if this.isFullEditing}}
   {{else}}
     <div class="state">
       {{#if @task.isError}}

@@ -1,7 +1,8 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, triggerEvent } from '@ember/test-helpers';
+import { click, render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import clickToEdit from 'ember-todo/tests/helpers/click-to-edit';
 
 module('Integration | Component | SingleTask', function (hooks) {
   setupRenderingTest(hooks);
@@ -49,7 +50,7 @@ module('Integration | Component | SingleTask', function (hooks) {
     assert.dom('.task').hasText('baz', 'displays task description');
   });
 
-  test('double-clicking a task enters edit mode', async function (assert) {
+  test('single-clicking a task enters edit mode', async function (assert) {
     let editingStartCalled = false;
     this.set('task', {
       description: 'foo bar',
@@ -63,7 +64,7 @@ module('Integration | Component | SingleTask', function (hooks) {
         @editingStart={{this.editingStart}}
       />
     `);
-    await triggerEvent('.task', 'dblclick');
+    await clickToEdit('.task');
 
     assert.ok(editingStartCalled, 'made call to "editStart" action');
     assert.dom('.task').hasClass('editing');
@@ -85,7 +86,7 @@ module('Integration | Component | SingleTask', function (hooks) {
       description: 'xyz',
     });
     await render(hbs`<SingleTask @task={{this.task}} />`);
-    await triggerEvent('.task', 'dblclick');
+    await click('.task');
 
     assert.dom('.task').doesNotHaveClass('editing');
     assert.dom('textarea').doesNotExist('does not become editable');
@@ -97,7 +98,7 @@ module('Integration | Component | SingleTask', function (hooks) {
       description: 'abc',
     });
     await render(hbs`<SingleTask @task={{this.task}} />`);
-    await triggerEvent('.task', 'dblclick');
+    await clickToEdit('.task');
 
     assert.dom('.task').hasClass('editing');
     assert.dom('textarea').exists('displays a textarea for editing');

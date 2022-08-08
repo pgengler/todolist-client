@@ -1,11 +1,6 @@
 import { module, test } from 'qunit';
-import {
-  click,
-  currentURL,
-  findAll,
-  triggerEvent,
-  visit,
-} from '@ember/test-helpers';
+import { click, currentURL, findAll, visit } from '@ember/test-helpers';
+import clickToEdit from 'ember-todo/tests/helpers/click-to-edit';
 import fillInAndPressEnter from 'ember-todo/tests/helpers/fill-in-and-press-enter';
 import setupAcceptanceTest from 'ember-todo/tests/helpers/setup-acceptance-test';
 import { authenticateSession } from 'ember-simple-auth/test-support';
@@ -56,9 +51,9 @@ module('Acceptance | Days', function (hooks) {
       'tasks are displayed in alphabetical order'
     );
 
-    await triggerEvent(findAll('[data-test-task]')[1], 'dblclick');
+    await clickToEdit('[data-test-task]:nth-of-type(2)');
     await fillInAndPressEnter(
-      findAll('[data-test-task]')[1].querySelector('textarea'),
+      '[data-test-task]:nth-of-type(2) textarea',
       'zzz'
     );
 

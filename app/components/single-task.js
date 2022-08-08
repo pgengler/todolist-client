@@ -6,12 +6,20 @@ import { tracked } from '@glimmer/tracking';
 import { dropTask, timeout } from 'ember-concurrency';
 
 export default class SingleTask extends Component {
-  @tracked isEditing = false;
+  @tracked editType = null;
   @tracked editDescription;
 
   get editable() {
     let task = this.args.task;
     return !task.isNew || task.isError;
+  }
+
+  get isFullEditing() {
+    return this.editType === 'full';
+  }
+
+  get isQuickEditing() {
+    return this.editType === 'quick';
   }
 
   @dropTask
@@ -21,8 +29,8 @@ export default class SingleTask extends Component {
     }
     yield timeout(250);
     this.editDescription = this.args.task.description;
-    this.isEditing = true;
-    if (this.args.editingStart) this.args.editingStart();
+    this.editType = 'quick';
+    this.args.editingStart?.();
   }
 
   @action
@@ -32,8 +40,8 @@ export default class SingleTask extends Component {
     }
     this.quickEditTask.cancelAll();
     this.editDescription = this.args.task.description;
-    this.isEditing = true;
-    if (this.args.editingStart) this.args.editingStart();
+    this.editType = 'full';
+    this.args.editingStart?.();
   }
 
   @action
@@ -92,14 +100,13 @@ export default class SingleTask extends Component {
   @action
   cancelEdit() {
     this.editDescription = '';
-
     // wrapping this in a `next` to avoid double-updating `this.isEditing` twice
     // (e.g., when `updateTask` runs and sets `this.isEditing`, which then causes
     // the textarea to stop displaying and thus triggers the "focusout" event
     // that causes this method to run.)
-    next(() => (this.isEditing = false));
+    next(() => (this.editType = false));
 
-    if (this.args.editingEnd) this.args.editingEnd();
+    this.args.editingEnd?.();
   }
 
   @action
@@ -121,8 +128,8 @@ export default class SingleTask extends Component {
     } else {
       task.description = description;
       await task.save();
-      this.isEditing = false;
+      this.editType = null;
     }
-    if (this.args.editingEnd) this.args.editingEnd();
+    this.args.editingEnd?.();
   }
 }
