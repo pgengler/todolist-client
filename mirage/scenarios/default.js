@@ -1,3 +1,6 @@
 export default function (server) {
-  server.create('list', { name: 'Other', listType: 'list' });
+  let otherList = server.create('list', { name: 'Other', listType: 'list' });
+  server.create('task', {
+    list: otherList,
+  });
 }

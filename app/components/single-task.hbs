@@ -1,13 +1,14 @@
 {{!-- template-lint-disable no-invalid-interactive --}}
 <li
-  class="task {{if this.isEditing 'editing'}} {{if @task.done 'done'}} {{if @task.isError 'error'}} {{if @task.isNew 'pending'}}"
+  class="task {{if this.isQuickEditing 'editing'}} {{if @task.done 'done'}} {{if @task.isError 'error'}} {{if @task.isNew 'pending'}}"
   draggable="true"
+  {{on "click" (perform this.quickEditTask)}}
   {{on "dblclick" this.editTask}}
   {{on "dragstart" this.onDragStart}}
   {{on "touchend" this.simulateDoubleClicks}}
   ...attributes
 >
-  {{#if this.isEditing}}
+  {{#if this.isQuickEditing}}
     <AutofocusElasticTextarea
       @onEscapePressed={{this.cancelEdit}}
       @onEnterPressed={{this.updateTask}}
@@ -30,3 +31,11 @@
     <MarkdownToHtml @markdown={{@task.description}} />
   {{/if}}
 </li>
+
+{{!--
+  Don't include isFullEditing in the if/else ladder because we want to render the content normally underneath the modal.
+  Don't include it inside the <li> either, because otherwise the "click" handler fires on clicks inside the modal
+--}}
+{{#if this.isFullEditing}}
+  <EditTaskModal @task={{@task}} @onClose={{this.cancelEdit}} />
+{{/if}}

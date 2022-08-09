@@ -8,7 +8,7 @@ export default class DatePickerIcon extends Component {
 
   @action
   changeDate(newDate) {
-    let date = moment(newDate.moment.start).utc().format('YYYY-MM-DD');
+    let date = moment(newDate.moment.start).format('YYYY-MM-DD');
     this.args.dateSelected(date);
     this.showingCalendar = false;
   }

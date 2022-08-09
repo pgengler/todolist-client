@@ -17,16 +17,8 @@ module('Acceptance | New Task modal', function (hooks) {
 
     this.server.post('/tasks', function ({ tasks }) {
       let attrs = this.normalizedRequestAttrs();
-      assert.strictEqual(
-        attrs.listId,
-        list.id,
-        'makes request with the correct list ID'
-      );
-      assert.strictEqual(
-        attrs.description,
-        'Something',
-        'makes request with the entered description'
-      );
+      assert.strictEqual(attrs.listId, list.id, 'makes request with the correct list ID');
+      assert.strictEqual(attrs.description, 'Something', 'makes request with the entered description');
 
       return tasks.create(attrs);
     });
@@ -34,48 +26,34 @@ module('Acceptance | New Task modal', function (hooks) {
     await visit('/days');
     await click('.top-nav [data-test-add-task]');
 
-    assert
-      .dom('.new-task-dialog')
-      .exists('"new task" modal displays after clicking icon in header');
+    assert.dom('.new-task-dialog').exists('"new task" modal displays after clicking icon in header');
 
-    await fillIn('[data-test-new-task-description]', 'Something');
-    await fillIn('[data-test-new-task-date]', '2014-11-13');
-    await click('[data-test-create-task]');
+    await fillIn('[data-test-task-description]', 'Something');
+    await fillIn('[data-test-task-date]', '2014-11-13');
+    await click('[data-test-save-task]');
 
-    assert
-      .dom('.new-task-dialog')
-      .doesNotExist(
-        '"new task" modal is no longer displayed after filling out the form'
-      );
+    assert.dom('.new-task-dialog').doesNotExist('"new task" modal is no longer displayed after filling out the form');
   });
 
   test('cannot submit form when some information is missing', async function (assert) {
     await visit('/days');
     await click('.top-nav [data-test-add-task]');
-    await click('[data-test-create-task]');
+    await click('[data-test-save-task]');
 
     assert
       .dom('.new-task-dialog')
-      .exists(
-        '"new task" modal continues to display after submitting with both fields missing'
-      );
+      .exists('"new task" modal continues to display after submitting with both fields missing');
 
-    await fillIn('[data-test-new-task-description]', 'Something');
-    await click('[data-test-create-task]');
+    await fillIn('[data-test-task-description]', 'Something');
+    await click('[data-test-save-task]');
+    assert.dom('.new-task-dialog').exists('"new task" modal continues to display after submitting with date missing');
+
+    await fillIn('[data-test-task-description]', '');
+    await fillIn('[data-test-task-date]', '2014-11-13');
+    await click('[data-test-save-task]');
     assert
       .dom('.new-task-dialog')
-      .exists(
-        '"new task" modal continues to display after submitting with date missing'
-      );
-
-    await fillIn('[data-test-new-task-description]', '');
-    await fillIn('[data-test-new-task-date]', '2014-11-13');
-    await click('[data-test-create-task]');
-    assert
-      .dom('.new-task-dialog')
-      .exists(
-        '"new task" modal continues to display after submitting with description missing'
-      );
+      .exists('"new task" modal continues to display after submitting with description missing');
   });
 
   test('clicking the Cancel button closes the modal', async function (assert) {
@@ -83,10 +61,6 @@ module('Acceptance | New Task modal', function (hooks) {
     await click('.top-nav [data-test-add-task]');
     await click('[data-test-cancel-button]');
 
-    assert
-      .dom('.new-task-dialog')
-      .doesNotExist(
-        '"new task" modal is not displayed after clicking Cancel button'
-      );
+    assert.dom('.new-task-dialog').doesNotExist('"new task" modal is not displayed after clicking Cancel button');
   });
 });

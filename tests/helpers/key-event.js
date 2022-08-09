@@ -216,19 +216,12 @@ function keyCodeFromKey(key) {
   let keys = Object.keys(keyFromKeyCode);
   let keyCode =
     keys.find((keyCode) => keyFromKeyCode[Number(keyCode)] === key) ||
-    keys.find(
-      (keyCode) => keyFromKeyCode[Number(keyCode)] === key.toLowerCase()
-    );
+    keys.find((keyCode) => keyFromKeyCode[Number(keyCode)] === key.toLowerCase());
 
   return keyCode !== undefined ? parseInt(keyCode) : undefined;
 }
 
-function __triggerKeyEvent__(
-  element,
-  eventType,
-  key,
-  modifiers = DEFAULT_MODIFIERS
-) {
+function __triggerKeyEvent__(element, eventType, key, modifiers = DEFAULT_MODIFIERS) {
   let props;
   if (typeof key === 'number') {
     props = {
@@ -253,9 +246,7 @@ function __triggerKeyEvent__(
     let keyCode = keyCodeFromKey(key);
     props = { keyCode, which: keyCode, key };
   } else {
-    throw new Error(
-      `Must provide a \`key\` or \`keyCode\` to \`triggerKeyEvent\``
-    );
+    throw new Error(`Must provide a \`key\` or \`keyCode\` to \`triggerKeyEvent\``);
   }
 
   let options = { ...props, ...modifiers };
@@ -263,21 +254,14 @@ function __triggerKeyEvent__(
   return fireEvent(element, eventType, options);
 }
 
-async function triggerKeyEvent(
-  target,
-  eventType,
-  key,
-  modifiers = DEFAULT_MODIFIERS
-) {
+async function triggerKeyEvent(target, eventType, key, modifiers = DEFAULT_MODIFIERS) {
   if (!target) {
     throw new Error('Must pass an element or selector to `triggerKeyEvent`.');
   }
 
   let element = find(target);
   if (!element) {
-    throw new Error(
-      `Element not found when calling \`triggerKeyEvent('${target}', ...)\`.`
-    );
+    throw new Error(`Element not found when calling \`triggerKeyEvent('${target}', ...)\`.`);
   }
 
   if (!eventType) {
