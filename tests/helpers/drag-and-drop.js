@@ -17,22 +17,10 @@ export class DataTransferMock {
   }
 }
 
-export default async function dragAndDrop(
-  draggedElementSelector,
-  targetElementSelector,
-  eventOptions = {}
-) {
+export default async function dragAndDrop(draggedElementSelector, targetElementSelector, eventOptions = {}) {
   let dataTransfer = new DataTransferMock();
-  await triggerEvent(
-    draggedElementSelector,
-    'dragstart',
-    Object.assign(eventOptions, { dataTransfer })
-  );
-  await triggerEvent(
-    targetElementSelector,
-    'drop',
-    Object.assign(eventOptions, { dataTransfer })
-  );
+  await triggerEvent(draggedElementSelector, 'dragstart', Object.assign(eventOptions, { dataTransfer }));
+  await triggerEvent(targetElementSelector, 'drop', Object.assign(eventOptions, { dataTransfer }));
   return await triggerEvent(draggedElementSelector, 'dragend', {
     dataTransfer,
   });
