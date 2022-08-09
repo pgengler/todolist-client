@@ -21,25 +21,14 @@ module('Acceptance | Tasks', function (hooks) {
 
     this.server.post('/tasks', function ({ tasks }, request) {
       let requestData = JSON.parse(request.requestBody).data;
-      assert.strictEqual(
-        requestData.relationships.list.data.id,
-        list.id,
-        'request includes correct list ID'
-      );
-      assert.strictEqual(
-        requestData.attributes.description,
-        'A new task',
-        'request includes correct description'
-      );
+      assert.strictEqual(requestData.relationships.list.data.id, list.id, 'request includes correct list ID');
+      assert.strictEqual(requestData.attributes.description, 'A new task', 'request includes correct description');
 
       return tasks.create(this.normalizedRequestAttrs());
     });
 
     await visit('/days?date=2017-08-20');
-    await fillInAndPressEnter(
-      '.task-list[data-test-list-name="2017-08-20"] [data-test-new-task]',
-      'A new task'
-    );
+    await fillInAndPressEnter('.task-list[data-test-list-name="2017-08-20"] [data-test-new-task]', 'A new task');
 
     assert.dom('[data-test-task]').hasText('A new task');
   });
@@ -84,12 +73,8 @@ module('Acceptance | Tasks', function (hooks) {
     assert.dom('[data-test-task] textarea').doesNotExist();
 
     assert.dom('[data-test-edit-task-dialog]').exists();
-    assert
-      .dom('[data-test-edit-task-dialog] [data-test-task-description]')
-      .hasValue('initial description');
-    assert
-      .dom('[data-test-edit-task-dialog] [data-test-task-date]')
-      .hasValue('2022-08-08');
+    assert.dom('[data-test-edit-task-dialog] [data-test-task-description]').hasValue('initial description');
+    assert.dom('[data-test-edit-task-dialog] [data-test-task-date]').hasValue('2022-08-08');
   });
 
   test('can update task via edit form', async function (assert) {
@@ -113,16 +98,10 @@ module('Acceptance | Tasks', function (hooks) {
 
     await visit('/days');
     await doubleClick('[data-test-task]');
-    await fillIn(
-      '[data-test-edit-task-dialog] [data-test-task-description]',
-      'updated description'
-    );
+    await fillIn('[data-test-edit-task-dialog] [data-test-task-description]', 'updated description');
     await click('[data-test-edit-task-dialog] [data-test-save-task]');
 
-    assert.verifySteps([
-      `updated task ${task.id}`,
-      'changed description to "updated description"',
-    ]);
+    assert.verifySteps([`updated task ${task.id}`, 'changed description to "updated description"']);
   });
 
   test('pressing Escape clears textarea for new tasks', async function (assert) {
@@ -131,9 +110,7 @@ module('Acceptance | Tasks', function (hooks) {
     await fillIn('[data-test-new-task]', 'New task');
     await keyEvent('[data-test-new-task]', 27);
 
-    assert
-      .dom('[data-test-new-task]')
-      .hasValue('', 'textarea is cleared after pressing Escape');
+    assert.dom('[data-test-new-task]').hasValue('', 'textarea is cleared after pressing Escape');
   });
 
   test('dragging a task to another day', async function (assert) {
@@ -152,11 +129,7 @@ module('Acceptance | Tasks', function (hooks) {
 
     this.server.patch('/tasks/:id', function ({ tasks }, request) {
       let requestData = JSON.parse(request.requestBody).data;
-      assert.strictEqual(
-        requestData.relationships.list.data.id,
-        targetDay.id,
-        'makes PATCH request with new list ID'
-      );
+      assert.strictEqual(requestData.relationships.list.data.id, targetDay.id, 'makes PATCH request with new list ID');
 
       let task = tasks.find(request.params.id);
       task.update(this.normalizedRequestAttrs());
@@ -165,10 +138,7 @@ module('Acceptance | Tasks', function (hooks) {
 
     await visit('/days?date=2016-03-07');
 
-    await dragAndDrop(
-      '[data-test-task]',
-      '.task-list[data-test-list-name="2016-03-08"]'
-    );
+    await dragAndDrop('[data-test-task]', '.task-list[data-test-list-name="2016-03-08"]');
 
     assert
       .dom('.task-list[data-test-list-name="2016-03-07"] [data-test-task]')
@@ -200,21 +170,13 @@ module('Acceptance | Tasks', function (hooks) {
         task.description,
         'creates new task with same description'
       );
-      assert.strictEqual(
-        requestData.relationships.list.data.id,
-        targetDay.id,
-        'creates new task on the correct day'
-      );
+      assert.strictEqual(requestData.relationships.list.data.id, targetDay.id, 'creates new task on the correct day');
 
       return tasks.create(this.normalizedRequestAttrs());
     });
 
     await visit('/days?date=2016-03-07');
-    await dragAndDrop(
-      '[data-test-task]',
-      '.task-list[data-test-list-name="2016-03-08"]',
-      { ctrlKey: true }
-    );
+    await dragAndDrop('[data-test-task]', '.task-list[data-test-list-name="2016-03-08"]', { ctrlKey: true });
   });
 
   test('updating the description for a task', async function (assert) {
@@ -230,11 +192,7 @@ module('Acceptance | Tasks', function (hooks) {
       let requestData = JSON.parse(request.requestBody).data;
 
       assert.ok(true, 'makes a PATCH request');
-      assert.strictEqual(
-        request.params.id,
-        task.id,
-        'makes a PUT request for the correct task'
-      );
+      assert.strictEqual(request.params.id, task.id, 'makes a PUT request for the correct task');
       assert.strictEqual(
         requestData.attributes.description,
         'New description',
@@ -262,11 +220,7 @@ module('Acceptance | Tasks', function (hooks) {
 
     this.server.delete('/tasks/:id', function (db, request) {
       assert.ok(true, 'makes a DELETE request');
-      assert.strictEqual(
-        request.params.id,
-        task.id,
-        'makes a DELETE request for the right ID'
-      );
+      assert.strictEqual(request.params.id, task.id, 'makes a DELETE request for the right ID');
     });
 
     await visit('/days?date=2016-03-07');
@@ -314,15 +268,9 @@ module('Acceptance | Tasks', function (hooks) {
     assert.expect(5);
 
     this.server.post('/tasks', function ({ tasks }) {
-      assert
-        .dom('[data-test-task]')
-        .exists({ count: 1 }, 'displays the new task');
-      assert
-        .dom('[data-test-task].pending')
-        .exists('new task gets the "pending" CSS class');
-      assert
-        .dom('[data-test-new-task]')
-        .hasValue('', '"new task" textarea is cleared');
+      assert.dom('[data-test-task]').exists({ count: 1 }, 'displays the new task');
+      assert.dom('[data-test-task].pending').exists('new task gets the "pending" CSS class');
+      assert.dom('[data-test-new-task]').hasValue('', '"new task" textarea is cleared');
 
       return tasks.create(this.normalizedRequestAttrs());
     });
@@ -330,12 +278,8 @@ module('Acceptance | Tasks', function (hooks) {
     await visit('/days');
     await fillInAndPressEnter('[data-test-new-task]', 'new thing');
 
-    assert
-      .dom('[data-test-task]')
-      .exists({ count: 1 }, 'still only displays one item after save finishes');
-    assert
-      .dom('[data-test-task].pending')
-      .doesNotExist('"pending" CSS class is no longer applied');
+    assert.dom('[data-test-task]').exists({ count: 1 }, 'still only displays one item after save finishes');
+    assert.dom('[data-test-task].pending').doesNotExist('"pending" CSS class is no longer applied');
   });
 
   test('handles when adding a task fails', async function (assert) {
@@ -356,14 +300,9 @@ module('Acceptance | Tasks', function (hooks) {
       );
     });
     await visit('/days?date=2018-01-01');
-    await fillInAndPressEnter(
-      '.task-list[data-test-list-name="Other"] [data-test-new-task]',
-      'This will fail'
-    );
+    await fillInAndPressEnter('.task-list[data-test-list-name="Other"] [data-test-new-task]', 'This will fail');
 
     assert.dom('.flash-message.alert').exists('an error message is displayed');
-    assert
-      .dom('.task.error')
-      .exists('task is displayed with the "error" class');
+    assert.dom('.task.error').exists('task is displayed with the "error" class');
   });
 });

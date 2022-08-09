@@ -37,12 +37,8 @@ module('Integration | Component | DatePickerIcon', function (hooks) {
     `);
 
     await click('[data-test-change-date]');
-    let selectedDayElements = findAll(
-      '.date-picker-content .ember-power-calendar-day--selected'
-    );
-    let highlightedDates = Array.from(selectedDayElements).map((elem) =>
-      elem.textContent.trim()
-    );
+    let selectedDayElements = findAll('.date-picker-content .ember-power-calendar-day--selected');
+    let highlightedDates = Array.from(selectedDayElements).map((elem) => elem.textContent.trim());
     assert.deepEqual(highlightedDates, ['4', '5', '6']);
   });
 });

@@ -10,9 +10,7 @@ module('Acceptance | index', function (hooks) {
     await visit('/');
 
     assert.strictEqual(currentURL(), '/login', 'redirected to login page');
-    assert
-      .dom('.top-nav')
-      .doesNotExist('does not show top nav when not logged in');
+    assert.dom('.top-nav').doesNotExist('does not show top nav when not logged in');
   });
 
   test('redirects to days view when user is authenticated', async function (assert) {

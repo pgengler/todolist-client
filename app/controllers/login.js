@@ -13,11 +13,7 @@ export default class LoginController extends Controller {
   @action
   async login() {
     try {
-      await this.session.authenticate(
-        'authenticator:oauth2',
-        this.email,
-        this.password
-      );
+      await this.session.authenticate('authenticator:oauth2', this.email, this.password);
       this.router.transitionTo('index');
     } catch {
       alert('Login failed');

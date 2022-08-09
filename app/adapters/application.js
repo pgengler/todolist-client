@@ -9,9 +9,7 @@ export default class ApplicationAdapter extends JSONAPIAdapter {
   get headers() {
     let headers = {};
     if (this.session.isAuthenticated) {
-      headers[
-        'Authorization'
-      ] = `Bearer ${this.session.data.authenticated.access_token}`;
+      headers['Authorization'] = `Bearer ${this.session.data.authenticated.access_token}`;
     }
 
     return headers;

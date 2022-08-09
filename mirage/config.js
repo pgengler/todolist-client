@@ -41,9 +41,7 @@ function routes() {
     }
     if (request.queryParams['filter[list-type]']) {
       let listType = request.queryParams['filter[list-type]'];
-      matchingLists = matchingLists.filter(
-        (list) => list.listType === listType
-      );
+      matchingLists = matchingLists.filter((list) => list.listType === listType);
     }
     return matchingLists;
   });

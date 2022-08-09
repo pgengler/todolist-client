@@ -42,29 +42,14 @@ module('Acceptance | Days', function (hooks) {
 
     await visit('/days?date=2018-01-01');
 
-    let displayedTasks = findAll('[data-test-task]').map((element) =>
-      element.textContent.trim()
-    );
-    assert.deepEqual(
-      displayedTasks,
-      ['abc', 'mno', 'xyz'],
-      'tasks are displayed in alphabetical order'
-    );
+    let displayedTasks = findAll('[data-test-task]').map((element) => element.textContent.trim());
+    assert.deepEqual(displayedTasks, ['abc', 'mno', 'xyz'], 'tasks are displayed in alphabetical order');
 
     await clickToEdit('[data-test-task]:nth-of-type(2)');
-    await fillInAndPressEnter(
-      '[data-test-task]:nth-of-type(2) textarea',
-      'zzz'
-    );
+    await fillInAndPressEnter('[data-test-task]:nth-of-type(2) textarea', 'zzz');
 
-    displayedTasks = findAll('[data-test-task]').map((element) =>
-      element.textContent.trim()
-    );
-    assert.deepEqual(
-      displayedTasks,
-      ['abc', 'xyz', 'zzz'],
-      'after editing a task, alphabetical order is preserved'
-    );
+    displayedTasks = findAll('[data-test-task]').map((element) => element.textContent.trim());
+    assert.deepEqual(displayedTasks, ['abc', 'xyz', 'zzz'], 'after editing a task, alphabetical order is preserved');
   });
 
   test('lists are sorted by date', async function (assert) {
@@ -76,15 +61,7 @@ module('Acceptance | Days', function (hooks) {
 
     await visit('/days?date=2021-04-23');
 
-    let listNames = Array.from(findAll('.task-list-header h2')).map(
-      (e) => e.textContent
-    );
-    assert.deepEqual(listNames, [
-      'Apr 22, 2021',
-      'Apr 23, 2021',
-      'Apr 24, 2021',
-      'Apr 25, 2021',
-      'Apr 26, 2021',
-    ]);
+    let listNames = Array.from(findAll('.task-list-header h2')).map((e) => e.textContent);
+    assert.deepEqual(listNames, ['Apr 22, 2021', 'Apr 23, 2021', 'Apr 24, 2021', 'Apr 25, 2021', 'Apr 26, 2021']);
   });
 });

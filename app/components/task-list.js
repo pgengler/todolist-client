@@ -22,19 +22,13 @@ export default class TaskList extends Component {
   }
 
   get finishedTasks() {
-    return this.args.list.tasks
-      .filterBy('done', true)
-      .sortBy('plaintextDescription');
+    return this.args.list.tasks.filterBy('done', true).sortBy('plaintextDescription');
   }
   get unfinishedTasks() {
-    return this.args.list.tasks
-      .filterBy('done', false)
-      .sortBy('plaintextDescription');
+    return this.args.list.tasks.filterBy('done', false).sortBy('plaintextDescription');
   }
   get pendingTasks() {
-    return this.args.list.tasks
-      .filterBy('isNew')
-      .sortBy('plaintextDescription');
+    return this.args.list.tasks.filterBy('isNew').sortBy('plaintextDescription');
   }
 
   get hasUnfinishedTasks() {
