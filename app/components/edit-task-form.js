@@ -3,11 +3,13 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
 
-export default class NewTaskForm extends Component {
+export default class EditTaskForm extends Component {
   @service store;
 
   @action
-  async createTask({ description, date }) {
+  async save({ date, description }) {
+    let task = this.args.task;
+
     if (isEmpty(description) || isEmpty(date)) {
       return;
     }
@@ -22,12 +24,10 @@ export default class NewTaskForm extends Component {
       },
     });
 
-    let task = this.store.createRecord('task', {
-      description,
-      list: lists.toArray()[0],
-    });
+    task.description = description;
+    task.list = lists.toArray()[0];
     await task.save();
 
-    this.args.onTaskCreated?.();
+    this.args.onTaskSaved?.();
   }
 }

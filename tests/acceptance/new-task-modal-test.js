@@ -38,9 +38,9 @@ module('Acceptance | New Task modal', function (hooks) {
       .dom('.new-task-dialog')
       .exists('"new task" modal displays after clicking icon in header');
 
-    await fillIn('[data-test-new-task-description]', 'Something');
-    await fillIn('[data-test-new-task-date]', '2014-11-13');
-    await click('[data-test-create-task]');
+    await fillIn('[data-test-task-description]', 'Something');
+    await fillIn('[data-test-task-date]', '2014-11-13');
+    await click('[data-test-save-task]');
 
     assert
       .dom('.new-task-dialog')
@@ -52,7 +52,7 @@ module('Acceptance | New Task modal', function (hooks) {
   test('cannot submit form when some information is missing', async function (assert) {
     await visit('/days');
     await click('.top-nav [data-test-add-task]');
-    await click('[data-test-create-task]');
+    await click('[data-test-save-task]');
 
     assert
       .dom('.new-task-dialog')
@@ -60,17 +60,17 @@ module('Acceptance | New Task modal', function (hooks) {
         '"new task" modal continues to display after submitting with both fields missing'
       );
 
-    await fillIn('[data-test-new-task-description]', 'Something');
-    await click('[data-test-create-task]');
+    await fillIn('[data-test-task-description]', 'Something');
+    await click('[data-test-save-task]');
     assert
       .dom('.new-task-dialog')
       .exists(
         '"new task" modal continues to display after submitting with date missing'
       );
 
-    await fillIn('[data-test-new-task-description]', '');
-    await fillIn('[data-test-new-task-date]', '2014-11-13');
-    await click('[data-test-create-task]');
+    await fillIn('[data-test-task-description]', '');
+    await fillIn('[data-test-task-date]', '2014-11-13');
+    await click('[data-test-save-task]');
     assert
       .dom('.new-task-dialog')
       .exists(

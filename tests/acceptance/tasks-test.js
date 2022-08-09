@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { doubleClick, fillIn, visit } from '@ember/test-helpers';
+import { click, doubleClick, fillIn, visit } from '@ember/test-helpers';
 import clickToEdit from 'ember-todo/tests/helpers/click-to-edit';
 import dragAndDrop from 'ember-todo/tests/helpers/drag-and-drop';
 import fillInAndPressEnter from 'ember-todo/tests/helpers/fill-in-and-press-enter';
@@ -67,8 +67,8 @@ module('Acceptance | Tasks', function (hooks) {
 
   test('double-clicking a task opens dialog with form', async function (assert) {
     let list = this.server.create('list', {
-      listType: 'list',
-      name: 'List',
+      listType: 'day',
+      name: '2022-08-08',
     });
     this.server.create('task', {
       description: 'initial description',
@@ -76,12 +76,53 @@ module('Acceptance | Tasks', function (hooks) {
     });
 
     await visit('/days');
+    assert.dom('[data-test-edit-task-dialog]').doesNotExist();
+
     await doubleClick('[data-test-task]');
     // make sure we're not in quick-edit state
     assert.dom('[data-test-task]').doesNotHaveClass('editing');
     assert.dom('[data-test-task] textarea').doesNotExist();
 
-    assert.dom('[data-test-task-form]').exists();
+    assert.dom('[data-test-edit-task-dialog]').exists();
+    assert
+      .dom('[data-test-edit-task-dialog] [data-test-task-description]')
+      .hasValue('initial description');
+    assert
+      .dom('[data-test-edit-task-dialog] [data-test-task-date]')
+      .hasValue('2022-08-08');
+  });
+
+  test('can update task via edit form', async function (assert) {
+    let list = this.server.create('list', {
+      listType: 'day',
+      name: '2022-08-08',
+    });
+    let task = this.server.create('task', {
+      description: 'initial description',
+      list,
+    });
+
+    this.server.patch('/tasks/:id', function ({ tasks }, request) {
+      let t = tasks.find(request.params.id);
+      let attrs = this.normalizedRequestAttrs();
+      assert.step(`updated task ${request.params.id}`);
+      assert.step(`changed description to "${attrs.description}"`);
+      t.update(attrs);
+      return t;
+    });
+
+    await visit('/days');
+    await doubleClick('[data-test-task]');
+    await fillIn(
+      '[data-test-edit-task-dialog] [data-test-task-description]',
+      'updated description'
+    );
+    await click('[data-test-edit-task-dialog] [data-test-save-task]');
+
+    assert.verifySteps([
+      `updated task ${task.id}`,
+      'changed description to "updated description"',
+    ]);
   });
 
   test('pressing Escape clears textarea for new tasks', async function (assert) {
