@@ -7,12 +7,13 @@
     data-test-task-description
     placeholder="Task description"
     class="w-100"
+    required
   />
   <br><br>
-  <input type="date" id="task-date" value={{this.taskDate}} {{on "focus" this.showPicker}} data-test-task-date>
+  <input type="date" id="task-date" value={{this.taskDate}} {{on "focus" this.showPicker}} data-test-task-date required>
   <br><br>
   <button type="submit" data-test-save-task>
-    {{@saveButtonLabel}}
+    {{this.saveButtonLabel}}
   </button>
   <button type="button" {{on "click" @cancel}} data-test-cancel-button>
     Cancel

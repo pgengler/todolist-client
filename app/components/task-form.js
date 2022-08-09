@@ -20,6 +20,10 @@ export default class TaskForm extends Component {
     return `task-form-${guidFor(this)}`;
   }
 
+  get saveButtonLabel() {
+    return this.args.saveButtonLabel ?? 'Save';
+  }
+
   showPicker(event) {
     try {
       event.target.showPicker();
