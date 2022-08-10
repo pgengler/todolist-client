@@ -25,7 +25,7 @@ export default class EditTaskForm extends Component {
     });
 
     task.description = description;
-    task.list = lists.toArray()[0];
+    task.list = lists.toArray()[0]; // eslint-disable-line ember/no-array-prototype-extensions
     await task.save();
 
     this.args.onTaskSaved?.();

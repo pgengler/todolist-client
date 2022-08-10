@@ -55,10 +55,7 @@ module('Acceptance | Tasks', function (hooks) {
   });
 
   test('double-clicking a task opens dialog with form', async function (assert) {
-    let list = this.server.create('list', {
-      listType: 'day',
-      name: '2022-08-08',
-    });
+    let list = this.server.create('list', 'day');
     this.server.create('task', {
       description: 'initial description',
       list,
@@ -74,14 +71,11 @@ module('Acceptance | Tasks', function (hooks) {
 
     assert.dom('[data-test-edit-task-dialog]').exists();
     assert.dom('[data-test-edit-task-dialog] [data-test-task-description]').hasValue('initial description');
-    assert.dom('[data-test-edit-task-dialog] [data-test-task-date]').hasValue('2022-08-08');
+    assert.dom('[data-test-edit-task-dialog] [data-test-task-date]').hasValue(list.name);
   });
 
   test('can update task via edit form', async function (assert) {
-    let list = this.server.create('list', {
-      listType: 'day',
-      name: '2022-08-08',
-    });
+    let list = this.server.create('list', 'day');
     let task = this.server.create('task', {
       description: 'initial description',
       list,
