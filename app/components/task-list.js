@@ -1,6 +1,7 @@
 import { action } from '@ember/object';
 import { next } from '@ember/runloop';
 import { service } from '@ember/service';
+import { compare } from '@ember/utils';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import TaskListHeaderComponent from 'ember-todo/components/task-list/header';
@@ -22,13 +23,19 @@ export default class TaskList extends Component {
   }
 
   get finishedTasks() {
-    return this.args.list.tasks.filterBy('done', true).sortBy('plaintextDescription');
+    return this.args.list.tasks
+      .filter((task) => task.done)
+      .sort((a, b) => compare(a.plaintextDescription, b.plaintextDescription));
   }
   get unfinishedTasks() {
-    return this.args.list.tasks.filterBy('done', false).sortBy('plaintextDescription');
+    return this.args.list.tasks
+      .filter((task) => !task.done)
+      .sort((a, b) => compare(a.plaintextDescription, b.plaintextDescription));
   }
   get pendingTasks() {
-    return this.args.list.tasks.filterBy('isNew').sortBy('plaintextDescription');
+    return this.args.list.tasks
+      .filter((task) => task.isNew)
+      .sort((a, b) => compare(a.plaintextDescription, b.plaintextDescription));
   }
 
   get hasUnfinishedTasks() {

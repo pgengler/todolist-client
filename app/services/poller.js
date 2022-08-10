@@ -38,13 +38,14 @@ export default class PollerService extends Service {
 
   @restartableTask
   *loadDayLists() {
-    this.days = yield this.store.query('list', {
+    let days = yield this.store.query('list', {
       include: 'tasks',
       filter: {
         'list-type': 'day',
         date: this.selectedDate.dates.map((date) => date.format('YYYY-MM-DD')),
       },
     });
+    this.days = days.toArray(); // eslint-disable-line ember/no-array-prototype-extensions
   }
 
   @restartableTask

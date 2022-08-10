@@ -1,6 +1,7 @@
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
+import { compare } from '@ember/utils';
 import { tracked } from '@glimmer/tracking';
 import moment from 'moment';
 
@@ -15,7 +16,7 @@ export default class DaysController extends Controller {
   }
 
   get days() {
-    return this.poller.days ? this.poller.days.sortBy('name') : [];
+    return this.poller.days ? this.poller.days.sort((a, b) => compare(a.name, b.name)) : [];
   }
 
   get lists() {
