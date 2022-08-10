@@ -7,4 +7,4 @@ export default modifier(function showDialogOnInsert(element, positional, { onClo
   return () => {
     element.removeEventListener('close', onClose);
   };
-});
+}, { eager: false });
