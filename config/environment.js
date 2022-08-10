@@ -35,6 +35,8 @@ module.exports = function (environment) {
       simplifiedAutoLink: true,
       strikethrough: true,
     },
+
+    mirageLogging: typeof process.env.MIRAGE_LOGGING !== 'undefined' ? !!process.env.MIRAGE_LOGGING : false,
   };
 
   if (environment === 'development') {
@@ -44,8 +46,9 @@ module.exports = function (environment) {
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
     ENV['ember-cli-mirage'] = {
-      enabled: !!process.env['MIRAGE_ENABLED'],
+      enabled: !!process.env.MIRAGE_ENABLED,
     };
+    ENV.mirageLogging = typeof process.env.MIRAGE_LOGGING !== 'undefined' ? !!process.env.MIRAGE_LOGGING : true;
   }
 
   if (environment === 'test') {
@@ -58,6 +61,12 @@ module.exports = function (environment) {
 
     ENV.APP.rootElement = '#ember-testing';
     ENV.APP.autoboot = false;
+
+    if (typeof process.env.MIRAGE_LOGGING !== 'undefined') {
+      ENV.mirageLogging = !!process.env.MIRAGE_LOGGING;
+    } else {
+      ENV.mirageLogging = process.env.CI ? false : true;
+    }
   }
 
   if (environment === 'production') {

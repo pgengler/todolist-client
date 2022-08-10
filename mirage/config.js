@@ -1,5 +1,6 @@
 import { discoverEmberDataModels } from 'ember-cli-mirage';
 import { createServer } from 'miragejs';
+import config from 'ember-todo/config/environment';
 
 export default function (config) {
   let finalConfig = {
@@ -14,7 +15,7 @@ export default function (config) {
 function routes() {
   this.passthrough('/write-coverage');
 
-  this.logging = true;
+  this.logging = config.mirageLogging;
 
   this.namespace = '/api';
   this.post('/oauth/token', function () {
