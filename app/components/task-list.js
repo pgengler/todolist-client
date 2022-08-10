@@ -24,12 +24,12 @@ export default class TaskList extends Component {
 
   get finishedTasks() {
     return this.args.list.tasks
-      .filter((task) => task.done)
+      .filter((task) => task.done === true)
       .sort((a, b) => compare(a.plaintextDescription, b.plaintextDescription));
   }
   get unfinishedTasks() {
     return this.args.list.tasks
-      .filter((task) => !task.done)
+      .filter((task) => task.done === false)
       .sort((a, b) => compare(a.plaintextDescription, b.plaintextDescription));
   }
   get pendingTasks() {
