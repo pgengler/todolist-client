@@ -4,5 +4,5 @@ export default class List extends Model {
   @attr('string') listType;
   @attr('string') name;
 
-  @hasMany('task') tasks;
+  @hasMany('task', { async: false, inverse: 'list' }) tasks;
 }

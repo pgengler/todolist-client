@@ -45,7 +45,7 @@ export default class PollerService extends Service {
         date: this.selectedDate.dates.map((date) => date.format('YYYY-MM-DD')),
       },
     });
-    this.days = days.toArray(); // eslint-disable-line ember/no-array-prototype-extensions
+    this.days = Array.from(days);
   }
 
   @restartableTask
