@@ -24,38 +24,35 @@ export default class PollerService extends Service {
     return this.pollForChanges.cancelAll();
   }
 
-  @restartableTask
-  *pollForChanges() {
-    yield all([this.loadDayLists.perform(), this.loadOtherLists.perform()]);
+  pollForChanges = restartableTask(async () => {
+    await all([this.loadDayLists.perform(), this.loadOtherLists.perform()]);
     this.loaded = true;
 
     if (macroCondition(isTesting())) {
       return;
     }
-    yield timeout(5000);
+    await timeout(5000);
     this.pollForChanges.perform();
-  }
+  });
 
-  @restartableTask
-  *loadDayLists() {
-    let days = yield this.store.query('list', {
+  loadDayLists = restartableTask(async () => {
+    let days = await this.store.query('list', {
       include: 'tasks',
       filter: {
         'list-type': 'day',
         date: this.selectedDate.dates.map((date) => date.format('YYYY-MM-DD')),
       },
     });
-    this.days = days.toArray(); // eslint-disable-line ember/no-array-prototype-extensions
-  }
+    this.days = Array.from(days);
+  });
 
-  @restartableTask
-  *loadOtherLists() {
-    this.lists = yield this.store.query('list', {
+  loadOtherLists = restartableTask(async () => {
+    this.lists = await this.store.query('list', {
       include: 'tasks',
       filter: {
         'list-type': 'list',
       },
       sort: 'sort-order',
     });
-  }
+  });
 }

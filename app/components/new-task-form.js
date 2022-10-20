@@ -24,7 +24,7 @@ export default class NewTaskForm extends Component {
 
     let task = this.store.createRecord('task', {
       description,
-      list: lists.toArray()[0], // eslint-disable-line ember/no-array-prototype-extensions
+      list: lists[0],
     });
     await task.save();
 
