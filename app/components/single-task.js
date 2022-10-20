@@ -14,6 +14,10 @@ export default class SingleTask extends Component {
     return !task.isNew || task.isError;
   }
 
+  get isEditing() {
+    return !!this.editType;
+  }
+
   get isFullEditing() {
     return this.editType === 'full';
   }
@@ -23,7 +27,7 @@ export default class SingleTask extends Component {
   }
 
   quickEditTask = dropTask(async () => {
-    if (!this.editable) {
+    if (!this.editable || this.isEditing) {
       return;
     }
     await timeout(250);
@@ -34,7 +38,7 @@ export default class SingleTask extends Component {
 
   @action
   editTask() {
-    if (!this.editable) {
+    if (!this.editable || this.isEditing) {
       return;
     }
     this.quickEditTask.cancelAll();
