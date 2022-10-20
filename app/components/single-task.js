@@ -22,16 +22,15 @@ export default class SingleTask extends Component {
     return this.editType === 'quick';
   }
 
-  @dropTask
-  *quickEditTask() {
+  quickEditTask = dropTask(async () => {
     if (!this.editable) {
       return;
     }
-    yield timeout(250);
+    await timeout(250);
     this.editDescription = this.args.task.description;
     this.editType = 'quick';
     this.args.editingStart?.();
-  }
+  });
 
   @action
   editTask() {
