@@ -8,6 +8,10 @@ $body-background-color: #23A08D;
 @import "flash-messages";
 @import "task";
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   background-color: $body-background-color;
   box-sizing: border-box;
@@ -87,7 +91,7 @@ nav.top-nav {
 
   ul {
     max-height: calc(100vh - 12em);
-    overflow-y: scroll;
+    overflow-y: auto;
     padding: .25em;
   }
 
