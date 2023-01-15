@@ -25,7 +25,7 @@ export default class PollerService extends Service {
   }
 
   pollForChanges = restartableTask(async () => {
-    await all([this.loadDayLists.perform(), this.loadOtherLists.perform()]);
+    await all([this.loadDayLists(), this.loadOtherLists()]);
     this.loaded = true;
 
     if (macroCondition(isTesting())) {
@@ -35,8 +35,8 @@ export default class PollerService extends Service {
     this.pollForChanges.perform();
   });
 
-  loadDayLists = restartableTask(async () => {
-    let days = await this.store.query('list', {
+  async loadDayLists() {
+    const days = await this.store.query('list', {
       include: 'tasks',
       filter: {
         'list-type': 'day',
@@ -44,9 +44,9 @@ export default class PollerService extends Service {
       },
     });
     this.days = Array.from(days);
-  });
+  }
 
-  loadOtherLists = restartableTask(async () => {
+  async loadOtherLists() {
     this.lists = await this.store.query('list', {
       include: 'tasks',
       filter: {
@@ -54,5 +54,5 @@ export default class PollerService extends Service {
       },
       sort: 'sort-order',
     });
-  });
+  }
 }
