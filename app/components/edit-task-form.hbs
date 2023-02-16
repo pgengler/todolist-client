@@ -3,4 +3,12 @@
   @save={{this.save}}
   @saveButtonLabel="Save"
   @task={{@task}}
-/>
+>
+  <:footer>
+    <div style="margin-top: 2em; text-align: right">
+      <button type="button" {{on "click" this.deleteTask}} data-test-delete-task>
+        Delete
+      </button>
+    </div>
+  </:footer>
+</TaskForm>
