@@ -98,6 +98,23 @@ module('Acceptance | Tasks', function (hooks) {
     assert.verifySteps([`updated task ${task.id}`, 'changed description to "updated description"']);
   });
 
+  test('can delete a task via edit form', async function (assert) {
+    let task = this.server.create('task', 'withDayList');
+
+    this.server.del('/tasks/:id', function ({ tasks }, request) {
+      let t = tasks.find(request.params.id);
+      assert.step(`made request to DELETE task ${t.id}`);
+      t.destroy();
+      return new Response(204);
+    });
+
+    await visit('/days');
+    await doubleClick('[data-test-task]');
+    await click('[data-test-edit-task-dialog] [data-test-delete-task]');
+
+    assert.verifySteps([`made request to DELETE task ${task.id}`]);
+  });
+
   test('pressing Escape clears textarea for new tasks', async function (assert) {
     await visit('/days');
 

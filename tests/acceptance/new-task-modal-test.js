@@ -63,4 +63,10 @@ module('Acceptance | New Task modal', function (hooks) {
 
     assert.dom('.new-task-dialog').doesNotExist('"new task" modal is not displayed after clicking Cancel button');
   });
+
+  test('does not show a delete button for a new task', async function (assert) {
+    await visit('/days');
+    await click('.top-nav [data-test-add-task]');
+    assert.dom('[data-test-edit-task-dialog] [data-test-delete-task]').doesNotExist();
+  });
 });

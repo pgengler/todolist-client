@@ -30,4 +30,12 @@ export default class EditTaskForm extends Component {
 
     this.args.onTaskSaved?.();
   }
+
+  @action
+  async deleteTask() {
+    let task = this.args.task;
+
+    await task.destroyRecord();
+    this.args.onTaskDeleted?.();
+  }
 }

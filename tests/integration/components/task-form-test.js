@@ -65,4 +65,16 @@ module('Integration | Component | TaskForm', function (hooks) {
     await click('[data-test-cancel-button]');
     assert.verifySteps(['cancel action triggered']);
   });
+
+  test('renders content in <:footer> after save/cancel buttons', async function (assert) {
+    await render(hbs`
+      <TaskForm @cancel={{this.noop}}>
+        <:footer>
+          <div data-test-foo-bar></div>
+        </:footer>
+      </TaskForm>
+    `);
+
+    assert.dom('[data-test-cancel-button] + [data-test-foo-bar]').exists();
+  });
 });
