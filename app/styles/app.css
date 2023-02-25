@@ -1,8 +1,13 @@
-@import "ember-power-calendar";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* @import "ember-power-calendar"; */
 
-$body-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
-$body-font-size: 10pt;
-$body-background-color: #23A08D;
+:root {
+  --body-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --body-font-size: 10pt;
+  --body-background-color: #23A08D;
+}
 
 @import "datepicker";
 @import "flash-messages";
@@ -13,10 +18,10 @@ $body-background-color: #23A08D;
 }
 
 body {
-  background-color: $body-background-color;
+  background-color: var(--body-background-color);
   box-sizing: border-box;
-  font-family: $body-font;
-  font-size: $body-font-size;
+  font-family: var(--body-font);
+  font-size: var(--body-font-size);
   margin: 0;
   overflow: hidden;
   position: fixed;
@@ -203,10 +208,6 @@ dialog {
     height: 50vh;
     width: 90vw;
   }
-}
-
-.w-100 {
-  width: 100%;
 }
 
 .button-footer {
