@@ -190,8 +190,8 @@ dialog {
   border-radius: 3px;
   box-shadow: 10px 10px 15px #222;
   width: 25vw;
-  height: 25vh;
   min-height: 15em;
+  max-height: 50vh;
 
   &::backdrop {
     background: rgba(128, 128, 128, .77);
