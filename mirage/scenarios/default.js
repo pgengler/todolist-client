@@ -3,4 +3,9 @@ export default function (server) {
   server.create('task', {
     list: otherList,
   });
+
+  server.create('task', 'withDayList', {
+    description: 'Task with notes',
+    notes: 'These are some notes',
+  });
 }

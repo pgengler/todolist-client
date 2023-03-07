@@ -7,7 +7,7 @@ export default class EditTaskForm extends Component {
   @service store;
 
   @action
-  async save({ date, description }) {
+  async save({ date, description, notes }) {
     let task = this.args.task;
 
     if (isEmpty(description) || isEmpty(date)) {
@@ -26,6 +26,7 @@ export default class EditTaskForm extends Component {
 
     task.description = description;
     task.list = lists[0];
+    task.notes = notes;
     await task.save();
 
     this.args.onTaskSaved?.();

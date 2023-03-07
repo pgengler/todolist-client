@@ -11,6 +11,16 @@
   />
   <br><br>
   <input type="date" id="task-date" value={{this.taskDate}} {{on "focus" this.showPicker}} data-test-task-date required>
+
+  <br><br>
+  <ElasticTextarea
+    @value={{this.notes}}
+    id="task-notes"
+    data-test-task-notes
+    class="w-100"
+    placeholder="Notes (optional)"
+  />
+
   <br><br>
   <button type="submit" data-test-save-task>
     {{this.saveButtonLabel}}
