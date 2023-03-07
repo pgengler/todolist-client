@@ -28,7 +28,15 @@
       {{/if}}
     </div>
 
-    <MarkdownToHtml @markdown={{@task.description}} />
+    <div class="description">
+      <MarkdownToHtml @markdown={{@task.description}} />
+    </div>
+
+    {{#if @task.notes}}
+      <div>
+        <FaIcon @icon="sticky-note" @prefix="far" data-test-task-has-notes />
+      </div>
+    {{/if}}
   {{/if}}
 </li>
 

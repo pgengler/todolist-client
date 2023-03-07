@@ -7,7 +7,7 @@ export default class NewTaskForm extends Component {
   @service store;
 
   @action
-  async createTask({ description, date }) {
+  async createTask({ date, description, notes }) {
     if (isEmpty(description) || isEmpty(date)) {
       return;
     }
@@ -24,6 +24,7 @@ export default class NewTaskForm extends Component {
 
     let task = this.store.createRecord('task', {
       description,
+      notes,
       list: lists[0],
     });
     await task.save();

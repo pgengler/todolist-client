@@ -29,7 +29,11 @@
     margin: 0;
   }
 
-  & > div:not(:first-child) {
+  & > div {
+    flex: 0;
+  }
+
+  & > div.description {
     flex-grow: 1;
   }
 
