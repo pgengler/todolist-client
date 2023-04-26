@@ -31,37 +31,6 @@ module('Acceptance | Task notes', function (hooks) {
     assert.verifySteps(['created new task with notes="foo bar baz"']);
   });
 
-  test('edit task modal displays existing notes in "notes" field', async function (assert) {
-    this.server.create('task', 'withDayList', {
-      notes: 'xyzzy',
-    });
-
-    await visit('/');
-    await doubleClick('[data-test-task]');
-    assert.dom('.edit-task-dialog .task-form [data-test-task-notes]').hasValue('xyzzy');
-  });
-
-  test('notes are updated when saving existing task', async function (assert) {
-    let task = this.server.create('task', 'withDayList', {
-      notes: 'xyzzy',
-    });
-
-    this.server.patch('/tasks/:id', function ({ tasks }, request) {
-      let t = tasks.find(request.params.id);
-
-      let attrs = this.normalizedRequestAttrs();
-      assert.step(`updated task ID ${request.params.id} with notes="${attrs.notes}"`);
-      t.update(attrs);
-      return t;
-    });
-
-    await visit('/');
-    await doubleClick('[data-test-task]');
-    await fillIn('.edit-task-dialog .task-form [data-test-task-notes]', 'a new note');
-    await click('.edit-task-dialog [data-test-save-task]');
-    assert.verifySteps([`updated task ID ${task.id} with notes="a new note"`]);
-  });
-
   test('tasks with notes display an icon on listing', async function (assert) {
     this.server.create('task', 'withDayList', {
       notes: 'xyzzy',
@@ -78,5 +47,81 @@ module('Acceptance | Task notes', function (hooks) {
 
     await visit('/');
     assert.dom('.task [data-test-task-has-notes]').doesNotExist();
+  });
+
+  test('edit task modal renders note content as HTML initially', async function (assert) {
+    this.server.create('task', 'withDayList', {
+      notes: '**something**',
+    });
+
+    await visit('/days');
+    await doubleClick('[data-test-task]');
+    assert.dom('.edit-task-dialog .task-form [data-test-task-notes]').doesNotMatchSelector('textarea');
+    assert.dom('.edit-task-dialog .task-form [data-test-task-notes] strong').hasText('something');
+  });
+
+  test('edit task modal displays textarea if task has no note', async function (assert) {
+    this.server.create('task', 'withDayList', {
+      notes: '',
+    });
+
+    await visit('/days');
+    await doubleClick('[data-test-task]');
+    assert.dom('.edit-task-dialog .task-form [data-test-task-notes]').matchesSelector('textarea');
+  });
+
+  test('in edit task modal, clicking on note content changes it to a textarea with unrendered content', async function (assert) {
+    this.server.create('task', 'withDayList', {
+      notes: '**something**',
+    });
+
+    await visit('/days');
+    await doubleClick('[data-test-task]');
+    await click('.edit-task-dialog .task-form [data-test-task-notes]');
+    assert.dom('.edit-task-dialog .task-form [data-test-task-notes]').matchesSelector('textarea');
+    assert.dom('.edit-task-dialog .task-form [data-test-task-notes]').hasValue('**something**');
+    assert.dom('.edit-task-dialog .task-form [data-test-task-notes]').isFocused();
+  });
+
+  test('when notes are not edited, saving task saves previous note content', async function (assert) {
+    let task = this.server.create('task', 'withDayList', {
+      notes: '**something**',
+    });
+
+    this.server.patch('/tasks/:id', function ({ tasks }, request) {
+      let t = tasks.find(request.params.id);
+
+      let attrs = this.normalizedRequestAttrs();
+      assert.step(`saved task ID ${request.params.id} with notes="${attrs.notes}"`);
+      t.update(attrs);
+      return t;
+    });
+
+    await visit('/');
+    await doubleClick('[data-test-task]');
+    await click('.edit-task-dialog [data-test-save-task]');
+    assert.verifySteps([`saved task ID ${task.id} with notes="**something**"`]);
+  });
+
+  test('when notes are edited, saving task saves new note content', async function (assert) {
+    let task = this.server.create('task', 'withDayList', {
+      notes: '**something**',
+    });
+
+    this.server.patch('/tasks/:id', function ({ tasks }, request) {
+      let t = tasks.find(request.params.id);
+
+      let attrs = this.normalizedRequestAttrs();
+      assert.step(`saved task ID ${request.params.id} with notes="${attrs.notes}"`);
+      t.update(attrs);
+      return t;
+    });
+
+    await visit('/');
+    await doubleClick('[data-test-task]');
+    await click('.edit-task-dialog [data-test-task-notes]');
+    await fillIn('.edit-task-dialog .task-form [data-test-task-notes]', 'a new note');
+    await click('.edit-task-dialog [data-test-save-task]');
+    assert.verifySteps([`saved task ID ${task.id} with notes="a new note"`]);
   });
 });
