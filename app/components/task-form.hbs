@@ -24,6 +24,7 @@
       placeholder="Notes (optional)"
     />
   {{else}}
+    {{!-- template-lint-disable no-invalid-interactive --}}
     <div {{on "click" this.startNotesEdit}} data-test-task-notes>
       <MarkdownToHtml @markdown={{@task.notes}} />
     </div>
