@@ -14,8 +14,13 @@ function taskDate(task) {
 
 export default class TaskForm extends Component {
   @tracked description = this.args.task?.description;
+  @tracked isEditingNotes = false;
   @tracked notes = this.args.task?.notes;
   @tracked taskDate = taskDate(this.args.task);
+
+  get editingNotes() {
+    return !this.args.task || this.args.task?.isNew || isEmpty(this.args.task?.notes) || this.isEditingNotes;
+  }
 
   get formId() {
     return `task-form-${guidFor(this)}`;
@@ -39,12 +44,22 @@ export default class TaskForm extends Component {
 
     let date = form.querySelector('#task-date').value;
     let description = form.querySelector('#task-description').value.trim();
-    let notes = form.querySelector('#task-notes').value.trim();
+    let notes = form.querySelector('#task-notes')?.value.trim() || this.args.task?.notes;
 
     if (isEmpty(description) || isEmpty(date)) {
       return;
     }
 
     this.args.save?.({ date, description, notes });
+  }
+
+  @action
+  startNotesEdit() {
+    this.isEditingNotes = true;
+  }
+
+  @action
+  cancelNotesEdit() {
+    this.isEditingNotes = false;
   }
 }

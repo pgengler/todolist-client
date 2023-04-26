@@ -13,14 +13,21 @@
   <input type="date" id="task-date" value={{this.taskDate}} {{on "focus" this.showPicker}} data-test-task-date required>
 
   <br><br>
-  <ElasticTextarea
-    @onEnterPressed={{this.save}}
-    @value={{this.notes}}
-    id="task-notes"
-    data-test-task-notes
-    class="w-100"
-    placeholder="Notes (optional)"
-  />
+  {{#if this.editingNotes}}
+    <AutofocusElasticTextarea
+      @onEscapePressed={{this.cancelNotesEdit}}
+      @onEnterPressed={{this.save}}
+      @value={{this.notes}}
+      id="task-notes"
+      data-test-task-notes
+      class="w-100"
+      placeholder="Notes (optional)"
+    />
+  {{else}}
+    <div {{on "click" this.startNotesEdit}} data-test-task-notes>
+      <MarkdownToHtml @markdown={{@task.notes}} />
+    </div>
+  {{/if}}
 
   <br><br>
   <button type="submit" data-test-save-task>
