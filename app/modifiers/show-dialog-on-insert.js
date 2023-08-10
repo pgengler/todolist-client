@@ -9,5 +9,5 @@ export default modifier(
       element.removeEventListener('close', onClose);
     };
   },
-  { eager: false }
+  { eager: false },
 );

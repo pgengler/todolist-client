@@ -15,5 +15,5 @@ export default modifier(
       element.removeEventListener('input', resize);
     };
   },
-  { eager: false }
+  { eager: false },
 );

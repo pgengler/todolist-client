@@ -178,7 +178,7 @@ function buildKeyboardEvent(type, options = {}) {
       eventOpts.shiftKey,
       eventOpts.metaKey,
       eventOpts.keyCode,
-      eventOpts.charCode
+      eventOpts.charCode,
     );
   } else {
     event = buildBasicEvent(type, options);
@@ -233,13 +233,13 @@ function __triggerKeyEvent__(element, eventType, key, modifiers = DEFAULT_MODIFI
     let firstCharacter = key[0];
     if (firstCharacter !== firstCharacter.toUpperCase()) {
       throw new Error(
-        `Must provide a \`key\` to \`triggerKeyEvent\` that starts with an uppercase character but you passed \`${key}\`.`
+        `Must provide a \`key\` to \`triggerKeyEvent\` that starts with an uppercase character but you passed \`${key}\`.`,
       );
     }
 
     if (isNumeric(key) && key.length > 1) {
       throw new Error(
-        `Must provide a numeric \`keyCode\` to \`triggerKeyEvent\` but you passed \`${key}\` as a string.`
+        `Must provide a numeric \`keyCode\` to \`triggerKeyEvent\` but you passed \`${key}\` as a string.`,
       );
     }
 
@@ -271,7 +271,7 @@ async function triggerKeyEvent(target, eventType, key, modifiers = DEFAULT_MODIF
   if (!isKeyboardEventType(eventType)) {
     let validEventTypes = KEYBOARD_EVENT_TYPES.join(', ');
     throw new Error(
-      `Must provide an \`eventType\` of ${validEventTypes} to \`triggerKeyEvent\` but you passed \`${eventType}\`.`
+      `Must provide an \`eventType\` of ${validEventTypes} to \`triggerKeyEvent\` but you passed \`${eventType}\`.`,
     );
   }
 

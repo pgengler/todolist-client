@@ -85,7 +85,7 @@ export default class SingleTask extends Component {
           event.shiftKey,
           event.metaKey,
           event.button, // copy button 0: left, 1: middle, 2: right
-          event.relatedTarget // copy relatedTarget
+          event.relatedTarget, // copy relatedTarget
         );
 
         event.target.dispatchEvent(doubleClickEvent);
