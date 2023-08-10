@@ -10,8 +10,7 @@ module('Acceptance | New Task modal', function (hooks) {
   test('adding a new task', async function (assert) {
     assert.expect(4);
 
-    let list = this.server.create('list', {
-      listType: 'day',
+    let list = this.server.create('list', 'day', {
       name: '2014-11-13',
     });
 

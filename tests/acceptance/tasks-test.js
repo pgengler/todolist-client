@@ -13,8 +13,7 @@ module('Acceptance | Tasks', function (hooks) {
   hooks.beforeEach(() => authenticateSession());
 
   test('adding a new task sends right data to server', async function (assert) {
-    let list = this.server.create('list', {
-      listType: 'day',
+    let list = this.server.create('list', 'day', {
       name: '2017-08-20',
     });
     assert.expect(3);
@@ -55,7 +54,7 @@ module('Acceptance | Tasks', function (hooks) {
   });
 
   test('double-clicking a task opens dialog with form', async function (assert) {
-    let list = this.server.create('list', 'day');
+    let list = this.server.create('list', 'today');
     this.server.create('task', {
       description: 'initial description',
       list,
@@ -75,7 +74,7 @@ module('Acceptance | Tasks', function (hooks) {
   });
 
   test('can update task via edit form', async function (assert) {
-    let list = this.server.create('list', 'day');
+    let list = this.server.create('list', 'today');
     let task = this.server.create('task', {
       description: 'initial description',
       list,
@@ -128,13 +127,11 @@ module('Acceptance | Tasks', function (hooks) {
     assert.expect(3);
 
     let task = this.server.create('task');
-    this.server.create('list', {
-      listType: 'day',
+    this.server.create('list', 'day', {
       name: '2016-03-07',
       taskIds: [task.id],
     });
-    let targetDay = this.server.create('list', {
-      listType: 'day',
+    let targetDay = this.server.create('list', 'day', {
       name: '2016-03-08',
     });
 
@@ -166,13 +163,11 @@ module('Acceptance | Tasks', function (hooks) {
     assert.expect(3);
 
     let task = this.server.create('task');
-    this.server.create('list', {
-      listType: 'day',
+    this.server.create('list', 'day', {
       name: '2016-03-07',
       taskIds: [task.id],
     });
-    let targetDay = this.server.create('list', {
-      listType: 'day',
+    let targetDay = this.server.create('list', 'day', {
       name: '2016-03-08',
     });
 
@@ -200,8 +195,7 @@ module('Acceptance | Tasks', function (hooks) {
   test('updating the description for a task', async function (assert) {
     assert.expect(3);
     let task = this.server.create('task', { description: "I'm a task" });
-    this.server.create('list', {
-      listType: 'day',
+    this.server.create('list', 'day', {
       name: '2016-03-07',
       taskIds: [task.id],
     });
@@ -230,8 +224,7 @@ module('Acceptance | Tasks', function (hooks) {
   test('setting an empty description for a task deletes it', async function (assert) {
     assert.expect(2);
     let task = this.server.create('task');
-    this.server.create('list', {
-      listType: 'day',
+    this.server.create('list', 'day', {
       name: '2016-03-07',
       taskIds: [task.id],
     });
@@ -250,7 +243,7 @@ module('Acceptance | Tasks', function (hooks) {
     assert.expect(1);
 
     let task = this.server.create('task');
-    this.server.create('list', 'day', { tasks: [task] });
+    this.server.create('list', 'today', { tasks: [task] });
 
     this.server.delete('/tasks/:id', function () {
       assert.ok(false, 'does not make a delete request');
@@ -268,7 +261,7 @@ module('Acceptance | Tasks', function (hooks) {
     assert.expect(2);
 
     let task = this.server.create('task');
-    this.server.create('list', 'day', { tasks: [task] });
+    this.server.create('list', 'today', { tasks: [task] });
 
     this.server.delete('/tasks/:id', function ({ tasks }, request) {
       assert.ok(true, 'makes a delete request');

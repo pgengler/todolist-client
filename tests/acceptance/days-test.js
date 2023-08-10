@@ -11,11 +11,10 @@ module('Acceptance | Days', function (hooks) {
   hooks.beforeEach(() => authenticateSession());
 
   test('visiting /days shows lists', async function (assert) {
-    this.server.create('list', {
-      listType: 'day',
+    this.server.create('list', 'day', {
       name: '2014-11-06',
     });
-    this.server.createList('list', 4, { listType: 'day' });
+    this.server.createList('list', 4, 'day');
     this.server.create('list', { listType: 'list' });
     await visit('/days?date=2014-11-07');
 
@@ -33,8 +32,7 @@ module('Acceptance | Days', function (hooks) {
   });
 
   test('tasks are resorted correctly when editing descriptions', async function (assert) {
-    let list = this.server.create('list', {
-      listType: 'day',
+    let list = this.server.create('list', 'day', {
       name: '2018-01-01',
     });
     this.server.create('task', { description: 'xyz', list });
@@ -99,5 +97,17 @@ module('Acceptance | Days', function (hooks) {
     await visit('/days');
     assert.verifySteps(['fetched list of overdue tasks from server']);
     assert.dom('[data-test-list-overdue]').doesNotExist('"Overdue" list is not displayed');
+  });
+
+  test('tasks in Overdue list are displayed with their due date', async function (assert) {
+    let oldList = this.server.create('list', 'day', {
+      name: '2023-01-01',
+    });
+    this.server.create('task', {
+      list: oldList,
+    });
+
+    await visit('/days');
+    assert.dom('[data-test-list-overdue] [data-test-task] .due-date').hasText('Due 2023-01-01');
   });
 });

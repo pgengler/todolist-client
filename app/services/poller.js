@@ -60,8 +60,9 @@ export default class PollerService extends Service {
 
   async loadOverdueTasks() {
     this.overdueTasks = await this.store.query('task', {
+      include: 'list',
       filter: { overdue: true },
-      sort: 'name',
+      sort: 'due-date,description',
     });
   }
 }

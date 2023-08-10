@@ -11,35 +11,45 @@
       {{on "focusout" this.cancelEdit}}
     />
   {{else}}
-    <div class="state">
-      {{#if @task.isError}}
-        <FaIcon @icon="exclamation-triangle" title="Task failed to save" />
-      {{else if @task.isNew}}
-        <FaIcon @icon="spinner" @spin={{true}} />
-      {{else}}
-        {{!-- template-lint-disable require-input-label --}}
-        <input
-          type="checkbox"
-          checked={{@task.done}}
-          {{on "change" this.toggleTaskDone}}
-        >
+    {{#if (has-block "before")}}
+      {{yield to="before"}}
+    {{/if}}
+
+    <div class="flex-container">
+      <div class="state">
+        {{#if @task.isError}}
+          <FaIcon @icon="exclamation-triangle" title="Task failed to save" />
+        {{else if @task.isNew}}
+          <FaIcon @icon="spinner" @spin={{true}} />
+        {{else}}
+          {{!-- template-lint-disable require-input-label --}}
+          <input
+            type="checkbox"
+            checked={{@task.done}}
+            {{on "change" this.toggleTaskDone}}
+          >
+        {{/if}}
+      </div>
+
+      <div
+        class="description"
+        role="button"
+        {{on "click" (perform this.quickEditTask)}}
+        {{on "dblclick" this.editTask}}
+        {{on "touchend" this.simulateDoubleClicks}}
+      >
+        <MarkdownToHtml @markdown={{@task.description}} role="presentation" />
+      </div>
+
+      {{#if @task.notes}}
+        <div>
+          <FaIcon @icon="sticky-note" @prefix="far" data-test-task-has-notes />
+        </div>
       {{/if}}
     </div>
 
-    <div
-      class="description"
-      role="button"
-      {{on "click" (perform this.quickEditTask)}}
-      {{on "dblclick" this.editTask}}
-      {{on "touchend" this.simulateDoubleClicks}}
-    >
-      <MarkdownToHtml @markdown={{@task.description}} role="presentation" />
-    </div>
-
-    {{#if @task.notes}}
-      <div>
-        <FaIcon @icon="sticky-note" @prefix="far" data-test-task-has-notes />
-      </div>
+    {{#if (has-block "after")}}
+      {{yield to="after"}}
     {{/if}}
   {{/if}}
 

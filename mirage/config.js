@@ -60,6 +60,27 @@ function routes() {
         return moment().isAfter(listDate);
       });
     }
+
+    let sort = request.queryParams['sort'];
+    if (sort === 'due-date,description') {
+      result = result.sort((a, b) => {
+        if (a.list && !b.list) return -1;
+        if (!a.list && b.list) return 1;
+
+        let aDate = moment(a.list.name);
+        let bDate = moment(b.list.name);
+        if (aDate.isBefore(bDate)) return -1;
+        if (bDate.isBefore(aDate)) return 1;
+
+        let aDescription = a.description.replace(/[^A-Za-z0-9]/g, '');
+        let bDescription = b.description.replace(/[^A-Za-z0-9]/g, '');
+
+        if (aDescription < bDescription) return -1;
+        if (aDescription > bDescription) return 1;
+        return 0;
+      });
+    }
+
     return result;
   });
   this.post('/tasks');
