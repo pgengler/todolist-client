@@ -5,6 +5,10 @@ import moment from 'moment';
 export default class SelectedDateService extends Service {
   @tracked date = null;
 
+  get hasDateSelected() {
+    return !!this.date;
+  }
+
   get dates() {
     let date = this.date || moment();
     return [moment(date).subtract(1, 'day'), date, ...[1, 2, 3].map((val) => moment(date).add(val, 'days'))];

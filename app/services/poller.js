@@ -27,7 +27,13 @@ export default class PollerService extends Service {
   }
 
   pollForChanges = restartableTask(async () => {
-    await all([this.loadDayLists(), this.loadOtherLists(), this.loadOverdueTasks()]);
+    let loadingPromises = [this.loadDayLists(), this.loadOtherLists()];
+    if (this.#loadOverdueTasks) {
+      loadingPromises.push(this.loadOverdueTasks());
+    } else {
+      this.overdueTasks = [];
+    }
+    await all(loadingPromises);
     this.loaded = true;
 
     if (macroCondition(isTesting())) {
@@ -64,5 +70,9 @@ export default class PollerService extends Service {
       filter: { overdue: true },
       sort: 'due-date,description',
     });
+  }
+
+  get #loadOverdueTasks() {
+    return !this.selectedDate.hasDateSelected;
   }
 }

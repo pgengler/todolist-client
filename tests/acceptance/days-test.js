@@ -3,6 +3,7 @@ import { click, currentURL, findAll, visit } from '@ember/test-helpers';
 import { clickToEdit } from 'ember-todo/tests/helpers/click-to-edit';
 import fillInAndPressEnter from 'ember-todo/tests/helpers/fill-in-and-press-enter';
 import setupAcceptanceTest from 'ember-todo/tests/helpers/setup-acceptance-test';
+import { calendarSelect } from 'ember-power-calendar/test-support';
 import { authenticateSession } from 'ember-simple-auth/test-support';
 import { Collection } from 'miragejs';
 
@@ -68,7 +69,7 @@ module('Acceptance | Days', function (hooks) {
     assert.deepEqual(listNames, ['Apr 22, 2021', 'Apr 23, 2021', 'Apr 24, 2021', 'Apr 25, 2021', 'Apr 26, 2021']);
   });
 
-  test('fetches and displays a list of overdue tasks', async function (assert) {
+  test('fetches and displays a list of overdue tasks when viewing current day (no date param)', async function (assert) {
     this.server.get('/tasks', function ({ tasks }, request) {
       if (request.queryParams['filter[overdue]']) {
         assert.step('fetched list of overdue tasks from server');
@@ -109,5 +110,31 @@ module('Acceptance | Days', function (hooks) {
 
     await visit('/days');
     assert.dom('[data-test-list-overdue] [data-test-task] .due-date').hasText('Due 2023-01-01');
+  });
+
+  test('does not fetch overdue tasks when viewing a specific date', async function (assert) {
+    this.server.get('/tasks', function ({ tasks }, request) {
+      if (request.queryParams['filter[overdue]']) {
+        assert.step('fetched list of overdue tasks from server');
+      }
+      return tasks.all();
+    });
+
+    this.server.createList('task', 3);
+
+    await visit('/days?date=2023-08-01');
+    assert.verifySteps([]);
+    assert.dom('[data-test-list-overdue]').doesNotExist();
+  });
+
+  test('"Overdue" section is hidden when switching to a specific date', async function (assert) {
+    const yesterday = this.server.create('list', 'yesterday');
+    this.server.createList('task', 3, { list: yesterday });
+    await visit('/days');
+    assert.dom('[data-test-list-overdue]').exists();
+
+    await click('[data-test-change-date]');
+    await calendarSelect('.date-picker-content', new Date(2023, 1, 1));
+    assert.dom('[data-test-list-overdue]').doesNotExist();
   });
 });
