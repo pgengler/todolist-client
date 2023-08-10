@@ -9,12 +9,17 @@
 
   <ul>
     {{#each @tasks as |task|}}
-      <OverdueTask
+      <SingleTask
         @task={{task}}
         @editingStart={{@editingStart}}
         @editingEnd={{@editingEnd}}
+        {{draggable-task task}}
         data-test-task
-      />
+      >
+        <:after>
+          <p class="due-date">Due {{task.list.name}}</p>
+        </:after>
+      </SingleTask>
     {{/each}}
   </ul>
 </div>
