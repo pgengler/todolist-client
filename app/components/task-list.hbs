@@ -8,15 +8,16 @@
 >
   <this.headerComponent @list={{@list}} {{on "click" this.focusNewTaskField}} />
   <ul>
-    {{#each this.unfinishedTasks as |task|}}
-      <SingleTask @task={{task}} @editingStart={{@editingStart}} @editingEnd={{@editingEnd}} data-test-task />
+    {{#each this.sortedTasks as |task|}}
+      <SingleTask
+        @task={{task}}
+        @editingStart={{@editingStart}}
+        @editingEnd={{@editingEnd}}
+        {{draggable-task task}}
+        data-test-task
+      />
     {{/each}}
-    {{#each this.finishedTasks as |task|}}
-      <SingleTask @task={{task}} @editingStart={{@editingStart}} @editingEnd={{@editingEnd}} data-test-task />
-    {{/each}}
-    {{#each this.pendingTasks as |task|}}
-      <SingleTask @task={{task}} @editingStart={{@editingStart}} @editingEnd={{@editingEnd}} data-test-task />
-    {{/each}}
+
     <li class="task">
       <ElasticTextarea
         @onEscapePressed={{this.clearTextarea}}

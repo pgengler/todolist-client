@@ -2,6 +2,9 @@
   {{#if this.isLoading}}
     <FaIcon @icon="spinner" @spin={{true}} @size="4x" />
   {{else}}
+    {{#if this.showOverdueTasks}}
+      <OverdueTaskList @tasks={{this.poller.overdueTasks}} />
+    {{/if}}
     {{#each this.days as |list|}}
       <DayTasks
         @list={{list}}

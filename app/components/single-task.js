@@ -96,11 +96,6 @@ export default class SingleTask extends Component {
   }
 
   @action
-  onDragStart(event) {
-    event.dataTransfer.setData('text/data', this.args.task.id);
-  }
-
-  @action
   cancelEdit() {
     this.editDescription = '';
     // wrapping this in a `next` to avoid double-updating `this.isEditing` twice

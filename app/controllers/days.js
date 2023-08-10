@@ -7,9 +7,15 @@ import moment from 'moment';
 
 export default class DaysController extends Controller {
   @service poller;
+  @service selectedDate;
 
   queryParams = ['date'];
   @tracked date = null;
+
+  get showOverdueTasks() {
+    // show "Overdue" section only if there _are_ overdue tasks, and an explicit date isn't being used
+    return !this.selectedDate.hasDateSelected && this.poller.overdueTasks.length > 0;
+  }
 
   get isLoading() {
     return !this.poller.loaded;

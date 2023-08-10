@@ -10,6 +10,8 @@ export default class PollerService extends Service {
 
   @tracked days;
   @tracked lists;
+  @tracked overdueTasks = [];
+
   @tracked loaded = false;
 
   async start() {
@@ -25,7 +27,13 @@ export default class PollerService extends Service {
   }
 
   pollForChanges = restartableTask(async () => {
-    await all([this.loadDayLists(), this.loadOtherLists()]);
+    let loadingPromises = [this.loadDayLists(), this.loadOtherLists()];
+    if (this.#loadOverdueTasks) {
+      loadingPromises.push(this.loadOverdueTasks());
+    } else {
+      this.overdueTasks = [];
+    }
+    await all(loadingPromises);
     this.loaded = true;
 
     if (macroCondition(isTesting())) {
@@ -54,5 +62,17 @@ export default class PollerService extends Service {
       },
       sort: 'sort-order',
     });
+  }
+
+  async loadOverdueTasks() {
+    this.overdueTasks = await this.store.query('task', {
+      include: 'list',
+      filter: { overdue: true },
+      sort: 'due-date,plaintext-description',
+    });
+  }
+
+  get #loadOverdueTasks() {
+    return !this.selectedDate.hasDateSelected;
   }
 }

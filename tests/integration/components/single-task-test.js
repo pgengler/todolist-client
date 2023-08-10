@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { click, render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import clickToEdit from 'ember-todo/tests/helpers/click-to-edit';
+import { clickToEdit } from 'ember-todo/tests/helpers/click-to-edit';
 
 module('Integration | Component | SingleTask', function (hooks) {
   setupRenderingTest(hooks);

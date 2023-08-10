@@ -1,5 +1,6 @@
 import { module, test } from 'qunit';
-import { click, doubleClick, fillIn, visit } from '@ember/test-helpers';
+import { click, fillIn, visit } from '@ember/test-helpers';
+import { doubleClickToEdit } from 'ember-todo/tests/helpers/click-to-edit';
 import setupAcceptanceTest from 'ember-todo/tests/helpers/setup-acceptance-test';
 import { authenticateSession } from 'ember-simple-auth/test-support';
 
@@ -55,7 +56,7 @@ module('Acceptance | Task notes', function (hooks) {
     });
 
     await visit('/days');
-    await doubleClick('[data-test-task]');
+    await doubleClickToEdit('[data-test-task]');
     assert.dom('.edit-task-dialog .task-form [data-test-task-notes]').doesNotMatchSelector('textarea');
     assert.dom('.edit-task-dialog .task-form [data-test-task-notes] strong').hasText('something');
   });
@@ -66,7 +67,7 @@ module('Acceptance | Task notes', function (hooks) {
     });
 
     await visit('/days');
-    await doubleClick('[data-test-task]');
+    await doubleClickToEdit('[data-test-task]');
     assert.dom('.edit-task-dialog .task-form [data-test-task-notes]').matchesSelector('textarea');
   });
 
@@ -76,7 +77,7 @@ module('Acceptance | Task notes', function (hooks) {
     });
 
     await visit('/days');
-    await doubleClick('[data-test-task]');
+    await doubleClickToEdit('[data-test-task]');
     await click('.edit-task-dialog .task-form [data-test-task-notes]');
     assert.dom('.edit-task-dialog .task-form [data-test-task-notes]').matchesSelector('textarea');
     assert.dom('.edit-task-dialog .task-form [data-test-task-notes]').hasValue('**something**');
@@ -98,7 +99,7 @@ module('Acceptance | Task notes', function (hooks) {
     });
 
     await visit('/');
-    await doubleClick('[data-test-task]');
+    await doubleClickToEdit('[data-test-task]');
     await click('.edit-task-dialog [data-test-save-task]');
     assert.verifySteps([`saved task ID ${task.id} with notes="**something**"`]);
   });
@@ -118,7 +119,7 @@ module('Acceptance | Task notes', function (hooks) {
     });
 
     await visit('/');
-    await doubleClick('[data-test-task]');
+    await doubleClickToEdit('[data-test-task]');
     await click('.edit-task-dialog [data-test-task-notes]');
     await fillIn('.edit-task-dialog .task-form [data-test-task-notes]', 'a new note');
     await click('.edit-task-dialog [data-test-save-task]');

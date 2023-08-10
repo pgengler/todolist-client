@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
-import { click, doubleClick, fillIn, visit } from '@ember/test-helpers';
-import clickToEdit from 'ember-todo/tests/helpers/click-to-edit';
+import { click, fillIn, visit } from '@ember/test-helpers';
+import { clickToEdit, doubleClickToEdit } from 'ember-todo/tests/helpers/click-to-edit';
 import dragAndDrop from 'ember-todo/tests/helpers/drag-and-drop';
 import fillInAndPressEnter from 'ember-todo/tests/helpers/fill-in-and-press-enter';
 import keyEvent from 'ember-todo/tests/helpers/key-event';
@@ -13,8 +13,7 @@ module('Acceptance | Tasks', function (hooks) {
   hooks.beforeEach(() => authenticateSession());
 
   test('adding a new task sends right data to server', async function (assert) {
-    let list = this.server.create('list', {
-      listType: 'day',
+    let list = this.server.create('list', 'day', {
       name: '2017-08-20',
     });
     assert.expect(3);
@@ -55,7 +54,7 @@ module('Acceptance | Tasks', function (hooks) {
   });
 
   test('double-clicking a task opens dialog with form', async function (assert) {
-    let list = this.server.create('list', 'day');
+    let list = this.server.create('list', 'today');
     this.server.create('task', {
       description: 'initial description',
       list,
@@ -64,10 +63,10 @@ module('Acceptance | Tasks', function (hooks) {
     await visit('/days');
     assert.dom('[data-test-edit-task-dialog]').doesNotExist();
 
-    await doubleClick('[data-test-task]');
+    await doubleClickToEdit('[data-test-task]');
     // make sure we're not in quick-edit state
     assert.dom('[data-test-task]').doesNotHaveClass('editing');
-    assert.dom('[data-test-task] textarea').doesNotExist();
+    assert.dom('[data-test-task] textarea.edit').doesNotExist();
 
     assert.dom('[data-test-edit-task-dialog]').exists();
     assert.dom('[data-test-edit-task-dialog] [data-test-task-description]').hasValue('initial description');
@@ -75,7 +74,7 @@ module('Acceptance | Tasks', function (hooks) {
   });
 
   test('can update task via edit form', async function (assert) {
-    let list = this.server.create('list', 'day');
+    let list = this.server.create('list', 'today');
     let task = this.server.create('task', {
       description: 'initial description',
       list,
@@ -91,7 +90,7 @@ module('Acceptance | Tasks', function (hooks) {
     });
 
     await visit('/days');
-    await doubleClick('[data-test-task]');
+    await doubleClickToEdit('[data-test-task]');
     await fillIn('[data-test-edit-task-dialog] [data-test-task-description]', 'updated description');
     await click('[data-test-edit-task-dialog] [data-test-save-task]');
 
@@ -109,7 +108,7 @@ module('Acceptance | Tasks', function (hooks) {
     });
 
     await visit('/days');
-    await doubleClick('[data-test-task]');
+    await doubleClickToEdit('[data-test-task]');
     await click('[data-test-edit-task-dialog] [data-test-delete-task]');
 
     assert.verifySteps([`made request to DELETE task ${task.id}`]);
@@ -128,13 +127,11 @@ module('Acceptance | Tasks', function (hooks) {
     assert.expect(3);
 
     let task = this.server.create('task');
-    this.server.create('list', {
-      listType: 'day',
+    this.server.create('list', 'day', {
       name: '2016-03-07',
       taskIds: [task.id],
     });
-    let targetDay = this.server.create('list', {
-      listType: 'day',
+    let targetDay = this.server.create('list', 'day', {
       name: '2016-03-08',
     });
 
@@ -149,7 +146,10 @@ module('Acceptance | Tasks', function (hooks) {
 
     await visit('/days?date=2016-03-07');
 
-    await dragAndDrop('[data-test-task]', '.task-list[data-test-list-name="2016-03-08"]');
+    await dragAndDrop(
+      '.task-list[data-test-list-name="2016-03-07"] [data-test-task]',
+      '.task-list[data-test-list-name="2016-03-08"]'
+    );
 
     assert
       .dom('.task-list[data-test-list-name="2016-03-07"] [data-test-task]')
@@ -163,13 +163,11 @@ module('Acceptance | Tasks', function (hooks) {
     assert.expect(3);
 
     let task = this.server.create('task');
-    this.server.create('list', {
-      listType: 'day',
+    this.server.create('list', 'day', {
       name: '2016-03-07',
       taskIds: [task.id],
     });
-    let targetDay = this.server.create('list', {
-      listType: 'day',
+    let targetDay = this.server.create('list', 'day', {
       name: '2016-03-08',
     });
 
@@ -187,14 +185,17 @@ module('Acceptance | Tasks', function (hooks) {
     });
 
     await visit('/days?date=2016-03-07');
-    await dragAndDrop('[data-test-task]', '.task-list[data-test-list-name="2016-03-08"]', { ctrlKey: true });
+    await dragAndDrop(
+      '.task-list[data-test-list-name="2016-03-07"] [data-test-task]',
+      '.task-list[data-test-list-name="2016-03-08"]',
+      { ctrlKey: true }
+    );
   });
 
   test('updating the description for a task', async function (assert) {
     assert.expect(3);
     let task = this.server.create('task', { description: "I'm a task" });
-    this.server.create('list', {
-      listType: 'day',
+    this.server.create('list', 'day', {
       name: '2016-03-07',
       taskIds: [task.id],
     });
@@ -223,8 +224,7 @@ module('Acceptance | Tasks', function (hooks) {
   test('setting an empty description for a task deletes it', async function (assert) {
     assert.expect(2);
     let task = this.server.create('task');
-    this.server.create('list', {
-      listType: 'day',
+    this.server.create('list', 'day', {
       name: '2016-03-07',
       taskIds: [task.id],
     });
@@ -243,7 +243,7 @@ module('Acceptance | Tasks', function (hooks) {
     assert.expect(1);
 
     let task = this.server.create('task');
-    this.server.create('list', 'day', { tasks: [task] });
+    this.server.create('list', 'today', { tasks: [task] });
 
     this.server.delete('/tasks/:id', function () {
       assert.ok(false, 'does not make a delete request');
@@ -261,7 +261,7 @@ module('Acceptance | Tasks', function (hooks) {
     assert.expect(2);
 
     let task = this.server.create('task');
-    this.server.create('list', 'day', { tasks: [task] });
+    this.server.create('list', 'today', { tasks: [task] });
 
     this.server.delete('/tasks/:id', function ({ tasks }, request) {
       assert.ok(true, 'makes a delete request');

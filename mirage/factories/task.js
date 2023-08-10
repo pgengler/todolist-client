@@ -8,9 +8,12 @@ export default Factory.extend({
     afterCreate(task, server) {
       if (task.listId) return;
 
-      server.create('list', 'day', {
-        tasks: [task],
-      });
+      let list = server.schema.lists.where({ listType: 'day' }).models[0];
+      if (!list) {
+        list = server.create('list', 'today');
+      }
+
+      task.update({ list });
     },
   }),
 });

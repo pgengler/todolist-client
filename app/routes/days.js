@@ -19,7 +19,7 @@ export default class DaysRoute extends Route {
   }
 
   model(params) {
-    let date = params.date ? moment(params.date) : moment();
+    let date = params.date ? moment(params.date) : null;
     this.selectedDate.date = date;
     this.poller.start();
   }
