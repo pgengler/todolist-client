@@ -1,6 +1,7 @@
 import { discoverEmberDataModels } from 'ember-cli-mirage';
 import { createServer } from 'miragejs';
 import config from 'ember-todo/config/environment';
+import moment from 'moment';
 
 export default function (config) {
   let finalConfig = {
@@ -47,7 +48,20 @@ function routes() {
     return matchingLists;
   });
 
-  this.get('/tasks');
+  this.get('/tasks', function ({ tasks }, request) {
+    let result = tasks.all();
+    if (request.queryParams['filter[overdue]']) {
+      result = result.filter((task) => {
+        if (task.done) return false;
+        const list = task.list;
+        if (!list) return false;
+        if (list.listType !== 'day') return false;
+        let listDate = moment(list.name).endOf('day');
+        return moment().isAfter(listDate);
+      });
+    }
+    return result;
+  });
   this.post('/tasks');
 
   this.get('/tasks/:id');

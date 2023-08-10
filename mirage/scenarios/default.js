@@ -8,4 +8,9 @@ export default function (server) {
     description: 'Task with notes',
     notes: 'These are some notes',
   });
+
+  let yesterdayList = server.create('list', 'yesterday');
+  server.create('task', {
+    list: yesterdayList,
+  });
 }

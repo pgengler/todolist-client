@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
-import { click, doubleClick, fillIn, visit } from '@ember/test-helpers';
-import clickToEdit from 'ember-todo/tests/helpers/click-to-edit';
+import { click, fillIn, visit } from '@ember/test-helpers';
+import { clickToEdit, doubleClickToEdit } from 'ember-todo/tests/helpers/click-to-edit';
 import dragAndDrop from 'ember-todo/tests/helpers/drag-and-drop';
 import fillInAndPressEnter from 'ember-todo/tests/helpers/fill-in-and-press-enter';
 import keyEvent from 'ember-todo/tests/helpers/key-event';
@@ -64,10 +64,10 @@ module('Acceptance | Tasks', function (hooks) {
     await visit('/days');
     assert.dom('[data-test-edit-task-dialog]').doesNotExist();
 
-    await doubleClick('[data-test-task]');
+    await doubleClickToEdit('[data-test-task]');
     // make sure we're not in quick-edit state
     assert.dom('[data-test-task]').doesNotHaveClass('editing');
-    assert.dom('[data-test-task] textarea').doesNotExist();
+    assert.dom('[data-test-task] textarea.edit').doesNotExist();
 
     assert.dom('[data-test-edit-task-dialog]').exists();
     assert.dom('[data-test-edit-task-dialog] [data-test-task-description]').hasValue('initial description');
@@ -91,7 +91,7 @@ module('Acceptance | Tasks', function (hooks) {
     });
 
     await visit('/days');
-    await doubleClick('[data-test-task]');
+    await doubleClickToEdit('[data-test-task]');
     await fillIn('[data-test-edit-task-dialog] [data-test-task-description]', 'updated description');
     await click('[data-test-edit-task-dialog] [data-test-save-task]');
 
@@ -109,7 +109,7 @@ module('Acceptance | Tasks', function (hooks) {
     });
 
     await visit('/days');
-    await doubleClick('[data-test-task]');
+    await doubleClickToEdit('[data-test-task]');
     await click('[data-test-edit-task-dialog] [data-test-delete-task]');
 
     assert.verifySteps([`made request to DELETE task ${task.id}`]);
@@ -149,7 +149,10 @@ module('Acceptance | Tasks', function (hooks) {
 
     await visit('/days?date=2016-03-07');
 
-    await dragAndDrop('[data-test-task]', '.task-list[data-test-list-name="2016-03-08"]');
+    await dragAndDrop(
+      '.task-list[data-test-list-name="2016-03-07"] [data-test-task]',
+      '.task-list[data-test-list-name="2016-03-08"]'
+    );
 
     assert
       .dom('.task-list[data-test-list-name="2016-03-07"] [data-test-task]')
@@ -187,7 +190,11 @@ module('Acceptance | Tasks', function (hooks) {
     });
 
     await visit('/days?date=2016-03-07');
-    await dragAndDrop('[data-test-task]', '.task-list[data-test-list-name="2016-03-08"]', { ctrlKey: true });
+    await dragAndDrop(
+      '.task-list[data-test-list-name="2016-03-07"] [data-test-task]',
+      '.task-list[data-test-list-name="2016-03-08"]',
+      { ctrlKey: true }
+    );
   });
 
   test('updating the description for a task', async function (assert) {

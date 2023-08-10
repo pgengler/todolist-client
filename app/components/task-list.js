@@ -6,6 +6,19 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import TaskListHeaderComponent from 'ember-todo/components/task-list/header';
 
+function taskSort(a, b) {
+  // unfinished tasks display above finished or pending
+  if (a.done === true && b.done === false) return -1;
+  if (a.done === false && b.done === true) return 1;
+
+  // unfinished & finished tasks display above pending
+  if (a.isNew === false && b.isNew === true) return -1;
+  if (a.isNew === true && b.isNew === false) return 1;
+
+  // finally, sort alphabetically
+  return compare(a.plaintextDescription, b.plaintextDescription);
+}
+
 export default class TaskList extends Component {
   @tracked dragClass = '';
   @tracked newTaskDescription = '';
@@ -22,20 +35,12 @@ export default class TaskList extends Component {
     return `list-${this.args.list.id}-new-task`;
   }
 
-  get finishedTasks() {
-    return this.args.list.tasks
-      .filter((task) => task.done === true)
-      .sort((a, b) => compare(a.plaintextDescription, b.plaintextDescription));
+  get sortedTasks() {
+    return Array.from(this.args.list.tasks).sort((a, b) => taskSort(a, b));
   }
+
   get unfinishedTasks() {
-    return this.args.list.tasks
-      .filter((task) => task.done === false)
-      .sort((a, b) => compare(a.plaintextDescription, b.plaintextDescription));
-  }
-  get pendingTasks() {
-    return this.args.list.tasks
-      .filter((task) => task.isNew)
-      .sort((a, b) => compare(a.plaintextDescription, b.plaintextDescription));
+    return this.args.list.tasks.filter((task) => task.done === false);
   }
 
   get hasUnfinishedTasks() {

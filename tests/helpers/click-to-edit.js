@@ -1,6 +1,10 @@
-import { click, waitFor } from '@ember/test-helpers';
+import { click, doubleClick, waitFor } from '@ember/test-helpers';
 
-export default async function clickToEdit(selector) {
-  await click(selector);
+export async function clickToEdit(selector) {
+  await click(`${selector} .description`);
   return waitFor(`${selector} textarea`);
+}
+
+export async function doubleClickToEdit(selector) {
+  return doubleClick(`${selector} .description`);
 }

@@ -11,6 +11,10 @@ export default class DaysController extends Controller {
   queryParams = ['date'];
   @tracked date = null;
 
+  get showOverdueTasks() {
+    return this.poller.overdueTasks.length > 0;
+  }
+
   get isLoading() {
     return !this.poller.loaded;
   }
