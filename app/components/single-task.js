@@ -97,7 +97,6 @@ export default class SingleTask extends Component {
 
   @action
   cancelEdit() {
-    this.editDescription = '';
     // wrapping this in a `next` to avoid double-updating `this.isEditing` twice
     // (e.g., when `updateTask` runs and sets `this.isEditing`, which then causes
     // the textarea to stop displaying and thus triggers the "focusout" event
