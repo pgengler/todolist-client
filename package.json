@@ -51,7 +51,7 @@
     "ember-cli-deploy-with-rsync": "^0.3.0",
     "ember-cli-deprecation-workflow": "^2.1.0",
     "ember-cli-flash": "^4.0.0",
-    "ember-cli-htmlbars": "^6.2.0",
+    "ember-cli-htmlbars": "^6.3.0",
     "ember-cli-inject-live-reload": "^2.1.0",
     "ember-cli-moment-shim": "^3.8.0",
     "ember-cli-sass": "^11.0.1",
