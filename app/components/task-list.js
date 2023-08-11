@@ -8,8 +8,8 @@ import TaskListHeaderComponent from 'ember-todo/components/task-list/header';
 
 function taskSort(a, b) {
   // unfinished tasks display above finished or pending
-  if (a.done === true && b.done === false) return -1;
-  if (a.done === false && b.done === true) return 1;
+  if (a.done === true && b.done === false) return 1;
+  if (a.done === false && b.done === true) return -1;
 
   // unfinished & finished tasks display above pending
   if (a.isNew === false && b.isNew === true) return -1;
@@ -35,7 +35,7 @@ export default class TaskList extends Component {
   }
 
   get sortedTasks() {
-    return Array.from(this.args.list.tasks).sort((a, b) => taskSort(a, b));
+    return Array.from(this.args.list.tasks).toSorted((a, b) => taskSort(a, b));
   }
 
   get unfinishedTasks() {
