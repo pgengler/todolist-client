@@ -1,12 +1,12 @@
 import { module, test } from 'qunit';
-import { click, fillIn, settled, visit } from '@ember/test-helpers';
+import { click, fillIn, settled, visit, waitFor } from '@ember/test-helpers';
 import { clickToEdit, doubleClickToEdit } from 'ember-todo/tests/helpers/click-to-edit';
 import dragAndDrop from 'ember-todo/tests/helpers/drag-and-drop';
 import fillInAndPressEnter from 'ember-todo/tests/helpers/fill-in-and-press-enter';
 import keyEvent from 'ember-todo/tests/helpers/key-event';
 import setupAcceptanceTest from 'ember-todo/tests/helpers/setup-acceptance-test';
 import { authenticateSession } from 'ember-simple-auth/test-support';
-import { Response } from 'ember-cli-mirage';
+import { Response } from 'miragejs';
 
 module('Acceptance | Tasks', function (hooks) {
   setupAcceptanceTest(hooks);
@@ -100,10 +100,14 @@ module('Acceptance | Tasks', function (hooks) {
     let task = this.server.create('task', 'withDayList');
 
     this.server.del('/tasks/:id', function ({ tasks }, request) {
+      try {
       let t = tasks.find(request.params.id);
       assert.step(`made request to DELETE task ${t.id}`);
       t.destroy();
       return new Response(204);
+    } catch (e) {
+      console.error(e);
+    }
     });
 
     await visit('/days');
@@ -195,7 +199,7 @@ module('Acceptance | Tasks', function (hooks) {
       let matchingTask = tasks.find(request.params.id);
       let attrs = this.normalizedRequestAttrs();
 
-      assert.step(`updated task ${task.id}, set description to ${attrs.description}`);
+      assert.step(`updated task ${task.id}, set description to "${attrs.description}"`);
 
       matchingTask.update(attrs);
       return matchingTask;
@@ -204,6 +208,7 @@ module('Acceptance | Tasks', function (hooks) {
     await visit('/days?date=2016-03-07');
     await clickToEdit('[data-test-task]');
     await fillInAndPressEnter('[data-test-task] textarea', 'New description');
+    assert.verifySteps([`updated task ${task.id}, set description to "New description"`]);
   });
 
   test('setting an empty description for a task deletes it', async function (assert) {
@@ -263,6 +268,7 @@ module('Acceptance | Tasks', function (hooks) {
     await visit('/days');
     fillInAndPressEnter('[data-test-new-task]', 'new thing');
 
+    await waitFor('[data-test-task]');
     assert.dom('[data-test-task]').exists({ count: 1 }, 'displays the new task');
     assert.dom('[data-test-task].pending').exists('new task gets the "pending" CSS class');
     assert.dom('[data-test-new-task]').hasValue('', '"new task" textarea is cleared');

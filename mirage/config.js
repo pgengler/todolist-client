@@ -1,12 +1,12 @@
-import { discoverEmberDataModels } from 'ember-cli-mirage';
+import { discoverEmberDataModels } from '@pgengler/ember-cli-mirage';
 import { createServer } from 'miragejs';
 import config from 'ember-todo/config/environment';
 import moment from 'moment';
 
-export default function (config) {
+export default function (config, owner) {
   let finalConfig = {
     ...config,
-    models: { ...discoverEmberDataModels(), ...config.models },
+    models: { ...discoverEmberDataModels(owner), ...config.models },
     routes,
   };
 
