@@ -105,6 +105,7 @@ module('Acceptance | Days', function (hooks) {
       name: '2023-01-01',
     });
     this.server.create('task', {
+      dueDate: '2023-01-01',
       list: oldList,
     });
 

@@ -6,10 +6,7 @@ import { isEmpty } from '@ember/utils';
 
 function taskDate(task) {
   if (!task) return null;
-  if (!task.list) return null;
-  if (task.list.listType !== 'day') return null;
-
-  return task.list.name;
+  return task.dueDate;
 }
 
 export default class TaskForm extends Component {

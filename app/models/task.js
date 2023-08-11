@@ -1,10 +1,11 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
 
 export default class Task extends Model {
-  @belongsTo('list', { async: false, inverse: 'tasks' }) list;
+  @belongsTo('list', { async: true, inverse: 'tasks' }) list;
 
   @attr('string') description;
   @attr('boolean') done;
+  @attr('string') dueDate;
   @attr('string') notes;
 
   get plaintextDescription() {
