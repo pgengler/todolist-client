@@ -100,14 +100,10 @@ module('Acceptance | Tasks', function (hooks) {
     let task = this.server.create('task', 'withDayList');
 
     this.server.del('/tasks/:id', function ({ tasks }, request) {
-      try {
       let t = tasks.find(request.params.id);
       assert.step(`made request to DELETE task ${t.id}`);
       t.destroy();
       return new Response(204);
-    } catch (e) {
-      console.error(e);
-    }
     });
 
     await visit('/days');
