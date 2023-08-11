@@ -38,8 +38,8 @@ module('Integration | Component | SingleTask', function (hooks) {
     await render(hbs`<SingleTask @task={{this.task}} />`);
 
     assert.dom('input[type=checkbox]').doesNotExist('does not show a checkbox');
-    assert.dom('.fa-exclamation-triangle').exists('shows the right icon');
-    assert.dom('.fa-exclamation-triangle').hasAttribute('title', 'Task failed to save');
+    assert.dom('.fa-triangle-exclamation').exists('shows the right icon');
+    assert.dom('.fa-triangle-exclamation').hasAttribute('title', 'Task failed to save');
     assert.dom('.task').hasClass('error', 'failed saves get the "error" class');
     assert.dom('.task').hasText('baz', 'displays task description');
   });
