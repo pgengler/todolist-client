@@ -47,6 +47,7 @@ function routes() {
     }
     return matchingLists;
   });
+  this.patch('/lists/:id');
 
   this.get('/tasks', function ({ tasks }, request) {
     let result = tasks.all();

@@ -12,12 +12,22 @@
         @editingEnd={{this.startPolling}}
       />
     {{/each}}
-    {{#each this.lists as |list|}}
+    {{#each this.expandedLists as |list|}}
       <TaskList
         @list={{list}}
         @editingStart={{this.stopPolling}}
         @editingEnd={{this.startPolling}}
+        class="list-expanded"
       />
     {{/each}}
+    {{#if this.collapsedLists}}
+      <div class="collapsed-lists">
+        <div class="container">
+          {{#each this.collapsedLists as |list|}}
+            <TaskList @list={{list}} class="list-collapsed" />
+          {{/each}}
+        </div>
+      </div>
+    {{/if}}
   {{/if}}
 </div>

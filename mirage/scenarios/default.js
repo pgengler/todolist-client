@@ -1,7 +1,13 @@
 export default function (server) {
-  let otherList = server.create('list', { name: 'Other', listType: 'list' });
+  let otherList = server.create('list', 'asExpanded', { name: 'Other', listType: 'list' });
   server.create('task', {
     list: otherList,
+  });
+  server.create('list', 'asCollapsed', {
+    name: 'Collapsed list',
+  });
+  server.create('list', 'asCollapsed', {
+    name: '2nd collapsed list',
   });
 
   server.create('task', 'withDayList', {
@@ -12,6 +18,7 @@ export default function (server) {
   let yesterdayList = server.create('list', 'yesterday');
   server.create('task', {
     list: yesterdayList,
+    dueDate: yesterdayList.name,
   });
 
   server.create('list', 'recurringDay', { name: 'Sunday' });

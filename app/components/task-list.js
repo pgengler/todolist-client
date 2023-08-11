@@ -26,8 +26,18 @@ export default class TaskList extends Component {
   @service flashMessages;
   @service store;
 
+  get canToggleExpanded() {
+    return this.args.list.listType === 'list';
+  }
+
   get headerComponent() {
     return this.args.headerComponent || TaskListHeaderComponent;
+  }
+
+  get isExpanded() {
+    let list = this.args.list;
+    if (this.canToggleExpanded && !list.expanded) return false;
+    return true;
   }
 
   get newTaskFieldId() {
@@ -118,5 +128,14 @@ export default class TaskList extends Component {
   @action
   focusNewTaskField() {
     document.getElementById(this.newTaskFieldId).focus();
+  }
+
+  @action
+  toggleExpanded() {
+    let list = this.args.list;
+    if (!this.canToggleExpanded) return;
+
+    list.expanded = !list.expanded;
+    list.save();
   }
 }

@@ -6,27 +6,42 @@
   {{on "drop" this.dropped}}
   ...attributes
 >
-  <this.headerComponent @list={{@list}} {{on "click" this.focusNewTaskField}} />
-  <ul>
-    {{#each this.sortedTasks as |task|}}
-      <SingleTask
-        @task={{task}}
-        @editingStart={{@editingStart}}
-        @editingEnd={{@editingEnd}}
-        {{draggable-task task}}
-        data-test-task
-      />
-    {{/each}}
+  <header>
+    <div>
+      <this.headerComponent @list={{@list}} {{on "click" this.focusNewTaskField}} />
+    </div>
 
-    <li class="task">
-      <ElasticTextarea
-        @onEscapePressed={{this.clearTextarea}}
-        @onEnterPressed={{this.addTask}}
-        class="new-task"
-        id={{this.newTaskFieldId}}
-        placeholder="Add new task"
-        data-test-new-task
-      />
-    </li>
-  </ul>
+    {{#if this.canToggleExpanded}}
+      <div>
+        <button type="button" class="expand-collapse-toggle" data-test-toggle-expanded {{on "click" this.toggleExpanded}}>
+          <FaIcon @icon={{if this.isExpanded "minus" "plus"}} />
+        </button>
+      </div>
+    {{/if}}
+  </header>
+
+  {{#if this.isExpanded}}
+    <ul>
+      {{#each this.sortedTasks as |task|}}
+        <SingleTask
+          @task={{task}}
+          @editingStart={{@editingStart}}
+          @editingEnd={{@editingEnd}}
+          {{draggable-task task}}
+          data-test-task
+        />
+      {{/each}}
+
+      <li class="task">
+        <ElasticTextarea
+          @onEscapePressed={{this.clearTextarea}}
+          @onEnterPressed={{this.addTask}}
+          class="new-task"
+          id={{this.newTaskFieldId}}
+          placeholder="Add new task"
+          data-test-new-task
+        />
+      </li>
+    </ul>
+  {{/if}}
 </div>

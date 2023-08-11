@@ -29,6 +29,14 @@ export default class DaysController extends Controller {
     return this.poller.lists;
   }
 
+  get collapsedLists() {
+    return this.lists.filter((list) => !list.expanded);
+  }
+
+  get expandedLists() {
+    return this.lists.filter((list) => list.expanded);
+  }
+
   @action
   changeDate(date) {
     let dateString = moment(date).format('YYYY-MM-DD');

@@ -6,6 +6,10 @@ export default Factory.extend({
     listType: 'day',
   }),
 
+  list: trait({
+    name: (i) => `List ${i}`,
+  }),
+
   recurringDay: trait({
     listType: 'recurring-task-day',
   }),
@@ -18,5 +22,17 @@ export default Factory.extend({
   yesterday: trait({
     listType: 'day',
     name: moment().subtract(1, 'day').format('YYYY-MM-DD'),
+  }),
+
+  asCollapsed: trait({
+    expanded: false,
+    listType: 'list',
+    name: (i) => `List ${i}`,
+  }),
+
+  asExpanded: trait({
+    expanded: true,
+    listType: 'list',
+    name: (i) => `List ${i}`,
   }),
 });

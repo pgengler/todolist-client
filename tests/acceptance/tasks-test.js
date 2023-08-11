@@ -32,8 +32,7 @@ module('Acceptance | Tasks', function (hooks) {
   });
 
   test('single-clicking a task enables quick-edit mode', async function (assert) {
-    let list = this.server.create('list', {
-      listType: 'list',
+    let list = this.server.create('list', 'asExpanded', {
       name: 'List',
     });
     this.server.create('task', {
@@ -278,7 +277,7 @@ module('Acceptance | Tasks', function (hooks) {
   });
 
   test('handles when adding a task fails', async function (assert) {
-    this.server.create('list', { listType: 'list', name: 'Other' });
+    this.server.create('list', 'asExpanded', { name: 'Other' });
 
     this.server.post('/tasks', function () {
       return new Response(

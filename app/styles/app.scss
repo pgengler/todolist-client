@@ -6,6 +6,7 @@ $body-background-color: #23A08D;
 
 @import "datepicker";
 @import "flash-messages";
+@import "lists";
 @import "task";
 
 * {
@@ -65,55 +66,6 @@ nav.top-nav {
 
   .user-actions {
     text-align: right;
-  }
-}
-
-.task-list {
-  background-color: #e3e3e3;
-  border-radius: 3px;
-  display: inline-block;
-  margin-right: .5em;
-  padding-top: 1em;
-  scroll-snap-align: start;
-  -webkit-scroll-snap-align: start;
-  vertical-align: top;
-  white-space: normal;
-  width: 22em;
-
-  &.active-drop-target {
-    box-shadow: 0px 0px 15px #333;
-  }
-
-  h1, h2 {
-    text-align: center;
-    margin: 0;
-  }
-
-  ul {
-    max-height: calc(100vh - 12em);
-    overflow-y: auto;
-    padding: .25em;
-  }
-
-  &.current {
-    background-color: #B2DFDA;
-  }
-
-  &.past {
-    li:not(.done) {
-      color: #bf4a40;
-      font-weight: bold;
-    }
-
-    &.has-unfinished-tasks {
-      h1, h2 {
-        color: #bf4a40;
-      }
-    }
-
-    &:not(.has-unfinished-tasks) {
-      opacity: 0.75;
-    }
   }
 }
 
