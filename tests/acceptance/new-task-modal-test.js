@@ -8,16 +8,13 @@ module('Acceptance | New Task modal', function (hooks) {
   hooks.beforeEach(() => authenticateSession());
 
   test('adding a new task', async function (assert) {
-    assert.expect(4);
-
     let list = this.server.create('list', 'day', {
       name: '2014-11-13',
     });
 
     this.server.post('/tasks', function ({ tasks }) {
       let attrs = this.normalizedRequestAttrs();
-      assert.strictEqual(attrs.listId, list.id, 'makes request with the correct list ID');
-      assert.strictEqual(attrs.description, 'Something', 'makes request with the entered description');
+      assert.step(`created new task with list ID ${attrs.listId} and description "${attrs.description}"`);
 
       return tasks.create(attrs);
     });
@@ -30,6 +27,7 @@ module('Acceptance | New Task modal', function (hooks) {
     await fillIn('[data-test-task-description]', 'Something');
     await fillIn('[data-test-task-date]', '2014-11-13');
     await click('[data-test-save-task]');
+    assert.verifySteps([`created new task with list ID ${list.id} and description "Something"`]);
 
     assert.dom('.new-task-dialog').doesNotExist('"new task" modal is no longer displayed after filling out the form');
   });

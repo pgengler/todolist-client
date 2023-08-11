@@ -22,9 +22,4 @@ export default class SingleLineTextarea extends Component {
       if (this.args.onEscapePressed) this.args.onEscapePressed();
     }
   }
-
-  @action
-  updateValue(textarea) {
-    textarea.value = this.args.value;
-  }
 }

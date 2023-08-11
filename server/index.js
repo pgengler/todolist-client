@@ -8,8 +8,8 @@
 // };
 
 module.exports = function (app) {
-  let globSync = require('glob').sync;
-  let proxies = globSync('./proxies/**/*.js', { cwd: __dirname }).map(require);
+  let { globSync } = require('glob');
+  let proxies = globSync('./proxies/**/*.js', { cwd: __dirname, dotRelative: true }).map(require);
 
   // Log proxy requests
   let morgan = require('morgan');

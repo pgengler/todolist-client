@@ -1,12 +1,12 @@
 import { module, test } from 'qunit';
-import { click, fillIn, visit } from '@ember/test-helpers';
+import { click, fillIn, settled, visit, waitFor } from '@ember/test-helpers';
 import { clickToEdit, doubleClickToEdit } from 'ember-todo/tests/helpers/click-to-edit';
 import dragAndDrop from 'ember-todo/tests/helpers/drag-and-drop';
 import fillInAndPressEnter from 'ember-todo/tests/helpers/fill-in-and-press-enter';
 import keyEvent from 'ember-todo/tests/helpers/key-event';
 import setupAcceptanceTest from 'ember-todo/tests/helpers/setup-acceptance-test';
 import { authenticateSession } from 'ember-simple-auth/test-support';
-import { Response } from 'ember-cli-mirage';
+import { Response } from 'miragejs';
 
 module('Acceptance | Tasks', function (hooks) {
   setupAcceptanceTest(hooks);
@@ -16,18 +16,17 @@ module('Acceptance | Tasks', function (hooks) {
     let list = this.server.create('list', 'day', {
       name: '2017-08-20',
     });
-    assert.expect(3);
 
-    this.server.post('/tasks', function ({ tasks }, request) {
-      let requestData = JSON.parse(request.requestBody).data;
-      assert.strictEqual(requestData.relationships.list.data.id, list.id, 'request includes correct list ID');
-      assert.strictEqual(requestData.attributes.description, 'A new task', 'request includes correct description');
+    this.server.post('/tasks', function ({ tasks }) {
+      const attrs = this.normalizedRequestAttrs();
+      assert.step(`created new task with list ID ${attrs.listId} and description "${attrs.description}"`);
 
       return tasks.create(this.normalizedRequestAttrs());
     });
 
     await visit('/days?date=2017-08-20');
     await fillInAndPressEnter('.task-list[data-test-list-name="2017-08-20"] [data-test-new-task]', 'A new task');
+    assert.verifySteps([`created new task with list ID ${list.id} and description "A new task"`]);
 
     assert.dom('[data-test-task]').hasText('A new task');
   });
@@ -124,8 +123,6 @@ module('Acceptance | Tasks', function (hooks) {
   });
 
   test('dragging a task to another day', async function (assert) {
-    assert.expect(3);
-
     let task = this.server.create('task');
     this.server.create('list', 'day', {
       name: '2016-03-07',
@@ -136,11 +133,12 @@ module('Acceptance | Tasks', function (hooks) {
     });
 
     this.server.patch('/tasks/:id', function ({ tasks }, request) {
-      let requestData = JSON.parse(request.requestBody).data;
-      assert.strictEqual(requestData.relationships.list.data.id, targetDay.id, 'makes PATCH request with new list ID');
-
       let task = tasks.find(request.params.id);
-      task.update(this.normalizedRequestAttrs());
+
+      const attrs = this.normalizedRequestAttrs();
+      assert.step(`updated task ${task.id}, set list ID to ${attrs.listId}`);
+
+      task.update(attrs);
       return task;
     });
 
@@ -148,8 +146,9 @@ module('Acceptance | Tasks', function (hooks) {
 
     await dragAndDrop(
       '.task-list[data-test-list-name="2016-03-07"] [data-test-task]',
-      '.task-list[data-test-list-name="2016-03-08"]'
+      '.task-list[data-test-list-name="2016-03-08"]',
     );
+    assert.verifySteps([`updated task ${task.id}, set list ID to ${targetDay.id}`]);
 
     assert
       .dom('.task-list[data-test-list-name="2016-03-07"] [data-test-task]')
@@ -160,8 +159,6 @@ module('Acceptance | Tasks', function (hooks) {
   });
 
   test('dragging and dropping a task with Control held copies a task', async function (assert) {
-    assert.expect(3);
-
     let task = this.server.create('task');
     this.server.create('list', 'day', {
       name: '2016-03-07',
@@ -171,29 +168,23 @@ module('Acceptance | Tasks', function (hooks) {
       name: '2016-03-08',
     });
 
-    this.server.post('/tasks', function ({ tasks }, request) {
-      let requestData = JSON.parse(request.requestBody).data;
-      assert.ok(true, 'makes POST request to create new task');
-      assert.strictEqual(
-        requestData.attributes.description,
-        task.description,
-        'creates new task with same description'
-      );
-      assert.strictEqual(requestData.relationships.list.data.id, targetDay.id, 'creates new task on the correct day');
+    this.server.post('/tasks', function ({ tasks }) {
+      let attrs = this.normalizedRequestAttrs();
+      assert.step(`created new task with list ID ${attrs.listId} and description "${attrs.description}"`);
 
-      return tasks.create(this.normalizedRequestAttrs());
+      return tasks.create(attrs);
     });
 
     await visit('/days?date=2016-03-07');
     await dragAndDrop(
       '.task-list[data-test-list-name="2016-03-07"] [data-test-task]',
       '.task-list[data-test-list-name="2016-03-08"]',
-      { ctrlKey: true }
+      { ctrlKey: true },
     );
+    assert.verifySteps([`created new task with list ID ${targetDay.id} and description "${task.description}"`]);
   });
 
   test('updating the description for a task', async function (assert) {
-    assert.expect(3);
     let task = this.server.create('task', { description: "I'm a task" });
     this.server.create('list', 'day', {
       name: '2016-03-07',
@@ -201,52 +192,46 @@ module('Acceptance | Tasks', function (hooks) {
     });
 
     this.server.patch('/tasks/:id', function ({ tasks }, request) {
-      let requestData = JSON.parse(request.requestBody).data;
-
-      assert.ok(true, 'makes a PATCH request');
-      assert.strictEqual(request.params.id, task.id, 'makes a PUT request for the correct task');
-      assert.strictEqual(
-        requestData.attributes.description,
-        'New description',
-        'sends the new description in the request'
-      );
-
       let matchingTask = tasks.find(request.params.id);
-      matchingTask.update(this.normalizedRequestAttrs());
+      let attrs = this.normalizedRequestAttrs();
+
+      assert.step(`updated task ${task.id}, set description to "${attrs.description}"`);
+
+      matchingTask.update(attrs);
       return matchingTask;
     });
 
     await visit('/days?date=2016-03-07');
     await clickToEdit('[data-test-task]');
     await fillInAndPressEnter('[data-test-task] textarea', 'New description');
+    assert.verifySteps([`updated task ${task.id}, set description to "New description"`]);
   });
 
   test('setting an empty description for a task deletes it', async function (assert) {
-    assert.expect(2);
     let task = this.server.create('task');
     this.server.create('list', 'day', {
       name: '2016-03-07',
       taskIds: [task.id],
     });
 
-    this.server.delete('/tasks/:id', function (db, request) {
-      assert.ok(true, 'makes a DELETE request');
-      assert.strictEqual(request.params.id, task.id, 'makes a DELETE request for the right ID');
+    this.server.delete('/tasks/:id', function (schema, request) {
+      assert.step(`deleted task ${request.params.id}`);
+      return new Response(204);
     });
 
     await visit('/days?date=2016-03-07');
     await clickToEdit('[data-test-task]');
     await fillInAndPressEnter('[data-test-task] textarea', '');
+    assert.verifySteps([`deleted task ${task.id}`]);
   });
 
   test('pressing Shift+Enter adds a newline to the new description when it is not empty', async function (assert) {
-    assert.expect(1);
-
     let task = this.server.create('task');
     this.server.create('list', 'today', { tasks: [task] });
 
-    this.server.delete('/tasks/:id', function () {
-      assert.ok(false, 'does not make a delete request');
+    this.server.delete('/tasks/:id', function (schema, request) {
+      assert.step(`deleted task ${request.params.id}`);
+      return new Response(204);
     });
 
     await visit('/days');
@@ -254,17 +239,16 @@ module('Acceptance | Tasks', function (hooks) {
     await keyEvent('[data-test-task] textarea', 'Enter', {
       shiftKey: true,
     });
+    assert.verifySteps([]);
     assert.dom('[data-test-task] textarea').exists('remains in edit mode');
   });
 
   test('pressing Shift+Enter deletes a task when its description is empty', async function (assert) {
-    assert.expect(2);
-
     let task = this.server.create('task');
     this.server.create('list', 'today', { tasks: [task] });
 
     this.server.delete('/tasks/:id', function ({ tasks }, request) {
-      assert.ok(true, 'makes a delete request');
+      assert.step(`deleted task ${request.params.id}`);
       tasks.find(request.params.id).destroy();
       return new Response(204);
     });
@@ -272,22 +256,20 @@ module('Acceptance | Tasks', function (hooks) {
     await visit('/days');
     await clickToEdit('[data-test-task]');
     await fillInAndPressEnter('[data-test-task] textarea', '');
+    assert.verifySteps([`deleted task ${task.id}`]);
     assert.dom('[data-test-task]').doesNotExist('task is removed');
   });
 
   test('newly-created-but-still-saving tasks appear in the "pending" state', async function (assert) {
-    assert.expect(5);
-
-    this.server.post('/tasks', function ({ tasks }) {
-      assert.dom('[data-test-task]').exists({ count: 1 }, 'displays the new task');
-      assert.dom('[data-test-task].pending').exists('new task gets the "pending" CSS class');
-      assert.dom('[data-test-new-task]').hasValue('', '"new task" textarea is cleared');
-
-      return tasks.create(this.normalizedRequestAttrs());
-    });
-
     await visit('/days');
-    await fillInAndPressEnter('[data-test-new-task]', 'new thing');
+    fillInAndPressEnter('[data-test-new-task]', 'new thing');
+
+    await waitFor('[data-test-task]');
+    assert.dom('[data-test-task]').exists({ count: 1 }, 'displays the new task');
+    assert.dom('[data-test-task].pending').exists('new task gets the "pending" CSS class');
+    assert.dom('[data-test-new-task]').hasValue('', '"new task" textarea is cleared');
+
+    await settled();
 
     assert.dom('[data-test-task]').exists({ count: 1 }, 'still only displays one item after save finishes');
     assert.dom('[data-test-task].pending').doesNotExist('"pending" CSS class is no longer applied');
@@ -307,7 +289,7 @@ module('Acceptance | Tasks', function (hooks) {
               detail: 'Something went wrong',
             },
           ],
-        }
+        },
       );
     });
     await visit('/days?date=2018-01-01');

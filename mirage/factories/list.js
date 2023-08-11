@@ -6,6 +6,10 @@ export default Factory.extend({
     listType: 'day',
   }),
 
+  recurringDay: trait({
+    listType: 'recurring-task-day',
+  }),
+
   today: trait({
     listType: 'day',
     name: moment().format('YYYY-MM-DD'),

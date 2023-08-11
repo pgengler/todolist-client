@@ -43,7 +43,7 @@ module('Acceptance | Days', function (hooks) {
     await visit('/days?date=2018-01-01');
 
     let displayedTasks = findAll(`[data-test-list-name="${list.name}"] [data-test-task]`).map((element) =>
-      element.textContent.trim()
+      element.textContent.trim(),
     );
     assert.deepEqual(displayedTasks, ['abc', 'mno', 'xyz'], 'tasks are displayed in alphabetical order');
 
@@ -51,7 +51,7 @@ module('Acceptance | Days', function (hooks) {
     await fillInAndPressEnter(`[data-test-list-name="${list.name}"] [data-test-task]:nth-of-type(2) textarea`, 'zzz');
 
     displayedTasks = findAll(`[data-test-list-name="${list.name}"] [data-test-task]`).map((element) =>
-      element.textContent.trim()
+      element.textContent.trim(),
     );
     assert.deepEqual(displayedTasks, ['abc', 'xyz', 'zzz'], 'after editing a task, alphabetical order is preserved');
   });

@@ -13,4 +13,12 @@ export default function (server) {
   server.create('task', {
     list: yesterdayList,
   });
+
+  server.create('list', 'recurringDay', { name: 'Sunday' });
+  server.create('list', 'recurringDay', { name: 'Monday' });
+  server.create('list', 'recurringDay', { name: 'Tuesday' });
+  server.create('list', 'recurringDay', { name: 'Wednesday' });
+  server.create('list', 'recurringDay', { name: 'Thursday' });
+  server.create('list', 'recurringDay', { name: 'Friday' });
+  server.create('list', 'recurringDay', { name: 'Saturday' });
 }

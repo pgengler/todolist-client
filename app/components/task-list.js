@@ -21,7 +21,6 @@ function taskSort(a, b) {
 
 export default class TaskList extends Component {
   @tracked dragClass = '';
-  @tracked newTaskDescription = '';
   taskSorting = ['plaintextDescription'];
 
   @service flashMessages;
@@ -96,7 +95,7 @@ export default class TaskList extends Component {
       list: this.args.list,
     });
 
-    this.newTaskDescription = '';
+    this.clearTextarea();
 
     // The "next()" call is necessary to be able to test the 'pending' state
     // for adding a task; without it, the test never gets into the pending state.'
@@ -113,7 +112,7 @@ export default class TaskList extends Component {
 
   @action
   clearTextarea() {
-    this.newTaskDescription = '';
+    document.getElementById(this.newTaskFieldId).value = '';
   }
 
   @action
