@@ -28,7 +28,7 @@
     "@ember/optional-features": "^2.0.0",
     "@ember/string": "^3.1.1",
     "@ember/test-helpers": "^3.1.0",
-    "@embroider/macros": "1.5.0",
+    "@embroider/macros": "1.13.1",
     "@fortawesome/ember-fontawesome": "^0.3.2",
     "@fortawesome/free-regular-svg-icons": "^5.15.3",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
@@ -101,7 +101,7 @@
     "edition": "octane"
   },
   "resolutions": {
-    "@embroider/macros": "1.5.0",
+    "@embroider/macros": "1.13.1",
     "ember-concurrency": "3.1.0"
   }
 }
