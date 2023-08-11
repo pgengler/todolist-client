@@ -13,7 +13,10 @@ export default Factory.extend({
         list = server.create('list', 'today');
       }
 
-      task.update({ list });
+      task.update({
+        list,
+        dueDate: list.name,
+      });
     },
   }),
 });

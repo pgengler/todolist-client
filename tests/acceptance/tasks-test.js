@@ -56,6 +56,7 @@ module('Acceptance | Tasks', function (hooks) {
     let list = this.server.create('list', 'today');
     this.server.create('task', {
       description: 'initial description',
+      dueDate: list.name,
       list,
     });
 
@@ -76,6 +77,7 @@ module('Acceptance | Tasks', function (hooks) {
     let list = this.server.create('list', 'today');
     let task = this.server.create('task', {
       description: 'initial description',
+      dueDate: list.name,
       list,
     });
 
