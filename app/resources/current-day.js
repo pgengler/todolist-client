@@ -1,4 +1,4 @@
-import { cell, resource, resourceFactory } from 'ember-resources';
+import { cell, resource } from 'ember-resources';
 import moment from 'moment';
 
 export const CurrentDay = resource(({ on }) => {
