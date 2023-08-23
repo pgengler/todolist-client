@@ -1,7 +1,11 @@
 import Component from '@glimmer/component';
 import moment from 'moment';
+import { use } from 'ember-resources';
+import { CurrentDay } from 'ember-todo/resources/current-day';
 
 export default class DayTasks extends Component {
+  @use today = CurrentDay;
+
   get date() {
     return moment(this.args.list.name);
   }
@@ -12,17 +16,14 @@ export default class DayTasks extends Component {
 
   get isPast() {
     let date = this.date;
-    let now = moment();
-    return date.isBefore(now, 'day') && !date.isSame(now, 'day');
+    return date.isBefore(this.today, 'day') && !date.isSame(this.today, 'day');
   }
 
   get isCurrent() {
-    let now = moment();
-    return this.date.isSame(now, 'day');
+    return this.date.isSame(this.today, 'day');
   }
 
   get isFuture() {
-    let now = moment();
-    return this.date.isAfter(now, 'day');
+    return this.date.isAfter(this.today, 'day');
   }
 }

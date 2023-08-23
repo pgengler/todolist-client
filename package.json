@@ -68,6 +68,7 @@
     "ember-power-calendar-moment": "^0.2.0",
     "ember-qunit": "^7.0.0",
     "ember-resolver": "^11.0.0",
+    "ember-resources": "^6.4.0",
     "ember-showdown": "^1.0.0-beta.1",
     "ember-simple-auth": "^6.0.0-beta.1",
     "ember-source": "~5.1.1",
