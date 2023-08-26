@@ -4,7 +4,7 @@ export default class Task extends Model {
   @belongsTo('list', { async: true, inverse: 'tasks' }) list;
 
   @attr('string') description;
-  @attr('boolean') done;
+  @attr('boolean', { defaultValue: false }) done;
   @attr('string') dueDate;
   @attr('string') notes;
 
