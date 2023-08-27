@@ -61,6 +61,18 @@ function routes() {
       });
     }
 
+    if (request.queryParams['filter[due_before]']) {
+      const date = moment(request.queryParams['filter[due_before]']);
+      result = result.filter((task) => {
+        if (task.done) return false;
+        const list = task.list;
+        if (!list) return false;
+        if (list.listType !== 'day') return false;
+        let listDate = moment(list.name).endOf('day');
+        return date.isAfter(listDate);
+      });
+    }
+
     let sort = request.queryParams['sort'];
     if (sort === 'due-date,description') {
       result = result.sort((a, b) => {
