@@ -2,6 +2,7 @@ import Service, { service } from '@ember/service';
 import { all, didCancel, restartableTask, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 import { isTesting, macroCondition } from '@embroider/macros';
+import moment from 'moment';
 
 export default class PollerService extends Service {
   @service flashMessages;
@@ -66,7 +67,7 @@ export default class PollerService extends Service {
 
   async loadOverdueTasks() {
     this.overdueTasks = await this.store.query('task', {
-      filter: { overdue: true },
+      filter: { due_before: moment().format('YYYY-MM-DD') },
       sort: 'due-date,plaintext-description',
     });
   }

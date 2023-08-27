@@ -6,6 +6,7 @@ import setupAcceptanceTest from 'ember-todo/tests/helpers/setup-acceptance-test'
 import { calendarSelect } from 'ember-power-calendar/test-support';
 import { authenticateSession } from 'ember-simple-auth/test-support';
 import { Collection } from 'miragejs';
+import moment from 'moment';
 
 module('Acceptance | Days', function (hooks) {
   setupAcceptanceTest(hooks);
@@ -71,8 +72,10 @@ module('Acceptance | Days', function (hooks) {
 
   test('fetches and displays a list of overdue tasks when viewing current day (no date param)', async function (assert) {
     this.server.get('/tasks', function ({ tasks }, request) {
-      if (request.queryParams['filter[overdue]']) {
-        assert.step('fetched list of overdue tasks from server');
+      if (request.queryParams['filter[due_before]']) {
+        assert.step(
+          `fetched list of overdue tasks from server, due_before=${request.queryParams['filter[due_before]']}`,
+        );
       }
       return tasks.all();
     });
@@ -80,15 +83,18 @@ module('Acceptance | Days', function (hooks) {
     this.server.createList('task', 3);
 
     await visit('/days');
-    assert.verifySteps(['fetched list of overdue tasks from server']);
+    const today = moment().format('YYYY-MM-DD');
+    assert.verifySteps([`fetched list of overdue tasks from server, due_before=${today}`]);
     assert.dom('[data-test-list-overdue]').exists('displays list for overdue tasks');
     assert.dom('[data-test-list-overdue] [data-test-task]').exists({ count: 3 });
   });
 
   test('if no overdue tasks are returned, does not display "Overdue" list', async function (assert) {
     this.server.get('/tasks', ({ tasks }, request) => {
-      if (request.queryParams['filter[overdue]']) {
-        assert.step('fetched list of overdue tasks from server');
+      if (request.queryParams['filter[due_before]']) {
+        assert.step(
+          `fetched list of overdue tasks from server, due_before=${request.queryParams['filter[due_before]']}`,
+        );
         return new Collection('tasks', []);
       }
       return tasks.all();
@@ -96,7 +102,8 @@ module('Acceptance | Days', function (hooks) {
 
     this.server.createList('task', 12);
     await visit('/days');
-    assert.verifySteps(['fetched list of overdue tasks from server']);
+    const today = moment().format('YYYY-MM-DD');
+    assert.verifySteps([`fetched list of overdue tasks from server, due_before=${today}`]);
     assert.dom('[data-test-list-overdue]').doesNotExist('"Overdue" list is not displayed');
   });
 
