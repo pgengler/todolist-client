@@ -22,8 +22,7 @@ export default class SelectedDateService extends Service {
   }
 
   get dates() {
-    let date = this.date || moment();
-    return [moment(date).subtract(1, 'day'), date, ...[1, 2, 3].map((val) => moment(date).add(val, 'days'))];
+    return [moment(this.date).subtract(1, 'day'), this.date, ...[1, 2, 3].map((val) => moment(this.date).add(val, 'days'))];
   }
 
   get startDate() {
