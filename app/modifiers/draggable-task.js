@@ -10,10 +10,11 @@ export default modifier(function draggableTask(element, [task], { onDragStart, o
     dragging = true;
     onDragStart?.(task);
   };
-  let dragEndHandler = function (event) {
+  let dragEndHandler = function (/* event */) {
     dragging = false;
     onDragEnd?.(task);
-  }
+  };
+
   element.addEventListener('dragstart', dragStartHandler);
   element.addEventListener('dragend', dragEndHandler);
 
