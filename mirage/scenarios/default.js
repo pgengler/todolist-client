@@ -12,6 +12,7 @@ export default function (server) {
   let yesterdayList = server.create('list', 'yesterday');
   server.create('task', {
     list: yesterdayList,
+    dueDate: yesterdayList.name,
   });
 
   server.create('list', 'recurringDay', { name: 'Sunday' });

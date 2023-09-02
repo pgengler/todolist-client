@@ -1,8 +1,10 @@
 import Service, { service } from '@ember/service';
-import { all, didCancel, restartableTask, timeout } from 'ember-concurrency';
+import { all, didCancel, dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 import { isTesting, macroCondition } from '@embroider/macros';
 import moment from 'moment';
+import { use } from 'ember-resources';
+import { CurrentDay } from 'ember-todo/resources/current-day';
 
 export default class PollerService extends Service {
   @service flashMessages;
@@ -11,9 +13,10 @@ export default class PollerService extends Service {
 
   @tracked days;
   @tracked lists;
-  @tracked overdueTasks = [];
 
   @tracked loaded = false;
+
+  @use today = CurrentDay;
 
   async start() {
     try {
@@ -30,9 +33,7 @@ export default class PollerService extends Service {
   pollForChanges = restartableTask(async () => {
     let loadingPromises = [this.loadDayLists(), this.loadOtherLists()];
     if (this.#loadOverdueTasks) {
-      loadingPromises.push(this.loadOverdueTasks());
-    } else {
-      this.overdueTasks = [];
+      loadingPromises.push(this.loadOverdueTasks.perform());
     }
     await all(loadingPromises);
     this.loaded = true;
@@ -65,11 +66,17 @@ export default class PollerService extends Service {
     });
   }
 
-  async loadOverdueTasks() {
-    this.overdueTasks = await this.store.query('task', {
+  loadOverdueTasks = dropTask(async () => {
+    if (!this.#loadOverdueTasks) return [];
+    return await this.store.query('task', {
       filter: { due_before: moment().format('YYYY-MM-DD') },
       sort: 'due-date,plaintext-description',
     });
+  });
+
+  get overdueTasks() {
+    let tasks = this.loadOverdueTasks.lastSuccessful?.value ?? [];
+    return tasks.filter((task) => moment(task.dueDate).endOf('day').isBefore(this.today.startOf('day')));
   }
 
   get #loadOverdueTasks() {

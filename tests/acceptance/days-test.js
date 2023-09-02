@@ -80,7 +80,7 @@ module('Acceptance | Days', function (hooks) {
       return tasks.all();
     });
 
-    this.server.createList('task', 3);
+    this.server.createList('task', 3, { dueDate: '2023-01-01' });
 
     await visit('/days');
     const today = moment().format('YYYY-MM-DD');
@@ -137,7 +137,7 @@ module('Acceptance | Days', function (hooks) {
 
   test('"Overdue" section is hidden when switching to a specific date', async function (assert) {
     const yesterday = this.server.create('list', 'yesterday');
-    this.server.createList('task', 3, { list: yesterday });
+    this.server.createList('task', 3, { list: yesterday, dueDate: yesterday.name });
     await visit('/days');
     assert.dom('[data-test-list-overdue]').exists();
 

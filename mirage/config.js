@@ -95,9 +95,22 @@ function routes() {
 
     return result;
   });
-  this.post('/tasks');
+  this.post('/tasks', function ({ tasks }) {
+    let task = tasks.create(this.normalizedRequestAttrs());
+    if (task.list.listType === 'day') {
+      task.update({ dueDate: task.list.name });
+    }
+    return task;
+  });
 
   this.get('/tasks/:id');
-  this.patch('/tasks/:id');
+  this.patch('/tasks/:id', function ({ tasks }, request) {
+    let task = tasks.find(request.params.id);
+    task.update(this.normalizedRequestAttrs());
+    if (task.list.listType === 'day') {
+      task.update({ dueDate: task.list.name });
+    }
+    return task;
+  });
   this.del('/tasks/:id');
 }
