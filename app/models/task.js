@@ -1,7 +1,7 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
 
 export default class Task extends Model {
-  @belongsTo('list', { async: true, inverse: 'tasks' }) list;
+  @belongsTo('list', { async: false, inverse: 'tasks' }) list;
 
   @attr('string') description;
   @attr('boolean', { defaultValue: false }) done;

@@ -70,6 +70,7 @@ export default class PollerService extends Service {
     if (!this.#loadOverdueTasks) return [];
     return await this.store.query('task', {
       filter: { due_before: moment().format('YYYY-MM-DD') },
+      include: 'list',
       sort: 'due-date,plaintext-description',
     });
   });
