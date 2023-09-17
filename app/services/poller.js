@@ -35,8 +35,12 @@ export default class PollerService extends Service {
     if (this.#loadOverdueTasks) {
       loadingPromises.push(this.loadOverdueTasks.perform());
     }
-    await all(loadingPromises);
-    this.loaded = true;
+    try {
+      await all(loadingPromises);
+      this.loaded = true;
+    } catch (e) {
+      console.warn(e); // eslint-disable no-console
+    }
 
     if (macroCondition(isTesting())) {
       return;
