@@ -21,4 +21,12 @@ export default class ApplicationAdapter extends JSONAPIAdapter {
     }
     return super.handleResponse(...arguments);
   }
+
+  shouldBackgroundReloadRecord() {
+    return false;
+  }
+
+  shouldBackgroundReloadAll() {
+    return false;
+  }
 }
