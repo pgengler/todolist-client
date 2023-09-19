@@ -79,9 +79,10 @@ export default class TaskList extends Component {
     }
   }
 
-  moveTaskToList(task) {
+  async moveTaskToList(task) {
     task.list = this.args.list;
-    task.save();
+    await task.save();
+    this.args.editingEnd?.();
   }
 
   @action
