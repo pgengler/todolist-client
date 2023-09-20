@@ -122,7 +122,7 @@ nav.top-nav {
 .days, .recurring-task-days {
   display: flex;
   align-items: flex-start;
-  height: calc(100vh - 5em);
+  height: calc(100vh - 4em);
   -webkit-overflow-scrolling: touch;
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
