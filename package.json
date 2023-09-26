@@ -81,7 +81,7 @@
     "eslint-plugin-n": "^16.1.0",
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-qunit": "^8.0.0",
-    "glob": "^10.3.3",
+    "glob": "^10.3.9",
     "http-proxy": "^1.18.1",
     "loader.js": "^4.7.0",
     "miragejs": "^0.1.47",
