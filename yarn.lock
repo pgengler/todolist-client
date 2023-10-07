@@ -1278,7 +1278,7 @@
     ember-cli-babel "^7.26.11"
     ember-cli-htmlbars "^6.2.0"
 
-"@ember/test-waiters@^3", "@ember/test-waiters@^3.0.0", "@ember/test-waiters@^3.0.2":
+"@ember/test-waiters@^3.0.0", "@ember/test-waiters@^3.0.2":
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/@ember/test-waiters/-/test-waiters-3.0.2.tgz#5b950c580a1891ed1d4ee64f9c6bacf49a15ea6f"
   integrity sha512-H8Q3Xy9rlqhDKnQpwt2pzAYDouww4TZIGSI1pZJhM7mQIGufQKuB0ijzn/yugA6Z+bNdjYp1HioP8Y4hn2zazQ==
@@ -4895,7 +4895,7 @@ ember-async-data@^1.0.1:
     "@ember/test-waiters" "^3.0.0"
     "@embroider/addon-shim" "^1.8.5"
 
-ember-auto-import@^2.3.0, ember-auto-import@^2.4.1, ember-auto-import@^2.6.0, ember-auto-import@^2.6.3:
+ember-auto-import@^2.3.0, ember-auto-import@^2.4.1, ember-auto-import@^2.4.2, ember-auto-import@^2.6.0, ember-auto-import@^2.6.3:
   version "2.6.3"
   resolved "https://registry.yarnpkg.com/ember-auto-import/-/ember-auto-import-2.6.3.tgz#f18d1b93dd10b08ba5496518436f9d56dd4e000a"
   integrity sha512-uLhrRDJYWCRvQ4JQ1e64XlSrqAKSd6PXaJ9ZsZI6Tlms9T4DtQFxNXasqji2ZRJBVrxEoLCRYX3RTldsQ0vNGQ==
@@ -4967,7 +4967,7 @@ ember-cli-babel-plugin-helpers@^1.0.0, ember-cli-babel-plugin-helpers@^1.1.1:
   resolved "https://registry.yarnpkg.com/ember-cli-babel-plugin-helpers/-/ember-cli-babel-plugin-helpers-1.1.1.tgz#5016b80cdef37036c4282eef2d863e1d73576879"
   integrity sha512-sKvOiPNHr5F/60NLd7SFzMpYPte/nnGkq/tMIfXejfKHIhaiIkYFqX8Z9UFTKWLLn+V7NOaby6niNPZUdvKCRw==
 
-ember-cli-babel@^7.1.2, ember-cli-babel@^7.10.0, ember-cli-babel@^7.13.0, ember-cli-babel@^7.22.1, ember-cli-babel@^7.23.0, ember-cli-babel@^7.23.1, ember-cli-babel@^7.26.0, ember-cli-babel@^7.26.11, ember-cli-babel@^7.26.3, ember-cli-babel@^7.26.4, ember-cli-babel@^7.26.5, ember-cli-babel@^7.26.6, ember-cli-babel@^7.7.3:
+ember-cli-babel@^7.1.2, ember-cli-babel@^7.10.0, ember-cli-babel@^7.13.0, ember-cli-babel@^7.20.5, ember-cli-babel@^7.22.1, ember-cli-babel@^7.23.0, ember-cli-babel@^7.23.1, ember-cli-babel@^7.26.0, ember-cli-babel@^7.26.11, ember-cli-babel@^7.26.3, ember-cli-babel@^7.26.4, ember-cli-babel@^7.26.5, ember-cli-babel@^7.26.6, ember-cli-babel@^7.7.3:
   version "7.26.11"
   resolved "https://registry.yarnpkg.com/ember-cli-babel/-/ember-cli-babel-7.26.11.tgz#50da0fe4dcd99aada499843940fec75076249a9f"
   integrity sha512-JJYeYjiz/JTn34q7F5DSOjkkZqy8qwFOOxXfE6pe9yEJqWGu4qErKxlz8I22JoVEQ/aBUO+OcKTpmctvykM9YA==
@@ -5742,14 +5742,13 @@ ember-showdown@^1.0.0-beta.1:
     semver "^5.5.0"
     showdown "^1.8.6"
 
-ember-simple-auth@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/ember-simple-auth/-/ember-simple-auth-6.0.0.tgz#7c3e4d0885de3f58c0568056eba03a6434f34084"
-  integrity sha512-9SzSFApxZ74CD4UxIeTV+poIPeXcRLXWM60cMvC1SwTYjoc/p9DeQF0pVm6m1XV6uA3kPUzEsEn4/GeHc2YX1w==
+ember-simple-auth@6.0.0-rc.1:
+  version "6.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/ember-simple-auth/-/ember-simple-auth-6.0.0-rc.1.tgz#fc34fba992ed3f1436468f9aa78d83838db76de5"
+  integrity sha512-s5ts3Fl4fmsWXBQCcw8R58iwhWMejQo1Hk7Dxp9eN2V2dwtkXKUoFCtPwzgaaX+esjAouQ/q8LS5eWjpiIX4OA==
   dependencies:
-    "@ember/test-waiters" "^3"
-    "@embroider/addon-shim" "^1.0.0"
-    "@embroider/macros" "^1.0.0"
+    ember-auto-import "^2.4.2"
+    ember-cli-babel "^7.20.5"
     ember-cli-is-package-missing "^1.0.0"
     ember-cookies "^1.0.0"
     silent-error "^1.0.0"
