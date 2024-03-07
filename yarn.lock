@@ -1606,7 +1606,7 @@
     broccoli-funnel "^3.0.8"
     semver "^7.3.8"
 
-"@embroider/macros@1.13.1", "@embroider/macros@^0.50.0 || ^1.0.0", "@embroider/macros@^1.0.0", "@embroider/macros@^1.10.0", "@embroider/macros@^1.12.3", "@embroider/macros@^1.13.0", "@embroider/macros@^1.13.1", "@embroider/macros@^1.13.2", "@embroider/macros@^1.13.5", "@embroider/macros@^1.8.3":
+"@embroider/macros@1.13.1", "@embroider/macros@^0.50.0 || ^1.0.0", "@embroider/macros@^1.0.0", "@embroider/macros@^1.10.0", "@embroider/macros@^1.12.3", "@embroider/macros@^1.13.0", "@embroider/macros@^1.13.1", "@embroider/macros@^1.13.2", "@embroider/macros@^1.13.4", "@embroider/macros@^1.13.5", "@embroider/macros@^1.8.3":
   version "1.13.1"
   resolved "https://registry.yarnpkg.com/@embroider/macros/-/macros-1.13.1.tgz#aee17e5af0e0086bd36873bdb4e49ea346bab3fa"
   integrity sha512-4htraP/rNIht8uCxXoc59Bw2EsBFfc4YUQD9XSpzJ4xUr1V0GQf9wL/noeSuYSxIhwRfZOErnJhsdyf1hH+I/A==
@@ -6016,6 +6016,22 @@ ember-cli-typescript@^4.1.0:
     stagehand "^1.0.0"
     walk-sync "^2.2.0"
 
+ember-cli-typescript@^5.0.0:
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-typescript/-/ember-cli-typescript-5.3.0.tgz#c0f726c61e4309aa9ff49b388219c6729ea986cd"
+  integrity sha512-gFA+ZwmsvvFwo2Jz/B9GMduEn+fPoGb69qWGP0Tp3+Tu5xypDtIKVSZ5086I3Cr19cLXD4HkrOR3YQvdUKzAkQ==
+  dependencies:
+    ansi-to-html "^0.6.15"
+    broccoli-stew "^3.0.0"
+    debug "^4.0.0"
+    execa "^4.0.0"
+    fs-extra "^9.0.1"
+    resolve "^1.5.0"
+    rsvp "^4.8.1"
+    semver "^7.3.2"
+    stagehand "^1.0.0"
+    walk-sync "^2.2.0"
+
 ember-cli-version-checker@^2.1.0, ember-cli-version-checker@^2.1.2:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/ember-cli-version-checker/-/ember-cli-version-checker-2.2.0.tgz#47771b731fe0962705e27c8199a9e3825709f3b3"
@@ -6196,10 +6212,10 @@ ember-data@~5.3.3:
     typescript "^5.3.3"
     webpack "^5.89.0"
 
-ember-element-helper@^0.8.2:
-  version "0.8.4"
-  resolved "https://registry.yarnpkg.com/ember-element-helper/-/ember-element-helper-0.8.4.tgz#578fbacbe5af4fa7f14a977674154a8afd001631"
-  integrity sha512-zwCRNgCuTr+bSGtGh1eWHlNZuhJQuREeQmmv7pfTTAFICAzAOO7p7sCVIITcn0l9cUM2KW5uQY2FK4967bYMdw==
+ember-element-helper@^0.8.4:
+  version "0.8.5"
+  resolved "https://registry.yarnpkg.com/ember-element-helper/-/ember-element-helper-0.8.5.tgz#5a53d4e3aa8379694c2002a3097269aeb7c2621b"
+  integrity sha512-yZYzuasn6ZC8Nwv0MpaLYGtm68ZxIBSNSe/CYxNWkDdgcuAb2lAG1gx37XkwBIiwPQET0W2agwq7++/HwdMF8g==
   dependencies:
     "@embroider/addon-shim" "1.8.3"
     "@embroider/util" "^1.0.0"
@@ -6235,6 +6251,15 @@ ember-fetch@^8.1.2:
     ember-cli-version-checker "^5.1.2"
     node-fetch "^2.6.1"
     whatwg-fetch "^3.6.2"
+
+ember-functions-as-helper-polyfill@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/ember-functions-as-helper-polyfill/-/ember-functions-as-helper-polyfill-2.1.2.tgz#5f7a7c7f87b87d4df785c53d1ee0810693c89b6b"
+  integrity sha512-yvW6xykvZEIYzzwlrC/g9yu6LtLkkj5F+ho6U+BDxN1uREMgoMOZnji7sSILn5ITVpaJ055DPcO+utEFD7IZOA==
+  dependencies:
+    ember-cli-babel "^7.26.11"
+    ember-cli-typescript "^5.0.0"
+    ember-cli-version-checker "^5.1.2"
 
 ember-get-config@, "ember-get-config@0.2.4 - 0.5.0 || ^1.0.0 || ^2.1.1", ember-get-config@^2.0.0:
   version "2.1.1"
@@ -6299,20 +6324,19 @@ ember-page-title@^8.2.2:
     "@embroider/addon-shim" "^1.8.7"
     "@simple-dom/document" "^1.4.0"
 
-ember-power-calendar-moment@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/ember-power-calendar-moment/-/ember-power-calendar-moment-0.3.0.tgz#09800306b1953b1a4e45bb7c70cf7a55ff200d88"
-  integrity sha512-QIPhvVtoT398KDkT8zaKzjg6ugSvlnffGtldwUMmz5bjg6hHj63E5skpCfzsSoWhYlNt3g1zgmVNDyt2x6llLw==
+ember-power-calendar-moment@^0.6.1:
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/ember-power-calendar-moment/-/ember-power-calendar-moment-0.6.1.tgz#b745bad675cf731e77a002e93db5c34877ce889a"
+  integrity sha512-v1mkI2bkqRPQfCL3XZHLFwzSaIV6G7fInBNlbZnWgwyKUUs1axPTb7WnunYzmB1N0bZMx9OByd8WFFl/0P0klQ==
   dependencies:
-    "@embroider/macros" "^1.13.1"
-    ember-auto-import "^2.6.3"
-    ember-cli-babel "^7.26.11"
-    ember-cli-htmlbars "^6.2.0"
+    "@embroider/addon-shim" "^1.8.7"
+    "@embroider/macros" "^1.13.4"
+    decorator-transforms "^1.0.1"
 
-ember-power-calendar@^0.20.2:
-  version "0.20.2"
-  resolved "https://registry.yarnpkg.com/ember-power-calendar/-/ember-power-calendar-0.20.2.tgz#3095d03af06abde3aaa4ef97317e3368d8cfaa2a"
-  integrity sha512-R+gC7xwsX8egLk+j0pufLcUuO0xlKtBhDOar04C5cU9fu4LzT2au5hr178MK3BT8dIENDZUAPcZqglmTPs2CZw==
+ember-power-calendar@^0.21.0:
+  version "0.21.0"
+  resolved "https://registry.yarnpkg.com/ember-power-calendar/-/ember-power-calendar-0.21.0.tgz#9d5d3e2ed9643dcec69959c5d6a41bee18054ced"
+  integrity sha512-vrMgArTuU5pg/WO2zkuyzd/ROHOhq2gobKG41GkT5DkveRBSD71NOUHC2Y69ZEg8fTBuXceFWidCfoduUM9kFA==
   dependencies:
     "@ember/render-modifiers" "^2.1.0"
     "@embroider/macros" "^1.13.1"
@@ -6321,8 +6345,8 @@ ember-power-calendar@^0.20.2:
     ember-cli-babel "^7.26.11"
     ember-cli-htmlbars "^6.2.0"
     ember-concurrency "^3.1.0"
-    ember-element-helper "^0.8.2"
-    ember-truth-helpers "^3.1.0"
+    ember-element-helper "^0.8.4"
+    ember-truth-helpers "^3.1.0 || ^4.0.0"
 
 ember-qunit@^8.0.2:
   version "8.0.2"
@@ -6525,12 +6549,13 @@ ember-tracked-storage-polyfill@^1.0.0:
     ember-cli-babel "^7.26.3"
     ember-cli-htmlbars "^5.7.1"
 
-ember-truth-helpers@^3.1.0:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/ember-truth-helpers/-/ember-truth-helpers-3.1.1.tgz#434715926d72bcc63b8a115dec09745fda4474dc"
-  integrity sha512-FHwJAx77aA5q27EhdaaiBFuy9No+8yaWNT5A7zs0sIFCmf14GbcLn69vJEp6mW7vkITezizGAWhw7gL0Wbk7DA==
+"ember-truth-helpers@^3.1.0 || ^4.0.0":
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/ember-truth-helpers/-/ember-truth-helpers-4.0.3.tgz#02705dc36f2d68f1d4cff0d8226396c8ae5dee2e"
+  integrity sha512-T6Ogd3pk9FxYiZfSxdjgn3Hb3Ksqgw7CD23V9qfig9jktNdkNEHo4+3PA3cSD/+3a2kdH3KmNvKyarVuzdtEkA==
   dependencies:
-    ember-cli-babel "^7.22.1"
+    "@embroider/addon-shim" "^1.8.6"
+    ember-functions-as-helper-polyfill "^2.1.2"
 
 emoji-regex@^7.0.1:
   version "7.0.3"
