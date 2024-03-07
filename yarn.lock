@@ -1597,7 +1597,7 @@
     broccoli-funnel "^3.0.8"
     semver "^7.3.8"
 
-"@embroider/addon-shim@^1.8.7":
+"@embroider/addon-shim@^1.6.0", "@embroider/addon-shim@^1.8.7":
   version "1.8.7"
   resolved "https://registry.yarnpkg.com/@embroider/addon-shim/-/addon-shim-1.8.7.tgz#ba2dcb0647ed2cb0c500c835326266b89ceec595"
   integrity sha512-JGOQNRj3UR0NdWEg8MsM2eqPLncEwSB1IX+rwntIj22TEKj8biqx7GDgSbeH+ZedijmCh354Hf2c5rthrdzUAw==
@@ -6255,6 +6255,13 @@ ember-get-config@, "ember-get-config@0.2.4 - 0.5.0 || ^1.0.0 || ^2.1.1", ember-g
   integrity sha512-+oRstEa52mm0jAFzhr51/xtEWpCEykB3SEBr7vUg8YnXUZJ5hKNBppP938q8Zzr9XfJEbzrtDSGjhKwJCJv6FQ==
   dependencies:
     ember-cli-babel "^7.26.5"
+
+ember-lifeline@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/ember-lifeline/-/ember-lifeline-7.0.0.tgz#46780c8f832b6c784ee4681b938a1e1437bfa676"
+  integrity sha512-2l51NzgH5vjN972zgbs+32rnXnnEFKB7qsSpJF+lBI4V5TG6DMy4SfowC72ZEuAtS58OVfwITbOO+RnM21EdpA==
+  dependencies:
+    "@embroider/addon-shim" "^1.6.0"
 
 ember-load-initializers@^2.1.2:
   version "2.1.2"

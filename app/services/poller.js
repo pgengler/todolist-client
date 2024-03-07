@@ -1,5 +1,5 @@
 import Service, { service } from '@ember/service';
-import { all, didCancel, dropTask, restartableTask, timeout } from 'ember-concurrency';
+import { didCancel, dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 import { isTesting, macroCondition } from '@embroider/macros';
 import moment from 'moment';
@@ -36,7 +36,7 @@ export default class PollerService extends Service {
       loadingPromises.push(this.loadOverdueTasks.perform());
     }
     try {
-      await all(loadingPromises);
+      await Promise.all(loadingPromises);
       this.loaded = true;
     } catch (e) {
       console.warn(e); // eslint-disable no-console
@@ -57,7 +57,7 @@ export default class PollerService extends Service {
         date: this.selectedDate.dates.map((date) => date.format('YYYY-MM-DD')),
       },
     });
-    this.days = Array.from(days);
+    this.days = days.slice();
   }
 
   async loadOtherLists() {
