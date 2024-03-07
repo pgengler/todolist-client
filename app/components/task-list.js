@@ -1,9 +1,9 @@
 import { action } from '@ember/object';
-import { next } from '@ember/runloop';
 import { service } from '@ember/service';
 import { compare } from '@ember/utils';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
+import { runTask } from 'ember-lifeline';
 import TaskListHeaderComponent from 'ember-todo/components/task-list/header';
 
 function taskSort(a, b) {
@@ -101,7 +101,7 @@ export default class TaskList extends Component {
     // The "next()" call is necessary to be able to test the 'pending' state
     // for adding a task; without it, the test never gets into the pending state.'
     // The actual application works with or without the "next()" call.
-    next(async () => {
+    runTask(this, async () => {
       try {
         await task.save();
         document.getElementById(this.newTaskFieldId).scrollIntoView();

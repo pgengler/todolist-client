@@ -1,9 +1,9 @@
 import { isEmpty } from '@ember/utils';
 import { action } from '@ember/object';
-import { next } from '@ember/runloop';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { dropTask, timeout } from 'ember-concurrency';
+import { runTask } from 'ember-lifeline';
 
 export default class SingleTask extends Component {
   @tracked editType = null;
@@ -97,11 +97,11 @@ export default class SingleTask extends Component {
 
   @action
   cancelEdit() {
-    // wrapping this in a `next` to avoid double-updating `this.isEditing` twice
+    // wrapping this in a `runTask` to avoid double-updating `this.isEditing` twice
     // (e.g., when `updateTask` runs and sets `this.isEditing`, which then causes
     // the textarea to stop displaying and thus triggers the "focusout" event
     // that causes this method to run.)
-    next(() => (this.editType = false));
+    runTask(this, () => (this.editType = false));
 
     this.args.editingEnd?.();
   }
