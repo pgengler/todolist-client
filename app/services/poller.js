@@ -7,7 +7,6 @@ import { use } from 'ember-resources';
 import { CurrentDay } from 'ember-todo/resources/current-day';
 
 export default class PollerService extends Service {
-  @service flashMessages;
   @service selectedDate;
   @service store;
 

@@ -4,7 +4,6 @@ import { service } from '@ember/service';
 import moment from 'moment';
 
 export default class DaysRoute extends Route {
-  @service flashMessages;
   @service poller;
   @service selectedDate;
   @service session;

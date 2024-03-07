@@ -10,7 +10,7 @@
     <DatePickerIcon @dateSelected={{@changeDate}} @dateRange={{@selectedDate.dateRange}} data-test-change-date />
   </div>
   <div class="flash-messages">
-    {{#each @flashMessages.queue as |flash|}}
+    {{#each this.flashMessages.queue as |flash|}}
       <FlashMessage @flash={{flash}} />
     {{/each}}
   </div>

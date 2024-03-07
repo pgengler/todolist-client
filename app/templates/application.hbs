@@ -1,7 +1,6 @@
 <div class="page-wrapper">
   {{#if this.session.isAuthenticated}}
     <TopNav
-      @flashMessages={{this.flashMessages}}
       @selectedDate={{this.selectedDate}}
       @changeDate={{this.changeDate}}
       @logout={{this.logout}}
