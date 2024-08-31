@@ -92,7 +92,7 @@
     "qunit-dom": "^3.0.0",
     "sass": "^1.71.1",
     "tracked-built-ins": "^3.3.0",
-    "webpack": "^5.90.3"
+    "webpack": "^5.94.0"
   },
   "engines": {
     "node": ">= 18"
