@@ -4,15 +4,13 @@ import { action } from '@ember/object';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { on } from '@ember/modifier';
 import RangeDatepicker from './range-datepicker';
-import { format } from 'date-fns';
 
 export default class DatePickerIcon extends Component {
   @tracked showingCalendar = false;
 
   @action
   changeDate({ date: range }) {
-    let dateStr = format(range.start, 'yyyy-MM-dd');
-    this.args.dateSelected(dateStr);
+    this.args.dateSelected(range.start);
     this.showingCalendar = false;
   }
 

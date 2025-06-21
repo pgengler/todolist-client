@@ -1,6 +1,7 @@
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
+import { format } from 'date-fns';
 
 export default class ApplicationController extends Controller {
   @service router;
@@ -9,7 +10,8 @@ export default class ApplicationController extends Controller {
 
   @action
   changeDate(date) {
-    this.router.transitionTo('days', { queryParams: { date } });
+    const dateStr = format(date, 'yyyy-MM-dd');
+    this.router.transitionTo('days', { queryParams: { date: dateStr } });
   }
 
   @action

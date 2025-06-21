@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { click, findAll, render } from '@ember/test-helpers';
 import { calendarSelect } from 'ember-power-calendar/test-support/helpers';
-import { parse } from 'date-fns';
+import { format, parse } from 'date-fns';
 import DatePickerIcon from 'ember-todo/components/date-picker-icon';
 
 module('Integration | Component | DatePickerIcon', function (hooks) {
@@ -24,7 +24,7 @@ module('Integration | Component | DatePickerIcon', function (hooks) {
     await click('[data-test-change-date]');
     await calendarSelect('.date-picker-content', new Date(2018, 1, 1));
 
-    assert.strictEqual(newDate, '2018-02-01');
+    assert.strictEqual(format(newDate, 'yyyy-MM-dd'), '2018-02-01');
   });
 
   test('it highlights the currently-viewed dates', async function (assert) {
