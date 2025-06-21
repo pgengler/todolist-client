@@ -2,7 +2,7 @@
 
 $body-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
 $body-font-size: 10pt;
-$body-background-color: #23A08D;
+$body-background-color: #23a08d;
 
 @import "datepicker";
 @import "flash-messages";
@@ -56,7 +56,7 @@ nav.top-nav {
   }
 
   .todolist-actions > * {
-    padding-right: .5em;
+    padding-right: 0.5em;
   }
 
   .flash-messages {
@@ -73,7 +73,7 @@ nav.top-nav {
   border-radius: 3px;
   display: flex;
   flex-direction: column;
-  margin-right: .5em;
+  margin-right: 0.5em;
   max-height: 100%;
   min-width: 22em;
   padding-top: 1em;
@@ -86,7 +86,8 @@ nav.top-nav {
     box-shadow: 0px 0px 15px #333;
   }
 
-  h1, h2 {
+  h1,
+  h2 {
     text-align: center;
     margin: 0;
   }
@@ -94,11 +95,11 @@ nav.top-nav {
   ul {
     max-height: calc(100% - 12em);
     overflow-y: auto;
-    padding: .25em;
+    padding: 0.25em;
   }
 
   &.current {
-    background-color: #B2DFDA;
+    background-color: #b2dfda;
   }
 
   &.past {
@@ -108,7 +109,8 @@ nav.top-nav {
     }
 
     &.has-unfinished-tasks {
-      h1, h2 {
+      h1,
+      h2 {
         color: #bf4a40;
       }
     }
@@ -119,7 +121,8 @@ nav.top-nav {
   }
 }
 
-.days, .recurring-task-days {
+.days,
+.recurring-task-days {
   display: flex;
   align-items: flex-start;
   height: calc(100vh - 4em);
@@ -142,17 +145,20 @@ nav.top-nav {
 .new-task {
   width: 100%;
 
-  textarea, input[type=text] {
+  textarea,
+  input[type="text"] {
     background-color: white;
   }
 }
 
-.new-task-dialog, .edit-task-dialog {
+.new-task-dialog,
+.edit-task-dialog {
   background-color: lightgray;
 
   padding: 0 2em 1em 2em;
 
-  textarea, input[type=text] {
+  textarea,
+  input[type="text"] {
     background-color: white;
   }
 }
@@ -164,7 +170,7 @@ nav.top-nav {
   width: 18em;
 
   td {
-    padding: .25em;
+    padding: 0.25em;
   }
 
   td[colspan] {
@@ -173,12 +179,13 @@ nav.top-nav {
 }
 
 @media (max-width: 25em) {
-  input, textarea {
+  input,
+  textarea {
     font-size: 16px !important;
   }
 
   .task-list {
-    width: calc(100vw - 8px - .25em);
+    width: calc(100vw - 8px - 0.25em);
 
     ul {
       max-height: calc(100vh - 16em);
@@ -198,7 +205,7 @@ dialog {
   max-height: 50vh;
 
   &::backdrop {
-    background: rgba(128, 128, 128, .77);
+    background: rgba(128, 128, 128, 0.77);
   }
 }
 

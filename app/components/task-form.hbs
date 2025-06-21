@@ -1,4 +1,8 @@
-<form class="task-form" {{on "submit" (prevent-default this.save)}} id={{this.formId}}>
+<form
+  class="task-form"
+  {{on "submit" (prevent-default this.save)}}
+  id={{this.formId}}
+>
   <AutofocusElasticTextarea
     @onEnterPressed={{this.save}}
     @onEscapePressed={{@cancel}}
@@ -9,10 +13,17 @@
     class="w-100"
     required
   />
-  <br><br>
-  <input type="date" id="task-date" value={{this.taskDate}} {{on "focus" this.showPicker}} data-test-task-date required>
+  <br /><br />
+  <input
+    type="date"
+    id="task-date"
+    value={{this.taskDate}}
+    {{on "focus" this.showPicker}}
+    data-test-task-date
+    required
+  />
 
-  <br><br>
+  <br /><br />
   {{#if this.editingNotes}}
     <AutofocusElasticTextarea
       @onEscapePressed={{this.cancelNotesEdit}}
@@ -24,13 +35,13 @@
       placeholder="Notes (optional)"
     />
   {{else}}
-    {{!-- template-lint-disable no-invalid-interactive --}}
+    {{! template-lint-disable no-invalid-interactive }}
     <div {{on "click" this.startNotesEdit}} data-test-task-notes>
       <MarkdownToHtml @markdown={{@task.notes}} />
     </div>
   {{/if}}
 
-  <br><br>
+  <br /><br />
   <button type="submit" data-test-save-task>
     {{this.saveButtonLabel}}
   </button>

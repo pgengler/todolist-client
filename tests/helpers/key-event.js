@@ -147,14 +147,14 @@ function buildKeyboardEvent(type, options = {}) {
     });
 
     return event;
-  } catch (e) {
+  } catch {
     // left intentionally blank
   }
 
   try {
     event = document.createEvent('KeyboardEvents');
     eventMethodName = 'initKeyboardEvent';
-  } catch (e) {
+  } catch {
     // left intentionally blank
   }
 
@@ -162,7 +162,7 @@ function buildKeyboardEvent(type, options = {}) {
     try {
       event = document.createEvent('KeyEvents');
       eventMethodName = 'initKeyEvent';
-    } catch (e) {
+    } catch {
       // left intentionally blank
     }
   }

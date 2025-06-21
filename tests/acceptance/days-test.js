@@ -3,7 +3,7 @@ import { click, currentURL, findAll, visit } from '@ember/test-helpers';
 import { clickToEdit } from 'ember-todo/tests/helpers/click-to-edit';
 import fillInAndPressEnter from 'ember-todo/tests/helpers/fill-in-and-press-enter';
 import setupAcceptanceTest from 'ember-todo/tests/helpers/setup-acceptance-test';
-import { calendarSelect } from 'ember-power-calendar/test-support';
+import { calendarSelect } from 'ember-power-calendar/test-support/helpers';
 import { authenticateSession } from 'ember-simple-auth/test-support';
 import { Collection } from 'miragejs';
 import moment from 'moment';

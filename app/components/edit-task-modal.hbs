@@ -1,4 +1,8 @@
-<dialog class="edit-task-dialog" {{show-dialog-on-insert onClose=@onClose}} data-test-edit-task-dialog>
+<dialog
+  class="edit-task-dialog"
+  {{show-dialog-on-insert onClose=@onClose}}
+  data-test-edit-task-dialog
+>
   <h1>Edit task</h1>
   <EditTaskForm
     @cancel={{@onClose}}
