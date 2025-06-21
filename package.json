@@ -61,7 +61,7 @@
     "ember-cli-sass": "^11.0.1",
     "ember-cli-sri": "^2.1.1",
     "ember-cli-terser": "^4.0.2",
-    "ember-concurrency": "^4.0.0",
+    "ember-concurrency": "^4.0.4",
     "ember-data": "~5.4.1",
     "ember-fetch": "^8.1.2",
     "ember-lifeline": "^7.0.0",
@@ -69,8 +69,8 @@
     "ember-modifier": "^4.2.0",
     "ember-moment": "^10.0.0",
     "ember-page-title": "^9.0.1",
-    "ember-power-calendar": "^0.21.0",
-    "ember-power-calendar-moment": "^0.6.1",
+    "ember-power-calendar": "^1.5.4",
+    "ember-power-calendar-moment": "^1.0.4",
     "ember-qunit": "^9.0.2",
     "ember-resolver": "^13.1.0",
     "ember-resources": "^7.0.0",
@@ -103,8 +103,5 @@
   },
   "ember": {
     "edition": "octane"
-  },
-  "resolutions": {
-    "ember-concurrency": "4.0.0"
   }
 }

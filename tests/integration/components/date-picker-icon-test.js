@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { click, findAll, render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { calendarSelect } from 'ember-power-calendar/test-support';
+import { calendarSelect } from 'ember-power-calendar/test-support/helpers';
 import moment from 'moment';
 
 module('Integration | Component | DatePickerIcon', function (hooks) {
