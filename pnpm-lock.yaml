@@ -53,6 +53,9 @@ importers:
       concurrently:
         specifier: ^9.1.2
         version: 9.1.2
+      date-fns:
+        specifier: ^4.1.0
+        version: 4.1.0
       ember-auto-import:
         specifier: ^2.10.0
         version: 2.10.0(@glint/template@1.5.2)(webpack@5.99.9)
@@ -143,6 +146,9 @@ importers:
       ember-power-calendar:
         specifier: ^1.5.4
         version: 1.5.4(@babel/core@7.27.4)(@ember/test-helpers@5.2.2(@babel/core@7.27.4)(@glint/template@1.5.2))(@glimmer/component@2.0.0)(@glint/template@1.5.2)(ember-concurrency@4.0.4(@babel/core@7.27.4)(@glint/template@1.5.2))(ember-source@6.5.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
+      ember-power-calendar-date-fns:
+        specifier: ^1.0.0
+        version: 1.0.0(date-fns@4.1.0)(ember-power-calendar@1.5.4(@babel/core@7.27.4)(@ember/test-helpers@5.2.2(@babel/core@7.27.4)(@glint/template@1.5.2))(@glimmer/component@2.0.0)(@glint/template@1.5.2)(ember-concurrency@4.0.4(@babel/core@7.27.4)(@glint/template@1.5.2))(ember-source@6.5.0(@glimmer/component@2.0.0)(rsvp@4.8.5)))
       ember-power-calendar-moment:
         specifier: ^1.0.4
         version: 1.0.4(@glint/template@1.5.2)(ember-power-calendar@1.5.4(@babel/core@7.27.4)(@ember/test-helpers@5.2.2(@babel/core@7.27.4)(@glint/template@1.5.2))(@glimmer/component@2.0.0)(@glint/template@1.5.2)(ember-concurrency@4.0.4(@babel/core@7.27.4)(@glint/template@1.5.2))(ember-source@6.5.0(@glimmer/component@2.0.0)(rsvp@4.8.5)))(moment-timezone@0.5.48)(moment@2.30.1)
@@ -2636,6 +2642,9 @@ packages:
   date-fns@3.6.0:
     resolution: {integrity: sha512-fRHTG8g/Gif+kSh50gaGEdToemgfj74aRX3swtiouboip5JDLAyDE9F11nHMIcvOaXeOC6D7SpNhi7uFyB7Uww==}
 
+  date-fns@4.1.0:
+    resolution: {integrity: sha512-Ukq0owbQXxa/U3EGtsdVBkR1w7KOQ5gIBqdH2hkvknzZPYvBxb/aa6E8L7tmjFtkwZBu3UXBbjIgPo/Ez4xaNg==}
+
   date-time@2.1.0:
     resolution: {integrity: sha512-/9+C44X7lot0IeiyfgJmETtRMhBidBYM2QFFIkGa0U1k+hSyY87Nw7PY3eDqpvCBm7I3WCSfPeZskW/YYq6m4g==}
     engines: {node: '>=4'}
@@ -3082,6 +3091,12 @@ packages:
   ember-page-title@9.0.2:
     resolution: {integrity: sha512-ACklH6hemNB6tDAiwGo4e0tFIqVrAkTNqRmlLtLABlh+GynH7xkWm9q4fyc4Ysg9R1jP8OrsKcxWRittshRatA==}
     engines: {node: 16.* || >= 18}
+
+  ember-power-calendar-date-fns@1.0.0:
+    resolution: {integrity: sha512-u/Wyd85CwBteSRnzhGiVR1vnCc0iRjJm5cYzz7dF4SToKRFWTmT5R4QvsO+RXOy63Lr08QijVOK/w4CoZk+KQQ==}
+    peerDependencies:
+      date-fns: ^4.1.0
+      ember-power-calendar: '*'
 
   ember-power-calendar-moment@1.0.4:
     resolution: {integrity: sha512-+lG7YaccZxMYOTosHoCqhYJ57DkyqeLzyQCI2yu4rZEHKq6UCSagcqaSDn4xbGG9GAZjV1yPXG8YyXMmTW7JRA==}
@@ -9403,6 +9418,8 @@ snapshots:
 
   date-fns@3.6.0: {}
 
+  date-fns@4.1.0: {}
+
   date-time@2.1.0:
     dependencies:
       time-zone: 1.0.0
@@ -10257,6 +10274,14 @@ snapshots:
     dependencies:
       '@embroider/addon-shim': 1.10.0
       '@simple-dom/document': 1.4.0
+    transitivePeerDependencies:
+      - supports-color
+
+  ember-power-calendar-date-fns@1.0.0(date-fns@4.1.0)(ember-power-calendar@1.5.4(@babel/core@7.27.4)(@ember/test-helpers@5.2.2(@babel/core@7.27.4)(@glint/template@1.5.2))(@glimmer/component@2.0.0)(@glint/template@1.5.2)(ember-concurrency@4.0.4(@babel/core@7.27.4)(@glint/template@1.5.2))(ember-source@6.5.0(@glimmer/component@2.0.0)(rsvp@4.8.5))):
+    dependencies:
+      '@embroider/addon-shim': 1.10.0
+      date-fns: 4.1.0
+      ember-power-calendar: 1.5.4(@babel/core@7.27.4)(@ember/test-helpers@5.2.2(@babel/core@7.27.4)(@glint/template@1.5.2))(@glimmer/component@2.0.0)(@glint/template@1.5.2)(ember-concurrency@4.0.4(@babel/core@7.27.4)(@glint/template@1.5.2))(ember-source@6.5.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
     transitivePeerDependencies:
       - supports-color
 
