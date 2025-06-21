@@ -1,6 +1,7 @@
 import { on } from '@ember/modifier';
 import preventDefault from '../helpers/prevent-default.js';
 import { Input } from '@ember/component';
+
 <template>
   <form class="login-form" {{on "submit" (preventDefault @controller.login)}}>
     <table>

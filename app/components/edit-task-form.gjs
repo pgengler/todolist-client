@@ -6,17 +6,6 @@ import TaskForm from './task-form.gjs';
 import { on } from '@ember/modifier';
 
 export default class EditTaskForm extends Component {
-  <template>
-    <TaskForm @cancel={{@cancel}} @save={{this.save}} @saveButtonLabel="Save" @task={{@task}}>
-      <:footer>
-        <div class="button-footer">
-          <button type="button" {{on "click" this.deleteTask}} data-test-delete-task>
-            Delete
-          </button>
-        </div>
-      </:footer>
-    </TaskForm>
-  </template>
   @service store;
 
   @action
@@ -52,4 +41,16 @@ export default class EditTaskForm extends Component {
     await task.destroyRecord();
     this.args.onTaskDeleted?.();
   }
+
+  <template>
+    <TaskForm @cancel={{@cancel}} @save={{this.save}} @saveButtonLabel="Save" @task={{@task}}>
+      <:footer>
+        <div class="button-footer">
+          <button type="button" {{on "click" this.deleteTask}} data-test-delete-task>
+            Delete
+          </button>
+        </div>
+      </:footer>
+    </TaskForm>
+  </template>
 }

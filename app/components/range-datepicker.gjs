@@ -4,6 +4,13 @@ import { action } from '@ember/object';
 import PowerCalendarRange from 'ember-power-calendar/components/power-calendar-range';
 
 export default class RangeDatepicker extends Component {
+  @tracked center;
+
+  @action
+  updateCenter({ date }) {
+    this.center = date;
+  }
+
   <template>
     <PowerCalendarRange
       @center={{this.center}}
@@ -14,10 +21,4 @@ export default class RangeDatepicker extends Component {
       ...attributes
     />
   </template>
-  @tracked center;
-
-  @action
-  updateCenter({ date }) {
-    this.center = date;
-  }
 }

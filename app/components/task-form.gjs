@@ -14,6 +14,56 @@ function taskDate(task) {
 }
 
 export default class TaskForm extends Component {
+  @tracked description = this.args.task?.description;
+  @tracked isEditingNotes = false;
+  @tracked notes = this.args.task?.notes;
+  @tracked taskDate = taskDate(this.args.task);
+
+  get editingNotes() {
+    return !this.args.task || this.args.task?.isNew || isEmpty(this.args.task?.notes) || this.isEditingNotes;
+  }
+
+  get formId() {
+    return `task-form-${guidFor(this)}`;
+  }
+
+  get saveButtonLabel() {
+    return this.args.saveButtonLabel ?? 'Save';
+  }
+
+  showPicker(event) {
+    try {
+      event.target.showPicker();
+    } catch {
+      // this can fail in tests and we don't care
+    }
+  }
+
+  @action
+  async save() {
+    let form = document.getElementById(this.formId);
+
+    let date = form.querySelector('#task-date').value;
+    let description = form.querySelector('#task-description').value.trim();
+    let notes = form.querySelector('#task-notes')?.value.trim() || this.args.task?.notes;
+
+    if (isEmpty(description) || isEmpty(date)) {
+      return;
+    }
+
+    this.args.save?.({ date, description, notes });
+  }
+
+  @action
+  startNotesEdit() {
+    this.isEditingNotes = true;
+  }
+
+  @action
+  cancelNotesEdit() {
+    this.isEditingNotes = false;
+  }
+
   <template>
     <form class="task-form" {{on "submit" (preventDefault this.save)}} id={{this.formId}}>
       <AutofocusElasticTextarea
@@ -65,53 +115,4 @@ export default class TaskForm extends Component {
       {{yield to="footer"}}
     </form>
   </template>
-  @tracked description = this.args.task?.description;
-  @tracked isEditingNotes = false;
-  @tracked notes = this.args.task?.notes;
-  @tracked taskDate = taskDate(this.args.task);
-
-  get editingNotes() {
-    return !this.args.task || this.args.task?.isNew || isEmpty(this.args.task?.notes) || this.isEditingNotes;
-  }
-
-  get formId() {
-    return `task-form-${guidFor(this)}`;
-  }
-
-  get saveButtonLabel() {
-    return this.args.saveButtonLabel ?? 'Save';
-  }
-
-  showPicker(event) {
-    try {
-      event.target.showPicker();
-    } catch {
-      // this can fail in tests and we don't care
-    }
-  }
-
-  @action
-  async save() {
-    let form = document.getElementById(this.formId);
-
-    let date = form.querySelector('#task-date').value;
-    let description = form.querySelector('#task-description').value.trim();
-    let notes = form.querySelector('#task-notes')?.value.trim() || this.args.task?.notes;
-
-    if (isEmpty(description) || isEmpty(date)) {
-      return;
-    }
-
-    this.args.save?.({ date, description, notes });
-  }
-
-  @action
-  startNotesEdit() {
-    this.isEditingNotes = true;
-  }
-
-  @action
-  cancelNotesEdit() {
-    this.isEditingNotes = false;
-  }
 }

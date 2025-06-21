@@ -5,7 +5,6 @@ import { isEmpty } from '@ember/utils';
 import TaskForm from './task-form.gjs';
 
 export default class NewTaskForm extends Component {
-  <template><TaskForm @save={{this.createTask}} @cancel={{@cancel}} @saveButtonLabel="Add" /></template>
   @service store;
 
   @action
@@ -33,4 +32,6 @@ export default class NewTaskForm extends Component {
 
     this.args.onTaskCreated?.();
   }
+
+  <template><TaskForm @save={{this.createTask}} @cancel={{@cancel}} @saveButtonLabel="Add" /></template>
 }

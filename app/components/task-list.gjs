@@ -25,40 +25,6 @@ function taskSort(a, b) {
 }
 
 export default class TaskList extends Component {
-  <template>
-    <div
-      class="task-list {{if this.hasUnfinishedTasks 'has-unfinished-tasks'}} {{this.dragClass}}"
-      data-test-list-name={{@list.name}}
-      {{on "dragleave" (preventDefault this.dragOut)}}
-      {{on "dragover" (preventDefault this.dragIn)}}
-      {{on "drop" this.dropped}}
-      ...attributes
-    >
-      <this.headerComponent @list={{@list}} {{on "click" this.focusNewTaskField}} />
-      <ul>
-        {{#each this.sortedTasks as |task|}}
-          <SingleTask
-            @task={{task}}
-            @editingStart={{@editingStart}}
-            @editingEnd={{@editingEnd}}
-            {{draggableTask task onDragStart=@editingStart onDragEnd=@editingEnd}}
-            data-test-task
-          />
-        {{/each}}
-
-        <li class="task">
-          <ElasticTextarea
-            @onEscapePressed={{this.clearTextarea}}
-            @onEnterPressed={{this.addTask}}
-            class="new-task"
-            id={{this.newTaskFieldId}}
-            placeholder="Add new task"
-            data-test-new-task
-          />
-        </li>
-      </ul>
-    </div>
-  </template>
   @tracked dragClass = '';
   taskSorting = ['plaintextDescription'];
 
@@ -159,4 +125,39 @@ export default class TaskList extends Component {
   focusNewTaskField() {
     document.getElementById(this.newTaskFieldId).focus();
   }
+
+  <template>
+    <div
+      class="task-list {{if this.hasUnfinishedTasks 'has-unfinished-tasks'}} {{this.dragClass}}"
+      data-test-list-name={{@list.name}}
+      {{on "dragleave" (preventDefault this.dragOut)}}
+      {{on "dragover" (preventDefault this.dragIn)}}
+      {{on "drop" this.dropped}}
+      ...attributes
+    >
+      <this.headerComponent @list={{@list}} {{on "click" this.focusNewTaskField}} />
+      <ul>
+        {{#each this.sortedTasks as |task|}}
+          <SingleTask
+            @task={{task}}
+            @editingStart={{@editingStart}}
+            @editingEnd={{@editingEnd}}
+            {{draggableTask task onDragStart=@editingStart onDragEnd=@editingEnd}}
+            data-test-task
+          />
+        {{/each}}
+
+        <li class="task">
+          <ElasticTextarea
+            @onEscapePressed={{this.clearTextarea}}
+            @onEnterPressed={{this.addTask}}
+            class="new-task"
+            id={{this.newTaskFieldId}}
+            placeholder="Add new task"
+            data-test-new-task
+          />
+        </li>
+      </ul>
+    </div>
+  </template>
 }

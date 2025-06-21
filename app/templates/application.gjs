@@ -1,4 +1,5 @@
 import TopNav from '../components/top-nav.js';
+
 <template>
   <div class="page-wrapper">
     {{#if @controller.session.isAuthenticated}}

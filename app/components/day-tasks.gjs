@@ -6,16 +6,6 @@ import TaskList from './task-list.js';
 import DayTasksHeader from './day-tasks/header.js';
 
 export default class DayTasks extends Component {
-  <template>
-    <TaskList
-      @headerComponent={{component DayTasksHeader}}
-      @list={{@list}}
-      @editingEnd={{@editingEnd}}
-      @editingStart={{@editingStart}}
-      class="{{if this.isPast 'past'}} {{if this.isCurrent 'current'}} {{if this.isFuture 'future'}}"
-      data-test-date={{this.formattedDate}}
-    />
-  </template>
   @use today = CurrentDay;
 
   get date() {
@@ -38,4 +28,15 @@ export default class DayTasks extends Component {
   get isFuture() {
     return this.date.isAfter(this.today, 'day');
   }
+
+  <template>
+    <TaskList
+      @headerComponent={{component DayTasksHeader}}
+      @list={{@list}}
+      @editingEnd={{@editingEnd}}
+      @editingStart={{@editingStart}}
+      class="{{if this.isPast 'past'}} {{if this.isCurrent 'current'}} {{if this.isFuture 'future'}}"
+      data-test-date={{this.formattedDate}}
+    />
+  </template>
 }

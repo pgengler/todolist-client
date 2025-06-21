@@ -11,6 +11,20 @@ import FlashMessage from 'ember-cli-flash/components/flash-message';
 import NewTaskModal from './new-task-modal.js';
 
 export default class TopNav extends Component {
+  @service flashMessages;
+
+  @tracked isShowingNewTaskModal = false;
+
+  @action
+  closeModal() {
+    this.isShowingNewTaskModal = false;
+  }
+
+  @action
+  toggleModal() {
+    this.isShowingNewTaskModal = !this.isShowingNewTaskModal;
+  }
+
   <template>
     <nav class="top-nav">
       <div class="todolist-actions">
@@ -37,17 +51,4 @@ export default class TopNav extends Component {
       {{/if}}
     </nav>
   </template>
-  @service flashMessages;
-
-  @tracked isShowingNewTaskModal = false;
-
-  @action
-  closeModal() {
-    this.isShowingNewTaskModal = false;
-  }
-
-  @action
-  toggleModal() {
-    this.isShowingNewTaskModal = !this.isShowingNewTaskModal;
-  }
 }
