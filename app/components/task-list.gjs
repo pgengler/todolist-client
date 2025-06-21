@@ -5,6 +5,11 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { runTask } from 'ember-lifeline';
 import TaskListHeaderComponent from 'ember-todo/components/task-list/header';
+import { on } from "@ember/modifier";
+import preventDefault from "../helpers/prevent-default.js";
+import SingleTask from "./single-task.js";
+import draggableTask from "../modifiers/draggable-task.js";
+import ElasticTextarea from "./elastic-textarea.js";
 
 function taskSort(a, b) {
   // unfinished tasks display above finished or pending
@@ -19,7 +24,20 @@ function taskSort(a, b) {
   return compare(a.plaintextDescription, b.plaintextDescription);
 }
 
-export default class TaskList extends Component {
+export default class TaskList extends Component {<template><div class="task-list
+    {{if this.hasUnfinishedTasks "has-unfinished-tasks"}}
+    {{this.dragClass}}" data-test-list-name={{@list.name}} {{on "dragleave" (preventDefault this.dragOut)}} {{on "dragover" (preventDefault this.dragIn)}} {{on "drop" this.dropped}} ...attributes>
+  <this.headerComponent @list={{@list}} {{on "click" this.focusNewTaskField}} />
+  <ul>
+    {{#each this.sortedTasks as |task|}}
+      <SingleTask @task={{task}} @editingStart={{@editingStart}} @editingEnd={{@editingEnd}} {{draggableTask task onDragStart=@editingStart onDragEnd=@editingEnd}} data-test-task />
+    {{/each}}
+
+    <li class="task">
+      <ElasticTextarea @onEscapePressed={{this.clearTextarea}} @onEnterPressed={{this.addTask}} class="new-task" id={{this.newTaskFieldId}} placeholder="Add new task" data-test-new-task />
+    </li>
+  </ul>
+</div></template>
   @tracked dragClass = '';
   taskSorting = ['plaintextDescription'];
 
@@ -121,38 +139,3 @@ export default class TaskList extends Component {
     document.getElementById(this.newTaskFieldId).focus();
   }
 }
-
-<div
-  class="task-list
-    {{if this.hasUnfinishedTasks 'has-unfinished-tasks'}}
-    {{this.dragClass}}"
-  data-test-list-name={{@list.name}}
-  {{on "dragleave" (prevent-default this.dragOut)}}
-  {{on "dragover" (prevent-default this.dragIn)}}
-  {{on "drop" this.dropped}}
-  ...attributes
->
-  <this.headerComponent @list={{@list}} {{on "click" this.focusNewTaskField}} />
-  <ul>
-    {{#each this.sortedTasks as |task|}}
-      <SingleTask
-        @task={{task}}
-        @editingStart={{@editingStart}}
-        @editingEnd={{@editingEnd}}
-        {{draggable-task task onDragStart=@editingStart onDragEnd=@editingEnd}}
-        data-test-task
-      />
-    {{/each}}
-
-    <li class="task">
-      <ElasticTextarea
-        @onEscapePressed={{this.clearTextarea}}
-        @onEnterPressed={{this.addTask}}
-        class="new-task"
-        id={{this.newTaskFieldId}}
-        placeholder="Add new task"
-        data-test-new-task
-      />
-    </li>
-  </ul>
-</div>

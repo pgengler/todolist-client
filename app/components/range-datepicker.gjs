@@ -1,8 +1,9 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import PowerCalendarRange from "ember-power-calendar/components/power-calendar-range";
 
-export default class RangeDatepicker extends Component {
+export default class RangeDatepicker extends Component {<template><PowerCalendarRange @center={{this.center}} @onCenterChange={{this.updateCenter}} @onSelect={{@onSelect}} @selected={{@selected}} @renderInPlace={{@renderInPlace}} ...attributes /></template>
   @tracked center;
 
   @action
@@ -10,12 +11,3 @@ export default class RangeDatepicker extends Component {
     this.center = date;
   }
 }
-
-<PowerCalendarRange
-  @center={{this.center}}
-  @onCenterChange={{this.updateCenter}}
-  @onSelect={{@onSelect}}
-  @selected={{@selected}}
-  @renderInPlace={{@renderInPlace}}
-  ...attributes
-/>

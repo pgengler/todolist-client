@@ -4,8 +4,60 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { dropTask, timeout } from 'ember-concurrency';
 import { runTask } from 'ember-lifeline';
+import AutofocusElasticTextarea from "./autofocus-elastic-textarea.js";
+import { on } from "@ember/modifier";
+import FaIcon from "@fortawesome/ember-fontawesome/components/fa-icon";
+import perform from "ember-concurrency/helpers/perform";
+import MarkdownToHtml from "ember-showdown/components/markdown-to-html";
+import EditTaskModal from "./edit-task-modal.js";
 
-export default class SingleTask extends Component {
+export default class SingleTask extends Component {<template><li class="task
+    {{if this.isQuickEditing "editing"}}
+    {{if @task.done "done"}}
+    {{if @task.isError "error"}}
+    {{if @task.isNew "pending"}}" ...attributes>
+  {{#if this.isQuickEditing}}
+    <AutofocusElasticTextarea @onEscapePressed={{this.cancelEdit}} @onEnterPressed={{this.updateTask}} @value={{this.editDescription}} class="edit" {{on "focusout" this.cancelEdit}} />
+  {{else}}
+    {{#if (has-block "before")}}
+      {{yield to="before"}}
+    {{/if}}
+
+    <div class="flex-container">
+      <div class="state">
+        {{#if @task.isError}}
+          <FaIcon @icon="triangle-exclamation" title="Task failed to save" />
+        {{else if @task.isNew}}
+          <FaIcon @icon="spinner" @spin={{true}} />
+        {{else}}
+          {{!-- template-lint-disable require-input-label --}}
+          <input type="checkbox" checked={{@task.done}} {{on "change" this.toggleTaskDone}} />
+        {{/if}}
+      </div>
+
+      <div class="description" role="button" {{on "click" (perform this.quickEditTask)}} {{on "dblclick" this.editTask}} {{on "touchend" this.simulateDoubleClicks}}>
+        <MarkdownToHtml @markdown={{@task.description}} role="presentation" />
+      </div>
+
+      {{#if @task.notes}}
+        <div>
+          <FaIcon @icon="sticky-note" @prefix="far" data-test-task-has-notes />
+        </div>
+      {{/if}}
+    </div>
+
+    {{#if (has-block "after")}}
+      {{yield to="after"}}
+    {{/if}}
+  {{/if}}
+
+  {{!--
+    Don't include isFullEditing in the if/else ladder because we want to render the content normally underneath the modal.
+  --}}
+  {{#if this.isFullEditing}}
+    <EditTaskModal @task={{@task}} @onClose={{this.cancelEdit}} />
+  {{/if}}
+</li></template>
   @tracked editType = null;
   @tracked editDescription;
 
@@ -130,70 +182,3 @@ export default class SingleTask extends Component {
     this.args.editingEnd?.();
   }
 }
-
-<li
-  class="task
-    {{if this.isQuickEditing 'editing'}}
-    {{if @task.done 'done'}}
-    {{if @task.isError 'error'}}
-    {{if @task.isNew 'pending'}}"
-  ...attributes
->
-  {{#if this.isQuickEditing}}
-    <AutofocusElasticTextarea
-      @onEscapePressed={{this.cancelEdit}}
-      @onEnterPressed={{this.updateTask}}
-      @value={{this.editDescription}}
-      class="edit"
-      {{on "focusout" this.cancelEdit}}
-    />
-  {{else}}
-    {{#if (has-block "before")}}
-      {{yield to="before"}}
-    {{/if}}
-
-    <div class="flex-container">
-      <div class="state">
-        {{#if @task.isError}}
-          <FaIcon @icon="triangle-exclamation" title="Task failed to save" />
-        {{else if @task.isNew}}
-          <FaIcon @icon="spinner" @spin={{true}} />
-        {{else}}
-          {{! template-lint-disable require-input-label }}
-          <input
-            type="checkbox"
-            checked={{@task.done}}
-            {{on "change" this.toggleTaskDone}}
-          />
-        {{/if}}
-      </div>
-
-      <div
-        class="description"
-        role="button"
-        {{on "click" (perform this.quickEditTask)}}
-        {{on "dblclick" this.editTask}}
-        {{on "touchend" this.simulateDoubleClicks}}
-      >
-        <MarkdownToHtml @markdown={{@task.description}} role="presentation" />
-      </div>
-
-      {{#if @task.notes}}
-        <div>
-          <FaIcon @icon="sticky-note" @prefix="far" data-test-task-has-notes />
-        </div>
-      {{/if}}
-    </div>
-
-    {{#if (has-block "after")}}
-      {{yield to="after"}}
-    {{/if}}
-  {{/if}}
-
-  {{!
-    Don't include isFullEditing in the if/else ladder because we want to render the content normally underneath the modal.
-  }}
-  {{#if this.isFullEditing}}
-    <EditTaskModal @task={{@task}} @onClose={{this.cancelEdit}} />
-  {{/if}}
-</li>

@@ -1,4 +1,7 @@
-<form class="login-form" {{on "submit" (prevent-default this.login)}}>
+import { on } from "@ember/modifier";
+import preventDefault from "../helpers/prevent-default.js";
+import { Input } from "@ember/component";
+<template><form class="login-form" {{on "submit" (preventDefault @controller.login)}}>
   <table>
     <tbody>
       <tr>
@@ -6,7 +9,7 @@
           <label for="email">Email address</label>
         </td>
         <td>
-          <Input @type="text" @value={{this.email}} id="email" />
+          <Input @type="text" @value={{@controller.email}} id="email" />
         </td>
       </tr>
       <tr>
@@ -14,7 +17,7 @@
           <label for="password">Password</label>
         </td>
         <td>
-          <Input @type="password" @value={{this.password}} id="password" />
+          <Input @type="password" @value={{@controller.password}} id="password" />
         </td>
       </tr>
       <tr>
@@ -24,4 +27,4 @@
       </tr>
     </tbody>
   </table>
-</form>
+</form></template>

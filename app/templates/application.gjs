@@ -1,11 +1,8 @@
-<div class="page-wrapper">
-  {{#if this.session.isAuthenticated}}
-    <TopNav
-      @selectedDate={{this.selectedDate}}
-      @changeDate={{this.changeDate}}
-      @logout={{this.logout}}
-    />
+import TopNav from "../components/top-nav.js";
+<template><div class="page-wrapper">
+  {{#if @controller.session.isAuthenticated}}
+    <TopNav @selectedDate={{@controller.selectedDate}} @changeDate={{@controller.changeDate}} @logout={{@controller.logout}} />
   {{/if}}
 
   {{outlet}}
-</div>
+</div></template>

@@ -1,7 +1,8 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
+import { on } from "@ember/modifier";
 
-export default class SingleLineTextarea extends Component {
+export default class SingleLineTextarea extends Component {<template><textarea {{on "keydown" this.handleKeyDown}} {{on "keyup" this.handleKeyUp}} ...attributes>{{@value}}</textarea></template>
   @action
   handleKeyDown(event) {
     if (event.key !== 'Enter') return;
@@ -23,9 +24,3 @@ export default class SingleLineTextarea extends Component {
     }
   }
 }
-
-<textarea
-  {{on "keydown" this.handleKeyDown}}
-  {{on "keyup" this.handleKeyUp}}
-  ...attributes
->{{@value}}</textarea>

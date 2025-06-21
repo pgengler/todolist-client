@@ -1,8 +1,8 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { click, render } from '@ember/test-helpers';
-import hbs from 'htmlbars-inline-precompile';
 import { clickToEdit } from 'ember-todo/tests/helpers/click-to-edit';
+import SingleTask from "../../../app/components/single-task.js";
 
 module('Integration | Component | SingleTask', function (hooks) {
   setupRenderingTest(hooks);
@@ -11,7 +11,7 @@ module('Integration | Component | SingleTask', function (hooks) {
     this.set('task', {
       description: 'foo',
     });
-    await render(hbs`<SingleTask @task={{this.task}} />`);
+    await render(<template><SingleTask @task={{this.task}} /></template>);
 
     assert.dom('input[type=checkbox]').exists('displays a checkbox');
     assert.dom('.task').hasText('foo', 'displays task description');
@@ -22,7 +22,7 @@ module('Integration | Component | SingleTask', function (hooks) {
       isNew: true,
       description: 'bar',
     });
-    await render(hbs`<SingleTask @task={{this.task}} />`);
+    await render(<template><SingleTask @task={{this.task}} /></template>);
 
     assert.dom('input[type=checkbox]').doesNotExist('does not show a checkbox for pending tasks');
     assert.dom('.fa-spinner').exists('shows a spinner');
@@ -35,7 +35,7 @@ module('Integration | Component | SingleTask', function (hooks) {
       isError: true,
       description: 'baz',
     });
-    await render(hbs`<SingleTask @task={{this.task}} />`);
+    await render(<template><SingleTask @task={{this.task}} /></template>);
 
     assert.dom('input[type=checkbox]').doesNotExist('does not show a checkbox');
     assert.dom('.fa-triangle-exclamation').exists('shows the right icon');
@@ -52,12 +52,9 @@ module('Integration | Component | SingleTask', function (hooks) {
     this.set('editingStart', () => {
       editingStartCalled = true;
     });
-    await render(hbs`
-      <SingleTask
-        @task={{this.task}}
-        @editingStart={{this.editingStart}}
-      />
-    `);
+    await render(<template>
+      <SingleTask @task={{this.task}} @editingStart={{this.editingStart}} />
+    </template>);
     await clickToEdit('.task');
 
     assert.ok(editingStartCalled, 'made call to "editStart" action');
@@ -72,7 +69,7 @@ module('Integration | Component | SingleTask', function (hooks) {
       isNew: true,
       description: 'xyz',
     });
-    await render(hbs`<SingleTask @task={{this.task}} />`);
+    await render(<template><SingleTask @task={{this.task}} /></template>);
     await click('.task');
 
     assert.dom('.task').doesNotHaveClass('editing');
@@ -84,7 +81,7 @@ module('Integration | Component | SingleTask', function (hooks) {
       isError: true,
       description: 'abc',
     });
-    await render(hbs`<SingleTask @task={{this.task}} />`);
+    await render(<template><SingleTask @task={{this.task}} /></template>);
     await clickToEdit('.task');
 
     assert.dom('.task').hasClass('editing');
