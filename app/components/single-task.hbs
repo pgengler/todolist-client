@@ -1,5 +1,9 @@
 <li
-  class="task {{if this.isQuickEditing 'editing'}} {{if @task.done 'done'}} {{if @task.isError 'error'}} {{if @task.isNew 'pending'}}"
+  class="task
+    {{if this.isQuickEditing 'editing'}}
+    {{if @task.done 'done'}}
+    {{if @task.isError 'error'}}
+    {{if @task.isNew 'pending'}}"
   ...attributes
 >
   {{#if this.isQuickEditing}}
@@ -22,12 +26,12 @@
         {{else if @task.isNew}}
           <FaIcon @icon="spinner" @spin={{true}} />
         {{else}}
-          {{!-- template-lint-disable require-input-label --}}
+          {{! template-lint-disable require-input-label }}
           <input
             type="checkbox"
             checked={{@task.done}}
             {{on "change" this.toggleTaskDone}}
-          >
+          />
         {{/if}}
       </div>
 
@@ -53,9 +57,9 @@
     {{/if}}
   {{/if}}
 
-  {{!--
+  {{!
     Don't include isFullEditing in the if/else ladder because we want to render the content normally underneath the modal.
-  --}}
+  }}
   {{#if this.isFullEditing}}
     <EditTaskModal @task={{@task}} @onClose={{this.cancelEdit}} />
   {{/if}}

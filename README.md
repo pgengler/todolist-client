@@ -21,6 +21,7 @@ You will need the following things properly installed on your computer.
 - `pnpm install`
 
 ## Running / Development
+
 - Start the Rails API server
 - `pnpm start`
 - Visit your app at [http://localhost:4200](http://localhost:4200).

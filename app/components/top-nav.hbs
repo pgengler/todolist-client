@@ -7,7 +7,11 @@
       <FaIcon @icon="list" />
     </LinkTo>
     <FaIcon @icon="plus" {{on "click" this.toggleModal}} data-test-add-task />
-    <DatePickerIcon @dateSelected={{@changeDate}} @dateRange={{@selectedDate.dateRange}} data-test-change-date />
+    <DatePickerIcon
+      @dateSelected={{@changeDate}}
+      @dateRange={{@selectedDate.dateRange}}
+      data-test-change-date
+    />
   </div>
   <div class="flash-messages">
     {{#each this.flashMessages.queue as |flash|}}

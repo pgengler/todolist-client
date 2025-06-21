@@ -1,5 +1,7 @@
 <div
-  class="task-list {{if this.hasUnfinishedTasks 'has-unfinished-tasks'}} {{this.dragClass}}"
+  class="task-list
+    {{if this.hasUnfinishedTasks 'has-unfinished-tasks'}}
+    {{this.dragClass}}"
   data-test-list-name={{@list.name}}
   {{on "dragleave" (prevent-default this.dragOut)}}
   {{on "dragover" (prevent-default this.dragIn)}}
