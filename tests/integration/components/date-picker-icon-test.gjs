@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { click, findAll, render } from '@ember/test-helpers';
 import { calendarSelect } from 'ember-power-calendar/test-support/helpers';
-import moment from 'moment';
+import { parse } from 'date-fns';
 import DatePickerIcon from 'ember-todo/components/date-picker-icon';
 
 module('Integration | Component | DatePickerIcon', function (hooks) {
@@ -12,8 +12,8 @@ module('Integration | Component | DatePickerIcon', function (hooks) {
     let newDate;
     const dateSelected = (date) => (newDate = date);
     const dateRange = {
-      start: moment('2018-02-02'),
-      end: moment('2018-02-04'),
+      start: parse('2018-02-02', 'yyyy-MM-dd', new Date()),
+      end: parse('2018-02-04', 'yyyy-MM-dd', new Date()),
     };
     await render(
       <template>
@@ -29,8 +29,8 @@ module('Integration | Component | DatePickerIcon', function (hooks) {
 
   test('it highlights the currently-viewed dates', async function (assert) {
     const dateRange = {
-      start: moment('2017-12-04'),
-      end: moment('2017-12-06'),
+      start: parse('2017-12-04', 'yyyy-MM-dd', new Date()),
+      end: parse('2017-12-06', 'yyyy-MM-dd', new Date()),
     };
     await render(<template><DatePickerIcon @dateRange={{dateRange}} data-test-change-date /></template>);
 

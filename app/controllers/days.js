@@ -3,7 +3,7 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { compare } from '@ember/utils';
 import { tracked } from '@glimmer/tracking';
-import moment from 'moment';
+import { format } from 'date-fns';
 
 export default class DaysController extends Controller {
   @service poller;
@@ -31,7 +31,7 @@ export default class DaysController extends Controller {
 
   @action
   changeDate(date) {
-    let dateString = moment(date).format('YYYY-MM-DD');
+    let dateString = format(date, 'yyyy-MM-dd');
     this.date = dateString;
   }
 

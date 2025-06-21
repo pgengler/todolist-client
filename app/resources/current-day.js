@@ -1,14 +1,14 @@
 import { cell, resource } from 'ember-resources';
-import moment from 'moment';
+import { isSameDay } from 'date-fns';
 
 const UPDATE_INTERVAL = 250; // in ms.
 
 export const CurrentDay = resource(({ on }) => {
-  let today = cell(moment());
+  let today = cell(new Date());
 
   let timer = setInterval(() => {
-    let now = moment();
-    if (!today.current.isSame(now, 'day')) {
+    let now = new Date();
+    if (!isSameDay(now, today.current)) {
       today.current = now;
     }
   }, UPDATE_INTERVAL);

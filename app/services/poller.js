@@ -2,9 +2,9 @@ import Service, { service } from '@ember/service';
 import { didCancel, dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 import { isTesting, macroCondition } from '@embroider/macros';
-import moment from 'moment';
 import { use } from 'ember-resources';
 import { CurrentDay } from 'ember-todo/resources/current-day';
+import { endOfDay, format, isBefore, parse, startOfDay } from 'date-fns';
 
 export default class PollerService extends Service {
   @service selectedDate;
@@ -53,7 +53,7 @@ export default class PollerService extends Service {
       include: 'tasks',
       filter: {
         'list-type': 'day',
-        date: this.selectedDate.dates.map((date) => date.format('YYYY-MM-DD')),
+        date: this.selectedDate.dates.map((date) => format(date, 'yyyy-MM-dd')),
       },
     });
     this.days = days.slice();
@@ -72,14 +72,18 @@ export default class PollerService extends Service {
   loadOverdueTasks = dropTask(async () => {
     if (!this.#loadOverdueTasks) return [];
     return await this.store.query('task', {
-      filter: { due_before: moment().format('YYYY-MM-DD') },
+      filter: { due_before: format(new Date(), 'yyyy-MM-dd') },
       sort: 'due-date,plaintext-description',
     });
   });
 
   get overdueTasks() {
     let tasks = this.loadOverdueTasks.lastSuccessful?.value ?? [];
-    return tasks.filter((task) => moment(task.dueDate).endOf('day').isBefore(this.today.startOf('day')));
+    let today = startOfDay(this.today);
+    return tasks.filter((task) => {
+      const taskDueDate = endOfDay(parse(task.dueDate, 'yyyy-MM-dd', new Date()));
+      return isBefore(taskDueDate, today);
+    });
   }
 
   get #loadOverdueTasks() {

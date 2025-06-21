@@ -1,18 +1,18 @@
 import Component from '@glimmer/component';
-import moment from 'moment';
 import Header from '../task-list/header';
+import { format, parse } from 'date-fns';
 
 export default class DayTasksHeader extends Component {
   get date() {
-    return moment(this.args.list.name);
+    return parse(this.args.list.name, 'yyyy-MM-dd', new Date());
   }
 
   get dayOfWeek() {
-    return this.date.format('dddd');
+    return format(this.date, 'EEEE');
   }
 
   get formattedDate() {
-    return this.date.format('MMM D, YYYY');
+    return format(this.date, 'MMM d, yyyy');
   }
 
   <template>
