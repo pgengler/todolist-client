@@ -6,7 +6,7 @@ module.exports = function (app) {
   let proxy = require('http-proxy').createProxyServer({});
 
   proxy.on('error', function (err, req) {
-    console.error(err, req.url); // eslint-disable-line no-console
+    console.error(err, req.url);
   });
 
   app.use(proxyPath, function (req, res /* , next */) {

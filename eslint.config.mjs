@@ -16,7 +16,6 @@ import globals from 'globals';
 import js from '@eslint/js';
 
 import ember from 'eslint-plugin-ember/recommended';
-import eslintConfigPrettier from 'eslint-config-prettier';
 import qunit from 'eslint-plugin-qunit';
 import n from 'eslint-plugin-n';
 
@@ -33,7 +32,6 @@ const esmParserOptions = {
 
 export default [
   js.configs.recommended,
-  eslintConfigPrettier,
   ember.configs.base,
   ember.configs.gjs,
   /**
@@ -79,6 +77,7 @@ export default [
     files: [
       '**/*.cjs',
       'config/**/*.js',
+      'server/**/*.js',
       'tests/dummy/config/**/*.js',
       'testem.js',
       'testem*.js',
