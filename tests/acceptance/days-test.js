@@ -6,7 +6,7 @@ import setupAcceptanceTest from 'ember-todo/tests/helpers/setup-acceptance-test'
 import { calendarSelect } from 'ember-power-calendar/test-support/helpers';
 import { authenticateSession } from 'ember-simple-auth/test-support';
 import { Collection } from 'miragejs';
-import moment from 'moment';
+import { format } from 'date-fns';
 
 module('Acceptance | Days', function (hooks) {
   setupAcceptanceTest(hooks);
@@ -83,7 +83,7 @@ module('Acceptance | Days', function (hooks) {
     this.server.createList('task', 3, { dueDate: '2023-01-01' });
 
     await visit('/days');
-    const today = moment().format('YYYY-MM-DD');
+    const today = format(new Date(), 'yyyy-MM-dd');
     assert.verifySteps([`fetched list of overdue tasks from server, due_before=${today}`]);
     assert.dom('[data-test-list-overdue]').exists('displays list for overdue tasks');
     assert.dom('[data-test-list-overdue] [data-test-task]').exists({ count: 3 });
@@ -102,7 +102,7 @@ module('Acceptance | Days', function (hooks) {
 
     this.server.createList('task', 12);
     await visit('/days');
-    const today = moment().format('YYYY-MM-DD');
+    const today = format(new Date(), 'yyyy-MM-dd');
     assert.verifySteps([`fetched list of overdue tasks from server, due_before=${today}`]);
     assert.dom('[data-test-list-overdue]').doesNotExist('"Overdue" list is not displayed');
   });

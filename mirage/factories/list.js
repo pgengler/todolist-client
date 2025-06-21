@@ -1,5 +1,5 @@
 import { Factory, trait } from 'miragejs';
-import moment from 'moment';
+import { format, subDays } from 'date-fns';
 
 export default Factory.extend({
   day: trait({
@@ -12,11 +12,11 @@ export default Factory.extend({
 
   today: trait({
     listType: 'day',
-    name: moment().format('YYYY-MM-DD'),
+    name: format(new Date(), 'yyyy-MM-dd'),
   }),
 
   yesterday: trait({
     listType: 'day',
-    name: moment().subtract(1, 'day').format('YYYY-MM-DD'),
+    name: format(subDays(new Date(), 1), 'yyyy-MM-dd'),
   }),
 });

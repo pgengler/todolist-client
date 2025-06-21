@@ -1,8 +1,8 @@
 import Service from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import moment from 'moment';
 import { use } from 'ember-resources';
 import { CurrentDay } from 'ember-todo/resources/current-day';
+import { addDays, subDays } from 'date-fns';
 
 export default class SelectedDateService extends Service {
   @tracked _date = null;
@@ -22,11 +22,7 @@ export default class SelectedDateService extends Service {
   }
 
   get dates() {
-    return [
-      moment(this.date).subtract(1, 'day'),
-      this.date,
-      ...[1, 2, 3].map((val) => moment(this.date).add(val, 'days')),
-    ];
+    return [subDays(this.date, 1), this.date, ...[1, 2, 3].map((val) => addDays(this.date, val))];
   }
 
   get startDate() {

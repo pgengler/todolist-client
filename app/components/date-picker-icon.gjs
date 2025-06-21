@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import moment from 'moment';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { on } from '@ember/modifier';
 import RangeDatepicker from './range-datepicker';
@@ -10,9 +9,8 @@ export default class DatePickerIcon extends Component {
   @tracked showingCalendar = false;
 
   @action
-  changeDate(newDate) {
-    let date = moment(newDate.moment.start).format('YYYY-MM-DD');
-    this.args.dateSelected(date);
+  changeDate({ date: range }) {
+    this.args.dateSelected(range.start);
     this.showingCalendar = false;
   }
 

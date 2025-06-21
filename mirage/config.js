@@ -1,7 +1,7 @@
 import { discoverEmberDataModels } from 'ember-cli-mirage';
 import { createServer } from 'miragejs';
 import config from 'ember-todo/config/environment';
-import moment from 'moment';
+import { endOfDay, isAfter, isBefore, parse } from 'date-fns';
 
 export default function (config) {
   let finalConfig = {
@@ -56,20 +56,20 @@ function routes() {
         const list = task.list;
         if (!list) return false;
         if (list.listType !== 'day') return false;
-        let listDate = moment(list.name).endOf('day');
-        return moment().isAfter(listDate);
+        let listDate = endOfDay(parse(list.name, 'yyyy-MM-dd', new Date()));
+        return isAfter(new Date(), listDate);
       });
     }
 
     if (request.queryParams['filter[due_before]']) {
-      const date = moment(request.queryParams['filter[due_before]']);
+      const date = parse(request.queryParams['filter[due_before]'], 'yyyy-MM-dd', new Date());
       result = result.filter((task) => {
         if (task.done) return false;
         const list = task.list;
         if (!list) return false;
         if (list.listType !== 'day') return false;
-        let listDate = moment(list.name).endOf('day');
-        return date.isAfter(listDate);
+        let listDate = endOfDay(parse(list.name, 'yyyy-MM-dd', new Date()));
+        return isAfter(date, listDate);
       });
     }
 
@@ -79,10 +79,10 @@ function routes() {
         if (a.list && !b.list) return -1;
         if (!a.list && b.list) return 1;
 
-        let aDate = moment(a.list.name);
-        let bDate = moment(b.list.name);
-        if (aDate.isBefore(bDate)) return -1;
-        if (bDate.isBefore(aDate)) return 1;
+        let aDate = parse(a.list.name, 'yyyy-MM-dd', new Date());
+        let bDate = parse(b.list.name, 'yyyy-MM-dd', new Date());
+        if (isBefore(aDate, bDate)) return -1;
+        if (isBefore(bDate, aDate)) return 1;
 
         let aDescription = a.description.replace(/[^A-Za-z0-9]/g, '');
         let bDescription = b.description.replace(/[^A-Za-z0-9]/g, '');

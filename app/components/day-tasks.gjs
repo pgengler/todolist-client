@@ -1,32 +1,35 @@
 import Component from '@glimmer/component';
-import moment from 'moment';
 import { use } from 'ember-resources';
 import { CurrentDay } from 'ember-todo/resources/current-day';
 import TaskList from './task-list';
 import DayTasksHeader from './day-tasks/header';
+import { format, isAfter, isBefore, isSameDay, parse, startOfDay } from 'date-fns';
 
 export default class DayTasks extends Component {
   @use today = CurrentDay;
 
   get date() {
-    return moment(this.args.list.name);
+    return parse(this.args.list.name, 'yyyy-MM-dd', new Date());
   }
 
   get formattedDate() {
-    return this.date.format('YYYY-MM-DD');
+    return format(this.date, 'yyyy-MM-dd');
   }
 
   get isPast() {
-    let date = this.date;
-    return date.isBefore(this.today, 'day') && !date.isSame(this.today, 'day');
+    let date = startOfDay(this.date);
+    let today = startOfDay(this.today);
+    return isBefore(date, today) && !isSameDay(date, today);
   }
 
   get isCurrent() {
-    return this.date.isSame(this.today, 'day');
+    return isSameDay(this.date, this.today);
   }
 
   get isFuture() {
-    return this.date.isAfter(this.today, 'day');
+    let date = startOfDay(this.date);
+    let today = startOfDay(this.today);
+    return isAfter(date, today);
   }
 
   <template>
