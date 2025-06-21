@@ -3,41 +3,68 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { isEmpty } from '@ember/utils';
-import { on } from "@ember/modifier";
-import preventDefault from "../helpers/prevent-default.js";
-import AutofocusElasticTextarea from "./autofocus-elastic-textarea.js";
-import MarkdownToHtml from "ember-showdown/components/markdown-to-html";
+import { on } from '@ember/modifier';
+import preventDefault from '../helpers/prevent-default.js';
+import AutofocusElasticTextarea from './autofocus-elastic-textarea.js';
+import MarkdownToHtml from 'ember-showdown/components/markdown-to-html';
 
 function taskDate(task) {
   if (!task) return null;
   return task.dueDate;
 }
 
-export default class TaskForm extends Component {<template><form class="task-form" {{on "submit" (preventDefault this.save)}} id={{this.formId}}>
-  <AutofocusElasticTextarea @onEnterPressed={{this.save}} @onEscapePressed={{@cancel}} @value={{this.description}} id="task-description" data-test-task-description placeholder="Task description" class="w-100" required />
-  <br /><br />
-  <input type="date" id="task-date" value={{this.taskDate}} {{on "focus" this.showPicker}} data-test-task-date required />
+export default class TaskForm extends Component {
+  <template>
+    <form class="task-form" {{on "submit" (preventDefault this.save)}} id={{this.formId}}>
+      <AutofocusElasticTextarea
+        @onEnterPressed={{this.save}}
+        @onEscapePressed={{@cancel}}
+        @value={{this.description}}
+        id="task-description"
+        data-test-task-description
+        placeholder="Task description"
+        class="w-100"
+        required
+      />
+      <br /><br />
+      <input
+        type="date"
+        id="task-date"
+        value={{this.taskDate}}
+        {{on "focus" this.showPicker}}
+        data-test-task-date
+        required
+      />
 
-  <br /><br />
-  {{#if this.editingNotes}}
-    <AutofocusElasticTextarea @onEscapePressed={{this.cancelNotesEdit}} @onEnterPressed={{this.save}} @value={{this.notes}} id="task-notes" data-test-task-notes class="w-100" placeholder="Notes (optional)" />
-  {{else}}
-    {{!-- template-lint-disable no-invalid-interactive --}}
-    <div {{on "click" this.startNotesEdit}} data-test-task-notes>
-      <MarkdownToHtml @markdown={{@task.notes}} />
-    </div>
-  {{/if}}
+      <br /><br />
+      {{#if this.editingNotes}}
+        <AutofocusElasticTextarea
+          @onEscapePressed={{this.cancelNotesEdit}}
+          @onEnterPressed={{this.save}}
+          @value={{this.notes}}
+          id="task-notes"
+          data-test-task-notes
+          class="w-100"
+          placeholder="Notes (optional)"
+        />
+      {{else}}
+        {{! template-lint-disable no-invalid-interactive }}
+        <div {{on "click" this.startNotesEdit}} data-test-task-notes>
+          <MarkdownToHtml @markdown={{@task.notes}} />
+        </div>
+      {{/if}}
 
-  <br /><br />
-  <button type="submit" data-test-save-task>
-    {{this.saveButtonLabel}}
-  </button>
-  <button type="button" {{on "click" @cancel}} data-test-cancel-button>
-    Cancel
-  </button>
+      <br /><br />
+      <button type="submit" data-test-save-task>
+        {{this.saveButtonLabel}}
+      </button>
+      <button type="button" {{on "click" @cancel}} data-test-cancel-button>
+        Cancel
+      </button>
 
-  {{yield to="footer"}}
-</form></template>
+      {{yield to="footer"}}
+    </form>
+  </template>
   @tracked description = this.args.task?.description;
   @tracked isEditingNotes = false;
   @tracked notes = this.args.task?.notes;

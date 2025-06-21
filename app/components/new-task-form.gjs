@@ -2,9 +2,10 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
-import TaskForm from "./task-form.gjs";
+import TaskForm from './task-form.gjs';
 
-export default class NewTaskForm extends Component {<template><TaskForm @save={{this.createTask}} @cancel={{@cancel}} @saveButtonLabel="Add" /></template>
+export default class NewTaskForm extends Component {
+  <template><TaskForm @save={{this.createTask}} @cancel={{@cancel}} @saveButtonLabel="Add" /></template>
   @service store;
 
   @action

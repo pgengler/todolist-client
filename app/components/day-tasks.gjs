@@ -2,12 +2,20 @@ import Component from '@glimmer/component';
 import moment from 'moment';
 import { use } from 'ember-resources';
 import { CurrentDay } from 'ember-todo/resources/current-day';
-import TaskList from "./task-list.js";
-import DayTasksHeader from "./day-tasks/header.js";
+import TaskList from './task-list.js';
+import DayTasksHeader from './day-tasks/header.js';
 
-export default class DayTasks extends Component {<template><TaskList @headerComponent={{component DayTasksHeader}} @list={{@list}} @editingEnd={{@editingEnd}} @editingStart={{@editingStart}} class="{{if this.isPast "past"}}
-    {{if this.isCurrent "current"}}
-    {{if this.isFuture "future"}}" data-test-date={{this.formattedDate}} /></template>
+export default class DayTasks extends Component {
+  <template>
+    <TaskList
+      @headerComponent={{component DayTasksHeader}}
+      @list={{@list}}
+      @editingEnd={{@editingEnd}}
+      @editingStart={{@editingStart}}
+      class="{{if this.isPast 'past'}} {{if this.isCurrent 'current'}} {{if this.isFuture 'future'}}"
+      data-test-date={{this.formattedDate}}
+    />
+  </template>
   @use today = CurrentDay;
 
   get date() {

@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { click, render } from '@ember/test-helpers';
 import { clickToEdit } from 'ember-todo/tests/helpers/click-to-edit';
-import SingleTask from "../../../app/components/single-task.js";
+import SingleTask from '../../../app/components/single-task.js';
 
 module('Integration | Component | SingleTask', function (hooks) {
   setupRenderingTest(hooks);
@@ -52,9 +52,7 @@ module('Integration | Component | SingleTask', function (hooks) {
     this.set('editingStart', () => {
       editingStartCalled = true;
     });
-    await render(<template>
-      <SingleTask @task={{this.task}} @editingStart={{this.editingStart}} />
-    </template>);
+    await render(<template><SingleTask @task={{this.task}} @editingStart={{this.editingStart}} /></template>);
     await clickToEdit('.task');
 
     assert.ok(editingStartCalled, 'made call to "editStart" action');

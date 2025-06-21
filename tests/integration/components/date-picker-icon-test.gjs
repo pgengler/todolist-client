@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { click, findAll, render } from '@ember/test-helpers';
 import { calendarSelect } from 'ember-power-calendar/test-support/helpers';
 import moment from 'moment';
-import DatePickerIcon from "../../../app/components/date-picker-icon.js";
+import DatePickerIcon from '../../../app/components/date-picker-icon.js';
 
 module('Integration | Component | DatePickerIcon', function (hooks) {
   setupRenderingTest(hooks);
@@ -17,9 +17,11 @@ module('Integration | Component | DatePickerIcon', function (hooks) {
         end: moment('2018-02-04'),
       },
     });
-    await render(<template>
-      <DatePickerIcon @dateSelected={{this.dateSelected}} @dateRange={{this.dateRange}} data-test-change-date />
-    </template>);
+    await render(
+      <template>
+        <DatePickerIcon @dateSelected={{this.dateSelected}} @dateRange={{this.dateRange}} data-test-change-date />
+      </template>,
+    );
 
     await click('[data-test-change-date]');
     await calendarSelect('.date-picker-content', new Date(2018, 1, 1));
@@ -32,9 +34,7 @@ module('Integration | Component | DatePickerIcon', function (hooks) {
       start: moment('2017-12-04'),
       end: moment('2017-12-06'),
     });
-    await render(<template>
-      <DatePickerIcon @dateRange={{this.dateRange}} data-test-change-date />
-    </template>);
+    await render(<template><DatePickerIcon @dateRange={{this.dateRange}} data-test-change-date /></template>);
 
     await click('[data-test-change-date]');
     let selectedDayElements = findAll('.date-picker-content .ember-power-calendar-day--selected');
