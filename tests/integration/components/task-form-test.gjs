@@ -3,38 +3,36 @@ import { setupRenderingTest } from 'ember-qunit';
 import { click, fillIn, render } from '@ember/test-helpers';
 import TaskForm from 'ember-todo/components/task-form';
 
+function noop() {}
+
 module('Integration | Component | TaskForm', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function () {
-    this.noop = () => {};
-  });
-
   test('when given a @task, prefills description field with task description', async function (assert) {
-    this.task = {
+    const task = {
       description: 'some task',
     };
-    await render(<template><TaskForm @task={{this.task}} @cancel={{this.noop}} /></template>);
+    await render(<template><TaskForm @task={{task}} @cancel={{noop}} /></template>);
 
     assert.dom('[data-test-task-description]').hasValue('some task');
   });
 
   test('Save button label defaults to "Save" if @saveButtonLabel is not present', async function (assert) {
-    await render(<template><TaskForm @cancel={{this.noop}} /></template>);
+    await render(<template><TaskForm @cancel={{noop}} /></template>);
 
     assert.dom('[data-test-save-task]').hasText('Save');
   });
 
   test('Save button gets label from @saveButtonLabel, if present', async function (assert) {
-    await render(<template><TaskForm @saveButtonLabel="Foo" @cancel={{this.noop}} /></template>);
+    await render(<template><TaskForm @saveButtonLabel="Foo" @cancel={{noop}} /></template>);
 
     assert.dom('[data-test-save-task]').hasText('Foo');
   });
 
   test('Save button triggers @save action when clicked and all required fields are present', async function (assert) {
-    this.onSave = ({ date, description }) =>
+    const onSave = ({ date, description }) =>
       assert.step(`save action triggered with date="${date}" and description="${description}"`);
-    await render(<template><TaskForm @save={{this.onSave}} @cancel={{this.noop}} /></template>);
+    await render(<template><TaskForm @save={{onSave}} @cancel={{noop}} /></template>);
 
     await click('[data-test-save-task]');
     assert.verifySteps([]);
@@ -49,8 +47,8 @@ module('Integration | Component | TaskForm', function (hooks) {
   });
 
   test('Cancel button triggers @cancel action when clicked', async function (assert) {
-    this.onCancel = () => assert.step('cancel action triggered');
-    await render(<template><TaskForm @cancel={{this.onCancel}} /></template>);
+    const onCancel = () => assert.step('cancel action triggered');
+    await render(<template><TaskForm @cancel={{onCancel}} /></template>);
 
     await click('[data-test-cancel-button]');
     assert.verifySteps(['cancel action triggered']);
@@ -59,7 +57,7 @@ module('Integration | Component | TaskForm', function (hooks) {
   test('renders content in <:footer> after save/cancel buttons', async function (assert) {
     await render(
       <template>
-        <TaskForm @cancel={{this.noop}}>
+        <TaskForm @cancel={{noop}}>
           <:footer>
             <div data-test-foo-bar></div>
           </:footer>

@@ -8,21 +8,21 @@ module('Integration | Component | SingleTask', function (hooks) {
   setupRenderingTest(hooks);
 
   test('displays a regular task', async function (assert) {
-    this.set('task', {
+    const task = {
       description: 'foo',
-    });
-    await render(<template><SingleTask @task={{this.task}} /></template>);
+    };
+    await render(<template><SingleTask @task={{task}} /></template>);
 
     assert.dom('input[type=checkbox]').exists('displays a checkbox');
     assert.dom('.task').hasText('foo', 'displays task description');
   });
 
   test('displays a pending task', async function (assert) {
-    this.set('task', {
+    const task = {
       isNew: true,
       description: 'bar',
-    });
-    await render(<template><SingleTask @task={{this.task}} /></template>);
+    };
+    await render(<template><SingleTask @task={{task}} /></template>);
 
     assert.dom('input[type=checkbox]').doesNotExist('does not show a checkbox for pending tasks');
     assert.dom('.fa-spinner').exists('shows a spinner');
@@ -31,11 +31,11 @@ module('Integration | Component | SingleTask', function (hooks) {
   });
 
   test('displays a task that failed to save', async function (assert) {
-    this.set('task', {
+    const task = {
       isError: true,
       description: 'baz',
-    });
-    await render(<template><SingleTask @task={{this.task}} /></template>);
+    };
+    await render(<template><SingleTask @task={{task}} /></template>);
 
     assert.dom('input[type=checkbox]').doesNotExist('does not show a checkbox');
     assert.dom('.fa-triangle-exclamation').exists('shows the right icon');
@@ -46,13 +46,13 @@ module('Integration | Component | SingleTask', function (hooks) {
 
   test('single-clicking a task enters edit mode', async function (assert) {
     let editingStartCalled = false;
-    this.set('task', {
+    const task = {
       description: 'foo bar',
-    });
-    this.set('editingStart', () => {
+    };
+    const editingStart = () => {
       editingStartCalled = true;
-    });
-    await render(<template><SingleTask @task={{this.task}} @editingStart={{this.editingStart}} /></template>);
+    };
+    await render(<template><SingleTask @task={{task}} @editingStart={{editingStart}} /></template>);
     await clickToEdit('.task');
 
     assert.ok(editingStartCalled, 'made call to "editStart" action');
@@ -63,11 +63,11 @@ module('Integration | Component | SingleTask', function (hooks) {
   });
 
   test('pending tasks are not editable', async function (assert) {
-    this.set('task', {
+    const task = {
       isNew: true,
       description: 'xyz',
-    });
-    await render(<template><SingleTask @task={{this.task}} /></template>);
+    };
+    await render(<template><SingleTask @task={{task}} /></template>);
     await click('.task');
 
     assert.dom('.task').doesNotHaveClass('editing');
@@ -75,11 +75,11 @@ module('Integration | Component | SingleTask', function (hooks) {
   });
 
   test('tasks that failed to save are editable', async function (assert) {
-    this.set('task', {
+    const task = {
       isError: true,
       description: 'abc',
-    });
-    await render(<template><SingleTask @task={{this.task}} /></template>);
+    };
+    await render(<template><SingleTask @task={{task}} /></template>);
     await clickToEdit('.task');
 
     assert.dom('.task').hasClass('editing');

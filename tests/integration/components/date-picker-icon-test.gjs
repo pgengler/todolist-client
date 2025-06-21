@@ -10,16 +10,14 @@ module('Integration | Component | DatePickerIcon', function (hooks) {
 
   test('triggers a dateSelected action when selecting a date', async function (assert) {
     let newDate;
-    this.setProperties({
-      dateSelected: (date) => (newDate = date),
-      dateRange: {
-        start: moment('2018-02-02'),
-        end: moment('2018-02-04'),
-      },
-    });
+    const dateSelected = (date) => (newDate = date);
+    const dateRange = {
+      start: moment('2018-02-02'),
+      end: moment('2018-02-04'),
+    };
     await render(
       <template>
-        <DatePickerIcon @dateSelected={{this.dateSelected}} @dateRange={{this.dateRange}} data-test-change-date />
+        <DatePickerIcon @dateSelected={{dateSelected}} @dateRange={{dateRange}} data-test-change-date />
       </template>,
     );
 
@@ -30,11 +28,11 @@ module('Integration | Component | DatePickerIcon', function (hooks) {
   });
 
   test('it highlights the currently-viewed dates', async function (assert) {
-    this.set('dateRange', {
+    const dateRange = {
       start: moment('2017-12-04'),
       end: moment('2017-12-06'),
-    });
-    await render(<template><DatePickerIcon @dateRange={{this.dateRange}} data-test-change-date /></template>);
+    };
+    await render(<template><DatePickerIcon @dateRange={{dateRange}} data-test-change-date /></template>);
 
     await click('[data-test-change-date]');
     let selectedDayElements = findAll('.date-picker-content .ember-power-calendar-day--selected');

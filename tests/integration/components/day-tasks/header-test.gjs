@@ -7,11 +7,10 @@ module('Integration | Component | DayTasks::Header', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders the day and formatted date', async function (assert) {
-    let list = {
+    const list = {
       name: '2017-12-31',
     };
-    this.set('list', list);
-    await render(<template><Header @list={{this.list}} /></template>);
+    await render(<template><Header @list={{list}} /></template>);
 
     assert.dom('h1').hasText('Sunday');
     assert.dom('h2').hasText('Dec 31, 2017');

@@ -7,10 +7,10 @@ module('Integration | Component | TaskList::Header', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders the list name', async function (assert) {
-    this.set('list', {
+    const list = {
       name: 'Foo Bar Baz',
-    });
-    await render(<template><Header @list={{this.list}} /></template>);
+    };
+    await render(<template><Header @list={{list}} /></template>);
 
     assert.dom('.task-list-header').exists('has header class');
     assert.dom('h1').hasText('Foo Bar Baz', 'renders list name');
