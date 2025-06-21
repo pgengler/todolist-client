@@ -1,2 +1,2 @@
-add|ember-template-lint|no-builtin-form-components|9|10|9|10|f423354106db0f7c80b79587357912c5bcd18b1b|1750464000000|||app/templates/login.hbs
-add|ember-template-lint|no-builtin-form-components|17|10|17|10|cef2088667afb42a33d2684edeca38f3bbb9189d|1750464000000|||app/templates/login.hbs
+add|ember-template-lint|no-builtin-form-components|13|12|13|12|88c3e09f53122446f28306613417f806937b87af|1750464000000|||app/templates/login.gjs
+add|ember-template-lint|no-builtin-form-components|21|12|21|12|b763bc2db7849111843a2fcd48885d69e808e40c|1750464000000|||app/templates/login.gjs
