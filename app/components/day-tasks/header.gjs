@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import moment from 'moment';
-import Header from '../task-list/header.gjs';
+import Header from '../task-list/header';
 
 export default class DayTasksHeader extends Component {
   get date() {

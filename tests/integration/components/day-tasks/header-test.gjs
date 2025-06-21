@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
-import Header from '../../../../app/components/day-tasks/header.js';
+import Header from 'ember-todo/components/day-tasks/header';
 
 module('Integration | Component | DayTasks::Header', function (hooks) {
   setupRenderingTest(hooks);

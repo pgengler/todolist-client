@@ -1,6 +1,6 @@
-import Header from './task-list/header.js';
-import SingleTask from './single-task.js';
-import draggableTask from '../modifiers/draggable-task.js';
+import Header from './task-list/header';
+import SingleTask from './single-task';
+import draggableTask from '../modifiers/draggable-task';
 
 <template>
   <div class="task-list has-unfinished-tasks past" data-test-list-overdue ...attributes>

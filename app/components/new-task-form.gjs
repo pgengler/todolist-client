@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
-import TaskForm from './task-form.gjs';
+import TaskForm from './task-form';
 
 export default class NewTaskForm extends Component {
   @service store;

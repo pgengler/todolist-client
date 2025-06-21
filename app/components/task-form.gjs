@@ -4,8 +4,8 @@ import { action } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { isEmpty } from '@ember/utils';
 import { on } from '@ember/modifier';
-import preventDefault from '../helpers/prevent-default.js';
-import AutofocusElasticTextarea from './autofocus-elastic-textarea.js';
+import preventDefault from '../helpers/prevent-default';
+import AutofocusElasticTextarea from './autofocus-elastic-textarea';
 import MarkdownToHtml from 'ember-showdown/components/markdown-to-html';
 
 function taskDate(task) {

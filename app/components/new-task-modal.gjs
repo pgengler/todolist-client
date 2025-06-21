@@ -1,5 +1,5 @@
-import showDialogOnInsert from '../modifiers/show-dialog-on-insert.js';
-import NewTaskForm from './new-task-form.js';
+import showDialogOnInsert from '../modifiers/show-dialog-on-insert';
+import NewTaskForm from './new-task-form';
 
 <template>
   <dialog class="new-task-dialog" {{showDialogOnInsert onClose=@onClose}}>

@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
-import Header from '../../../../app/components/task-list/header.gjs';
+import Header from 'ember-todo/components/task-list/header';
 
 module('Integration | Component | TaskList::Header', function (hooks) {
   setupRenderingTest(hooks);

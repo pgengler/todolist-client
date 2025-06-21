@@ -1,5 +1,5 @@
-import SingleLineTextarea from './single-line-textarea.gjs';
-import elasticTextarea from '../modifiers/elastic-textarea.js';
+import SingleLineTextarea from './single-line-textarea';
+import elasticTextarea from '../modifiers/elastic-textarea';
 
 <template>
   <SingleLineTextarea

@@ -6,9 +6,9 @@ import { LinkTo } from '@ember/routing';
 import { hash } from '@ember/helper';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { on } from '@ember/modifier';
-import DatePickerIcon from './date-picker-icon.js';
+import DatePickerIcon from './date-picker-icon';
 import FlashMessage from 'ember-cli-flash/components/flash-message';
-import NewTaskModal from './new-task-modal.js';
+import NewTaskModal from './new-task-modal';
 
 export default class TopNav extends Component {
   @service flashMessages;

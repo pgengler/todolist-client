@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import keyEvent from 'ember-todo/tests/helpers/key-event';
-import SingleLineTextarea from '../../../app/components/single-line-textarea.gjs';
+import SingleLineTextarea from 'ember-todo/components/single-line-textarea';
 
 module('Integration | Component | SingleLineTextarea', function (hooks) {
   setupRenderingTest(hooks);

@@ -1,4 +1,4 @@
-import TopNav from '../components/top-nav.js';
+import TopNav from '../components/top-nav';
 
 <template>
   <div class="page-wrapper">

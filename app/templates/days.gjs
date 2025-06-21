@@ -1,7 +1,7 @@
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import OverdueTaskList from '../components/overdue-task-list.js';
-import DayTasks from '../components/day-tasks.js';
-import TaskList from '../components/task-list.js';
+import OverdueTaskList from '../components/overdue-task-list';
+import DayTasks from '../components/day-tasks';
+import TaskList from '../components/task-list';
 
 <template>
   <div class="days">

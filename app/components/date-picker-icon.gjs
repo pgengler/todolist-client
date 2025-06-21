@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import moment from 'moment';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { on } from '@ember/modifier';
-import RangeDatepicker from './range-datepicker.gjs';
+import RangeDatepicker from './range-datepicker';
 
 export default class DatePickerIcon extends Component {
   @tracked showingCalendar = false;

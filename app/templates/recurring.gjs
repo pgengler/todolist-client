@@ -1,4 +1,4 @@
-import TaskList from '../components/task-list.js';
+import TaskList from '../components/task-list';
 
 <template>
   <div class="recurring-task-days">

@@ -4,12 +4,12 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { dropTask, timeout } from 'ember-concurrency';
 import { runTask } from 'ember-lifeline';
-import AutofocusElasticTextarea from './autofocus-elastic-textarea.js';
+import AutofocusElasticTextarea from './autofocus-elastic-textarea';
 import { on } from '@ember/modifier';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import perform from 'ember-concurrency/helpers/perform';
 import MarkdownToHtml from 'ember-showdown/components/markdown-to-html';
-import EditTaskModal from './edit-task-modal.js';
+import EditTaskModal from './edit-task-modal';
 
 export default class SingleTask extends Component {
   @tracked editType = null;

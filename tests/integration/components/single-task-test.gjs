@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { click, render } from '@ember/test-helpers';
 import { clickToEdit } from 'ember-todo/tests/helpers/click-to-edit';
-import SingleTask from '../../../app/components/single-task.js';
+import SingleTask from 'ember-todo/components/single-task';
 
 module('Integration | Component | SingleTask', function (hooks) {
   setupRenderingTest(hooks);

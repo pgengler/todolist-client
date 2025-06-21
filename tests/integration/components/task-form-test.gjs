@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { click, fillIn, render } from '@ember/test-helpers';
-import TaskForm from '../../../app/components/task-form.gjs';
+import TaskForm from 'ember-todo/components/task-form';
 
 module('Integration | Component | TaskForm', function (hooks) {
   setupRenderingTest(hooks);

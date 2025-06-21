@@ -1,5 +1,5 @@
 import { on } from '@ember/modifier';
-import preventDefault from '../helpers/prevent-default.js';
+import preventDefault from '../helpers/prevent-default';
 import { Input } from '@ember/component';
 
 <template>

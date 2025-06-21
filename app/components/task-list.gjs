@@ -6,10 +6,10 @@ import { tracked } from '@glimmer/tracking';
 import { runTask } from 'ember-lifeline';
 import TaskListHeaderComponent from 'ember-todo/components/task-list/header';
 import { on } from '@ember/modifier';
-import preventDefault from '../helpers/prevent-default.js';
-import SingleTask from './single-task.js';
-import draggableTask from '../modifiers/draggable-task.js';
-import ElasticTextarea from './elastic-textarea.js';
+import preventDefault from '../helpers/prevent-default';
+import SingleTask from './single-task';
+import draggableTask from '../modifiers/draggable-task';
+import ElasticTextarea from './elastic-textarea';
 
 function taskSort(a, b) {
   // unfinished tasks display above finished or pending

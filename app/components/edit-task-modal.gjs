@@ -1,5 +1,5 @@
-import showDialogOnInsert from '../modifiers/show-dialog-on-insert.js';
-import EditTaskForm from './edit-task-form.js';
+import showDialogOnInsert from '../modifiers/show-dialog-on-insert';
+import EditTaskForm from './edit-task-form';
 
 <template>
   <dialog class="edit-task-dialog" {{showDialogOnInsert onClose=@onClose}} data-test-edit-task-dialog>

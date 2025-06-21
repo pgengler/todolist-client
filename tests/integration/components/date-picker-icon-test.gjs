@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { click, findAll, render } from '@ember/test-helpers';
 import { calendarSelect } from 'ember-power-calendar/test-support/helpers';
 import moment from 'moment';
-import DatePickerIcon from '../../../app/components/date-picker-icon.js';
+import DatePickerIcon from 'ember-todo/components/date-picker-icon';
 
 module('Integration | Component | DatePickerIcon', function (hooks) {
   setupRenderingTest(hooks);
