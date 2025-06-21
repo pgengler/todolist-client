@@ -10,7 +10,6 @@ if (macroCondition(isDevelopingApp())) {
   importSync('./deprecation-workflow');
 }
 
-
 registerDateLibrary(DateUtils);
 
 export default class App extends Application {
