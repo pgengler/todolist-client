@@ -74,7 +74,7 @@
     "ember-resolver": "^13.1.1",
     "ember-resources": "^7.0.0",
     "ember-showdown": "^2.0.0-pre.1",
-    "ember-simple-auth": "^8.0.0",
+    "ember-simple-auth": "6.0.0-rc.1",
     "ember-source": "~6.5.0",
     "ember-template-imports": "^4.3.0",
     "ember-template-lint": "^6.1.0",
