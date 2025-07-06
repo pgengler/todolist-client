@@ -90,8 +90,8 @@ importers:
         specifier: ^3.0.0
         version: 3.0.0
       ember-cli-deploy-with-rsync:
-        specifier: 0.4.0-beta.2
-        version: 0.4.0-beta.2
+        specifier: ^0.4.0
+        version: 0.4.0
       ember-cli-deprecation-workflow:
         specifier: ^3.3.0
         version: 3.3.0(ember-source@6.5.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
@@ -2859,8 +2859,8 @@ packages:
     resolution: {integrity: sha512-Sas5fenzGeflGjGCDDRfbDGJZbgEQ+3yUFncFvh+Y2Qv1u3nT0boDO+S33FjbJf3zRuHqZHY+Z+Joi4fed10jg==}
     engines: {node: 14.x || 16.x || 18.x || >= 20}
 
-  ember-cli-deploy-with-rsync@0.4.0-beta.2:
-    resolution: {integrity: sha512-tOl1GChFDniB07vTYCROAxTRJMcNjjd0lPc51GhAbQB6JjmBZyFuBrVqkMWlPKamHdnKD3T5YC7RPcQjNTxXDA==}
+  ember-cli-deploy-with-rsync@0.4.0:
+    resolution: {integrity: sha512-Kldd6xx+cY8aaopY0SENuHCnoK6/j85H9JC3XQG22P++Y2TCFmhV6vd2Zcovl0rZo6lxdmAzNaa35WEE+SwX4g==}
     engines: {node: 6.* || 8.* || >= 10.*}
 
   ember-cli-deploy@2.0.0:
@@ -9680,7 +9680,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-cli-deploy-with-rsync@0.4.0-beta.2:
+  ember-cli-deploy-with-rsync@0.4.0:
     dependencies:
       ember-cli-babel: 7.26.11
       ember-cli-deploy-plugin: 0.2.9

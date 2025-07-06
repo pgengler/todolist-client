@@ -52,7 +52,7 @@
     "ember-cli-deploy-build": "^3.0.0",
     "ember-cli-deploy-display-revisions": "^3.0.0",
     "ember-cli-deploy-revision-data": "^3.0.0",
-    "ember-cli-deploy-with-rsync": "0.4.0-beta.2",
+    "ember-cli-deploy-with-rsync": "^0.4.0",
     "ember-cli-deprecation-workflow": "^3.3.0",
     "ember-cli-flash": "^6.0.0",
     "ember-cli-htmlbars": "^6.3.0",
