@@ -9,19 +9,29 @@ import { on } from '@ember/modifier';
 import DatePickerIcon from './date-picker-icon';
 import FlashMessage from 'ember-cli-flash/components/flash-message';
 import NewTaskModal from './new-task-modal';
+import type FlashMessagesService from 'ember-cli-flash/services/flash-messages';
+import type SelectedDateService from 'ember-todo/services/selected-date';
 
-export default class TopNav extends Component {
-  @service flashMessages;
+interface TopNavSignature {
+  Args: {
+    changeDate: (date: Date) => void;
+    logout: (event: Event) => void;
+    selectedDate: SelectedDateService;
+  };
+}
+
+export default class TopNav extends Component<TopNavSignature> {
+  @service declare flashMessages: FlashMessagesService;
 
   @tracked isShowingNewTaskModal = false;
 
   @action
-  closeModal() {
+  closeModal(): void {
     this.isShowingNewTaskModal = false;
   }
 
   @action
-  toggleModal() {
+  toggleModal(): void {
     this.isShowingNewTaskModal = !this.isShowingNewTaskModal;
   }
 

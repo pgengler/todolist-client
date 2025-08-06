@@ -6,7 +6,7 @@ interface ElasticTextareaSignature {
   Args: {
     onEnterPressed?: (value: string) => void;
     onEscapePressed?: () => void;
-    value: string;
+    value?: string | null;
   };
   Element: HTMLTextAreaElement;
 }

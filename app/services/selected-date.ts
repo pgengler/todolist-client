@@ -4,8 +4,13 @@ import { use } from 'ember-resources';
 import { CurrentDay } from 'ember-todo/resources/current-day';
 import { addDays, subDays } from 'date-fns';
 
+export type DateRange = {
+  start: Date;
+  end: Date;
+};
+
 export default class SelectedDateService extends Service {
-  @tracked _date = null;
+  @tracked _date: Date | null = null;
 
   @use today = CurrentDay;
 
@@ -26,14 +31,14 @@ export default class SelectedDateService extends Service {
   }
 
   get startDate() {
-    return this.dates[0];
+    return this.dates[0]!;
   }
 
   get endDate() {
-    return this.dates[this.dates.length - 1];
+    return this.dates[this.dates.length - 1]!;
   }
 
-  get dateRange() {
+  get dateRange(): DateRange {
     return {
       start: this.startDate,
       end: this.endDate,

@@ -4,18 +4,27 @@ import { action } from '@ember/object';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { on } from '@ember/modifier';
 import RangeDatepicker from './range-datepicker';
+import type { DateRange } from 'ember-todo/services/selected-date';
 
-export default class DatePickerIcon extends Component {
+interface DatePickerIconSignature {
+  Args: {
+    dateRange: DateRange;
+    dateSelected: (date: Date) => void;
+  };
+  Element: HTMLDivElement;
+}
+
+export default class DatePickerIcon extends Component<DatePickerIconSignature> {
   @tracked showingCalendar = false;
 
   @action
-  changeDate({ date: range }) {
+  changeDate(range: DateRange): void {
     this.args.dateSelected(range.start);
     this.showingCalendar = false;
   }
 
   @action
-  toggleCalendar() {
+  toggleCalendar(): void {
     this.showingCalendar = !this.showingCalendar;
   }
 

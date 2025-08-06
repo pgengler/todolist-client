@@ -7,60 +7,76 @@ import { on } from '@ember/modifier';
 import preventDefault from '../helpers/prevent-default';
 import AutofocusElasticTextarea from './autofocus-elastic-textarea';
 import MarkdownToHtml from 'ember-showdown/components/markdown-to-html';
+import type Task from 'ember-todo/models/task';
 
-function taskDate(task) {
+function taskDate(task?: Task): string | null {
   if (!task) return null;
   return task.dueDate;
 }
 
-export default class TaskForm extends Component {
+interface TaskFormSignature {
+  Args: {
+    cancel: () => void;
+    task?: Task;
+    saveButtonLabel?: string;
+    save?: (task: { date: string; description: string; notes: string }) => Promise<void>;
+  };
+  Blocks: {
+    footer: [];
+  };
+}
+
+export default class TaskForm extends Component<TaskFormSignature> {
   @tracked description = this.args.task?.description;
   @tracked isEditingNotes = false;
   @tracked notes = this.args.task?.notes;
   @tracked taskDate = taskDate(this.args.task);
 
-  get editingNotes() {
+  get editingNotes(): boolean {
     return !this.args.task || this.args.task?.isNew || isEmpty(this.args.task?.notes) || this.isEditingNotes;
   }
 
-  get formId() {
+  get formId(): string {
     return `task-form-${guidFor(this)}`;
   }
 
-  get saveButtonLabel() {
+  get saveButtonLabel(): string {
     return this.args.saveButtonLabel ?? 'Save';
   }
 
-  showPicker(event) {
+  showPicker(event: Event) {
     try {
-      event.target.showPicker();
+      (event.target as HTMLInputElement).showPicker();
     } catch {
       // this can fail in tests and we don't care
     }
   }
 
   @action
-  async save() {
-    let form = document.getElementById(this.formId);
+  async save(): Promise<void> {
+    const form = document.getElementById(this.formId)!;
 
-    let date = form.querySelector('#task-date').value;
-    let description = form.querySelector('#task-description').value.trim();
-    let notes = form.querySelector('#task-notes')?.value.trim() || this.args.task?.notes;
+    const date = (form.querySelector('#task-date') as HTMLInputElement).value;
+    const description = (form.querySelector('#task-description') as HTMLTextAreaElement).value.trim();
+    const notes =
+      (form.querySelector('#task-notes') as HTMLTextAreaElement | undefined)?.value.trim() ||
+      this.args.task?.notes ||
+      '';
 
     if (isEmpty(description) || isEmpty(date)) {
       return;
     }
 
-    this.args.save?.({ date, description, notes });
+    await this.args.save?.({ date, description, notes });
   }
 
   @action
-  startNotesEdit() {
+  startNotesEdit(): void {
     this.isEditingNotes = true;
   }
 
   @action
-  cancelNotesEdit() {
+  cancelNotesEdit(): void {
     this.isEditingNotes = false;
   }
 

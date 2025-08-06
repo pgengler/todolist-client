@@ -127,5 +127,10 @@
   },
   "ember": {
     "edition": "octane"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "ember-power-calendar": "patches/ember-power-calendar.patch"
+    }
   }
 }

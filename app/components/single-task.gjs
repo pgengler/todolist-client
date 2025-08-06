@@ -170,6 +170,7 @@ export default class SingleTask extends Component {
             {{/if}}
           </div>
 
+          {{! template-lint-disable require-presentational-children }}
           <div
             class="description"
             role="button"
@@ -177,8 +178,9 @@ export default class SingleTask extends Component {
             {{on "dblclick" this.editTask}}
             {{on "touchend" this.simulateDoubleClicks}}
           >
-            <MarkdownToHtml @markdown={{@task.description}} role="presentation" />
+            <MarkdownToHtml @markdown={{@task.description}} />
           </div>
+          {{! template-lint-enable require-presentational-children }}
 
           {{#if @task.notes}}
             <div>

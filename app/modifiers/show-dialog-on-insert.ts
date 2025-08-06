@@ -2,7 +2,7 @@ import { modifier } from 'ember-modifier';
 
 type PositionalArgs = [];
 type NamedArgs = {
-  onClose(event: Event): void;
+  onClose(this: void, event: Event): void;
 };
 
 export default modifier(function showDialogOnInsert(

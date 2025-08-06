@@ -3,17 +3,26 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
 import TaskForm from './task-form';
+import type Store from '@ember-data/store';
+import type Task from 'ember-todo/models/task';
 
-export default class NewTaskForm extends Component {
-  @service store;
+interface NewTaskFormSignature {
+  Args: {
+    cancel: () => void;
+    onTaskCreated?: () => void;
+  };
+}
+
+export default class NewTaskForm extends Component<NewTaskFormSignature> {
+  @service declare store: Store;
 
   @action
-  async createTask({ date, description, notes }) {
+  async createTask({ date, description, notes }: { date: string; description: string; notes: string }): Promise<void> {
     if (isEmpty(description) || isEmpty(date)) {
       return;
     }
 
-    let lists = await this.store.query('list', {
+    const lists = await this.store.query('list', {
       filter: {
         'list-type': 'day',
         date,
@@ -23,7 +32,7 @@ export default class NewTaskForm extends Component {
       },
     });
 
-    let task = this.store.createRecord('task', {
+    const task = <Task>this.store.createRecord('task', {
       description,
       notes,
       list: lists[0],

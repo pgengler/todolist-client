@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  ember-power-calendar:
+    hash: 00e5f42a6f418a3f590582776fb05043d1f33e50e06c51a1cfdd68f74e5c4a51
+    path: patches/ember-power-calendar.patch
+
 importers:
 
   .:
@@ -205,10 +210,10 @@ importers:
         version: 9.0.2
       ember-power-calendar:
         specifier: ^1.5.4
-        version: 1.5.4(@babel/core@7.27.4)(@ember/test-helpers@5.2.2(@babel/core@7.27.4)(@glint/template@1.5.2))(@glimmer/component@2.0.0)(@glint/environment-ember-loose@1.5.2(@glimmer/component@2.0.0)(@glint/template@1.5.2)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.2.2(@babel/core@7.27.4)))(@glint/template@1.5.2)(ember-concurrency@4.0.4(@babel/core@7.27.4)(@glint/template@1.5.2))(ember-source@6.5.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
+        version: 1.5.4(patch_hash=00e5f42a6f418a3f590582776fb05043d1f33e50e06c51a1cfdd68f74e5c4a51)(@babel/core@7.27.4)(@ember/test-helpers@5.2.2(@babel/core@7.27.4)(@glint/template@1.5.2))(@glimmer/component@2.0.0)(@glint/environment-ember-loose@1.5.2(@glimmer/component@2.0.0)(@glint/template@1.5.2)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.2.2(@babel/core@7.27.4)))(@glint/template@1.5.2)(ember-concurrency@4.0.4(@babel/core@7.27.4)(@glint/template@1.5.2))(ember-source@6.5.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
       ember-power-calendar-date-fns:
         specifier: ^1.0.0
-        version: 1.0.0(date-fns@4.1.0)(ember-power-calendar@1.5.4(@babel/core@7.27.4)(@ember/test-helpers@5.2.2(@babel/core@7.27.4)(@glint/template@1.5.2))(@glimmer/component@2.0.0)(@glint/environment-ember-loose@1.5.2(@glimmer/component@2.0.0)(@glint/template@1.5.2)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.2.2(@babel/core@7.27.4)))(@glint/template@1.5.2)(ember-concurrency@4.0.4(@babel/core@7.27.4)(@glint/template@1.5.2))(ember-source@6.5.0(@glimmer/component@2.0.0)(rsvp@4.8.5)))
+        version: 1.0.0(date-fns@4.1.0)(ember-power-calendar@1.5.4(patch_hash=00e5f42a6f418a3f590582776fb05043d1f33e50e06c51a1cfdd68f74e5c4a51)(@babel/core@7.27.4)(@ember/test-helpers@5.2.2(@babel/core@7.27.4)(@glint/template@1.5.2))(@glimmer/component@2.0.0)(@glint/environment-ember-loose@1.5.2(@glimmer/component@2.0.0)(@glint/template@1.5.2)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.2.2(@babel/core@7.27.4)))(@glint/template@1.5.2)(ember-concurrency@4.0.4(@babel/core@7.27.4)(@glint/template@1.5.2))(ember-source@6.5.0(@glimmer/component@2.0.0)(rsvp@4.8.5)))
       ember-qunit:
         specifier: ^9.0.3
         version: 9.0.3(@ember/test-helpers@5.2.2(@babel/core@7.27.4)(@glint/template@1.5.2))(@glint/template@1.5.2)(qunit@2.24.1)
@@ -11321,15 +11326,15 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-power-calendar-date-fns@1.0.0(date-fns@4.1.0)(ember-power-calendar@1.5.4(@babel/core@7.27.4)(@ember/test-helpers@5.2.2(@babel/core@7.27.4)(@glint/template@1.5.2))(@glimmer/component@2.0.0)(@glint/environment-ember-loose@1.5.2(@glimmer/component@2.0.0)(@glint/template@1.5.2)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.2.2(@babel/core@7.27.4)))(@glint/template@1.5.2)(ember-concurrency@4.0.4(@babel/core@7.27.4)(@glint/template@1.5.2))(ember-source@6.5.0(@glimmer/component@2.0.0)(rsvp@4.8.5))):
+  ember-power-calendar-date-fns@1.0.0(date-fns@4.1.0)(ember-power-calendar@1.5.4(patch_hash=00e5f42a6f418a3f590582776fb05043d1f33e50e06c51a1cfdd68f74e5c4a51)(@babel/core@7.27.4)(@ember/test-helpers@5.2.2(@babel/core@7.27.4)(@glint/template@1.5.2))(@glimmer/component@2.0.0)(@glint/environment-ember-loose@1.5.2(@glimmer/component@2.0.0)(@glint/template@1.5.2)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.2.2(@babel/core@7.27.4)))(@glint/template@1.5.2)(ember-concurrency@4.0.4(@babel/core@7.27.4)(@glint/template@1.5.2))(ember-source@6.5.0(@glimmer/component@2.0.0)(rsvp@4.8.5))):
     dependencies:
       '@embroider/addon-shim': 1.10.0
       date-fns: 4.1.0
-      ember-power-calendar: 1.5.4(@babel/core@7.27.4)(@ember/test-helpers@5.2.2(@babel/core@7.27.4)(@glint/template@1.5.2))(@glimmer/component@2.0.0)(@glint/environment-ember-loose@1.5.2(@glimmer/component@2.0.0)(@glint/template@1.5.2)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.2.2(@babel/core@7.27.4)))(@glint/template@1.5.2)(ember-concurrency@4.0.4(@babel/core@7.27.4)(@glint/template@1.5.2))(ember-source@6.5.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
+      ember-power-calendar: 1.5.4(patch_hash=00e5f42a6f418a3f590582776fb05043d1f33e50e06c51a1cfdd68f74e5c4a51)(@babel/core@7.27.4)(@ember/test-helpers@5.2.2(@babel/core@7.27.4)(@glint/template@1.5.2))(@glimmer/component@2.0.0)(@glint/environment-ember-loose@1.5.2(@glimmer/component@2.0.0)(@glint/template@1.5.2)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.2.2(@babel/core@7.27.4)))(@glint/template@1.5.2)(ember-concurrency@4.0.4(@babel/core@7.27.4)(@glint/template@1.5.2))(ember-source@6.5.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
     transitivePeerDependencies:
       - supports-color
 
-  ember-power-calendar@1.5.4(@babel/core@7.27.4)(@ember/test-helpers@5.2.2(@babel/core@7.27.4)(@glint/template@1.5.2))(@glimmer/component@2.0.0)(@glint/environment-ember-loose@1.5.2(@glimmer/component@2.0.0)(@glint/template@1.5.2)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.2.2(@babel/core@7.27.4)))(@glint/template@1.5.2)(ember-concurrency@4.0.4(@babel/core@7.27.4)(@glint/template@1.5.2))(ember-source@6.5.0(@glimmer/component@2.0.0)(rsvp@4.8.5)):
+  ember-power-calendar@1.5.4(patch_hash=00e5f42a6f418a3f590582776fb05043d1f33e50e06c51a1cfdd68f74e5c4a51)(@babel/core@7.27.4)(@ember/test-helpers@5.2.2(@babel/core@7.27.4)(@glint/template@1.5.2))(@glimmer/component@2.0.0)(@glint/environment-ember-loose@1.5.2(@glimmer/component@2.0.0)(@glint/template@1.5.2)(ember-cli-htmlbars@6.3.0)(ember-modifier@4.2.2(@babel/core@7.27.4)))(@glint/template@1.5.2)(ember-concurrency@4.0.4(@babel/core@7.27.4)(@glint/template@1.5.2))(ember-source@6.5.0(@glimmer/component@2.0.0)(rsvp@4.8.5)):
     dependencies:
       '@ember/test-helpers': 5.2.2(@babel/core@7.27.4)(@glint/template@1.5.2)
       '@embroider/addon-shim': 1.10.0
