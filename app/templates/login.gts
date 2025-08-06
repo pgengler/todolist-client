@@ -5,13 +5,15 @@ import { action } from '@ember/object';
 import { service } from '@ember/service';
 import preventDefault from '../helpers/prevent-default';
 import { Input } from '@ember/component';
+import type RouterService from '@ember/routing/router-service';
+import type SessionService from 'ember-simple-auth/services/session';
 
 export default class extends Component {
   @tracked email = null;
   @tracked password = null;
 
-  @service router;
-  @service session;
+  @service declare router: RouterService;
+  @service declare session: SessionService;
 
   @action
   async login() {
@@ -34,6 +36,7 @@ export default class extends Component {
               <label for="email">Email address</label>
             </td>
             <td>
+              {{! template-lint-disable no-builtin-form-components }}
               <Input @type="text" @value={{this.email}} id="email" />
             </td>
           </tr>
@@ -42,6 +45,7 @@ export default class extends Component {
               <label for="password">Password</label>
             </td>
             <td>
+              {{! template-lint-disable no-builtin-form-components }}
               <Input @type="password" @value={{this.password}} id="password" />
             </td>
           </tr>
