@@ -2,14 +2,14 @@ import { modifier } from 'ember-modifier';
 import type Task from 'ember-todo/models/task';
 
 type NamedArgs = {
-  onDragStart(this: void, task: Task): void;
-  onDragEnd(this: void, task: Task): void;
+  onDragStart?: (this: void, task: Task) => void;
+  onDragEnd?: (this: void, task: Task) => void;
 };
 
 type PositionalArgs = [task: Task];
 
 export default modifier(function draggableTask(
-  element: HTMLDivElement,
+  element: HTMLLIElement,
   [task]: PositionalArgs,
   { onDragStart, onDragEnd }: NamedArgs,
 ) {

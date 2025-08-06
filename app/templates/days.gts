@@ -6,10 +6,12 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import OverdueTaskList from '../components/overdue-task-list';
 import DayTasks from '../components/day-tasks';
 import TaskList from '../components/task-list';
+import type PollerService from 'ember-todo/services/poller';
+import type SelectedDateService from 'ember-todo/services/selected-date';
 
 export default class extends Component {
-  @service poller;
-  @service selectedDate;
+  @service declare poller: PollerService;
+  @service declare selectedDate: SelectedDateService;
 
   get showOverdueTasks() {
     // show "Overdue" section only if there _are_ overdue tasks, and an explicit date isn't being used
@@ -30,12 +32,12 @@ export default class extends Component {
 
   @action
   stopPolling() {
-    this.poller.stop();
+    void this.poller.stop();
   }
 
   @action
   startPolling() {
-    this.poller.start();
+    void this.poller.start();
   }
 
   <template>

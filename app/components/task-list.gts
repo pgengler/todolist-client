@@ -4,14 +4,18 @@ import { compare } from '@ember/utils';
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { runTask } from 'ember-lifeline';
-import TaskListHeaderComponent from 'ember-todo/components/task-list/header';
+import TaskListHeader from 'ember-todo/components/task-list/header';
 import { on } from '@ember/modifier';
 import preventDefault from '../helpers/prevent-default';
 import SingleTask from './single-task';
 import draggableTask from '../modifiers/draggable-task';
 import ElasticTextarea from './elastic-textarea';
+import type Task from 'ember-todo/models/task';
+import type List from 'ember-todo/models/list';
+import type FlashMessagesService from 'ember-cli-flash/services/flash-messages';
+import type Store from '@ember-data/store';
 
-function taskSort(a, b) {
+function taskSort(a: Task, b: Task): number {
   // unfinished tasks display above finished or pending
   if (a.done === true && b.done === false) return 1;
   if (a.done === false && b.done === true) return -1;
@@ -24,16 +28,24 @@ function taskSort(a, b) {
   return compare(a.plaintextDescription, b.plaintextDescription);
 }
 
-export default class TaskList extends Component {
-  @tracked dragClass = '';
+interface TaskListSignature {
+  Args: {
+    editingStart?: () => void;
+    editingEnd?: () => void;
+    list: List;
+  };
+  Blocks: {
+    header?: [() => void];
+  };
+  Element: HTMLDivElement;
+}
+
+export default class TaskList extends Component<TaskListSignature> {
+  @tracked declare dragClass: string;
   taskSorting = ['plaintextDescription'];
 
-  @service flashMessages;
-  @service store;
-
-  get headerComponent() {
-    return this.args.headerComponent || TaskListHeaderComponent;
-  }
+  @service declare flashMessages: FlashMessagesService;
+  @service declare store: Store;
 
   get newTaskFieldId() {
     return `list-${this.args.list.id}-new-task`;
@@ -51,12 +63,12 @@ export default class TaskList extends Component {
     return this.unfinishedTasks.length > 0;
   }
 
-  cloneTask(task) {
-    let newTask = this.store.createRecord('task', {
+  async cloneTask(task: Task): Promise<void> {
+    const newTask = <Task>this.store.createRecord('task', {
       list: this.args.list,
       description: task.description,
     });
-    newTask.save();
+    await newTask.save();
   }
 
   @action
@@ -70,33 +82,33 @@ export default class TaskList extends Component {
   }
 
   @action
-  async dropped(event) {
-    let id = event.dataTransfer.getData('text/data');
-    let cloningTask = event.ctrlKey ? true : false;
+  async dropped(event: DragEvent): Promise<void> {
+    const id = event.dataTransfer!.getData('text/data');
+    const cloningTask = event.ctrlKey ? true : false;
 
     this.dragClass = '';
 
-    let task = await this.store.findRecord('task', id);
+    const task = <Task>await this.store.findRecord('task', id);
     if (cloningTask) {
-      this.cloneTask(task);
+      await this.cloneTask(task);
     } else {
-      this.moveTaskToList(task);
+      await this.moveTaskToList(task);
     }
   }
 
-  async moveTaskToList(task) {
+  async moveTaskToList(task: Task): Promise<void> {
     task.list = this.args.list;
     await task.save();
     this.args.editingEnd?.();
   }
 
   @action
-  addTask(description) {
+  addTask(description: string): void {
     description = description.trim();
     if (!description) {
       return;
     }
-    let task = this.store.createRecord('task', {
+    const task = <Task>this.store.createRecord('task', {
       description,
       list: this.args.list,
     });
@@ -109,21 +121,21 @@ export default class TaskList extends Component {
     runTask(this, async () => {
       try {
         await task.save();
-        document.getElementById(this.newTaskFieldId).scrollIntoView();
+        document.getElementById(this.newTaskFieldId)?.scrollIntoView();
       } catch (err) {
-        this.flashMessages.error(err);
+        this.flashMessages.alert(<string>err);
       }
     });
   }
 
   @action
-  clearTextarea() {
-    document.getElementById(this.newTaskFieldId).value = '';
+  clearTextarea(): void {
+    (document.getElementById(this.newTaskFieldId) as HTMLTextAreaElement).value = '';
   }
 
   @action
-  focusNewTaskField() {
-    document.getElementById(this.newTaskFieldId).focus();
+  focusNewTaskField(): void {
+    document.getElementById(this.newTaskFieldId)?.focus();
   }
 
   <template>
@@ -135,7 +147,11 @@ export default class TaskList extends Component {
       {{on "drop" this.dropped}}
       ...attributes
     >
-      <this.headerComponent @list={{@list}} {{on "click" this.focusNewTaskField}} />
+      {{#if (has-block "header")}}
+        {{yield this.focusNewTaskField to="header"}}
+      {{else}}
+        <TaskListHeader @list={{@list}} {{on "click" this.focusNewTaskField}} />
+      {{/if}}
       <ul>
         {{#each this.sortedTasks as |task|}}
           <SingleTask

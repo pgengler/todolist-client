@@ -1,8 +1,19 @@
 import Header from './task-list/header';
 import SingleTask from './single-task';
 import draggableTask from '../modifiers/draggable-task';
+import type Task from 'ember-todo/models/task';
+import type { TOC } from '@ember/component/template-only';
 
-<template>
+interface OverdueTaskListSignature {
+  Args: {
+    editingStart?: () => void;
+    editingEnd?: () => void;
+    tasks: Task[];
+  };
+  Element: HTMLDivElement;
+}
+
+export default <template>
   <div class="task-list has-unfinished-tasks past" data-test-list-overdue ...attributes>
     <Header>
       <h1>Overdue</h1>
@@ -24,4 +35,4 @@ import draggableTask from '../modifiers/draggable-task';
       {{/each}}
     </ul>
   </div>
-</template>
+</template> satisfies TOC<OverdueTaskListSignature>;

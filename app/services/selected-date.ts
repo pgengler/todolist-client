@@ -14,11 +14,11 @@ export default class SelectedDateService extends Service {
 
   @use today = CurrentDay;
 
-  get date() {
+  get date(): Date {
     return this._date ?? this.today;
   }
 
-  set date(date) {
+  set date(date: Date | null) {
     this._date = date;
   }
 

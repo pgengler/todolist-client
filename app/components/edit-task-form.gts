@@ -4,30 +4,44 @@ import { service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
 import TaskForm from './task-form';
 import { on } from '@ember/modifier';
+import type List from 'ember-todo/models/list';
+import type Task from 'ember-todo/models/task';
+import type Store from '@ember-data/store';
 
-export default class EditTaskForm extends Component {
-  @service store;
+interface EditTaskFormSignature {
+  Args: {
+    cancel: () => void;
+    onTaskDeleted?: () => void;
+    onTaskSaved?: () => void;
+    task: Task;
+  };
+}
+
+export default class EditTaskForm extends Component<EditTaskFormSignature> {
+  @service declare store: Store;
 
   @action
-  async save({ date, description, notes }) {
-    let task = this.args.task;
+  async save({ date, description, notes }: { date: string; description: string; notes: string }) {
+    const task = this.args.task;
 
     if (isEmpty(description) || isEmpty(date)) {
       return;
     }
 
-    let lists = await this.store.query('list', {
-      filter: {
-        'list-type': 'day',
-        date,
-      },
-      page: {
-        size: 1,
-      },
-    });
+    const lists = <List[]>(
+      await this.store.query('list', {
+        filter: {
+          'list-type': 'day',
+          date,
+        },
+        page: {
+          size: 1,
+        },
+      })
+    ).slice();
 
     task.description = description;
-    task.list = lists[0];
+    task.list = lists[0] ?? null;
     task.notes = notes;
     await task.save();
 
@@ -36,7 +50,7 @@ export default class EditTaskForm extends Component {
 
   @action
   async deleteTask() {
-    let task = this.args.task;
+    const task = this.args.task;
 
     await task.destroyRecord();
     this.args.onTaskDeleted?.();

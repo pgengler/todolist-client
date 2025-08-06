@@ -10,13 +10,37 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import perform from 'ember-concurrency/helpers/perform';
 import MarkdownToHtml from 'ember-showdown/components/markdown-to-html';
 import EditTaskModal from './edit-task-modal';
+import type Task from 'ember-todo/models/task';
 
-export default class SingleTask extends Component {
-  @tracked editType = null;
-  @tracked editDescription;
+type EditType = 'full' | 'quick' | null;
 
-  get editable() {
-    let task = this.args.task;
+type TouchEventInfo = {
+  clientX: number;
+  clientY: number;
+  when: number;
+};
+
+interface SingleTaskSignature {
+  Args: {
+    editingStart?: () => void;
+    editingEnd?: () => void;
+    task: Task;
+  };
+  Blocks: {
+    after?: [];
+    before?: [];
+  };
+  Element: HTMLLIElement;
+}
+
+export default class SingleTask extends Component<SingleTaskSignature> {
+  @tracked editType: EditType = null;
+  @tracked editDescription: string | null = null;
+
+  lastTouchEndEventInfo: TouchEventInfo | null = null;
+
+  get editable(): boolean {
+    const task = this.args.task;
     return !task.isNew || task.isError;
   }
 
@@ -47,18 +71,19 @@ export default class SingleTask extends Component {
     if (!this.editable || this.isEditing) {
       return;
     }
-    this.quickEditTask.cancelAll();
+    void this.quickEditTask.cancelAll();
     this.editDescription = this.args.task.description;
     this.editType = 'full';
     this.args.editingStart?.();
   }
 
   @action
-  simulateDoubleClicks(event) {
-    let now = Date.now();
-    let touch = event.changedTouches[0];
+  simulateDoubleClicks(event: TouchEvent) {
+    const now = Date.now();
+    const touch = event.changedTouches[0];
+    if (!touch) return;
 
-    let lastTouchEndEventInfo = this.lastTouchEndEventInfo;
+    const lastTouchEndEventInfo = this.lastTouchEndEventInfo;
     this.lastTouchEndEventInfo = {
       clientX: touch.clientX,
       clientY: touch.clientY,
@@ -69,16 +94,16 @@ export default class SingleTask extends Component {
     }
 
     if (now - lastTouchEndEventInfo.when < 500) {
-      let xDistance = Math.abs(lastTouchEndEventInfo.clientX - touch.clientX);
-      let yDistance = Math.abs(lastTouchEndEventInfo.clientY - touch.clientY);
+      const xDistance = Math.abs(lastTouchEndEventInfo.clientX - touch.clientX);
+      const yDistance = Math.abs(lastTouchEndEventInfo.clientY - touch.clientY);
 
       if (xDistance < 40 && yDistance < 40) {
-        let doubleClickEvent = document.createEvent('MouseEvents');
+        const doubleClickEvent = document.createEvent('MouseEvents');
         doubleClickEvent.initMouseEvent(
           'dblclick',
           true, // click bubbles
           true, // click cancelable
-          event.view, // copy view
+          event.view ?? window, // copy view
           2, // click count
           // copy coordinates
           touch.screenX,
@@ -90,11 +115,11 @@ export default class SingleTask extends Component {
           event.altKey,
           event.shiftKey,
           event.metaKey,
-          event.button, // copy button 0: left, 1: middle, 2: right
-          event.relatedTarget, // copy relatedTarget
+          0, // mouse button; 0: left, 1: middle, 2: right
+          null, // relatedTarget
         );
 
-        event.target.dispatchEvent(doubleClickEvent);
+        event.target?.dispatchEvent(doubleClickEvent);
         event.stopPropagation();
         event.preventDefault();
       }
@@ -107,24 +132,24 @@ export default class SingleTask extends Component {
     // (e.g., when `updateTask` runs and sets `this.isEditing`, which then causes
     // the textarea to stop displaying and thus triggers the "focusout" event
     // that causes this method to run.)
-    runTask(this, () => (this.editType = false));
+    runTask(this, () => (this.editType = null));
 
     this.args.editingEnd?.();
   }
 
   @action
   toggleTaskDone() {
-    let task = this.args.task;
+    const task = this.args.task;
     task.done = !task.done;
-    task.save();
+    void task.save();
   }
 
   @action
-  async updateTask(description) {
+  async updateTask(description: string): Promise<void> {
     if (!this.editable) {
       return;
     }
-    let task = this.args.task;
+    const task = this.args.task;
     description = description.trim();
     if (isEmpty(description)) {
       await task.destroyRecord();

@@ -5,13 +5,17 @@ import { isTesting, macroCondition } from '@embroider/macros';
 import { use } from 'ember-resources';
 import { CurrentDay } from 'ember-todo/resources/current-day';
 import { endOfDay, format, isBefore, parse, startOfDay } from 'date-fns';
+import type SelectedDateService from 'ember-todo/services/selected-date';
+import type Store from '@ember-data/store';
+import type List from 'ember-todo/models/list';
+import type Task from 'ember-todo/models/task';
 
 export default class PollerService extends Service {
-  @service selectedDate;
-  @service store;
+  @service declare selectedDate: SelectedDateService;
+  @service declare store: Store;
 
-  @tracked days;
-  @tracked lists;
+  @tracked days: List[] | undefined;
+  @tracked lists: List[] | undefined;
 
   @tracked loaded = false;
 
@@ -30,7 +34,7 @@ export default class PollerService extends Service {
   }
 
   pollForChanges = restartableTask(async () => {
-    let loadingPromises = [this.loadDayLists(), this.loadOtherLists()];
+    const loadingPromises: Array<Promise<unknown>> = [this.loadDayLists(), this.loadOtherLists()];
     if (this.#loadOverdueTasks) {
       loadingPromises.push(this.loadOverdueTasks.perform());
     }
@@ -45,41 +49,47 @@ export default class PollerService extends Service {
       return;
     }
     await timeout(5000);
-    this.pollForChanges.perform();
+    void this.pollForChanges.perform();
   });
 
   async loadDayLists() {
-    const days = await this.store.query('list', {
-      include: 'tasks',
-      filter: {
-        'list-type': 'day',
-        date: this.selectedDate.dates.map((date) => format(date, 'yyyy-MM-dd')),
-      },
-    });
+    const days = <List[]>(
+      await this.store.query('list', {
+        include: 'tasks',
+        filter: {
+          'list-type': 'day',
+          date: this.selectedDate.dates.map((date) => format(date, 'yyyy-MM-dd')),
+        },
+      })
+    ).slice();
     this.days = days.slice();
   }
 
   async loadOtherLists() {
-    this.lists = await this.store.query('list', {
-      include: 'tasks',
-      filter: {
-        'list-type': 'list',
-      },
-      sort: 'sort-order',
-    });
+    this.lists = <List[]>(
+      await this.store.query('list', {
+        include: 'tasks',
+        filter: {
+          'list-type': 'list',
+        },
+        sort: 'sort-order',
+      })
+    ).slice();
   }
 
   loadOverdueTasks = dropTask(async () => {
     if (!this.#loadOverdueTasks) return [];
-    return await this.store.query('task', {
-      filter: { due_before: format(new Date(), 'yyyy-MM-dd') },
-      sort: 'due-date,plaintext-description',
-    });
+    return <Task[]>(
+      await this.store.query('task', {
+        filter: { due_before: format(new Date(), 'yyyy-MM-dd') },
+        sort: 'due-date,plaintext-description',
+      })
+    ).slice();
   });
 
   get overdueTasks() {
-    let tasks = this.loadOverdueTasks.lastSuccessful?.value ?? [];
-    let today = startOfDay(this.today);
+    const tasks = this.loadOverdueTasks.lastSuccessful?.value ?? [];
+    const today = startOfDay(this.today);
     return tasks.filter((task) => {
       const taskDueDate = endOfDay(parse(task.dueDate, 'yyyy-MM-dd', new Date()));
       return isBefore(taskDueDate, today);

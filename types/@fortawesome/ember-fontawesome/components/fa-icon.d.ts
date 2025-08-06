@@ -4,6 +4,8 @@ interface FaIconSignature {
   Args: {
     icon: string;
     prefix?: string;
+    size?: string;
+    spin?: boolean;
   };
   Element: HTMLDivElement;
 }
