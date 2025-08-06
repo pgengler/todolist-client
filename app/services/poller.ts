@@ -53,7 +53,7 @@ export default class PollerService extends Service {
   });
 
   async loadDayLists() {
-    const days = <List[]>(
+    this.days = <List[]>(
       await this.store.query('list', {
         include: 'tasks',
         filter: {
@@ -62,7 +62,6 @@ export default class PollerService extends Service {
         },
       })
     ).slice();
-    this.days = days.slice();
   }
 
   async loadOtherLists() {
