@@ -16,8 +16,8 @@ export default class SingleLineTextarea extends Component<SingleLineTextareaSign
   handleKeyDown(event: KeyboardEvent) {
     if (event.key !== 'Enter') return;
 
-    let element = <HTMLTextAreaElement>event.target;
-    let value = element.value.trim();
+    const element = <HTMLTextAreaElement>event.target;
+    const value = element.value.trim();
 
     // if textarea is empty, or the Shift key is not pressed along with Enter,
     // then don't add a new line and trigger the @onEnterPressed action.
