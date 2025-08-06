@@ -15,7 +15,7 @@ interface RangeDatepickerSignature {
 }
 
 export default class RangeDatepicker extends Component<RangeDatepickerSignature> {
-  @tracked center = new Date();
+  @tracked center: Date | undefined;
 
   @action
   selectDateRange(range: NormalizeRangeActionValue): void {
