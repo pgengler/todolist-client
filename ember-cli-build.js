@@ -13,18 +13,26 @@ module.exports = function (defaults) {
         DEPRECATE_STORE_EXTENDS_EMBER_OBJECT: false,
       },
     },
-    // Add options here
+    'ember-cli-babel': { enableTypeScriptTransform: true },
     'ember-simple-auth': {
       useSessionSetupMethod: true,
     },
 
     babel: {
-      plugins: [
-        // ... any other plugins
-        require.resolve('ember-concurrency/async-arrow-task-transform'),
-      ],
+      plugins: [require.resolve('ember-concurrency/async-arrow-task-transform')],
     },
   });
 
-  return app.toTree();
+  const { Webpack } = require('@embroider/webpack');
+  return require('@embroider/compat').compatBuild(app, Webpack, {
+    staticAddonTestSupportTrees: true,
+    staticAddonTrees: true,
+    staticEmberSource: true,
+    staticInvokables: true,
+    skipBabel: [
+      {
+        package: 'qunit',
+      },
+    ],
+  });
 };
