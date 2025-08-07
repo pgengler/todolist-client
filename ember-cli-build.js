@@ -23,21 +23,5 @@ module.exports = function (defaults) {
     },
   });
 
-  const { Webpack } = require('@embroider/webpack');
-  return require('@embroider/compat').compatBuild(app, Webpack, {
-    staticAddonTestSupportTrees: true,
-    staticAddonTrees: true,
-    staticEmberSource: true,
-    staticInvokables: true,
-    skipBabel: [
-      {
-        package: 'qunit',
-      },
-    ],
-    packagerOptions: {
-      webpackConfig: {
-        devtool: 'source-map',
-      },
-    },
-  });
+  return app.toTree();
 };
