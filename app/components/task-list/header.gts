@@ -1,4 +1,4 @@
-import Component from '@glimmer/component';
+import type { TOC } from '@ember/component/template-only';
 import type List from 'ember-todo/models/list';
 
 interface TaskListHeaderSignature {
@@ -11,15 +11,12 @@ interface TaskListHeaderSignature {
   Element: HTMLDivElement;
 }
 
-// eslint-disable-next-line ember/no-empty-glimmer-component-classes
-export default class TaskListHeader extends Component<TaskListHeaderSignature> {
-  <template>
-    <div class="task-list-header" ...attributes>
-      {{#if (has-block)}}
-        {{yield @list}}
-      {{else}}
-        <h1>{{@list.name}}</h1>
-      {{/if}}
-    </div>
-  </template>
-}
+export default <template>
+  <div class="task-list-header" ...attributes>
+    {{#if (has-block)}}
+      {{yield @list}}
+    {{else}}
+      <h1>{{@list.name}}</h1>
+    {{/if}}
+  </div>
+</template> satisfies TOC<TaskListHeaderSignature>;
