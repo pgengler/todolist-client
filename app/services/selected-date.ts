@@ -1,0 +1,47 @@
+import Service from '@ember/service';
+import { tracked } from '@glimmer/tracking';
+import { use } from 'ember-resources';
+import { CurrentDay } from 'ember-todo/resources/current-day';
+import { addDays, subDays } from 'date-fns';
+
+export type DateRange = {
+  start: Date;
+  end: Date;
+};
+
+export default class SelectedDateService extends Service {
+  @tracked _date: Date | null = null;
+
+  @use today = CurrentDay;
+
+  get date(): Date {
+    return this._date ?? this.today;
+  }
+
+  set date(date: Date | null) {
+    this._date = date;
+  }
+
+  get hasDateSelected() {
+    return !!this._date;
+  }
+
+  get dates() {
+    return [subDays(this.date, 1), this.date, ...[1, 2, 3].map((val) => addDays(this.date, val))];
+  }
+
+  get startDate() {
+    return this.dates[0]!;
+  }
+
+  get endDate() {
+    return this.dates[this.dates.length - 1]!;
+  }
+
+  get dateRange(): DateRange {
+    return {
+      start: this.startDate,
+      end: this.endDate,
+    };
+  }
+}

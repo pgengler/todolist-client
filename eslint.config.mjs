@@ -15,25 +15,36 @@
 import globals from 'globals';
 import js from '@eslint/js';
 
+import ts from 'typescript-eslint';
+
 import ember from 'eslint-plugin-ember/recommended';
 import qunit from 'eslint-plugin-qunit';
 import n from 'eslint-plugin-n';
 
 import babelParser from '@babel/eslint-parser';
 
-const esmParserOptions = {
-  ecmaFeatures: { modules: true },
-  ecmaVersion: 'latest',
-  requireConfigFile: false,
-  babelOptions: {
-    plugins: [['@babel/plugin-proposal-decorators', { decoratorsBeforeExport: true }]],
+const parserOptions = {
+  esm: {
+    js: {
+      ecmaFeatures: { modules: true },
+      ecmaVersion: 'latest',
+      requireConfigFile: false,
+      babelOptions: {
+        plugins: [['@babel/plugin-proposal-decorators', { decoratorsBeforeExport: true }]],
+      },
+    },
+    ts: {
+      projectService: true,
+      tsconfigRootDir: import.meta.dirname,
+    },
   },
 };
 
-export default [
+export default ts.config(
   js.configs.recommended,
   ember.configs.base,
   ember.configs.gjs,
+  ember.configs.gts,
   /**
    * Ignores must be in their own object
    * https://eslint.org/docs/latest/use/configure/ignore
@@ -58,14 +69,22 @@ export default [
   {
     files: ['**/*.{js,gjs}'],
     languageOptions: {
-      parserOptions: esmParserOptions,
+      parserOptions: parserOptions.esm.js,
       globals: {
         ...globals.browser,
       },
     },
   },
   {
-    files: ['tests/**/*-test.{js,gjs}'],
+    files: ['**/*.{ts,gts}'],
+    languageOptions: {
+      parser: ember.parser,
+      parserOptions: parserOptions.esm.ts,
+    },
+    extends: [...ts.configs.recommendedTypeChecked, ember.configs.gts],
+  },
+  {
+    files: ['tests/**/*-test.{js,gjs,ts,gts}'],
     plugins: {
       qunit,
     },
@@ -111,10 +130,10 @@ export default [
     languageOptions: {
       sourceType: 'module',
       ecmaVersion: 'latest',
-      parserOptions: esmParserOptions,
+      parserOptions: parserOptions.esm.js,
       globals: {
         ...globals.node,
       },
     },
   },
-];
+);

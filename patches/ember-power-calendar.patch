@@ -1,0 +1,12 @@
+diff --git a/declarations/components/power-calendar.d.ts b/declarations/components/power-calendar.d.ts
+index 199f34af30df33657d8128adadede8da48dfee26..db8c446e1aa527a6486b52b2aacc52564380ee69 100644
+--- a/declarations/components/power-calendar.d.ts
++++ b/declarations/components/power-calendar.d.ts
+@@ -38,6 +38,7 @@ export interface PowerCalendarArgs {
+     selected?: SelectedDays;
+     center?: Date;
+     tag?: string;
++    renderInPlace?: boolean;
+ }
+ export interface PowerCalendarDefaultBlock extends PowerCalendarAPI {
+     Nav: ComponentLike<{
