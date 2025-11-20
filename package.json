@@ -103,7 +103,7 @@
     "eslint-plugin-ember": "^12.5.0",
     "eslint-plugin-n": "^17.19.0",
     "eslint-plugin-qunit": "^8.1.2",
-    "glob": "^10.3.10",
+    "glob": "^10.5.0",
     "globals": "^15.15.0",
     "http-proxy": "^1.18.1",
     "loader.js": "^4.7.0",
