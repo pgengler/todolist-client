@@ -95,7 +95,7 @@
     "ember-resources": "^7.0.0",
     "ember-showdown": "^2.0.0-pre.1",
     "ember-simple-auth": "6.0.0-rc.1",
-    "ember-source": "~6.6.0",
+    "ember-source": "~6.9.0",
     "ember-template-imports": "^4.3.0",
     "ember-template-lint": "^6.1.0",
     "ember-test-selectors": "^7.1.0",
