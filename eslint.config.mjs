@@ -28,10 +28,6 @@ const parserOptions = {
     js: {
       ecmaFeatures: { modules: true },
       ecmaVersion: 'latest',
-      requireConfigFile: false,
-      babelOptions: {
-        plugins: [['@babel/plugin-proposal-decorators', { decoratorsBeforeExport: true }]],
-      },
     },
     ts: {
       projectService: true,
@@ -97,10 +93,8 @@ export default ts.config(
       '**/*.cjs',
       'config/**/*.js',
       'server/**/*.js',
-      'tests/dummy/config/**/*.js',
       'testem.js',
       'testem*.js',
-      'index.js',
       '.prettierrc.js',
       '.stylelintrc.js',
       '.template-lintrc.js',
