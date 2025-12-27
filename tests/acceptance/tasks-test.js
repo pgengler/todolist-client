@@ -148,7 +148,7 @@ module('Acceptance | Tasks', function (hooks) {
 
     await dragAndDrop(
       '.task-list[data-test-list-name="2016-03-07"] [data-test-task]',
-      '.task-list[data-test-list-name="2016-03-08"]',
+      '.task-list[data-test-list-name="2016-03-08"]'
     );
     assert.verifySteps([`updated task ${task.id}, set list ID to ${targetDay.id}`]);
 
@@ -181,7 +181,7 @@ module('Acceptance | Tasks', function (hooks) {
     await dragAndDrop(
       '.task-list[data-test-list-name="2016-03-07"] [data-test-task]',
       '.task-list[data-test-list-name="2016-03-08"]',
-      { ctrlKey: true },
+      { ctrlKey: true }
     );
     assert.verifySteps([`created new task with list ID ${targetDay.id} and description "${task.description}"`]);
   });
@@ -291,7 +291,7 @@ module('Acceptance | Tasks', function (hooks) {
               detail: 'Something went wrong',
             },
           ],
-        },
+        }
       );
     });
     await visit('/days?date=2018-01-01');

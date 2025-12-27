@@ -44,7 +44,7 @@ module('Acceptance | Days', function (hooks) {
     await visit('/days?date=2018-01-01');
 
     let displayedTasks = findAll(`[data-test-list-name="${list.name}"] [data-test-task]`).map((element) =>
-      element.textContent.trim(),
+      element.textContent.trim()
     );
     assert.deepEqual(displayedTasks, ['abc', 'mno', 'xyz'], 'tasks are displayed in alphabetical order');
 
@@ -52,7 +52,7 @@ module('Acceptance | Days', function (hooks) {
     await fillInAndPressEnter(`[data-test-list-name="${list.name}"] [data-test-task]:nth-of-type(2) textarea`, 'zzz');
 
     displayedTasks = findAll(`[data-test-list-name="${list.name}"] [data-test-task]`).map((element) =>
-      element.textContent.trim(),
+      element.textContent.trim()
     );
     assert.deepEqual(displayedTasks, ['abc', 'xyz', 'zzz'], 'after editing a task, alphabetical order is preserved');
   });
@@ -74,7 +74,7 @@ module('Acceptance | Days', function (hooks) {
     this.server.get('/tasks', function ({ tasks }, request) {
       if (request.queryParams['filter[due_before]']) {
         assert.step(
-          `fetched list of overdue tasks from server, due_before=${request.queryParams['filter[due_before]']}`,
+          `fetched list of overdue tasks from server, due_before=${request.queryParams['filter[due_before]']}`
         );
       }
       return tasks.all();
@@ -93,7 +93,7 @@ module('Acceptance | Days', function (hooks) {
     this.server.get('/tasks', ({ tasks }, request) => {
       if (request.queryParams['filter[due_before]']) {
         assert.step(
-          `fetched list of overdue tasks from server, due_before=${request.queryParams['filter[due_before]']}`,
+          `fetched list of overdue tasks from server, due_before=${request.queryParams['filter[due_before]']}`
         );
         return new Collection('tasks', []);
       }

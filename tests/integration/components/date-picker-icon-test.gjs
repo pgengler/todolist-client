@@ -18,7 +18,7 @@ module('Integration | Component | DatePickerIcon', function (hooks) {
     await render(
       <template>
         <DatePickerIcon @dateSelected={{dateSelected}} @dateRange={{dateRange}} data-test-change-date />
-      </template>,
+      </template>
     );
 
     await click('[data-test-change-date]');

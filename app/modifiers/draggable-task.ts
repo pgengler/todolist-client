@@ -11,7 +11,7 @@ type PositionalArgs = [task: Task];
 export default modifier(function draggableTask(
   element: HTMLLIElement,
   [task]: PositionalArgs,
-  { onDragStart, onDragEnd }: NamedArgs,
+  { onDragStart, onDragEnd }: NamedArgs
 ) {
   element.draggable = true;
 

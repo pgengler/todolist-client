@@ -62,7 +62,7 @@ module('Integration | Component | TaskForm', function (hooks) {
             <div data-test-foo-bar></div>
           </:footer>
         </TaskForm>
-      </template>,
+      </template>
     );
 
     assert.dom('[data-test-cancel-button] + [data-test-foo-bar]').exists();
