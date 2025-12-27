@@ -1,12 +1,12 @@
-import { discoverEmberDataModels } from 'ember-cli-mirage';
 import { createServer } from 'miragejs';
 import config from 'ember-todo/config/environment';
 import { endOfDay, isAfter, isBefore, parse } from 'date-fns';
+import models from './models';
 
 export default function (config) {
   let finalConfig = {
     ...config,
-    models: { ...discoverEmberDataModels(config.store), ...config.models },
+    models,
     routes,
   };
 

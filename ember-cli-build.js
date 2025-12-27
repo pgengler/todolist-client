@@ -20,5 +20,7 @@ module.exports = async function (defaults) {
     },
   });
 
-  return compatBuild(app, buildOnce);
+  return compatBuild(app, buildOnce, {
+    staticAppPaths: ['mirage']
+  });
 };
