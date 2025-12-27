@@ -28,8 +28,8 @@ export default class EditTaskForm extends Component<EditTaskFormSignature> {
       return;
     }
 
-    const lists = <List[]>(
-      await this.store.query('list', {
+    const lists = (
+      await this.store.query<List>('list', {
         filter: {
           'list-type': 'day',
           date,

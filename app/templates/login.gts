@@ -9,8 +9,8 @@ import type RouterService from '@ember/routing/router-service';
 import type SessionService from 'ember-simple-auth/services/session';
 
 export default class extends Component {
-  @tracked email = null;
-  @tracked password = null;
+  @tracked email: string | null = null;
+  @tracked password: string | null = null;
 
   @service declare router: RouterService;
   @service declare session: SessionService;

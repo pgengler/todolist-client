@@ -7,6 +7,7 @@ import { importSync, isDevelopingApp, macroCondition } from '@embroider/macros';
 import { registerDateLibrary } from 'ember-power-calendar';
 import DateUtils from 'ember-power-calendar-date-fns';
 import setupInspector from '@embroider/legacy-inspector-support/ember-source-4.12';
+import '@warp-drive/ember/install';
 
 if (macroCondition(isDevelopingApp())) {
   importSync('./deprecation-workflow');

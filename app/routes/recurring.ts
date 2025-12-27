@@ -14,11 +14,11 @@ export default class RecurringRoute extends Route {
   }
 
   model(): Promise<List[]> {
-    return <Promise<List[]>>this.store.query('list', {
+    return this.store.query<List>('list', {
       filter: {
         'list-type': 'recurring-task-day',
       },
-      include: 'tasks',
+      include: ['tasks'],
       sort: 'sort-order',
     });
   }
