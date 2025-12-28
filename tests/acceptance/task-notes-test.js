@@ -1,11 +1,11 @@
 import { module, test } from 'qunit';
 import { click, fillIn, visit } from '@ember/test-helpers';
 import { doubleClickToEdit } from 'ember-todo/tests/helpers/click-to-edit';
-import { setupAcceptanceTest } from 'ember-todo/tests/helpers';
+import { setupApplicationTest } from 'ember-todo/tests/helpers';
 import { authenticateSession } from 'ember-simple-auth/test-support';
 
 module('Acceptance | Task notes', function (hooks) {
-  setupAcceptanceTest(hooks);
+  setupApplicationTest(hooks);
   hooks.beforeEach(() => authenticateSession());
 
   test('new task modal has a "notes" field', async function (assert) {

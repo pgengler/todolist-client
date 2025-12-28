@@ -2,14 +2,14 @@ import { module, test } from 'qunit';
 import { click, currentURL, findAll, visit } from '@ember/test-helpers';
 import { clickToEdit } from 'ember-todo/tests/helpers/click-to-edit';
 import fillInAndPressEnter from 'ember-todo/tests/helpers/fill-in-and-press-enter';
-import { setupAcceptanceTest } from 'ember-todo/tests/helpers';
+import { setupApplicationTest } from 'ember-todo/tests/helpers';
 import { calendarSelect } from 'ember-power-calendar/test-support/helpers';
 import { authenticateSession } from 'ember-simple-auth/test-support';
 import { Collection } from 'miragejs';
 import { format } from 'date-fns';
 
 module('Acceptance | Days', function (hooks) {
-  setupAcceptanceTest(hooks);
+  setupApplicationTest(hooks);
   hooks.beforeEach(() => authenticateSession());
 
   test('visiting /days shows lists', async function (assert) {
