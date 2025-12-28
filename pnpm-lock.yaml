@@ -130,6 +130,9 @@ importers:
       '@types/rsvp':
         specifier: ^4.0.9
         version: 4.0.9
+      '@warp-drive/build-config':
+        specifier: ^5.8.0
+        version: 5.8.0(@babel/core@7.28.5)(@glint/template@1.7.3)
       '@warp-drive/core-types':
         specifier: ~5.6.0
         version: 5.6.0(@glint/template@1.7.3)
@@ -1939,6 +1942,9 @@ packages:
 
   '@warp-drive/build-config@5.6.0':
     resolution: {integrity: sha512-7qdE7x1U0yRhbGy1wO47lirgKO6cjMqmKJUdLhpIhX31fIo0MM2/6n8p/+2rNTlZiCMhLNeV7RelA8LoIkxW3Q==}
+
+  '@warp-drive/build-config@5.8.0':
+    resolution: {integrity: sha512-p0Cgf/9qO9Ocv33RbsHhKTyQpiw+8FKHFOSvruAUrjtZCXzniqfnzLDv12XtufV7HIKe2aN5HCip6r5Q+xk6fg==}
 
   '@warp-drive/core-types@5.6.0':
     resolution: {integrity: sha512-ePYhowffjOtIuD27JnX2/+PXe2WyDqLzNOArgOYbo1xtZeDWg5V+Mmja6Zd3MlxptcHDiUsmfYei8XUgWGQ4Fg==}
@@ -8830,6 +8836,18 @@ snapshots:
       babel-import-util: 2.1.1
       semver: 7.7.2
     transitivePeerDependencies:
+      - '@glint/template'
+      - supports-color
+
+  '@warp-drive/build-config@5.8.0(@babel/core@7.28.5)(@glint/template@1.7.3)':
+    dependencies:
+      '@embroider/addon-shim': 1.10.2
+      '@embroider/macros': 1.19.5(@glint/template@1.7.3)
+      babel-import-util: 2.1.1
+      babel-plugin-debug-macros: 2.0.0(@babel/core@7.28.5)
+      semver: 7.7.2
+    transitivePeerDependencies:
+      - '@babel/core'
       - '@glint/template'
       - supports-color
 
