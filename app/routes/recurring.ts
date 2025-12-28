@@ -1,9 +1,9 @@
 import Route from '@ember/routing/route';
 import { service } from '@ember/service';
-import type SessionService from 'ember-simple-auth/services/session';
 import type Store from '@ember-data/store';
 import type Transition from '@ember/routing/transition';
 import type List from 'ember-todo/models/list';
+import type SessionService from 'ember-todo/services/session';
 
 export default class RecurringRoute extends Route {
   @service declare session: SessionService;

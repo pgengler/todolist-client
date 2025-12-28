@@ -6,7 +6,7 @@ import { pageTitle } from 'ember-page-title';
 import TopNav from 'ember-todo/components/top-nav';
 import type RouterService from '@ember/routing/router-service';
 import type SelectedDateService from 'ember-todo/services/selected-date';
-import type SessionService from 'ember-simple-auth/services/session';
+import type SessionService from 'ember-todo/services/session';
 
 export default class extends Component {
   @service declare router: RouterService;
@@ -20,9 +20,9 @@ export default class extends Component {
   }
 
   @action
-  logout(event: Event): void {
+  async logout(event: Event): Promise<void> {
     event.preventDefault();
-    this.session.invalidate();
+    await this.session.invalidate();
     this.router.transitionTo('login');
   }
 

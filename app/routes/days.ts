@@ -4,7 +4,7 @@ import { service } from '@ember/service';
 import { parse } from 'date-fns';
 import type PollerService from 'ember-todo/services/poller';
 import type SelectedDateService from 'ember-todo/services/selected-date';
-import type SessionService from 'ember-simple-auth/services/session';
+import type SessionService from 'ember-todo/services/session';
 import type Transition from '@ember/routing/transition';
 
 interface DaysRouteParams {
