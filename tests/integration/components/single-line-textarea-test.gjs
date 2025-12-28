@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
+import { setupRenderingTest } from 'ember-todo/tests/helpers';
 import { render } from '@ember/test-helpers';
 import keyEvent from 'ember-todo/tests/helpers/key-event';
 import SingleLineTextarea from 'ember-todo/components/single-line-textarea';

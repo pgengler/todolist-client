@@ -4,7 +4,7 @@ import { clickToEdit, doubleClickToEdit } from 'ember-todo/tests/helpers/click-t
 import dragAndDrop from 'ember-todo/tests/helpers/drag-and-drop';
 import fillInAndPressEnter from 'ember-todo/tests/helpers/fill-in-and-press-enter';
 import keyEvent from 'ember-todo/tests/helpers/key-event';
-import setupAcceptanceTest from 'ember-todo/tests/helpers/setup-acceptance-test';
+import { setupAcceptanceTest } from 'ember-todo/tests/helpers';
 import { authenticateSession } from 'ember-simple-auth/test-support';
 import { Response } from 'miragejs';
 

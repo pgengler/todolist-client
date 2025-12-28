@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
+import { setupRenderingTest } from 'ember-todo/tests/helpers';
 import { render } from '@ember/test-helpers';
 import Header from 'ember-todo/components/task-list/header';
 
