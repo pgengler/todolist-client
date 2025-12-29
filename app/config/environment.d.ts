@@ -9,6 +9,8 @@ declare const config: {
   locationType: 'history' | 'hash' | 'none';
   rootURL: string;
   APP: Record<string, unknown>;
+  mirageEnabled: boolean;
+  mirageLogging: boolean;
 };
 
 export default config;

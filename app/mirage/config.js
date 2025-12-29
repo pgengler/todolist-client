@@ -1,12 +1,14 @@
 import { createServer } from 'miragejs';
 import config from 'ember-todo/config/environment';
 import { endOfDay, isAfter, isBefore, parse } from 'date-fns';
+import factories from './factories';
 import models from './models';
 import ApplicationSerializer from './serializers/application';
 
 export default function (config) {
   let finalConfig = {
     ...config,
+    factories,
     models,
     serializers: {
       application: ApplicationSerializer,
