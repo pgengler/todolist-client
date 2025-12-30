@@ -5,7 +5,7 @@ export function setupMirage(hooks) {
   hooks.beforeEach(function () {
     if (!this.owner) {
       throw new Error(
-        'Must call one of the ember-qunit setupTest() / setupRenderingTest() / setupApplicationTest() first',
+        'Must call one of the ember-qunit setupTest() / setupRenderingTest() / setupApplicationTest() first'
       );
     }
 
