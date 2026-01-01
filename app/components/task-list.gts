@@ -64,7 +64,7 @@ export default class TaskList extends Component<TaskListSignature> {
   }
 
   async cloneTask(task: Task): Promise<void> {
-    const newTask = <Task>this.store.createRecord('task', {
+    const newTask = this.store.createRecord<Task>('task', {
       list: this.args.list,
       description: task.description,
     });
@@ -88,7 +88,7 @@ export default class TaskList extends Component<TaskListSignature> {
 
     this.dragClass = '';
 
-    const task = <Task>await this.store.findRecord('task', id);
+    const task = await this.store.findRecord<Task>('task', id);
     if (cloningTask) {
       await this.cloneTask(task);
     } else {
@@ -108,7 +108,7 @@ export default class TaskList extends Component<TaskListSignature> {
     if (!description) {
       return;
     }
-    const task = <Task>this.store.createRecord('task', {
+    const task = this.store.createRecord<Task>('task', {
       description,
       list: this.args.list,
     });

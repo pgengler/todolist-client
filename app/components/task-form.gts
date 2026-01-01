@@ -54,7 +54,7 @@ export default class TaskForm extends Component<TaskFormSignature> {
 
   @action
   async save(): Promise<void> {
-    const form = document.getElementById(this.formId)!;
+    const form = <HTMLFormElement>document.getElementById(this.formId)!;
 
     const date = (form.querySelector('#task-date') as HTMLInputElement).value;
     const description = (form.querySelector('#task-description') as HTMLTextAreaElement).value.trim();

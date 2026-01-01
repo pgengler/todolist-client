@@ -116,7 +116,7 @@ export default class SingleTask extends Component<SingleTaskSignature> {
           event.shiftKey,
           event.metaKey,
           0, // mouse button; 0: left, 1: middle, 2: right
-          null, // relatedTarget
+          null // relatedTarget
         );
 
         event.target?.dispatchEvent(doubleClickEvent);

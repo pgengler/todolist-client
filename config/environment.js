@@ -46,9 +46,7 @@ module.exports = function (environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
-    ENV['ember-cli-mirage'] = {
-      enabled: !!process.env.MIRAGE_ENABLED,
-    };
+    ENV.mirageEnabled = !!process.env.MIRAGE_ENABLED;
     ENV.mirageLogging = typeof process.env.MIRAGE_LOGGING !== 'undefined' ? !!process.env.MIRAGE_LOGGING : true;
   }
 

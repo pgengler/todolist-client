@@ -4,6 +4,7 @@ import { service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
 import TaskForm from './task-form';
 import type Store from '@ember-data/store';
+import type List from 'ember-todo/models/list';
 import type Task from 'ember-todo/models/task';
 
 interface NewTaskFormSignature {
@@ -22,17 +23,19 @@ export default class NewTaskForm extends Component<NewTaskFormSignature> {
       return;
     }
 
-    const lists = await this.store.query('list', {
-      filter: {
-        'list-type': 'day',
-        date,
-      },
-      page: {
-        size: 1,
-      },
-    });
+    const lists = (
+      await this.store.query<List>('list', {
+        filter: {
+          'list-type': 'day',
+          date,
+        },
+        page: {
+          size: 1,
+        },
+      })
+    ).slice();
 
-    const task = <Task>this.store.createRecord('task', {
+    const task = this.store.createRecord<Task>('task', {
       description,
       notes,
       list: lists[0],

@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
+import { setupRenderingTest } from 'ember-todo/tests/helpers';
 import { click, fillIn, render } from '@ember/test-helpers';
 import TaskForm from 'ember-todo/components/task-form';
 
@@ -62,7 +62,7 @@ module('Integration | Component | TaskForm', function (hooks) {
             <div data-test-foo-bar></div>
           </:footer>
         </TaskForm>
-      </template>,
+      </template>
     );
 
     assert.dom('[data-test-cancel-button] + [data-test-foo-bar]').exists();

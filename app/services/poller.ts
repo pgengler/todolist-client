@@ -53,9 +53,9 @@ export default class PollerService extends Service {
   });
 
   async loadDayLists() {
-    this.days = <List[]>(
-      await this.store.query('list', {
-        include: 'tasks',
+    this.days = (
+      await this.store.query<List>('list', {
+        include: ['tasks'],
         filter: {
           'list-type': 'day',
           date: this.selectedDate.dates.map((date) => format(date, 'yyyy-MM-dd')),
@@ -65,9 +65,9 @@ export default class PollerService extends Service {
   }
 
   async loadOtherLists() {
-    this.lists = <List[]>(
-      await this.store.query('list', {
-        include: 'tasks',
+    this.lists = (
+      await this.store.query<List>('list', {
+        include: ['tasks'],
         filter: {
           'list-type': 'list',
         },
@@ -78,8 +78,8 @@ export default class PollerService extends Service {
 
   loadOverdueTasks = dropTask(async () => {
     if (!this.#loadOverdueTasks) return [];
-    return <Task[]>(
-      await this.store.query('task', {
+    return (
+      await this.store.query<Task>('task', {
         filter: { due_before: format(new Date(), 'yyyy-MM-dd') },
         sort: 'due-date,plaintext-description',
       })

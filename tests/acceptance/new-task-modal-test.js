@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
-import setupAcceptanceTest from 'ember-todo/tests/helpers/setup-acceptance-test';
+import { setupApplicationTest } from 'ember-todo/tests/helpers';
 import { click, fillIn, visit } from '@ember/test-helpers';
 import { authenticateSession } from 'ember-simple-auth/test-support';
 
 module('Acceptance | New Task modal', function (hooks) {
-  setupAcceptanceTest(hooks);
+  setupApplicationTest(hooks);
   hooks.beforeEach(() => authenticateSession());
 
   test('adding a new task', async function (assert) {

@@ -8,7 +8,7 @@ type NamedArgs = {
 export default modifier(function showDialogOnInsert(
   element: HTMLDialogElement,
   positional: PositionalArgs,
-  { onClose }: NamedArgs,
+  { onClose }: NamedArgs
 ) {
   element.addEventListener('close', onClose);
   element.showModal();

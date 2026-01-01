@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
+import { setupRenderingTest } from 'ember-todo/tests/helpers';
 import { click, findAll, render } from '@ember/test-helpers';
 import { calendarSelect } from 'ember-power-calendar/test-support/helpers';
 import { format, parse } from 'date-fns';
@@ -18,7 +18,7 @@ module('Integration | Component | DatePickerIcon', function (hooks) {
     await render(
       <template>
         <DatePickerIcon @dateSelected={{dateSelected}} @dateRange={{dateRange}} data-test-change-date />
-      </template>,
+      </template>
     );
 
     await click('[data-test-change-date]');
