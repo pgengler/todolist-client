@@ -11,7 +11,7 @@ interface RecurringSignature {
 export default <template>
   <div class="recurring-task-days">
     {{#each @model as |list|}}
-      <TaskList @list={{list}} />
+      <TaskList @list={{list}} @hideDoneToggles={{true}} />
     {{/each}}
   </div>
 </template> satisfies TOC<RecurringSignature>;

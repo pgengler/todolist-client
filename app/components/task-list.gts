@@ -32,6 +32,7 @@ interface TaskListSignature {
   Args: {
     editingStart?: () => void;
     editingEnd?: () => void;
+    hideDoneToggles?: boolean;
     list: List;
   };
   Blocks: {
@@ -41,11 +42,10 @@ interface TaskListSignature {
 }
 
 export default class TaskList extends Component<TaskListSignature> {
-  @tracked declare dragClass: string;
-  taskSorting = ['plaintextDescription'];
-
   @service declare flashMessages: FlashMessagesService;
   @service declare store: Store;
+
+  @tracked declare dragClass: string;
 
   get newTaskFieldId() {
     return `list-${this.args.list.id}-new-task`;
@@ -115,9 +115,9 @@ export default class TaskList extends Component<TaskListSignature> {
 
     this.clearTextarea();
 
-    // The "next()" call is necessary to be able to test the 'pending' state
-    // for adding a task; without it, the test never gets into the pending state.'
-    // The actual application works with or without the "next()" call.
+    // The "runTask()" call is necessary to be able to test the 'pending' state
+    // for adding a task; without it, the test never gets into the pending state.
+    // The actual application works with or without the "runTask()" call.
     runTask(this, async () => {
       try {
         await task.save();
@@ -160,6 +160,7 @@ export default class TaskList extends Component<TaskListSignature> {
             @task={{task}}
             @editingStart={{@editingStart}}
             @editingEnd={{@editingEnd}}
+            @hideDoneToggle={{@hideDoneToggles}}
             {{draggableTask task onDragStart=@editingStart onDragEnd=@editingEnd}}
             data-test-task
           />
