@@ -10,15 +10,10 @@ import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import perform from 'ember-concurrency/helpers/perform';
 import MarkdownToHtml from 'ember-showdown/components/markdown-to-html';
 import EditTaskModal from './edit-task-modal';
+import doubleTapAsDoubleClick from 'ember-todo/modifiers/double-tap-as-double-click';
 import type Task from 'ember-todo/models/task';
 
 type EditType = 'full' | 'quick' | null;
-
-type TouchEventInfo = {
-  clientX: number;
-  clientY: number;
-  when: number;
-};
 
 interface SingleTaskSignature {
   Args: {
@@ -37,8 +32,6 @@ interface SingleTaskSignature {
 export default class SingleTask extends Component<SingleTaskSignature> {
   @tracked editType: EditType = null;
   @tracked editDescription: string | null = null;
-
-  lastTouchEndEventInfo: TouchEventInfo | null = null;
 
   get editable(): boolean {
     const task = this.args.task;
@@ -80,55 +73,6 @@ export default class SingleTask extends Component<SingleTaskSignature> {
     this.editDescription = this.args.task.description;
     this.editType = 'full';
     this.args.editingStart?.();
-  }
-
-  @action
-  simulateDoubleClicks(event: TouchEvent) {
-    const now = Date.now();
-    const touch = event.changedTouches[0];
-    if (!touch) return;
-
-    const lastTouchEndEventInfo = this.lastTouchEndEventInfo;
-    this.lastTouchEndEventInfo = {
-      clientX: touch.clientX,
-      clientY: touch.clientY,
-      when: now,
-    };
-    if (!lastTouchEndEventInfo) {
-      return;
-    }
-
-    if (now - lastTouchEndEventInfo.when < 500) {
-      const xDistance = Math.abs(lastTouchEndEventInfo.clientX - touch.clientX);
-      const yDistance = Math.abs(lastTouchEndEventInfo.clientY - touch.clientY);
-
-      if (xDistance < 40 && yDistance < 40) {
-        const doubleClickEvent = document.createEvent('MouseEvents');
-        doubleClickEvent.initMouseEvent(
-          'dblclick',
-          true, // click bubbles
-          true, // click cancelable
-          event.view ?? window, // copy view
-          2, // click count
-          // copy coordinates
-          touch.screenX,
-          touch.screenY,
-          touch.clientX,
-          touch.clientY,
-          // copy key modifiers
-          event.ctrlKey,
-          event.altKey,
-          event.shiftKey,
-          event.metaKey,
-          0, // mouse button; 0: left, 1: middle, 2: right
-          null // relatedTarget
-        );
-
-        event.target?.dispatchEvent(doubleClickEvent);
-        event.stopPropagation();
-        event.preventDefault();
-      }
-    }
   }
 
   @action
@@ -204,9 +148,9 @@ export default class SingleTask extends Component<SingleTaskSignature> {
           <div
             class="description"
             role="button"
+            {{doubleTapAsDoubleClick}}
             {{on "click" (perform this.quickEditTask)}}
             {{on "dblclick" this.editTask}}
-            {{on "touchend" this.simulateDoubleClicks}}
           >
             <MarkdownToHtml @markdown={{@task.description}} />
           </div>
