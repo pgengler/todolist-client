@@ -24,6 +24,7 @@ interface SingleTaskSignature {
   Args: {
     editingStart?: () => void;
     editingEnd?: () => void;
+    hideDoneToggle?: boolean;
     task: Task;
   };
   Blocks: {
@@ -54,6 +55,10 @@ export default class SingleTask extends Component<SingleTaskSignature> {
 
   get isQuickEditing() {
     return this.editType === 'quick';
+  }
+
+  get showDoneToggle() {
+    return !this.args.hideDoneToggle;
   }
 
   quickEditTask = dropTask(async () => {
@@ -189,7 +194,7 @@ export default class SingleTask extends Component<SingleTaskSignature> {
               <FaIcon @icon="triangle-exclamation" title="Task failed to save" />
             {{else if @task.isNew}}
               <FaIcon @icon="spinner" @spin={{true}} />
-            {{else}}
+            {{else if this.showDoneToggle}}
               {{! template-lint-disable require-input-label }}
               <input type="checkbox" checked={{@task.done}} {{on "change" this.toggleTaskDone}} />
             {{/if}}

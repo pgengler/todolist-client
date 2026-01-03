@@ -3,6 +3,7 @@ import config from 'ember-todo/config/environment';
 import { endOfDay, isAfter, isBefore, parse } from 'date-fns';
 import factories from './factories';
 import models from './models';
+import defaultScenario from './scenarios/default';
 import ApplicationSerializer from './serializers/application';
 
 export default function (config) {
@@ -10,6 +11,9 @@ export default function (config) {
     ...config,
     factories,
     models,
+    scenarios: {
+      default: defaultScenario,
+    },
     serializers: {
       application: ApplicationSerializer,
     },
