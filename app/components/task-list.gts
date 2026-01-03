@@ -135,7 +135,9 @@ export default class TaskList extends Component<TaskListSignature> {
 
   @action
   focusNewTaskField(): void {
-    document.getElementById(this.newTaskFieldId)?.focus();
+    const field = document.getElementById(this.newTaskFieldId)!;
+    field.scrollIntoView();
+    field.focus();
   }
 
   <template>
