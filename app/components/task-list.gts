@@ -41,11 +41,10 @@ interface TaskListSignature {
 }
 
 export default class TaskList extends Component<TaskListSignature> {
-  @tracked declare dragClass: string;
-  taskSorting = ['plaintextDescription'];
-
   @service declare flashMessages: FlashMessagesService;
   @service declare store: Store;
+
+  @tracked declare dragClass: string;
 
   get newTaskFieldId() {
     return `list-${this.args.list.id}-new-task`;
