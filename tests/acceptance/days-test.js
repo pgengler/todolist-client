@@ -1,8 +1,9 @@
 import { module, test } from 'qunit';
-import { click, currentURL, findAll, visit } from '@ember/test-helpers';
+import { click, currentURL, find, findAll, fillIn, visit } from '@ember/test-helpers';
 import { clickToEdit } from 'ember-todo/tests/helpers/click-to-edit';
 import fillInAndPressEnter from 'ember-todo/tests/helpers/fill-in-and-press-enter';
 import { setupApplicationTest } from 'ember-todo/tests/helpers';
+import keyEvent from 'ember-todo/tests/helpers/key-event';
 import { calendarSelect } from 'ember-power-calendar/test-support/helpers';
 import { authenticateSession } from 'ember-simple-auth/test-support';
 import { Collection } from 'miragejs';
@@ -144,5 +145,29 @@ module('Acceptance | Days', function (hooks) {
     await click('[data-test-change-date]');
     await calendarSelect('.date-picker-content', new Date(2023, 1, 1));
     assert.dom('[data-test-list-overdue]').doesNotExist();
+  });
+
+  test('"new task" input is reset to default size after entering a long task', async function (assert) {
+    await visit('/days');
+    // enter a single character to ensure height is set correctly
+    await fillIn('[data-test-new-task]', 'a');
+    const initialHeight = find('[data-test-new-task]').style.height;
+
+    // now enter a long string that causes the input to wrap/resize
+    await fillIn('[data-test-new-task]', 'a'.repeat(100));
+    assert.notStrictEqual(
+      find('[data-test-new-task]').style.height,
+      initialHeight,
+      'the entered text was long enough to cause the input to resize'
+    );
+
+    // save the new task; the input should be cleared and reset to the initial size
+    await keyEvent('[data-test-new-task]', 'Enter');
+    assert.dom('[data-test-new-task]').hasValue('', '"new task" input is reset to be blank');
+    assert.strictEqual(
+      find('[data-test-new-task]').style.height,
+      initialHeight,
+      'the input is reset to the default size'
+    );
   });
 });
