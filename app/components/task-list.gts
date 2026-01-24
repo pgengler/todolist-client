@@ -130,7 +130,9 @@ export default class TaskList extends Component<TaskListSignature> {
 
   @action
   clearTextarea(): void {
-    (document.getElementById(this.newTaskFieldId) as HTMLTextAreaElement).value = '';
+    const textarea = document.getElementById(this.newTaskFieldId) as HTMLTextAreaElement;
+    textarea.value = '';
+    textarea.dispatchEvent(new Event('input'));
   }
 
   @action
