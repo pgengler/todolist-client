@@ -2,7 +2,7 @@ import Route from '@ember/routing/route';
 import { service } from '@ember/service';
 import type Store from '@ember-data/store';
 import type Transition from '@ember/routing/transition';
-import type List from 'ember-todo/models/list';
+import type RecurrenceRule from 'ember-todo/models/recurrence-rule';
 import type SessionService from 'ember-todo/services/session';
 
 export default class RecurringRoute extends Route {
@@ -13,13 +13,7 @@ export default class RecurringRoute extends Route {
     this.session.requireAuthentication(transition, 'login');
   }
 
-  model(): Promise<List[]> {
-    return this.store.query<List>('list', {
-      filter: {
-        'list-type': 'recurring-task-day',
-      },
-      include: ['tasks'],
-      sort: 'sort-order',
-    });
+  model(): Promise<RecurrenceRule[]> {
+    return this.store.findAll<RecurrenceRule>('recurrence-rule');
   }
 }

@@ -1,12 +1,22 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 import { isEmpty } from '@ember/utils';
 import TaskForm from './task-form';
+import RecurringTaskActionDialog from './recurring-task-action-dialog';
 import { on } from '@ember/modifier';
 import type List from 'ember-todo/models/list';
 import type Task from 'ember-todo/models/task';
 import type Store from '@ember-data/store';
+import type TaskAdapter from 'ember-todo/adapters/task';
+
+const eq = <T,>(a: T, b: T): boolean => a === b;
+
+type PendingAction = {
+  type: 'save' | 'delete';
+  data?: { date: string; description: string; notes: string };
+};
 
 interface EditTaskFormSignature {
   Args: {
@@ -20,13 +30,30 @@ interface EditTaskFormSignature {
 export default class EditTaskForm extends Component<EditTaskFormSignature> {
   @service declare store: Store;
 
+  @tracked showRecurringDialog = false;
+  @tracked pendingAction: PendingAction | null = null;
+
+  get isRecurring() {
+    return this.args.task.isRecurring;
+  }
+
   @action
   async save({ date, description, notes }: { date: string; description: string; notes: string }) {
-    const task = this.args.task;
-
     if (isEmpty(description) || isEmpty(date)) {
       return;
     }
+
+    if (this.isRecurring) {
+      this.pendingAction = { type: 'save', data: { date, description, notes } };
+      this.showRecurringDialog = true;
+      return;
+    }
+
+    await this.performSave({ date, description, notes });
+  }
+
+  async performSave({ date, description, notes }: { date: string; description: string; notes: string }) {
+    const task = this.args.task;
 
     const lists = (
       await this.store.query<List>('list', {
@@ -52,8 +79,68 @@ export default class EditTaskForm extends Component<EditTaskFormSignature> {
   async deleteTask() {
     const task = this.args.task;
 
+    if (this.isRecurring) {
+      this.pendingAction = { type: 'delete' };
+      this.showRecurringDialog = true;
+      return;
+    }
+
     await task.destroyRecord();
     this.args.onTaskDeleted?.();
+  }
+
+  @action
+  closeRecurringDialog() {
+    this.showRecurringDialog = false;
+    this.pendingAction = null;
+  }
+
+  @action
+  async handleThisOnly() {
+    const task = this.args.task;
+    const taskId = task.id;
+    if (!taskId) return;
+
+    const adapter = this.store.adapterFor('task') as TaskAdapter;
+
+    if (this.pendingAction?.type === 'save' && this.pendingAction.data) {
+      await adapter.modifyInstance(taskId, {
+        description: this.pendingAction.data.description,
+        notes: this.pendingAction.data.notes,
+      });
+      await this.store.findRecord('task', taskId, { reload: true });
+      this.args.onTaskSaved?.();
+    } else if (this.pendingAction?.type === 'delete') {
+      await adapter.skip(taskId);
+      task.unloadRecord();
+      this.args.onTaskDeleted?.();
+    }
+
+    this.closeRecurringDialog();
+  }
+
+  @action
+  async handleThisAndFuture() {
+    const task = this.args.task;
+    const taskId = task.id;
+    if (!taskId) return;
+
+    const adapter = this.store.adapterFor('task') as TaskAdapter;
+
+    if (this.pendingAction?.type === 'save' && this.pendingAction.data) {
+      await adapter.updateThisAndFuture(taskId, {
+        description: this.pendingAction.data.description,
+        notes: this.pendingAction.data.notes,
+      });
+      await this.store.findRecord('task', taskId, { reload: true });
+      this.args.onTaskSaved?.();
+    } else if (this.pendingAction?.type === 'delete') {
+      await adapter.deleteThisAndFuture(taskId);
+      task.unloadRecord();
+      this.args.onTaskDeleted?.();
+    }
+
+    this.closeRecurringDialog();
   }
 
   <template>
@@ -66,5 +153,15 @@ export default class EditTaskForm extends Component<EditTaskFormSignature> {
         </div>
       </:footer>
     </TaskForm>
+
+    {{#if this.showRecurringDialog}}
+      <RecurringTaskActionDialog
+        @task={{@task}}
+        @actionType={{if (eq this.pendingAction.type "save") "edit" "delete"}}
+        @onClose={{this.closeRecurringDialog}}
+        @onThisOnly={{this.handleThisOnly}}
+        @onThisAndFuture={{this.handleThisAndFuture}}
+      />
+    {{/if}}
   </template>
 }
