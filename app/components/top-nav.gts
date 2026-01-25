@@ -41,9 +41,6 @@ export default class TopNav extends Component<TopNavSignature> {
         <LinkTo @route="days" @query={{hash date=null}} title="Home">
           <FaIcon @icon="home" />
         </LinkTo>
-        <LinkTo @route="recurring" title="Recurring tasks">
-          <FaIcon @icon="list" />
-        </LinkTo>
         <FaIcon @icon="plus" {{on "click" this.toggleModal}} data-test-add-task />
         <DatePickerIcon @dateSelected={{@changeDate}} @dateRange={{@selectedDate.dateRange}} data-test-change-date />
       </div>

@@ -202,6 +202,24 @@
   }
 }
 
+// Recurring task indicator in edit form
+.recurring-task-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.5em 0.75em;
+  margin-bottom: 1em;
+  background: #e8f4f8;
+  border: 1px solid #b8d4e3;
+  border-radius: 4px;
+  color: #2c5282;
+  font-size: 0.9em;
+
+  svg {
+    opacity: 0.8;
+  }
+}
+
 // Recurrence section in task form
 .recurrence-section {
   margin-top: 0.5em;

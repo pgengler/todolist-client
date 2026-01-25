@@ -5,6 +5,7 @@ import { tracked } from '@glimmer/tracking';
 import { isEmpty } from '@ember/utils';
 import TaskForm from './task-form';
 import RecurringTaskActionDialog from './recurring-task-action-dialog';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { on } from '@ember/modifier';
 import type List from 'ember-todo/models/list';
 import type Task from 'ember-todo/models/task';
@@ -144,11 +145,18 @@ export default class EditTaskForm extends Component<EditTaskFormSignature> {
   }
 
   <template>
+    {{#if this.isRecurring}}
+      <div class="recurring-task-indicator">
+        <FaIcon @icon="rotate" />
+        <span>This is a recurring task</span>
+      </div>
+    {{/if}}
+
     <TaskForm @cancel={{@cancel}} @save={{this.save}} @saveButtonLabel="Save" @task={{@task}}>
       <:footer>
         <div class="button-footer">
           <button type="button" {{on "click" this.deleteTask}} data-test-delete-task>
-            Delete
+            {{if this.isRecurring "Skip" "Delete"}}
           </button>
         </div>
       </:footer>
