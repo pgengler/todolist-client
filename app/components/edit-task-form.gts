@@ -4,11 +4,13 @@ import { service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { isEmpty } from '@ember/utils';
 import TaskForm from './task-form';
+import type { RecurrenceOptions } from './task-form';
 import RecurringTaskActionDialog from './recurring-task-action-dialog';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 import { on } from '@ember/modifier';
 import type List from 'ember-todo/models/list';
 import type Task from 'ember-todo/models/task';
+import type RecurrenceRule from 'ember-todo/models/recurrence-rule';
 import type Store from '@ember-data/store';
 import type TaskAdapter from 'ember-todo/adapters/task';
 
@@ -16,7 +18,7 @@ const eq = <T,>(a: T, b: T): boolean => a === b;
 
 type PendingAction = {
   type: 'save' | 'delete';
-  data?: { date: string; description: string; notes: string };
+  data?: { date: string; description: string; notes: string; recurrence?: RecurrenceOptions };
 };
 
 interface EditTaskFormSignature {
@@ -38,22 +40,51 @@ export default class EditTaskForm extends Component<EditTaskFormSignature> {
     return this.args.task.isRecurring;
   }
 
+  get hasRecurrenceChanged(): boolean {
+    const task = this.args.task;
+    const hadRecurrence = task.isRecurring;
+    // This will be set when save is called with recurrence data
+    return this.pendingAction?.data?.recurrence !== undefined || hadRecurrence;
+  }
+
   @action
-  async save({ date, description, notes }: { date: string; description: string; notes: string }) {
+  async save({
+    date,
+    description,
+    notes,
+    recurrence,
+  }: {
+    date: string;
+    description: string;
+    notes: string;
+    recurrence?: RecurrenceOptions;
+  }) {
     if (isEmpty(description) || isEmpty(date)) {
       return;
     }
 
+    // If task is currently recurring, show dialog for edit scope
     if (this.isRecurring) {
-      this.pendingAction = { type: 'save', data: { date, description, notes } };
+      this.pendingAction = { type: 'save', data: { date, description, notes, recurrence } };
       this.showRecurringDialog = true;
       return;
     }
 
-    await this.performSave({ date, description, notes });
+    // For non-recurring tasks (including adding recurrence), just save directly
+    await this.performSave({ date, description, notes, recurrence });
   }
 
-  async performSave({ date, description, notes }: { date: string; description: string; notes: string }) {
+  async performSave({
+    date,
+    description,
+    notes,
+    recurrence,
+  }: {
+    date: string;
+    description: string;
+    notes: string;
+    recurrence?: RecurrenceOptions;
+  }) {
     const task = this.args.task;
 
     const lists = (
@@ -71,6 +102,28 @@ export default class EditTaskForm extends Component<EditTaskFormSignature> {
     task.description = description;
     task.list = lists[0] ?? null;
     task.notes = notes;
+
+    // Handle adding recurrence to a non-recurring task
+    if (recurrence && !task.isRecurring) {
+      const rule = this.store.createRecord('recurrence-rule', {
+        description,
+        notes,
+        recurrenceType: recurrence.recurrenceType,
+        interval: recurrence.interval,
+        dayOfWeek: recurrence.dayOfWeek,
+        daysOfWeek: recurrence.daysOfWeek,
+        dayOfMonth: recurrence.dayOfMonth,
+        weekOfMonth: recurrence.weekOfMonth,
+        month: recurrence.month,
+        startDate: new Date(date),
+        endDate: recurrence.endDate ? new Date(recurrence.endDate) : null,
+        maxInstances: recurrence.maxInstances,
+      });
+      await rule.save();
+      task.recurrenceRule = rule as RecurrenceRule;
+      task.originalDate = new Date(date);
+    }
+
     await task.save();
 
     this.args.onTaskSaved?.();
@@ -152,7 +205,7 @@ export default class EditTaskForm extends Component<EditTaskFormSignature> {
       </div>
     {{/if}}
 
-    <TaskForm @cancel={{@cancel}} @save={{this.save}} @saveButtonLabel="Save" @task={{@task}}>
+    <TaskForm @cancel={{@cancel}} @save={{this.save}} @saveButtonLabel="Save" @task={{@task}} @showRecurrence={{true}}>
       <:footer>
         <div class="button-footer">
           <button type="button" {{on "click" this.deleteTask}} data-test-delete-task>

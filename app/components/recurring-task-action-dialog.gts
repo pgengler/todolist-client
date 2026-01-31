@@ -24,6 +24,10 @@ export default class RecurringTaskActionDialog extends Component<RecurringTaskAc
     return this.args.actionType === 'edit' ? 'Edit Recurring Task' : 'Delete Recurring Task';
   }
 
+  get description() {
+    return 'This is a recurring task. How would you like to proceed?';
+  }
+
   get thisOnlyLabel() {
     return this.args.actionType === 'edit' ? 'Edit this instance only' : 'Delete this instance only';
   }
@@ -63,7 +67,7 @@ export default class RecurringTaskActionDialog extends Component<RecurringTaskAc
       data-test-recurring-action-dialog
     >
       <h2>{{this.title}}</h2>
-      <p>This is a recurring task. How would you like to proceed?</p>
+      <p>{{this.description}}</p>
 
       <div class="action-options">
         <button type="button" class="action-option" {{on "click" this.handleThisOnly}} data-test-this-only>

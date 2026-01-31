@@ -123,4 +123,6 @@ function routes() {
     return task;
   });
   this.del('/tasks/:id');
+
+  this.post('/recurrence-rules');
 }

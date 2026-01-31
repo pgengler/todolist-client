@@ -7,7 +7,7 @@ export default class Task extends Model {
   declare [Type]: 'task';
 
   @belongsTo('list', { async: false, inverse: 'tasks' }) declare list: List | null;
-  @belongsTo('recurrence-rule', { async: true, inverse: 'tasks' })
+  @belongsTo('recurrence-rule', { async: false, inverse: 'tasks' })
   declare recurrenceRule: RecurrenceRule | null;
 
   @attr('string') declare description: string;

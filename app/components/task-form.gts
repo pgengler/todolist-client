@@ -104,16 +104,59 @@ export default class TaskForm extends Component<TaskFormSignature> {
   @tracked notes = this.args.task?.notes;
   @tracked taskDate = taskDate(this.args.task);
 
-  // Recurrence state
-  @tracked recurrenceType: RecurrenceType | 'none' = 'none';
-  @tracked interval = 1;
-  @tracked dayOfWeek = 1;
-  @tracked daysOfWeek: number[] = [];
-  @tracked dayOfMonth = 1;
-  @tracked weekOfMonth = 1;
-  @tracked month = 1;
-  @tracked recurrenceEndDate: string | null = null;
-  @tracked maxInstances: number | null = null;
+  // Recurrence state - initialize from existing recurrence rule if present
+  @tracked recurrenceType: RecurrenceType | 'none' = this.initialRecurrenceType;
+  @tracked interval = this.initialInterval;
+  @tracked dayOfWeek = this.initialDayOfWeek;
+  @tracked daysOfWeek: number[] = this.initialDaysOfWeek;
+  @tracked dayOfMonth = this.initialDayOfMonth;
+  @tracked weekOfMonth = this.initialWeekOfMonth;
+  @tracked month = this.initialMonth;
+  @tracked recurrenceEndDate: string | null = this.initialEndDate;
+  @tracked maxInstances: number | null = this.initialMaxInstances;
+
+  // Initial values from existing recurrence rule
+  private get existingRule() {
+    return this.args.task?.recurrenceRule;
+  }
+
+  private get initialRecurrenceType(): RecurrenceType | 'none' {
+    return this.existingRule?.recurrenceType ?? 'none';
+  }
+
+  private get initialInterval(): number {
+    return this.existingRule?.interval ?? 1;
+  }
+
+  private get initialDayOfWeek(): number {
+    return this.existingRule?.dayOfWeek ?? 1;
+  }
+
+  private get initialDaysOfWeek(): number[] {
+    return this.existingRule?.daysOfWeek ?? [];
+  }
+
+  private get initialDayOfMonth(): number {
+    return this.existingRule?.dayOfMonth ?? 1;
+  }
+
+  private get initialWeekOfMonth(): number {
+    return this.existingRule?.weekOfMonth ?? 1;
+  }
+
+  private get initialMonth(): number {
+    return this.existingRule?.month ?? 1;
+  }
+
+  private get initialEndDate(): string | null {
+    const endDate = this.existingRule?.endDate;
+    if (!endDate) return null;
+    return endDate.toISOString().split('T')[0] ?? null;
+  }
+
+  private get initialMaxInstances(): number | null {
+    return this.existingRule?.maxInstances ?? null;
+  }
 
   get editingNotes(): boolean {
     return !this.args.task || this.args.task?.isNew || isEmpty(this.args.task?.notes) || this.isEditingNotes;
