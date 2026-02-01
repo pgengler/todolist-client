@@ -12,7 +12,6 @@ import type List from 'ember-todo/models/list';
 import type Task from 'ember-todo/models/task';
 import type RecurrenceRule from 'ember-todo/models/recurrence-rule';
 import type Store from '@ember-data/store';
-import type TaskAdapter from 'ember-todo/adapters/task';
 
 const eq = <T,>(a: T, b: T): boolean => a === b;
 
@@ -152,20 +151,17 @@ export default class EditTaskForm extends Component<EditTaskFormSignature> {
   @action
   async handleThisOnly() {
     const task = this.args.task;
-    const taskId = task.id;
-    if (!taskId) return;
-
-    const adapter = this.store.adapterFor('task') as TaskAdapter;
+    if (!task.id) return;
 
     if (this.pendingAction?.type === 'save' && this.pendingAction.data) {
-      await adapter.modifyInstance(taskId, {
+      await task.modifyInstance({
         description: this.pendingAction.data.description,
         notes: this.pendingAction.data.notes,
       });
-      await this.store.findRecord('task', taskId, { reload: true });
+      await task.reload();
       this.args.onTaskSaved?.();
     } else if (this.pendingAction?.type === 'delete') {
-      await adapter.skip(taskId);
+      await task.skip();
       task.unloadRecord();
       this.args.onTaskDeleted?.();
     }
@@ -176,20 +172,17 @@ export default class EditTaskForm extends Component<EditTaskFormSignature> {
   @action
   async handleThisAndFuture() {
     const task = this.args.task;
-    const taskId = task.id;
-    if (!taskId) return;
-
-    const adapter = this.store.adapterFor('task') as TaskAdapter;
+    if (!task.id) return;
 
     if (this.pendingAction?.type === 'save' && this.pendingAction.data) {
-      await adapter.updateThisAndFuture(taskId, {
+      await task.updateThisAndFuture({
         description: this.pendingAction.data.description,
         notes: this.pendingAction.data.notes,
       });
-      await this.store.findRecord('task', taskId, { reload: true });
+      await task.reload();
       this.args.onTaskSaved?.();
     } else if (this.pendingAction?.type === 'delete') {
-      await adapter.deleteThisAndFuture(taskId);
+      await task.deleteThisAndFuture();
       task.unloadRecord();
       this.args.onTaskDeleted?.();
     }
