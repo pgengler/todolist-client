@@ -104,7 +104,7 @@ export default class EditTaskForm extends Component<EditTaskFormSignature> {
 
     // Handle adding recurrence to a non-recurring task
     if (recurrence && !task.isRecurring) {
-      const rule = this.store.createRecord('recurrence-rule', {
+      const rule = this.store.createRecord<RecurrenceRule>('recurrence-rule', {
         description,
         notes,
         recurrenceType: recurrence.recurrenceType,
@@ -119,7 +119,7 @@ export default class EditTaskForm extends Component<EditTaskFormSignature> {
         maxInstances: recurrence.maxInstances,
       });
       await rule.save();
-      task.recurrenceRule = rule as RecurrenceRule;
+      task.recurrenceRule = rule;
       task.originalDate = new Date(date);
     }
 

@@ -15,15 +15,7 @@ export type RecurrenceType =
   | 'yearly'
   | 'yearly_weekday';
 
-const DAY_NAMES = [
-  'Sunday',
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday',
-];
+const DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 export default class RecurrenceRule extends Model {
   declare [Type]: 'recurrence-rule';

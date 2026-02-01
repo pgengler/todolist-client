@@ -25,7 +25,7 @@ export default class Task extends Model {
   }
 
   get isRecurring(): boolean {
-    return this.recurring;
+    return !!this.recurring;
   }
 
   skip = memberAction<void>({ path: 'skip', type: 'post' });
