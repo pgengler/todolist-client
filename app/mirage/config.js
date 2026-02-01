@@ -253,6 +253,8 @@ function routes() {
     if (task.list.listType === 'day') {
       task.update({ dueDate: task.list.name });
     }
+    // Sync recurring attribute based on recurrence rule
+    task.update({ recurring: !!task.recurrenceRuleId });
     return task;
   });
 
@@ -263,6 +265,8 @@ function routes() {
     if (task.list.listType === 'day') {
       task.update({ dueDate: task.list.name });
     }
+    // Sync recurring attribute based on recurrence rule
+    task.update({ recurring: !!task.recurrenceRuleId });
     return task;
   });
   this.del('/tasks/:id');

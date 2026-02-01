@@ -18,14 +18,14 @@ export default class Task extends Model {
   @attr('date') declare originalDate: Date | null;
   @attr('boolean', { defaultValue: false }) declare instanceModified: boolean;
   @attr('boolean', { defaultValue: false }) declare skipped: boolean;
-  @attr('boolean', { defaultValue: false }) declare recurring: boolean;
+  @attr('boolean', { defaultValue: false }) declare readonly recurring: boolean;
 
   get plaintextDescription(): string {
     return this.description.replace(/[^A-Za-z0-9]/g, '');
   }
 
   get isRecurring(): boolean {
-    return !!this.recurring;
+    return this.recurring;
   }
 
   async skip(): Promise<void> {
