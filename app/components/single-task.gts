@@ -162,7 +162,7 @@ export default class SingleTask extends Component<SingleTaskSignature> {
             </div>
           {{/if}}
           {{#if @task.isRecurring}}
-            <div>
+            <div class="recurring-icon">
               <FaIcon @icon="repeat" data-test-task-is-recurring />
             </div>
           {{/if}}
