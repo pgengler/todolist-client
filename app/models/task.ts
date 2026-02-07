@@ -45,8 +45,8 @@ export default class Task extends Model {
       path: 'update_this_and_future',
       method: 'POST',
       data: payload,
-  });
-}
+    });
+  }
 
   async deleteThisAndFuture(): Promise<void> {
     await apiAction(this, {
