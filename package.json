@@ -29,7 +29,7 @@
     "./*": "./app/*"
   },
   "devDependencies": {
-    "@babel/core": "^7.28.5",
+    "@babel/core": "^7.29.6",
     "@babel/eslint-parser": "^7.28.5",
     "@babel/plugin-transform-runtime": "^7.28.5",
     "@babel/plugin-transform-typescript": "^7.28.5",
