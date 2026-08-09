@@ -134,5 +134,8 @@
     "patchedDependencies": {
       "ember-power-calendar": "patches/ember-power-calendar.patch"
     }
+  },
+  "dependencies": {
+    "@mainmatter/ember-api-actions": "^0.6.0"
   }
 }
