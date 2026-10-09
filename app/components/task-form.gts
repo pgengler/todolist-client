@@ -22,7 +22,7 @@ interface TaskFormSignature {
     save?: (task: { date: string; description: string; notes: string }) => Promise<void>;
   };
   Blocks: {
-    footer: [];
+    secondaryActions: [];
   };
 }
 
@@ -121,14 +121,19 @@ export default class TaskForm extends Component<TaskFormSignature> {
       {{/if}}
 
       <br /><br />
-      <button type="submit" data-test-save-task>
-        {{this.saveButtonLabel}}
-      </button>
-      <button type="button" {{on "click" @cancel}} data-test-cancel-button>
-        Cancel
-      </button>
-
-      {{yield to="footer"}}
+      <div class="form-actions">
+        <div class="secondary-actions" data-test-secondary-actions>
+          {{yield to="secondaryActions"}}
+        </div>
+        <div class="primary-actions" data-test-primary-actions>
+          <button type="button" {{on "click" @cancel}} data-test-cancel-button>
+            Cancel
+          </button>
+          <button type="submit" data-test-save-task>
+            {{this.saveButtonLabel}}
+          </button>
+        </div>
+      </div>
     </form>
   </template>
 }
