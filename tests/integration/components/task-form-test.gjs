@@ -54,17 +54,24 @@ module('Integration | Component | TaskForm', function (hooks) {
     assert.verifySteps(['cancel action triggered']);
   });
 
-  test('renders content in <:footer> after save/cancel buttons', async function (assert) {
+  test('renders content in <:secondaryActions> before the primary actions', async function (assert) {
     await render(
       <template>
         <TaskForm @cancel={{noop}}>
-          <:footer>
+          <:secondaryActions>
             <div data-test-foo-bar></div>
-          </:footer>
+          </:secondaryActions>
         </TaskForm>
       </template>
     );
 
-    assert.dom('[data-test-cancel-button] + [data-test-foo-bar]').exists();
+    assert.dom('[data-test-secondary-actions] [data-test-foo-bar]').exists();
+    assert.dom('[data-test-secondary-actions] + [data-test-primary-actions]').exists();
+  });
+
+  test('renders the Cancel button before the Save button', async function (assert) {
+    await render(<template><TaskForm @cancel={{noop}} /></template>);
+
+    assert.dom('[data-test-cancel-button] + [data-test-save-task]').exists();
   });
 });

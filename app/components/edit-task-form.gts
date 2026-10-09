@@ -7,6 +7,7 @@ import { on } from '@ember/modifier';
 import type List from 'ember-todo/models/list';
 import type Task from 'ember-todo/models/task';
 import type Store from '@ember-data/store';
+import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
 
 interface EditTaskFormSignature {
   Args: {
@@ -58,13 +59,17 @@ export default class EditTaskForm extends Component<EditTaskFormSignature> {
 
   <template>
     <TaskForm @cancel={{@cancel}} @save={{this.save}} @saveButtonLabel="Save" @task={{@task}}>
-      <:footer>
-        <div class="button-footer">
-          <button type="button" {{on "click" this.deleteTask}} data-test-delete-task>
-            Delete
-          </button>
-        </div>
-      </:footer>
+      <:secondaryActions>
+        <button
+          type="button"
+          {{on "click" this.deleteTask}}
+          title="Delete"
+          aria-label="Delete task"
+          data-test-delete-task
+        >
+          <FaIcon @icon="trash-can" />
+        </button>
+      </:secondaryActions>
     </TaskForm>
   </template>
 }
