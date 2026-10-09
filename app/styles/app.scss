@@ -194,8 +194,9 @@ nav.top-nav {
 }
 
 dialog {
+  border: 2px solid #555;
   border-radius: 3px;
-  box-shadow: 10px 10px 15px #222;
+  box-shadow: 10px 10px 15px #555;
   width: 25vw;
   min-height: 15em;
   max-height: 50vh;
