@@ -35,6 +35,7 @@ export default class extends Component {
       {{/if}}
 
       {{outlet}}
+      <div id="modal-container"></div>
     </div>
   </template>
 }

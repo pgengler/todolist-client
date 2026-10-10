@@ -68,7 +68,7 @@ module('Acceptance | Tasks', function (hooks) {
     assert.dom('[data-test-task]').doesNotHaveClass('editing');
     assert.dom('[data-test-task] textarea.edit').doesNotExist();
 
-    assert.dom('[data-test-edit-task-dialog]').exists();
+    assert.dom('#modal-container [data-test-edit-task-dialog]').exists();
     assert.dom('[data-test-edit-task-dialog] [data-test-task-description]').hasValue('initial description');
     assert.dom('[data-test-edit-task-dialog] [data-test-task-date]').hasValue(list.name);
   });
