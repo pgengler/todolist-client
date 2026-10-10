@@ -10,9 +10,13 @@ interface EditTaskModalSignature {
   };
 }
 
+const modalContainer = (): HTMLElement => document.getElementById('modal-container')!;
+
 export default <template>
-  <dialog class="edit-task-dialog" {{showDialogOnInsert onClose=@onClose}} data-test-edit-task-dialog>
-    <h1>Edit task</h1>
-    <EditTaskForm @cancel={{@onClose}} @onTaskDeleted={{@onClose}} @onTaskSaved={{@onClose}} @task={{@task}} />
-  </dialog>
+  {{#in-element (modalContainer) insertBefore=null}}
+    <dialog class="edit-task-dialog" {{showDialogOnInsert onClose=@onClose}} data-test-edit-task-dialog>
+      <h1>Edit task</h1>
+      <EditTaskForm @cancel={{@onClose}} @onTaskDeleted={{@onClose}} @onTaskSaved={{@onClose}} @task={{@task}} />
+    </dialog>
+  {{/in-element}}
 </template> satisfies TOC<EditTaskModalSignature>;

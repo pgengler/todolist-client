@@ -9,9 +9,13 @@ interface NewTaskModalSignature {
   };
 }
 
+const modalContainer = (): HTMLElement => document.getElementById('modal-container')!;
+
 export default <template>
-  <dialog class="new-task-dialog" {{showDialogOnInsert onClose=@onClose}}>
-    <h1>Add new task</h1>
-    <NewTaskForm @cancel={{@onClose}} @onTaskCreated={{@onClose}} />
-  </dialog>
+  {{#in-element (modalContainer) insertBefore=null}}
+    <dialog class="new-task-dialog" {{showDialogOnInsert onClose=@onClose}}>
+      <h1>Add new task</h1>
+      <NewTaskForm @cancel={{@onClose}} @onTaskCreated={{@onClose}} />
+    </dialog>
+  {{/in-element}}
 </template> satisfies TOC<NewTaskModalSignature>;

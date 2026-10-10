@@ -22,7 +22,7 @@ module('Acceptance | New Task modal', function (hooks) {
     await visit('/days');
     await click('.top-nav [data-test-add-task]');
 
-    assert.dom('.new-task-dialog').exists('"new task" modal displays after clicking icon in header');
+    assert.dom('#modal-container .new-task-dialog').exists('"new task" modal displays after clicking icon in header');
 
     await fillIn('[data-test-task-description]', 'Something');
     await fillIn('[data-test-task-date]', '2014-11-13');
