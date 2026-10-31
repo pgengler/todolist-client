@@ -7,7 +7,6 @@ import { runTask } from 'ember-lifeline';
 import AutofocusElasticTextarea from './autofocus-elastic-textarea';
 import { on } from '@ember/modifier';
 import FaIcon from '@fortawesome/ember-fontawesome/components/fa-icon';
-import perform from 'ember-concurrency/helpers/perform';
 import MarkdownToHtml from 'ember-showdown/components/markdown-to-html';
 import EditTaskModal from './edit-task-modal';
 import doubleTapAsDoubleClick from 'ember-todo/modifiers/double-tap-as-double-click';
@@ -47,7 +46,15 @@ export default class SingleTask extends Component<SingleTaskSignature> {
   }
 
   get isQuickEditing() {
-    return this.editType === 'quick';
+    return this.editType === 'quick' && !this.isSaving;
+  }
+
+  get isSaving() {
+    return this.updateTask.isRunning;
+  }
+
+  get isPending() {
+    return this.args.task.isNew || this.isSaving;
   }
 
   get showDoneToggle() {
@@ -93,8 +100,7 @@ export default class SingleTask extends Component<SingleTaskSignature> {
     void task.save();
   }
 
-  @action
-  async updateTask(description: string): Promise<void> {
+  updateTask = dropTask(async (description: string) => {
     if (!this.editable) {
       return;
     }
@@ -108,7 +114,7 @@ export default class SingleTask extends Component<SingleTaskSignature> {
       this.editType = null;
     }
     this.args.editingEnd?.();
-  }
+  });
 
   <template>
     <li
@@ -116,13 +122,13 @@ export default class SingleTask extends Component<SingleTaskSignature> {
         {{if this.isQuickEditing 'editing'}}
         {{if @task.done 'done'}}
         {{if @task.isError 'error'}}
-        {{if @task.isNew 'pending'}}"
+        {{if this.isPending 'pending'}}"
       ...attributes
     >
       {{#if this.isQuickEditing}}
         <AutofocusElasticTextarea
           @onEscapePressed={{this.cancelEdit}}
-          @onEnterPressed={{this.updateTask}}
+          @onEnterPressed={{this.updateTask.perform}}
           @value={{this.editDescription}}
           class="edit"
           {{on "focusout" this.cancelEdit}}
@@ -136,7 +142,7 @@ export default class SingleTask extends Component<SingleTaskSignature> {
           <div class="state">
             {{#if @task.isError}}
               <FaIcon @icon="triangle-exclamation" title="Task failed to save" />
-            {{else if @task.isNew}}
+            {{else if this.isPending}}
               <FaIcon @icon="spinner" @spin={{true}} />
             {{else if this.showDoneToggle}}
               {{! template-lint-disable require-input-label }}
@@ -149,7 +155,7 @@ export default class SingleTask extends Component<SingleTaskSignature> {
             class="description"
             role="button"
             {{doubleTapAsDoubleClick}}
-            {{on "click" (perform this.quickEditTask)}}
+            {{on "click" this.quickEditTask.perform}}
             {{on "dblclick" this.editTask}}
           >
             <MarkdownToHtml @markdown={{@task.description}} />

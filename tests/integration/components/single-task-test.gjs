@@ -1,7 +1,9 @@
 import { module, test } from 'qunit';
+import { tracked } from '@glimmer/tracking';
 import { setupRenderingTest } from 'ember-todo/tests/helpers';
-import { click, render } from '@ember/test-helpers';
+import { click, render, settled, waitFor } from '@ember/test-helpers';
 import { clickToEdit } from 'ember-todo/tests/helpers/click-to-edit';
+import fillInAndPressEnter from 'ember-todo/tests/helpers/fill-in-and-press-enter';
 import SingleTask from 'ember-todo/components/single-task';
 
 module('Integration | Component | SingleTask', function (hooks) {
@@ -85,5 +87,55 @@ module('Integration | Component | SingleTask', function (hooks) {
     assert.dom('.task').hasClass('editing');
     assert.dom('textarea').exists('displays a textarea for editing');
     assert.dom('textarea').hasValue('abc', 'textarea is populated with the current description');
+  });
+
+  test('shows a spinner while deleting a task via an empty description', async function (assert) {
+    let resolveSave;
+    const promise = new Promise((resolve) => (resolveSave = resolve));
+    const task = {
+      description: 'foo',
+      destroyRecord: () => promise,
+    };
+    await render(<template><SingleTask @task={{task}} /></template>);
+    await clickToEdit('.task');
+
+    fillInAndPressEnter('textarea', '');
+    await waitFor('.fa-spinner');
+
+    assert.dom('textarea').doesNotExist('textarea is no longer displayed');
+    assert.dom('.fa-spinner').exists('shows a spinner');
+    assert.dom('.task').hasClass('pending', 'task gets the "pending" class');
+
+    resolveSave();
+    await settled();
+
+    assert.dom('.fa-spinner').doesNotExist('spinner is gone');
+    assert.dom('.task').doesNotHaveClass('pending', 'task no longer has the "pending" class');
+  });
+
+  test('shows a spinner while saving an updated description', async function (assert) {
+    let resolveSave;
+    const promise = new Promise((resolve) => (resolveSave = resolve));
+    const task = new (class {
+      @tracked description = 'foo';
+      save = () => promise;
+    })();
+    await render(<template><SingleTask @task={{task}} /></template>);
+    await clickToEdit('.task');
+
+    fillInAndPressEnter('textarea', 'new text');
+    await waitFor('.fa-spinner');
+
+    assert.dom('textarea').doesNotExist('textarea is no longer displayed');
+    assert.dom('.fa-spinner').exists('shows a spinner');
+    assert.dom('.task').hasClass('pending', 'task gets the "pending" class');
+
+    resolveSave();
+    await settled();
+
+    assert.dom('.fa-spinner').doesNotExist('spinner is gone');
+    assert.dom('input[type=checkbox]').exists('checkbox is displayed again');
+    assert.dom('textarea').doesNotExist('textarea is no longer displayed');
+    assert.dom('.task').hasText('new text', 'displays the updated description');
   });
 });
