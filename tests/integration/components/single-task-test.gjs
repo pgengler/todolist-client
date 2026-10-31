@@ -90,8 +90,7 @@ module('Integration | Component | SingleTask', function (hooks) {
   });
 
   test('shows a spinner while deleting a task via an empty description', async function (assert) {
-    let resolveSave;
-    const promise = new Promise((resolve) => (resolveSave = resolve));
+    const { promise, resolve: resolveSave } = Promise.withResolvers();
     const task = {
       description: 'foo',
       destroyRecord: () => promise,
@@ -114,8 +113,7 @@ module('Integration | Component | SingleTask', function (hooks) {
   });
 
   test('shows a spinner while saving an updated description', async function (assert) {
-    let resolveSave;
-    const promise = new Promise((resolve) => (resolveSave = resolve));
+    const { promise, resolve: resolveSave } = Promise.withResolvers();
     const task = new (class {
       @tracked description = 'foo';
       save = () => promise;
